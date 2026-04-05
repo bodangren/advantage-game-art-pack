@@ -2,13 +2,6 @@
 
 This file tracks all major tracks for the project.
 
----
-
-- [x] **Track: Deterministic sprite compiler MVP**
-  *Link: [./conductor/tracks/sprite_compiler_mvp_20260405/](./conductor/tracks/sprite_compiler_mvp_20260405/)*
-
----
-
 - [ ] **Track: Style canon and annotation system**
   *Link: [./conductor/tracks/style_canon_annotation_system_20260405/](./conductor/tracks/style_canon_annotation_system_20260405/)*
 
