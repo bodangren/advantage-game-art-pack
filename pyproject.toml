@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "autonomous-sprite-factory"
+version = "0.1.0"
+description = "Deterministic pixel-art sprite compiler prototype"
+requires-python = ">=3.12"
+dependencies = ["Pillow>=10.0.0"]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]

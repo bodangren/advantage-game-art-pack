@@ -1,0 +1,45 @@
+{
+  "style_pack": "cute_chibi_v1",
+  "entity_type": "npc",
+  "frame": {
+    "width": 64,
+    "height": 64,
+    "pivot": [32, 56]
+  },
+  "animations": {
+    "idle": 3,
+    "walk": 3,
+    "action": 3
+  },
+  "body": {
+    "archetype": "ragged_chibi",
+    "proportions": {
+      "head_scale": 1.1,
+      "torso_scale": 0.95,
+      "leg_length": 14
+    }
+  },
+  "parts": {
+    "head": "messy_hair",
+    "torso": "ragged_tunic",
+    "legs": "bare_legs",
+    "arms": "bound_hands"
+  },
+  "equipment": {
+    "main_hand": null,
+    "off_hand": null
+  },
+  "palette": {
+    "primary": "skin_fair",
+    "secondary": "ash_gray",
+    "accent": "hair_brown"
+  },
+  "pose": {
+    "idle": [],
+    "walk": [],
+    "action": []
+  },
+  "fx": {
+    "type": "poison_aura"
+  }
+}

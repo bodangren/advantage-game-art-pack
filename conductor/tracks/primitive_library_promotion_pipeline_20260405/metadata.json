@@ -1,0 +1,11 @@
+{
+  "track_id": "primitive_library_promotion_pipeline_20260405",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2026-04-05T00:00:00Z",
+  "updated_at": "2026-04-05T00:00:00Z",
+  "description": "Primitive library and promotion pipeline",
+  "estimated_tasks": 9,
+  "actual_tasks": null,
+  "deviation_notes": ""
+}

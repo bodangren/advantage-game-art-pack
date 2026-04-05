@@ -1,0 +1,38 @@
+{
+  "name": "cute_chibi_v1",
+  "palette_limits": 12,
+  "outline": {
+    "enabled": true,
+    "color": "#1b1b1b",
+    "thickness": 1
+  },
+  "lighting": {
+    "direction": "top_left",
+    "levels": 3
+  },
+  "shading": {
+    "type": "soft_cluster"
+  },
+  "allowed_parts": [
+    "helmet_basic",
+    "shield_round",
+    "robe_basic",
+    "slime_body"
+  ],
+  "animation_rules": {
+    "max_offset": 3,
+    "max_rotation_deg": 10
+  },
+  "ramps": {
+    "swamp_green": ["#a8d080", "#5c9d4a", "#2b5a2a"],
+    "cloth_brown": ["#cda56a", "#8d6238", "#50351f"],
+    "toxic_violet": ["#9ce86d", "#4cb850", "#2f6c2d"],
+    "iron": ["#d2d8dd", "#8e9aa6", "#4b5561"],
+    "rag_tan": ["#d9c7a1", "#ab8759", "#6b4d2d"],
+    "royal_blue": ["#5fa8ff", "#2564c9", "#17327a"],
+    "gold_trim": ["#f7d869", "#c79627", "#745313"],
+    "skin_fair": ["#f3d1b0", "#d4a27d", "#8d5e47"],
+    "ash_gray": ["#c4beb2", "#8d8478", "#514a41"],
+    "hair_brown": ["#8f6746", "#68442d", "#362115"]
+  }
+}

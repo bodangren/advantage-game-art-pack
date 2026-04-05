@@ -1,0 +1,45 @@
+{
+  "style_pack": "cute_chibi_v1",
+  "entity_type": "player",
+  "frame": {
+    "width": 64,
+    "height": 64,
+    "pivot": [32, 56]
+  },
+  "animations": {
+    "idle": 3,
+    "walk": 3,
+    "action": 3
+  },
+  "body": {
+    "archetype": "armored_chibi",
+    "proportions": {
+      "head_scale": 1.0,
+      "torso_scale": 1.0,
+      "leg_length": 15
+    }
+  },
+  "parts": {
+    "head": "helmet_basic",
+    "torso": "plate_armor",
+    "legs": "plate_legs",
+    "arms": "gauntlets"
+  },
+  "equipment": {
+    "main_hand": "short_sword",
+    "off_hand": "shield_round"
+  },
+  "palette": {
+    "primary": "iron",
+    "secondary": "royal_blue",
+    "accent": "gold_trim"
+  },
+  "pose": {
+    "idle": [],
+    "walk": [],
+    "action": []
+  },
+  "fx": {
+    "type": null
+  }
+}

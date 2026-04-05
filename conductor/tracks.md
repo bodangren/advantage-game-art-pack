@@ -1,0 +1,53 @@
+# Project Tracks
+
+This file tracks all major tracks for the project.
+
+---
+
+- [x] **Track: Deterministic sprite compiler MVP**
+  *Link: [./conductor/tracks/sprite_compiler_mvp_20260405/](./conductor/tracks/sprite_compiler_mvp_20260405/)*
+
+---
+
+- [ ] **Track: Style canon and annotation system**
+  *Link: [./conductor/tracks/style_canon_annotation_system_20260405/](./conductor/tracks/style_canon_annotation_system_20260405/)*
+
+---
+
+- [ ] **Track: Primitive library and promotion pipeline**
+  *Link: [./conductor/tracks/primitive_library_promotion_pipeline_20260405/](./conductor/tracks/primitive_library_promotion_pipeline_20260405/)*
+
+---
+
+- [ ] **Track: Asset family compiler framework**
+  *Link: [./conductor/tracks/asset_family_compiler_framework_20260405/](./conductor/tracks/asset_family_compiler_framework_20260405/)*
+
+---
+
+- [ ] **Track: Scene layout and background assembler**
+  *Link: [./conductor/tracks/scene_layout_background_assembler_20260405/](./conductor/tracks/scene_layout_background_assembler_20260405/)*
+
+---
+
+- [ ] **Track: Presentation surfaces and UI pipeline**
+  *Link: [./conductor/tracks/presentation_surfaces_ui_pipeline_20260405/](./conductor/tracks/presentation_surfaces_ui_pipeline_20260405/)*
+
+---
+
+- [ ] **Track: Review queue foundation**
+  *Link: [./conductor/tracks/review_queue_foundation_20260405/](./conductor/tracks/review_queue_foundation_20260405/)*
+
+---
+
+- [ ] **Track: Prompt-to-asset-program planner**
+  *Link: [./conductor/tracks/prompt_to_asset_program_planner_20260405/](./conductor/tracks/prompt_to_asset_program_planner_20260405/)*
+
+---
+
+- [ ] **Track: Critic stack and auto-approval policy**
+  *Link: [./conductor/tracks/critic_stack_auto_approval_20260405/](./conductor/tracks/critic_stack_auto_approval_20260405/)*
+
+---
+
+- [ ] **Track: Batch generation and release manifests**
+  *Link: [./conductor/tracks/batch_generation_release_manifests_20260405/](./conductor/tracks/batch_generation_release_manifests_20260405/)*

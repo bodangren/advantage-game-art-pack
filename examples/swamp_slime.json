@@ -1,0 +1,45 @@
+{
+  "style_pack": "cute_chibi_v1",
+  "entity_type": "enemy",
+  "frame": {
+    "width": 64,
+    "height": 64,
+    "pivot": [32, 56]
+  },
+  "animations": {
+    "idle": 3,
+    "walk": 3,
+    "action": 3
+  },
+  "body": {
+    "archetype": "slime_chibi",
+    "proportions": {
+      "head_scale": 1.1,
+      "torso_scale": 1.0,
+      "leg_length": 14
+    }
+  },
+  "parts": {
+    "head": "slime_head_round",
+    "torso": "slime_core_blob",
+    "legs": "stump_legs",
+    "arms": "stub_arms"
+  },
+  "equipment": {
+    "main_hand": "spear_basic",
+    "off_hand": "shield_round"
+  },
+  "palette": {
+    "primary": "swamp_green",
+    "secondary": "cloth_brown",
+    "accent": "toxic_violet"
+  },
+  "pose": {
+    "idle": [],
+    "walk": [],
+    "action": []
+  },
+  "fx": {
+    "type": "poison_aura"
+  }
+}
