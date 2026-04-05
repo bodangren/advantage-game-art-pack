@@ -1,0 +1,100 @@
+{
+  "animation_tags": [
+    "idle",
+    "float",
+    "haunt"
+  ],
+  "asset_id": "spirit_3x3_pose_sheet",
+  "family": "character_sheet",
+  "frame_grid": {
+    "columns": 3,
+    "frame_labels": [
+      "idle_0",
+      "idle_1",
+      "idle_2",
+      "float_0",
+      "float_1",
+      "float_2",
+      "haunt_0",
+      "haunt_1",
+      "haunt_2"
+    ],
+    "frame_order": [
+      "idle",
+      "float",
+      "haunt"
+    ],
+    "rows": 3
+  },
+  "gold_reference": false,
+  "layout_type": "pose_sheet_3x3",
+  "lighting": {
+    "direction": "backlit",
+    "highlight_style": "halo",
+    "shadow_style": "none"
+  },
+  "material_tags": [
+    "glow",
+    "mist",
+    "ectoplasm"
+  ],
+  "motif_tags": [
+    "wisp",
+    "mist",
+    "eyes"
+  ],
+  "notes": "A ghostly sheet that relies on translucency and a haloed outline to stay readable.",
+  "outline": {
+    "continuity": "fragmented",
+    "presence": "soft",
+    "thickness_px": 0
+  },
+  "palette": {
+    "dominant_colors": [
+      "#e0e0e0",
+      "#a0a0c0",
+      "#a0a0e0",
+      "#8080e0"
+    ],
+    "ramps": [
+      {
+        "colors": [
+          "#e4e4e4",
+          "#e0e0e0",
+          "#a1a1a1"
+        ],
+        "name": "primary",
+        "role": "dominant"
+      },
+      {
+        "colors": [
+          "#ababc7",
+          "#a0a0c0",
+          "#73738a"
+        ],
+        "name": "secondary",
+        "role": "shadow"
+      },
+      {
+        "colors": [
+          "#b1b1e5",
+          "#a0a0e0",
+          "#6c6c98"
+        ],
+        "name": "accent",
+        "role": "accent"
+      }
+    ]
+  },
+  "reserved_gameplay_space": [],
+  "silhouette": {
+    "bbox_usage": "balanced",
+    "occupancy_band": "compact"
+  },
+  "source_path": "demo-assets/spirit_3x3_pose_sheet.png",
+  "theme_tags": [
+    "spirit",
+    "haunting"
+  ],
+  "version": 1
+}

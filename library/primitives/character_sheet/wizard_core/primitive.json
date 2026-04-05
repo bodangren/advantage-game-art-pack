@@ -1,0 +1,59 @@
+{
+  "primitive_id": "wizard_core",
+  "family": "character_sheet",
+  "subtype": "body_core",
+  "source_asset": "player_3x3_pose_sheet",
+  "source_path": "demo-assets/player_3x3_pose_sheet.png",
+  "source_region": {
+    "x": 0,
+    "y": 0,
+    "width": 853,
+    "height": 948
+  },
+  "anchors": {
+    "root": {
+      "x": 426,
+      "y": 947
+    },
+    "head": {
+      "x": 426,
+      "y": 84
+    }
+  },
+  "compatible_palettes": [
+    "cold_steel",
+    "guardian_neutral"
+  ],
+  "compatible_themes": [
+    "wizard",
+    "guardian"
+  ],
+  "tags": [
+    "wizard",
+    "guardian",
+    "body"
+  ],
+  "motifs": [
+    "cloak",
+    "staff",
+    "wizard hat"
+  ],
+  "approval_state": "approved",
+  "promoted_at": "2026-04-05T00:00:00Z",
+  "provenance": {
+    "source_kind": "demo_asset",
+    "source_asset": "player_3x3_pose_sheet",
+    "source_path": "demo-assets/player_3x3_pose_sheet.png",
+    "source_region": {
+      "x": 0,
+      "y": 0,
+      "width": 853,
+      "height": 948
+    },
+    "approved_by": "codex",
+    "variant_id": null,
+    "critic_summary": null,
+    "lineage": []
+  },
+  "companion_files": []
+}

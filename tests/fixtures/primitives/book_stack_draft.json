@@ -1,0 +1,61 @@
+{
+  "primitive_id": "book_stack_core",
+  "family": "prop_sheet",
+  "subtype": "prop_core",
+  "source_asset": "book_3x1_sheet",
+  "source_path": "demo-assets/book_3x1_sheet.png",
+  "source_region": {
+    "x": 96,
+    "y": 32,
+    "width": 128,
+    "height": 120
+  },
+  "anchors": {
+    "center": {
+      "x": 160,
+      "y": 92
+    }
+  },
+  "compatible_palettes": [
+    "paper_ink",
+    "library_warmth"
+  ],
+  "compatible_themes": [
+    "library",
+    "knowledge"
+  ],
+  "tags": [
+    "library",
+    "draft"
+  ],
+  "motifs": [
+    "book",
+    "pages",
+    "glow"
+  ],
+  "approval_state": "draft",
+  "promoted_at": null,
+  "provenance": {
+    "source_kind": "cropped_demo_asset",
+    "source_asset": "book_3x1_sheet",
+    "source_path": "demo-assets/book_3x1_sheet.png",
+    "source_region": {
+      "x": 96,
+      "y": 32,
+      "width": 128,
+      "height": 120
+    },
+    "approved_by": null,
+    "variant_id": "book_stack_core_v1",
+    "critic_summary": {
+      "score": 0.92,
+      "notes": [
+        "clear silhouette"
+      ]
+    },
+    "lineage": [
+      "book_3x1_sheet"
+    ]
+  },
+  "companion_files": []
+}

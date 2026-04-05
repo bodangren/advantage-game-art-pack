@@ -1,0 +1,100 @@
+{
+  "animation_tags": [
+    "idle",
+    "walk",
+    "action"
+  ],
+  "asset_id": "zombie_3x3_pose_sheet",
+  "family": "character_sheet",
+  "frame_grid": {
+    "columns": 3,
+    "frame_labels": [
+      "idle_0",
+      "idle_1",
+      "idle_2",
+      "walk_0",
+      "walk_1",
+      "walk_2",
+      "action_0",
+      "action_1",
+      "action_2"
+    ],
+    "frame_order": [
+      "idle",
+      "walk",
+      "action"
+    ],
+    "rows": 3
+  },
+  "gold_reference": true,
+  "layout_type": "pose_sheet_3x3",
+  "lighting": {
+    "direction": "top_left",
+    "highlight_style": "rim_light",
+    "shadow_style": "contact_shadow"
+  },
+  "material_tags": [
+    "flesh",
+    "cloth",
+    "decay"
+  ],
+  "motif_tags": [
+    "rot",
+    "tattered_clothes",
+    "stagger"
+  ],
+  "notes": "A readable undead enemy sheet with a staggered profile and high-contrast flesh tones.",
+  "outline": {
+    "continuity": "continuous",
+    "presence": "hard",
+    "thickness_px": 1
+  },
+  "palette": {
+    "dominant_colors": [
+      "#000000",
+      "#002020",
+      "#808080",
+      "#000020"
+    ],
+    "ramps": [
+      {
+        "colors": [
+          "#262626",
+          "#000000",
+          "#000000"
+        ],
+        "name": "primary",
+        "role": "dominant"
+      },
+      {
+        "colors": [
+          "#1e3a3a",
+          "#002020",
+          "#001717"
+        ],
+        "name": "secondary",
+        "role": "shadow"
+      },
+      {
+        "colors": [
+          "#969696",
+          "#808080",
+          "#575757"
+        ],
+        "name": "accent",
+        "role": "accent"
+      }
+    ]
+  },
+  "reserved_gameplay_space": [],
+  "silhouette": {
+    "bbox_usage": "tight",
+    "occupancy_band": "medium"
+  },
+  "source_path": "demo-assets/zombie_3x3_pose_sheet.png",
+  "theme_tags": [
+    "undead",
+    "enemy"
+  ],
+  "version": 1
+}

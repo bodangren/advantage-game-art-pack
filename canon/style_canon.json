@@ -1,0 +1,1300 @@
+{
+  "annotation_root": "canon/annotations",
+  "assets": [
+    {
+      "annotation_path": "canon/annotations/background.json",
+      "annotation_summary": {
+        "animation_tags": [],
+        "material_tags": [
+          "stone",
+          "glow",
+          "metal"
+        ],
+        "motif_tags": [
+          "stone_floor",
+          "rune_portal",
+          "ember_light"
+        ],
+        "theme_tags": [
+          "dungeon",
+          "portal",
+          "ruins"
+        ]
+      },
+      "asset_id": "background",
+      "family": "background_scene",
+      "gold_reference": false,
+      "layout_type": "scene_full_frame",
+      "metrics": {
+        "color_count": 190,
+        "contact_shadow_area": 0.215001,
+        "dominant_color_count": 8,
+        "dominant_colors": [
+          "#000000",
+          "#202020",
+          "#402020",
+          "#200000",
+          "#604040",
+          "#202000",
+          "#404040",
+          "#200020"
+        ],
+        "edge_density": 0.165849,
+        "frame_to_frame_drift": null,
+        "highlight_density": 0.03581,
+        "hue_distribution": {
+          "0-60": 0.79443,
+          "120-180": 1.6e-05,
+          "180-240": 3e-06,
+          "240-300": 0.056962,
+          "300-360": 0.102818,
+          "60-120": 0.045771
+        },
+        "non_transparent_occupancy_ratio": 1.0,
+        "value_distribution": {
+          "0-25": 0.522194,
+          "25-50": 0.298049,
+          "50-75": 0.122237,
+          "75-100": 0.05752
+        }
+      },
+      "source_path": "demo-assets/background.png"
+    },
+    {
+      "annotation_path": "canon/annotations/library_background.json",
+      "annotation_summary": {
+        "animation_tags": [],
+        "material_tags": [
+          "wood",
+          "stone",
+          "paper",
+          "cloth"
+        ],
+        "motif_tags": [
+          "bookshelves",
+          "rug",
+          "candles",
+          "table"
+        ],
+        "theme_tags": [
+          "library",
+          "sanctum",
+          "adventure_hub"
+        ]
+      },
+      "asset_id": "library_background",
+      "family": "background_scene",
+      "gold_reference": true,
+      "layout_type": "scene_full_frame",
+      "metrics": {
+        "color_count": 373,
+        "contact_shadow_area": 0.112096,
+        "dominant_color_count": 8,
+        "dominant_colors": [
+          "#a08060",
+          "#806040",
+          "#402000",
+          "#000000",
+          "#202000",
+          "#200000",
+          "#c0a060",
+          "#604020"
+        ],
+        "edge_density": 0.267076,
+        "frame_to_frame_drift": null,
+        "highlight_density": 0.112396,
+        "hue_distribution": {
+          "0-60": 0.835743,
+          "120-180": 0.010748,
+          "180-240": 0.0212,
+          "240-300": 0.012245,
+          "300-360": 0.007536,
+          "60-120": 0.112528
+        },
+        "non_transparent_occupancy_ratio": 1.0,
+        "value_distribution": {
+          "0-25": 0.162102,
+          "25-50": 0.262492,
+          "50-75": 0.331431,
+          "75-100": 0.243975
+        }
+      },
+      "source_path": "demo-assets/library_background.png"
+    },
+    {
+      "annotation_path": "canon/annotations/tile-library.json",
+      "annotation_summary": {
+        "animation_tags": [],
+        "material_tags": [
+          "wood",
+          "stone",
+          "cloth"
+        ],
+        "motif_tags": [
+          "bookshelves",
+          "center_rug",
+          "warm_lamps"
+        ],
+        "theme_tags": [
+          "library",
+          "background"
+        ]
+      },
+      "asset_id": "tile-library",
+      "family": "background_scene",
+      "gold_reference": false,
+      "layout_type": "scene_full_frame",
+      "metrics": {
+        "color_count": 373,
+        "contact_shadow_area": 0.112096,
+        "dominant_color_count": 8,
+        "dominant_colors": [
+          "#a08060",
+          "#806040",
+          "#402000",
+          "#000000",
+          "#202000",
+          "#200000",
+          "#c0a060",
+          "#604020"
+        ],
+        "edge_density": 0.267076,
+        "frame_to_frame_drift": null,
+        "highlight_density": 0.112396,
+        "hue_distribution": {
+          "0-60": 0.835743,
+          "120-180": 0.010748,
+          "180-240": 0.0212,
+          "240-300": 0.012245,
+          "300-360": 0.007536,
+          "60-120": 0.112528
+        },
+        "non_transparent_occupancy_ratio": 1.0,
+        "value_distribution": {
+          "0-25": 0.162102,
+          "25-50": 0.262492,
+          "50-75": 0.331431,
+          "75-100": 0.243975
+        }
+      },
+      "source_path": "demo-assets/tile-library.png"
+    },
+    {
+      "annotation_path": "canon/annotations/tile-ruins.json",
+      "annotation_summary": {
+        "animation_tags": [],
+        "material_tags": [
+          "stone",
+          "moss",
+          "glow"
+        ],
+        "motif_tags": [
+          "broken_stone",
+          "roots",
+          "moss"
+        ],
+        "theme_tags": [
+          "ruins",
+          "overgrowth"
+        ]
+      },
+      "asset_id": "tile-ruins",
+      "family": "background_scene",
+      "gold_reference": false,
+      "layout_type": "scene_full_frame",
+      "metrics": {
+        "color_count": 232,
+        "contact_shadow_area": 0.080911,
+        "dominant_color_count": 8,
+        "dominant_colors": [
+          "#808060",
+          "#202020",
+          "#404040",
+          "#000000",
+          "#a0a080",
+          "#606040",
+          "#606060",
+          "#202000"
+        ],
+        "edge_density": 0.318321,
+        "frame_to_frame_drift": null,
+        "highlight_density": 0.007379,
+        "hue_distribution": {
+          "0-60": 0.494553,
+          "120-180": 0.041511,
+          "180-240": 0.022823,
+          "240-300": 0.023753,
+          "300-360": 0.003594,
+          "60-120": 0.413767
+        },
+        "non_transparent_occupancy_ratio": 1.0,
+        "value_distribution": {
+          "0-25": 0.272503,
+          "25-50": 0.377697,
+          "50-75": 0.31289,
+          "75-100": 0.03691
+        }
+      },
+      "source_path": "demo-assets/tile-ruins.png"
+    },
+    {
+      "annotation_path": "canon/annotations/player-sheet.json",
+      "annotation_summary": {
+        "animation_tags": [
+          "idle",
+          "walk",
+          "action"
+        ],
+        "material_tags": [
+          "cloth",
+          "metal",
+          "leather"
+        ],
+        "motif_tags": [
+          "armor",
+          "staff",
+          "pouch"
+        ],
+        "theme_tags": [
+          "hero",
+          "guardian"
+        ]
+      },
+      "asset_id": "player-sheet",
+      "family": "character_sheet",
+      "gold_reference": false,
+      "layout_type": "pose_sheet_3x3",
+      "metrics": {
+        "color_count": 5951,
+        "contact_shadow_area": 0.052927,
+        "dominant_color_count": 8,
+        "dominant_colors": [
+          "#000020",
+          "#000000",
+          "#404060",
+          "#000020",
+          "#202040",
+          "#000040",
+          "#000000",
+          "#404060"
+        ],
+        "edge_density": 0.101126,
+        "frame_to_frame_drift": 0.133309,
+        "highlight_density": 0.033607,
+        "hue_distribution": {
+          "0-60": 0.443237,
+          "120-180": 0.000108,
+          "180-240": 0.160998,
+          "240-300": 0.350222,
+          "300-360": 0.008782,
+          "60-120": 0.036652
+        },
+        "non_transparent_occupancy_ratio": 0.345558,
+        "value_distribution": {
+          "0-25": 0.297295,
+          "25-50": 0.347542,
+          "50-75": 0.202916,
+          "75-100": 0.152247
+        }
+      },
+      "source_path": "demo-assets/player-sheet.png"
+    },
+    {
+      "annotation_path": "canon/annotations/player_3x3_pose_sheet.json",
+      "annotation_summary": {
+        "animation_tags": [
+          "idle",
+          "walk",
+          "action"
+        ],
+        "material_tags": [
+          "cloth",
+          "metal",
+          "glow"
+        ],
+        "motif_tags": [
+          "wizard hat",
+          "staff",
+          "cloak"
+        ],
+        "theme_tags": [
+          "wizard",
+          "guardian"
+        ]
+      },
+      "asset_id": "player_3x3_pose_sheet",
+      "family": "character_sheet",
+      "gold_reference": true,
+      "layout_type": "pose_sheet_3x3",
+      "metrics": {
+        "color_count": 4727,
+        "contact_shadow_area": 0.044513,
+        "dominant_color_count": 8,
+        "dominant_colors": [
+          "#002060",
+          "#2040a0",
+          "#000000",
+          "#202080",
+          "#000040",
+          "#204080",
+          "#808080",
+          "#000020"
+        ],
+        "edge_density": 0.088286,
+        "frame_to_frame_drift": 0.11663,
+        "highlight_density": 0.01977,
+        "hue_distribution": {
+          "0-60": 0.326917,
+          "120-180": 0.000152,
+          "180-240": 0.416021,
+          "240-300": 0.248255,
+          "300-360": 0.000648,
+          "60-120": 0.008007
+        },
+        "non_transparent_occupancy_ratio": 0.373919,
+        "value_distribution": {
+          "0-25": 0.208485,
+          "25-50": 0.331458,
+          "50-75": 0.3591,
+          "75-100": 0.100957
+        }
+      },
+      "source_path": "demo-assets/player_3x3_pose_sheet.png"
+    },
+    {
+      "annotation_path": "canon/annotations/prisoner-sheet.json",
+      "annotation_summary": {
+        "animation_tags": [
+          "idle",
+          "walk",
+          "action"
+        ],
+        "material_tags": [
+          "cloth",
+          "iron",
+          "skin"
+        ],
+        "motif_tags": [
+          "chains",
+          "ragged_clothes",
+          "guarded"
+        ],
+        "theme_tags": [
+          "prisoner",
+          "escape"
+        ]
+      },
+      "asset_id": "prisoner-sheet",
+      "family": "character_sheet",
+      "gold_reference": false,
+      "layout_type": "pose_sheet_3x3",
+      "metrics": {
+        "color_count": 2254,
+        "contact_shadow_area": 0.0587,
+        "dominant_color_count": 8,
+        "dominant_colors": [
+          "#000000",
+          "#402020",
+          "#604020",
+          "#202020",
+          "#200000",
+          "#404040",
+          "#c0a0e0",
+          "#202000"
+        ],
+        "edge_density": 0.086084,
+        "frame_to_frame_drift": 0.090676,
+        "highlight_density": 0.063614,
+        "hue_distribution": {
+          "0-60": 0.763095,
+          "120-180": 0.000323,
+          "180-240": 0.000573,
+          "240-300": 0.119631,
+          "300-360": 0.028882,
+          "60-120": 0.087496
+        },
+        "non_transparent_occupancy_ratio": 0.412665,
+        "value_distribution": {
+          "0-25": 0.341272,
+          "25-50": 0.301833,
+          "50-75": 0.169645,
+          "75-100": 0.18725
+        }
+      },
+      "source_path": "demo-assets/prisoner-sheet.png"
+    },
+    {
+      "annotation_path": "canon/annotations/slime-sheet.json",
+      "annotation_summary": {
+        "animation_tags": [
+          "idle",
+          "squash",
+          "burst"
+        ],
+        "material_tags": [
+          "goo",
+          "glow",
+          "slime"
+        ],
+        "motif_tags": [
+          "goo",
+          "drip",
+          "squash"
+        ],
+        "theme_tags": [
+          "ooze",
+          "enemy"
+        ]
+      },
+      "asset_id": "slime-sheet",
+      "family": "character_sheet",
+      "gold_reference": true,
+      "layout_type": "pose_sheet_3x3",
+      "metrics": {
+        "color_count": 1098,
+        "contact_shadow_area": 0.065854,
+        "dominant_color_count": 8,
+        "dominant_colors": [
+          "#200000",
+          "#400000",
+          "#000000",
+          "#600000",
+          "#800000",
+          "#806060",
+          "#604060",
+          "#a08080"
+        ],
+        "edge_density": 0.067752,
+        "frame_to_frame_drift": 0.074484,
+        "highlight_density": 0.018959,
+        "hue_distribution": {
+          "0-60": 0.90734,
+          "120-180": 0.0,
+          "180-240": 0.0,
+          "240-300": 0.0,
+          "300-360": 0.084717,
+          "60-120": 0.007943
+        },
+        "non_transparent_occupancy_ratio": 0.336682,
+        "value_distribution": {
+          "0-25": 0.340112,
+          "25-50": 0.308083,
+          "50-75": 0.212751,
+          "75-100": 0.139055
+        }
+      },
+      "source_path": "demo-assets/slime-sheet.png"
+    },
+    {
+      "annotation_path": "canon/annotations/spirit_3x3_pose_sheet.json",
+      "annotation_summary": {
+        "animation_tags": [
+          "idle",
+          "float",
+          "haunt"
+        ],
+        "material_tags": [
+          "glow",
+          "mist",
+          "ectoplasm"
+        ],
+        "motif_tags": [
+          "wisp",
+          "mist",
+          "eyes"
+        ],
+        "theme_tags": [
+          "spirit",
+          "haunting"
+        ]
+      },
+      "asset_id": "spirit_3x3_pose_sheet",
+      "family": "character_sheet",
+      "gold_reference": false,
+      "layout_type": "pose_sheet_3x3",
+      "metrics": {
+        "color_count": 2633,
+        "contact_shadow_area": 0.0,
+        "dominant_color_count": 8,
+        "dominant_colors": [
+          "#e0e0e0",
+          "#a0a0c0",
+          "#a0a0e0",
+          "#8080e0",
+          "#c0c0e0",
+          "#8080c0",
+          "#6060c0",
+          "#c0a0e0"
+        ],
+        "edge_density": 0.082194,
+        "frame_to_frame_drift": 0.139763,
+        "highlight_density": 0.189182,
+        "hue_distribution": {
+          "0-60": 0.182665,
+          "120-180": 0.0,
+          "180-240": 0.10359,
+          "240-300": 0.67876,
+          "300-360": 0.034816,
+          "60-120": 0.000169
+        },
+        "non_transparent_occupancy_ratio": 0.284492,
+        "value_distribution": {
+          "0-25": 0.0,
+          "25-50": 2.8e-05,
+          "50-75": 0.046131,
+          "75-100": 0.953841
+        }
+      },
+      "source_path": "demo-assets/spirit_3x3_pose_sheet.png"
+    },
+    {
+      "annotation_path": "canon/annotations/zombie_3x3_pose_sheet.json",
+      "annotation_summary": {
+        "animation_tags": [
+          "idle",
+          "walk",
+          "action"
+        ],
+        "material_tags": [
+          "flesh",
+          "cloth",
+          "decay"
+        ],
+        "motif_tags": [
+          "rot",
+          "tattered_clothes",
+          "stagger"
+        ],
+        "theme_tags": [
+          "undead",
+          "enemy"
+        ]
+      },
+      "asset_id": "zombie_3x3_pose_sheet",
+      "family": "character_sheet",
+      "gold_reference": true,
+      "layout_type": "pose_sheet_3x3",
+      "metrics": {
+        "color_count": 3100,
+        "contact_shadow_area": 0.067881,
+        "dominant_color_count": 8,
+        "dominant_colors": [
+          "#000000",
+          "#002020",
+          "#808080",
+          "#000020",
+          "#202020",
+          "#204040",
+          "#000000",
+          "#002040"
+        ],
+        "edge_density": 0.080786,
+        "frame_to_frame_drift": 0.123765,
+        "highlight_density": 0.002796,
+        "hue_distribution": {
+          "0-60": 0.497051,
+          "120-180": 0.011411,
+          "180-240": 0.22049,
+          "240-300": 0.10607,
+          "300-360": 0.00118,
+          "60-120": 0.163797
+        },
+        "non_transparent_occupancy_ratio": 0.326501,
+        "value_distribution": {
+          "0-25": 0.430862,
+          "25-50": 0.289816,
+          "50-75": 0.241146,
+          "75-100": 0.038176
+        }
+      },
+      "source_path": "demo-assets/zombie_3x3_pose_sheet.png"
+    },
+    {
+      "annotation_path": "canon/annotations/orb_3x3_pose_sheet.json",
+      "annotation_summary": {
+        "animation_tags": [
+          "charge",
+          "pulse",
+          "burst"
+        ],
+        "material_tags": [
+          "glow",
+          "mist",
+          "light"
+        ],
+        "motif_tags": [
+          "orb",
+          "spark",
+          "burst"
+        ],
+        "theme_tags": [
+          "magic",
+          "vfx",
+          "energy"
+        ]
+      },
+      "asset_id": "orb_3x3_pose_sheet",
+      "family": "fx_sheet",
+      "gold_reference": true,
+      "layout_type": "pose_sheet_3x3",
+      "metrics": {
+        "color_count": 2867,
+        "contact_shadow_area": 0.000708,
+        "dominant_color_count": 8,
+        "dominant_colors": [
+          "#2060e0",
+          "#e0e0e0",
+          "#2080e0",
+          "#808080",
+          "#c0e0e0",
+          "#0040e0",
+          "#a0a0a0",
+          "#a0e0e0"
+        ],
+        "edge_density": 0.104869,
+        "frame_to_frame_drift": 0.159583,
+        "highlight_density": 0.254848,
+        "hue_distribution": {
+          "0-60": 0.275764,
+          "120-180": 0.002727,
+          "180-240": 0.69406,
+          "240-300": 0.01937,
+          "300-360": 0.002002,
+          "60-120": 0.006078
+        },
+        "non_transparent_occupancy_ratio": 0.327789,
+        "value_distribution": {
+          "0-25": 0.000369,
+          "25-50": 0.025561,
+          "50-75": 0.152501,
+          "75-100": 0.821568
+        }
+      },
+      "source_path": "demo-assets/orb_3x3_pose_sheet.png"
+    },
+    {
+      "annotation_path": "canon/annotations/book_3x1_sheet.json",
+      "annotation_summary": {
+        "animation_tags": [
+          "pose_variants",
+          "state_change"
+        ],
+        "material_tags": [
+          "paper",
+          "cloth",
+          "light"
+        ],
+        "motif_tags": [
+          "book",
+          "open_pages",
+          "glow"
+        ],
+        "theme_tags": [
+          "library",
+          "artifact",
+          "knowledge"
+        ]
+      },
+      "asset_id": "book_3x1_sheet",
+      "family": "prop_sheet",
+      "gold_reference": true,
+      "layout_type": "strip_3x1",
+      "metrics": {
+        "color_count": 1813,
+        "contact_shadow_area": 0.0005,
+        "dominant_color_count": 8,
+        "dominant_colors": [
+          "#e0e0c0",
+          "#e0e0a0",
+          "#e0c0a0",
+          "#a08060",
+          "#404060",
+          "#e0e0e0",
+          "#806040",
+          "#c0a080"
+        ],
+        "edge_density": 0.060102,
+        "frame_to_frame_drift": 0.175522,
+        "highlight_density": 0.103823,
+        "hue_distribution": {
+          "0-60": 0.444594,
+          "120-180": 0.000683,
+          "180-240": 0.068158,
+          "240-300": 0.120567,
+          "300-360": 0.01232,
+          "60-120": 0.353678
+        },
+        "non_transparent_occupancy_ratio": 0.240448,
+        "value_distribution": {
+          "0-25": 0.019812,
+          "25-50": 0.18821,
+          "50-75": 0.27305,
+          "75-100": 0.518929
+        }
+      },
+      "source_path": "demo-assets/book_3x1_sheet.png"
+    }
+  ],
+  "family_baselines": {
+    "background_scene": {
+      "asset_count": 4,
+      "dominant_colors": [
+        "#000000",
+        "#202000",
+        "#200000",
+        "#202020",
+        "#404040",
+        "#a08060",
+        "#806040",
+        "#402000"
+      ],
+      "gold_assets": [
+        "library_background"
+      ],
+      "layout_types": [
+        "scene_full_frame"
+      ],
+      "metrics": {
+        "color_count": {
+          "max": 373.0,
+          "mean": 292.0,
+          "median": 302.5,
+          "min": 190.0,
+          "stdev": 82.349863
+        },
+        "contact_shadow_area": {
+          "max": 0.215001,
+          "mean": 0.130026,
+          "median": 0.112096,
+          "min": 0.080911,
+          "stdev": 0.050685
+        },
+        "dominant_color_count": {
+          "max": 8.0,
+          "mean": 8.0,
+          "median": 8.0,
+          "min": 8.0,
+          "stdev": 0.0
+        },
+        "edge_density": {
+          "max": 0.318321,
+          "mean": 0.25458,
+          "median": 0.267076,
+          "min": 0.165849,
+          "stdev": 0.055336
+        },
+        "highlight_density": {
+          "max": 0.112396,
+          "mean": 0.066995,
+          "median": 0.074103,
+          "min": 0.007379,
+          "stdev": 0.0465
+        },
+        "non_transparent_occupancy_ratio": {
+          "max": 1.0,
+          "mean": 1.0,
+          "median": 1.0,
+          "min": 1.0,
+          "stdev": 0.0
+        }
+      },
+      "motifs": [
+        "bookshelves",
+        "broken_stone",
+        "candles",
+        "center_rug",
+        "ember_light",
+        "moss",
+        "roots",
+        "rug",
+        "rune_portal",
+        "stone_floor",
+        "table",
+        "warm_lamps"
+      ],
+      "themes": [
+        "adventure_hub",
+        "background",
+        "dungeon",
+        "library",
+        "overgrowth",
+        "portal",
+        "ruins",
+        "sanctum"
+      ]
+    },
+    "character_sheet": {
+      "asset_count": 6,
+      "dominant_colors": [
+        "#000000",
+        "#000020",
+        "#404060",
+        "#000040",
+        "#808080",
+        "#202020",
+        "#200000",
+        "#c0a0e0"
+      ],
+      "gold_assets": [
+        "player_3x3_pose_sheet",
+        "slime-sheet",
+        "zombie_3x3_pose_sheet"
+      ],
+      "layout_types": [
+        "pose_sheet_3x3"
+      ],
+      "metrics": {
+        "color_count": {
+          "max": 5951.0,
+          "mean": 3293.833333,
+          "median": 2866.5,
+          "min": 1098.0,
+          "stdev": 1606.845296
+        },
+        "contact_shadow_area": {
+          "max": 0.067881,
+          "mean": 0.048313,
+          "median": 0.055814,
+          "min": 0.0,
+          "stdev": 0.02298
+        },
+        "dominant_color_count": {
+          "max": 8.0,
+          "mean": 8.0,
+          "median": 8.0,
+          "min": 8.0,
+          "stdev": 0.0
+        },
+        "edge_density": {
+          "max": 0.101126,
+          "mean": 0.084371,
+          "median": 0.084139,
+          "min": 0.067752,
+          "stdev": 0.00994
+        },
+        "frame_to_frame_drift": {
+          "max": 0.139763,
+          "mean": 0.113104,
+          "median": 0.120197,
+          "min": 0.074484,
+          "stdev": 0.023236
+        },
+        "highlight_density": {
+          "max": 0.189182,
+          "mean": 0.054655,
+          "median": 0.026688,
+          "min": 0.002796,
+          "stdev": 0.062983
+        },
+        "non_transparent_occupancy_ratio": {
+          "max": 0.412665,
+          "mean": 0.346636,
+          "median": 0.34112,
+          "min": 0.284492,
+          "stdev": 0.039732
+        }
+      },
+      "motifs": [
+        "armor",
+        "chains",
+        "cloak",
+        "drip",
+        "eyes",
+        "goo",
+        "guarded",
+        "mist",
+        "pouch",
+        "ragged_clothes",
+        "rot",
+        "squash",
+        "staff",
+        "stagger",
+        "tattered_clothes",
+        "wisp",
+        "wizard hat"
+      ],
+      "themes": [
+        "enemy",
+        "escape",
+        "guardian",
+        "haunting",
+        "hero",
+        "ooze",
+        "prisoner",
+        "spirit",
+        "undead",
+        "wizard"
+      ]
+    },
+    "fx_sheet": {
+      "asset_count": 1,
+      "dominant_colors": [
+        "#2060e0",
+        "#e0e0e0",
+        "#2080e0",
+        "#808080",
+        "#c0e0e0",
+        "#0040e0",
+        "#a0a0a0",
+        "#a0e0e0"
+      ],
+      "gold_assets": [
+        "orb_3x3_pose_sheet"
+      ],
+      "layout_types": [
+        "pose_sheet_3x3"
+      ],
+      "metrics": {
+        "color_count": {
+          "max": 2867.0,
+          "mean": 2867.0,
+          "median": 2867.0,
+          "min": 2867.0,
+          "stdev": 0.0
+        },
+        "contact_shadow_area": {
+          "max": 0.000708,
+          "mean": 0.000708,
+          "median": 0.000708,
+          "min": 0.000708,
+          "stdev": 0.0
+        },
+        "dominant_color_count": {
+          "max": 8.0,
+          "mean": 8.0,
+          "median": 8.0,
+          "min": 8.0,
+          "stdev": 0.0
+        },
+        "edge_density": {
+          "max": 0.104869,
+          "mean": 0.104869,
+          "median": 0.104869,
+          "min": 0.104869,
+          "stdev": 0.0
+        },
+        "frame_to_frame_drift": {
+          "max": 0.159583,
+          "mean": 0.159583,
+          "median": 0.159583,
+          "min": 0.159583,
+          "stdev": 0.0
+        },
+        "highlight_density": {
+          "max": 0.254848,
+          "mean": 0.254848,
+          "median": 0.254848,
+          "min": 0.254848,
+          "stdev": 0.0
+        },
+        "non_transparent_occupancy_ratio": {
+          "max": 0.327789,
+          "mean": 0.327789,
+          "median": 0.327789,
+          "min": 0.327789,
+          "stdev": 0.0
+        }
+      },
+      "motifs": [
+        "burst",
+        "orb",
+        "spark"
+      ],
+      "themes": [
+        "energy",
+        "magic",
+        "vfx"
+      ]
+    },
+    "prop_sheet": {
+      "asset_count": 1,
+      "dominant_colors": [
+        "#e0e0c0",
+        "#e0e0a0",
+        "#e0c0a0",
+        "#a08060",
+        "#404060",
+        "#e0e0e0",
+        "#806040",
+        "#c0a080"
+      ],
+      "gold_assets": [
+        "book_3x1_sheet"
+      ],
+      "layout_types": [
+        "strip_3x1"
+      ],
+      "metrics": {
+        "color_count": {
+          "max": 1813.0,
+          "mean": 1813.0,
+          "median": 1813.0,
+          "min": 1813.0,
+          "stdev": 0.0
+        },
+        "contact_shadow_area": {
+          "max": 0.0005,
+          "mean": 0.0005,
+          "median": 0.0005,
+          "min": 0.0005,
+          "stdev": 0.0
+        },
+        "dominant_color_count": {
+          "max": 8.0,
+          "mean": 8.0,
+          "median": 8.0,
+          "min": 8.0,
+          "stdev": 0.0
+        },
+        "edge_density": {
+          "max": 0.060102,
+          "mean": 0.060102,
+          "median": 0.060102,
+          "min": 0.060102,
+          "stdev": 0.0
+        },
+        "frame_to_frame_drift": {
+          "max": 0.175522,
+          "mean": 0.175522,
+          "median": 0.175522,
+          "min": 0.175522,
+          "stdev": 0.0
+        },
+        "highlight_density": {
+          "max": 0.103823,
+          "mean": 0.103823,
+          "median": 0.103823,
+          "min": 0.103823,
+          "stdev": 0.0
+        },
+        "non_transparent_occupancy_ratio": {
+          "max": 0.240448,
+          "mean": 0.240448,
+          "median": 0.240448,
+          "min": 0.240448,
+          "stdev": 0.0
+        }
+      },
+      "motifs": [
+        "book",
+        "glow",
+        "open_pages"
+      ],
+      "themes": [
+        "artifact",
+        "knowledge",
+        "library"
+      ]
+    }
+  },
+  "gold_reference_clusters": {
+    "background_scene": {
+      "gold_assets": [
+        "library_background"
+      ],
+      "metrics": {
+        "color_count": {
+          "max": 373.0,
+          "mean": 373.0,
+          "median": 373.0,
+          "min": 373.0,
+          "stdev": 0.0
+        },
+        "edge_density": {
+          "max": 0.267076,
+          "mean": 0.267076,
+          "median": 0.267076,
+          "min": 0.267076,
+          "stdev": 0.0
+        },
+        "non_transparent_occupancy_ratio": {
+          "max": 1.0,
+          "mean": 1.0,
+          "median": 1.0,
+          "min": 1.0,
+          "stdev": 0.0
+        }
+      },
+      "shared_material_tags": [
+        "cloth",
+        "paper",
+        "stone",
+        "wood"
+      ],
+      "shared_motif_tags": [
+        "bookshelves",
+        "candles",
+        "rug",
+        "table"
+      ],
+      "shared_theme_tags": [
+        "adventure_hub",
+        "library",
+        "sanctum"
+      ]
+    },
+    "character_sheet": {
+      "gold_assets": [
+        "player_3x3_pose_sheet",
+        "slime-sheet",
+        "zombie_3x3_pose_sheet"
+      ],
+      "metrics": {
+        "color_count": {
+          "max": 4727.0,
+          "mean": 2975.0,
+          "median": 3100.0,
+          "min": 1098.0,
+          "stdev": 1484.167331
+        },
+        "edge_density": {
+          "max": 0.088286,
+          "mean": 0.078941,
+          "median": 0.080786,
+          "min": 0.067752,
+          "stdev": 0.008484
+        },
+        "non_transparent_occupancy_ratio": {
+          "max": 0.373919,
+          "mean": 0.345701,
+          "median": 0.336682,
+          "min": 0.326501,
+          "stdev": 0.020382
+        }
+      },
+      "shared_material_tags": [
+        "cloth",
+        "decay",
+        "flesh",
+        "glow",
+        "goo",
+        "metal",
+        "slime"
+      ],
+      "shared_motif_tags": [
+        "cloak",
+        "drip",
+        "goo",
+        "rot",
+        "squash",
+        "staff",
+        "stagger",
+        "tattered_clothes",
+        "wizard hat"
+      ],
+      "shared_theme_tags": [
+        "enemy",
+        "guardian",
+        "ooze",
+        "undead",
+        "wizard"
+      ]
+    },
+    "fx_sheet": {
+      "gold_assets": [
+        "orb_3x3_pose_sheet"
+      ],
+      "metrics": {
+        "color_count": {
+          "max": 2867.0,
+          "mean": 2867.0,
+          "median": 2867.0,
+          "min": 2867.0,
+          "stdev": 0.0
+        },
+        "edge_density": {
+          "max": 0.104869,
+          "mean": 0.104869,
+          "median": 0.104869,
+          "min": 0.104869,
+          "stdev": 0.0
+        },
+        "non_transparent_occupancy_ratio": {
+          "max": 0.327789,
+          "mean": 0.327789,
+          "median": 0.327789,
+          "min": 0.327789,
+          "stdev": 0.0
+        }
+      },
+      "shared_material_tags": [
+        "glow",
+        "light",
+        "mist"
+      ],
+      "shared_motif_tags": [
+        "burst",
+        "orb",
+        "spark"
+      ],
+      "shared_theme_tags": [
+        "energy",
+        "magic",
+        "vfx"
+      ]
+    },
+    "prop_sheet": {
+      "gold_assets": [
+        "book_3x1_sheet"
+      ],
+      "metrics": {
+        "color_count": {
+          "max": 1813.0,
+          "mean": 1813.0,
+          "median": 1813.0,
+          "min": 1813.0,
+          "stdev": 0.0
+        },
+        "edge_density": {
+          "max": 0.060102,
+          "mean": 0.060102,
+          "median": 0.060102,
+          "min": 0.060102,
+          "stdev": 0.0
+        },
+        "non_transparent_occupancy_ratio": {
+          "max": 0.240448,
+          "mean": 0.240448,
+          "median": 0.240448,
+          "min": 0.240448,
+          "stdev": 0.0
+        }
+      },
+      "shared_material_tags": [
+        "cloth",
+        "light",
+        "paper"
+      ],
+      "shared_motif_tags": [
+        "book",
+        "glow",
+        "open_pages"
+      ],
+      "shared_theme_tags": [
+        "artifact",
+        "knowledge",
+        "library"
+      ]
+    }
+  },
+  "source_root": "demo-assets",
+  "taxonomy": {
+    "families": [
+      "character_sheet",
+      "prop_sheet",
+      "fx_sheet",
+      "tileset",
+      "background_scene",
+      "parallax_layer",
+      "ui_sheet",
+      "presentation_surface"
+    ],
+    "layout_types": [
+      "pose_sheet_3x3",
+      "strip_3x1",
+      "scene_full_frame",
+      "atlas_square"
+    ]
+  },
+  "version": 1
+}

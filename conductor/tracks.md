@@ -2,13 +2,13 @@
 
 This file tracks all major tracks for the project.
 
-- [ ] **Track: Style canon and annotation system**
+- [x] **Track: Style canon and annotation system**
   *Link: [./conductor/tracks/style_canon_annotation_system_20260405/](./conductor/tracks/style_canon_annotation_system_20260405/)*
 
 ---
 
-- [ ] **Track: Primitive library and promotion pipeline**
-  *Link: [./conductor/tracks/primitive_library_promotion_pipeline_20260405/](./conductor/tracks/primitive_library_promotion_pipeline_20260405/)*
+- [x] **Track: Primitive library and promotion pipeline**
+  *Link: [./conductor/archive/primitive_library_promotion_pipeline_20260405/](./conductor/archive/primitive_library_promotion_pipeline_20260405/)*
 
 ---
 

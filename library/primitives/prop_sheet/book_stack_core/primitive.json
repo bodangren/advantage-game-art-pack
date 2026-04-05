@@ -1,0 +1,55 @@
+{
+  "primitive_id": "book_stack_core",
+  "family": "prop_sheet",
+  "subtype": "prop_core",
+  "source_asset": "book_3x1_sheet",
+  "source_path": "demo-assets/book_3x1_sheet.png",
+  "source_region": {
+    "x": 0,
+    "y": 0,
+    "width": 889,
+    "height": 281
+  },
+  "anchors": {
+    "center": {
+      "x": 444,
+      "y": 140
+    }
+  },
+  "compatible_palettes": [
+    "paper_ink",
+    "library_warmth"
+  ],
+  "compatible_themes": [
+    "library",
+    "knowledge"
+  ],
+  "tags": [
+    "library",
+    "knowledge",
+    "artifact"
+  ],
+  "motifs": [
+    "book",
+    "open_pages",
+    "glow"
+  ],
+  "approval_state": "approved",
+  "promoted_at": "2026-04-05T00:00:00Z",
+  "provenance": {
+    "source_kind": "demo_asset",
+    "source_asset": "book_3x1_sheet",
+    "source_path": "demo-assets/book_3x1_sheet.png",
+    "source_region": {
+      "x": 0,
+      "y": 0,
+      "width": 889,
+      "height": 281
+    },
+    "approved_by": "codex",
+    "variant_id": null,
+    "critic_summary": null,
+    "lineage": []
+  },
+  "companion_files": []
+}

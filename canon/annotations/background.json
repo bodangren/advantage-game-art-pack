@@ -1,0 +1,80 @@
+{
+  "animation_tags": [],
+  "asset_id": "background",
+  "family": "background_scene",
+  "gold_reference": false,
+  "layout_type": "scene_full_frame",
+  "lighting": {
+    "direction": "upper_right",
+    "highlight_style": "rim_glow",
+    "shadow_style": "contact_shadow"
+  },
+  "material_tags": [
+    "stone",
+    "glow",
+    "metal"
+  ],
+  "motif_tags": [
+    "stone_floor",
+    "rune_portal",
+    "ember_light"
+  ],
+  "notes": "Full-frame dungeon chamber with a portal focal point and a broad walkable floor.",
+  "outline": {
+    "continuity": "broken",
+    "presence": "hard",
+    "thickness_px": 1
+  },
+  "palette": {
+    "dominant_colors": [
+      "#000000",
+      "#202020",
+      "#402020",
+      "#200000"
+    ],
+    "ramps": [
+      {
+        "colors": [
+          "#262626",
+          "#000000",
+          "#000000"
+        ],
+        "name": "primary",
+        "role": "dominant"
+      },
+      {
+        "colors": [
+          "#3a3a3a",
+          "#202020",
+          "#171717"
+        ],
+        "name": "secondary",
+        "role": "shadow"
+      },
+      {
+        "colors": [
+          "#624848",
+          "#402020",
+          "#2b1515"
+        ],
+        "name": "accent",
+        "role": "accent"
+      }
+    ]
+  },
+  "reserved_gameplay_space": [
+    "center_floor",
+    "right_portal_bay"
+  ],
+  "silhouette": {
+    "bbox_usage": "wide",
+    "occupancy_band": "full_frame"
+  },
+  "source_path": "demo-assets/background.png",
+  "theme_tags": [
+    "dungeon",
+    "portal",
+    "ruins"
+  ],
+  "version": 1
+}

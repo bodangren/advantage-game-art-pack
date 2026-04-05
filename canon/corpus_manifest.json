@@ -1,0 +1,217 @@
+{
+  "annotation_root": "canon/annotations",
+  "assets": [
+    {
+      "annotation_path": "canon/annotations/background.json",
+      "asset_id": "background",
+      "dimensions": {
+        "height": 1024,
+        "width": 1536
+      },
+      "family": "background_scene",
+      "layout_type": "scene_full_frame",
+      "source_path": "demo-assets/background.png",
+      "structure_notes": [
+        "full-frame environmental scene",
+        "portal focal point on right side"
+      ],
+      "transparency": "opaque"
+    },
+    {
+      "annotation_path": "canon/annotations/library_background.json",
+      "asset_id": "library_background",
+      "dimensions": {
+        "height": 1024,
+        "width": 1024
+      },
+      "family": "background_scene",
+      "layout_type": "scene_full_frame",
+      "source_path": "demo-assets/library_background.png",
+      "structure_notes": [
+        "full-room library scene",
+        "central empty floor for gameplay"
+      ],
+      "transparency": "opaque"
+    },
+    {
+      "annotation_path": "canon/annotations/tile-library.json",
+      "asset_id": "tile-library",
+      "dimensions": {
+        "height": 1024,
+        "width": 1024
+      },
+      "family": "background_scene",
+      "layout_type": "scene_full_frame",
+      "source_path": "demo-assets/tile-library.png",
+      "structure_notes": [
+        "full-room library scene",
+        "centered walkable ring"
+      ],
+      "transparency": "opaque"
+    },
+    {
+      "annotation_path": "canon/annotations/tile-ruins.json",
+      "asset_id": "tile-ruins",
+      "dimensions": {
+        "height": 1031,
+        "width": 1024
+      },
+      "family": "background_scene",
+      "layout_type": "scene_full_frame",
+      "source_path": "demo-assets/tile-ruins.png",
+      "structure_notes": [
+        "full-frame ruin scene",
+        "mossy stone composition"
+      ],
+      "transparency": "opaque"
+    },
+    {
+      "annotation_path": "canon/annotations/player-sheet.json",
+      "asset_id": "player-sheet",
+      "dimensions": {
+        "height": 890,
+        "width": 933
+      },
+      "family": "character_sheet",
+      "layout_type": "pose_sheet_3x3",
+      "source_path": "demo-assets/player-sheet.png",
+      "structure_notes": [
+        "3x3 character sheet",
+        "heroic humanoid silhouette"
+      ],
+      "transparency": "soft_alpha"
+    },
+    {
+      "annotation_path": "canon/annotations/player_3x3_pose_sheet.json",
+      "asset_id": "player_3x3_pose_sheet",
+      "dimensions": {
+        "height": 948,
+        "width": 853
+      },
+      "family": "character_sheet",
+      "layout_type": "pose_sheet_3x3",
+      "source_path": "demo-assets/player_3x3_pose_sheet.png",
+      "structure_notes": [
+        "3x3 character sheet",
+        "wizard-like humanoid silhouette"
+      ],
+      "transparency": "soft_alpha"
+    },
+    {
+      "annotation_path": "canon/annotations/prisoner-sheet.json",
+      "asset_id": "prisoner-sheet",
+      "dimensions": {
+        "height": 906,
+        "width": 887
+      },
+      "family": "character_sheet",
+      "layout_type": "pose_sheet_3x3",
+      "source_path": "demo-assets/prisoner-sheet.png",
+      "structure_notes": [
+        "3x3 character sheet",
+        "ragged humanoid silhouette"
+      ],
+      "transparency": "soft_alpha"
+    },
+    {
+      "annotation_path": "canon/annotations/slime-sheet.json",
+      "asset_id": "slime-sheet",
+      "dimensions": {
+        "height": 804,
+        "width": 900
+      },
+      "family": "character_sheet",
+      "layout_type": "pose_sheet_3x3",
+      "source_path": "demo-assets/slime-sheet.png",
+      "structure_notes": [
+        "3x3 character sheet",
+        "goo enemy silhouette"
+      ],
+      "transparency": "soft_alpha"
+    },
+    {
+      "annotation_path": "canon/annotations/spirit_3x3_pose_sheet.json",
+      "asset_id": "spirit_3x3_pose_sheet",
+      "dimensions": {
+        "height": 515,
+        "width": 485
+      },
+      "family": "character_sheet",
+      "layout_type": "pose_sheet_3x3",
+      "source_path": "demo-assets/spirit_3x3_pose_sheet.png",
+      "structure_notes": [
+        "3x3 character sheet",
+        "translucent spirit silhouette"
+      ],
+      "transparency": "soft_alpha"
+    },
+    {
+      "annotation_path": "canon/annotations/zombie_3x3_pose_sheet.json",
+      "asset_id": "zombie_3x3_pose_sheet",
+      "dimensions": {
+        "height": 957,
+        "width": 854
+      },
+      "family": "character_sheet",
+      "layout_type": "pose_sheet_3x3",
+      "source_path": "demo-assets/zombie_3x3_pose_sheet.png",
+      "structure_notes": [
+        "3x3 character sheet",
+        "undead humanoid silhouette"
+      ],
+      "transparency": "soft_alpha"
+    },
+    {
+      "annotation_path": "canon/annotations/orb_3x3_pose_sheet.json",
+      "asset_id": "orb_3x3_pose_sheet",
+      "dimensions": {
+        "height": 465,
+        "width": 462
+      },
+      "family": "fx_sheet",
+      "layout_type": "pose_sheet_3x3",
+      "source_path": "demo-assets/orb_3x3_pose_sheet.png",
+      "structure_notes": [
+        "3x3 effect sheet",
+        "centered luminous effect states"
+      ],
+      "transparency": "soft_alpha"
+    },
+    {
+      "annotation_path": "canon/annotations/book_3x1_sheet.json",
+      "asset_id": "book_3x1_sheet",
+      "dimensions": {
+        "height": 281,
+        "width": 889
+      },
+      "family": "prop_sheet",
+      "layout_type": "strip_3x1",
+      "source_path": "demo-assets/book_3x1_sheet.png",
+      "structure_notes": [
+        "3x1 prop strip",
+        "state progression left to right"
+      ],
+      "transparency": "soft_alpha"
+    }
+  ],
+  "source_root": "demo-assets",
+  "taxonomy": {
+    "families": [
+      "character_sheet",
+      "prop_sheet",
+      "fx_sheet",
+      "tileset",
+      "background_scene",
+      "parallax_layer",
+      "ui_sheet",
+      "presentation_surface"
+    ],
+    "layout_types": [
+      "pose_sheet_3x3",
+      "strip_3x1",
+      "scene_full_frame",
+      "atlas_square"
+    ]
+  },
+  "version": 1
+}

@@ -1,0 +1,56 @@
+{
+  "primitive_id": "library_cover_core",
+  "family": "presentation_surface",
+  "subtype": "cover_plate",
+  "source_asset": "library_background",
+  "source_path": "demo-assets/library_background.png",
+  "source_region": {
+    "x": 0,
+    "y": 0,
+    "width": 1024,
+    "height": 1024
+  },
+  "anchors": {
+    "title_safe": {
+      "x": 512,
+      "y": 160
+    }
+  },
+  "compatible_palettes": [
+    "cinematic_hero",
+    "warm_accents"
+  ],
+  "compatible_themes": [
+    "library",
+    "promo",
+    "selection"
+  ],
+  "tags": [
+    "cover",
+    "promo",
+    "surface"
+  ],
+  "motifs": [
+    "bookshelves",
+    "hero_plate",
+    "selection_card"
+  ],
+  "approval_state": "approved",
+  "promoted_at": "2026-04-05T00:00:00Z",
+  "provenance": {
+    "source_kind": "demo_asset",
+    "source_asset": "library_background",
+    "source_path": "demo-assets/library_background.png",
+    "source_region": {
+      "x": 0,
+      "y": 0,
+      "width": 1024,
+      "height": 1024
+    },
+    "approved_by": "codex",
+    "variant_id": null,
+    "critic_summary": null,
+    "lineage": []
+  },
+  "companion_files": []
+}

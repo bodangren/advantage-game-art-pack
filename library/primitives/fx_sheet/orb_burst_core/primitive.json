@@ -1,0 +1,56 @@
+{
+  "primitive_id": "orb_burst_core",
+  "family": "fx_sheet",
+  "subtype": "fx_core",
+  "source_asset": "orb_3x3_pose_sheet",
+  "source_path": "demo-assets/orb_3x3_pose_sheet.png",
+  "source_region": {
+    "x": 0,
+    "y": 0,
+    "width": 462,
+    "height": 465
+  },
+  "anchors": {
+    "center": {
+      "x": 231,
+      "y": 232
+    }
+  },
+  "compatible_palettes": [
+    "glow_blue",
+    "spell_light"
+  ],
+  "compatible_themes": [
+    "magic",
+    "vfx",
+    "energy"
+  ],
+  "tags": [
+    "magic",
+    "burst",
+    "orb"
+  ],
+  "motifs": [
+    "orb",
+    "spark",
+    "burst"
+  ],
+  "approval_state": "approved",
+  "promoted_at": "2026-04-05T00:00:00Z",
+  "provenance": {
+    "source_kind": "demo_asset",
+    "source_asset": "orb_3x3_pose_sheet",
+    "source_path": "demo-assets/orb_3x3_pose_sheet.png",
+    "source_region": {
+      "x": 0,
+      "y": 0,
+      "width": 462,
+      "height": 465
+    },
+    "approved_by": "codex",
+    "variant_id": null,
+    "critic_summary": null,
+    "lineage": []
+  },
+  "companion_files": []
+}

@@ -1,0 +1,56 @@
+{
+  "primitive_id": "library_scene_core",
+  "family": "background_scene",
+  "subtype": "scene_core",
+  "source_asset": "library_background",
+  "source_path": "demo-assets/library_background.png",
+  "source_region": {
+    "x": 0,
+    "y": 0,
+    "width": 1024,
+    "height": 1024
+  },
+  "anchors": {
+    "focus": {
+      "x": 512,
+      "y": 512
+    }
+  },
+  "compatible_palettes": [
+    "warm_stone",
+    "amber_lamps"
+  ],
+  "compatible_themes": [
+    "library",
+    "sanctum",
+    "adventure_hub"
+  ],
+  "tags": [
+    "library",
+    "scene",
+    "background"
+  ],
+  "motifs": [
+    "bookshelves",
+    "candles",
+    "table"
+  ],
+  "approval_state": "approved",
+  "promoted_at": "2026-04-05T00:00:00Z",
+  "provenance": {
+    "source_kind": "demo_asset",
+    "source_asset": "library_background",
+    "source_path": "demo-assets/library_background.png",
+    "source_region": {
+      "x": 0,
+      "y": 0,
+      "width": 1024,
+      "height": 1024
+    },
+    "approved_by": "codex",
+    "variant_id": null,
+    "critic_summary": null,
+    "lineage": []
+  },
+  "companion_files": []
+}

@@ -1,0 +1,486 @@
+{
+  "families": [
+    "character_sheet",
+    "prop_sheet",
+    "fx_sheet",
+    "tileset",
+    "background_scene",
+    "parallax_layer",
+    "ui_sheet",
+    "presentation_surface"
+  ],
+  "library_root": "library/primitives",
+  "primitive_count": 8,
+  "primitives": [
+    {
+      "anchors": {
+        "focus": {
+          "x": 512,
+          "y": 512
+        }
+      },
+      "approval_state": "approved",
+      "companion_files": [],
+      "compatible_palettes": [
+        "warm_stone",
+        "amber_lamps"
+      ],
+      "compatible_themes": [
+        "library",
+        "sanctum",
+        "adventure_hub"
+      ],
+      "family": "background_scene",
+      "metadata_path": "library/primitives/background_scene/library_scene_core/primitive.json",
+      "motifs": [
+        "bookshelves",
+        "candles",
+        "table"
+      ],
+      "primitive_dir": "library/primitives/background_scene/library_scene_core",
+      "primitive_id": "library_scene_core",
+      "promoted_at": "2026-04-05T00:00:00Z",
+      "provenance": {
+        "approved_by": "codex",
+        "critic_summary": null,
+        "lineage": [],
+        "source_asset": "library_background",
+        "source_kind": "demo_asset",
+        "source_path": "demo-assets/library_background.png",
+        "source_region": {
+          "height": 1024,
+          "width": 1024,
+          "x": 0,
+          "y": 0
+        },
+        "variant_id": null
+      },
+      "source_asset": "library_background",
+      "source_path": "demo-assets/library_background.png",
+      "source_region": {
+        "height": 1024,
+        "width": 1024,
+        "x": 0,
+        "y": 0
+      },
+      "subtype": "scene_core",
+      "tags": [
+        "library",
+        "scene",
+        "background"
+      ]
+    },
+    {
+      "anchors": {
+        "head": {
+          "x": 426,
+          "y": 84
+        },
+        "root": {
+          "x": 426,
+          "y": 947
+        }
+      },
+      "approval_state": "approved",
+      "companion_files": [],
+      "compatible_palettes": [
+        "cold_steel",
+        "guardian_neutral"
+      ],
+      "compatible_themes": [
+        "wizard",
+        "guardian"
+      ],
+      "family": "character_sheet",
+      "metadata_path": "library/primitives/character_sheet/wizard_core/primitive.json",
+      "motifs": [
+        "cloak",
+        "staff",
+        "wizard hat"
+      ],
+      "primitive_dir": "library/primitives/character_sheet/wizard_core",
+      "primitive_id": "wizard_core",
+      "promoted_at": "2026-04-05T00:00:00Z",
+      "provenance": {
+        "approved_by": "codex",
+        "critic_summary": null,
+        "lineage": [],
+        "source_asset": "player_3x3_pose_sheet",
+        "source_kind": "demo_asset",
+        "source_path": "demo-assets/player_3x3_pose_sheet.png",
+        "source_region": {
+          "height": 948,
+          "width": 853,
+          "x": 0,
+          "y": 0
+        },
+        "variant_id": null
+      },
+      "source_asset": "player_3x3_pose_sheet",
+      "source_path": "demo-assets/player_3x3_pose_sheet.png",
+      "source_region": {
+        "height": 948,
+        "width": 853,
+        "x": 0,
+        "y": 0
+      },
+      "subtype": "body_core",
+      "tags": [
+        "wizard",
+        "guardian",
+        "body"
+      ]
+    },
+    {
+      "anchors": {
+        "center": {
+          "x": 231,
+          "y": 232
+        }
+      },
+      "approval_state": "approved",
+      "companion_files": [],
+      "compatible_palettes": [
+        "glow_blue",
+        "spell_light"
+      ],
+      "compatible_themes": [
+        "magic",
+        "vfx",
+        "energy"
+      ],
+      "family": "fx_sheet",
+      "metadata_path": "library/primitives/fx_sheet/orb_burst_core/primitive.json",
+      "motifs": [
+        "orb",
+        "spark",
+        "burst"
+      ],
+      "primitive_dir": "library/primitives/fx_sheet/orb_burst_core",
+      "primitive_id": "orb_burst_core",
+      "promoted_at": "2026-04-05T00:00:00Z",
+      "provenance": {
+        "approved_by": "codex",
+        "critic_summary": null,
+        "lineage": [],
+        "source_asset": "orb_3x3_pose_sheet",
+        "source_kind": "demo_asset",
+        "source_path": "demo-assets/orb_3x3_pose_sheet.png",
+        "source_region": {
+          "height": 465,
+          "width": 462,
+          "x": 0,
+          "y": 0
+        },
+        "variant_id": null
+      },
+      "source_asset": "orb_3x3_pose_sheet",
+      "source_path": "demo-assets/orb_3x3_pose_sheet.png",
+      "source_region": {
+        "height": 465,
+        "width": 462,
+        "x": 0,
+        "y": 0
+      },
+      "subtype": "fx_core",
+      "tags": [
+        "magic",
+        "burst",
+        "orb"
+      ]
+    },
+    {
+      "anchors": {
+        "horizon": {
+          "x": 768,
+          "y": 320
+        }
+      },
+      "approval_state": "approved",
+      "companion_files": [],
+      "compatible_palettes": [
+        "distant_blue",
+        "atmosphere"
+      ],
+      "compatible_themes": [
+        "ruins",
+        "overgrowth",
+        "distance"
+      ],
+      "family": "parallax_layer",
+      "metadata_path": "library/primitives/parallax_layer/ruins_horizon_core/primitive.json",
+      "motifs": [
+        "broken_stone",
+        "mist",
+        "roots"
+      ],
+      "primitive_dir": "library/primitives/parallax_layer/ruins_horizon_core",
+      "primitive_id": "ruins_horizon_core",
+      "promoted_at": "2026-04-05T00:00:00Z",
+      "provenance": {
+        "approved_by": "codex",
+        "critic_summary": null,
+        "lineage": [],
+        "source_asset": "background",
+        "source_kind": "demo_asset",
+        "source_path": "demo-assets/background.png",
+        "source_region": {
+          "height": 1024,
+          "width": 1536,
+          "x": 0,
+          "y": 0
+        },
+        "variant_id": null
+      },
+      "source_asset": "background",
+      "source_path": "demo-assets/background.png",
+      "source_region": {
+        "height": 1024,
+        "width": 1536,
+        "x": 0,
+        "y": 0
+      },
+      "subtype": "depth_layer",
+      "tags": [
+        "parallax",
+        "ruins",
+        "horizon"
+      ]
+    },
+    {
+      "anchors": {
+        "title_safe": {
+          "x": 512,
+          "y": 160
+        }
+      },
+      "approval_state": "approved",
+      "companion_files": [],
+      "compatible_palettes": [
+        "cinematic_hero",
+        "warm_accents"
+      ],
+      "compatible_themes": [
+        "library",
+        "promo",
+        "selection"
+      ],
+      "family": "presentation_surface",
+      "metadata_path": "library/primitives/presentation_surface/library_cover_core/primitive.json",
+      "motifs": [
+        "bookshelves",
+        "hero_plate",
+        "selection_card"
+      ],
+      "primitive_dir": "library/primitives/presentation_surface/library_cover_core",
+      "primitive_id": "library_cover_core",
+      "promoted_at": "2026-04-05T00:00:00Z",
+      "provenance": {
+        "approved_by": "codex",
+        "critic_summary": null,
+        "lineage": [],
+        "source_asset": "library_background",
+        "source_kind": "demo_asset",
+        "source_path": "demo-assets/library_background.png",
+        "source_region": {
+          "height": 1024,
+          "width": 1024,
+          "x": 0,
+          "y": 0
+        },
+        "variant_id": null
+      },
+      "source_asset": "library_background",
+      "source_path": "demo-assets/library_background.png",
+      "source_region": {
+        "height": 1024,
+        "width": 1024,
+        "x": 0,
+        "y": 0
+      },
+      "subtype": "cover_plate",
+      "tags": [
+        "cover",
+        "promo",
+        "surface"
+      ]
+    },
+    {
+      "anchors": {
+        "center": {
+          "x": 444,
+          "y": 140
+        }
+      },
+      "approval_state": "approved",
+      "companion_files": [],
+      "compatible_palettes": [
+        "paper_ink",
+        "library_warmth"
+      ],
+      "compatible_themes": [
+        "library",
+        "knowledge"
+      ],
+      "family": "prop_sheet",
+      "metadata_path": "library/primitives/prop_sheet/book_stack_core/primitive.json",
+      "motifs": [
+        "book",
+        "open_pages",
+        "glow"
+      ],
+      "primitive_dir": "library/primitives/prop_sheet/book_stack_core",
+      "primitive_id": "book_stack_core",
+      "promoted_at": "2026-04-05T00:00:00Z",
+      "provenance": {
+        "approved_by": "codex",
+        "critic_summary": null,
+        "lineage": [],
+        "source_asset": "book_3x1_sheet",
+        "source_kind": "demo_asset",
+        "source_path": "demo-assets/book_3x1_sheet.png",
+        "source_region": {
+          "height": 281,
+          "width": 889,
+          "x": 0,
+          "y": 0
+        },
+        "variant_id": null
+      },
+      "source_asset": "book_3x1_sheet",
+      "source_path": "demo-assets/book_3x1_sheet.png",
+      "source_region": {
+        "height": 281,
+        "width": 889,
+        "x": 0,
+        "y": 0
+      },
+      "subtype": "prop_core",
+      "tags": [
+        "library",
+        "knowledge",
+        "artifact"
+      ]
+    },
+    {
+      "anchors": {
+        "center": {
+          "x": 512,
+          "y": 512
+        },
+        "north_edge": {
+          "x": 512,
+          "y": 8
+        }
+      },
+      "approval_state": "approved",
+      "companion_files": [],
+      "compatible_palettes": [
+        "stone_moss",
+        "library_floor"
+      ],
+      "compatible_themes": [
+        "library",
+        "ruins"
+      ],
+      "family": "tileset",
+      "metadata_path": "library/primitives/tileset/floor_module_core/primitive.json",
+      "motifs": [
+        "tile",
+        "stone",
+        "moss"
+      ],
+      "primitive_dir": "library/primitives/tileset/floor_module_core",
+      "primitive_id": "floor_module_core",
+      "promoted_at": "2026-04-05T00:00:00Z",
+      "provenance": {
+        "approved_by": "codex",
+        "critic_summary": null,
+        "lineage": [],
+        "source_asset": "tile-library",
+        "source_kind": "demo_asset",
+        "source_path": "demo-assets/tile-library.png",
+        "source_region": {
+          "height": 1024,
+          "width": 1024,
+          "x": 0,
+          "y": 0
+        },
+        "variant_id": null
+      },
+      "source_asset": "tile-library",
+      "source_path": "demo-assets/tile-library.png",
+      "source_region": {
+        "height": 1024,
+        "width": 1024,
+        "x": 0,
+        "y": 0
+      },
+      "subtype": "tile_module",
+      "tags": [
+        "floor",
+        "stone",
+        "tile"
+      ]
+    },
+    {
+      "anchors": {
+        "center": {
+          "x": 466,
+          "y": 445
+        }
+      },
+      "approval_state": "approved",
+      "companion_files": [],
+      "compatible_palettes": [
+        "neutral_ui",
+        "trim_gold"
+      ],
+      "compatible_themes": [
+        "ui",
+        "menu",
+        "catalog"
+      ],
+      "family": "ui_sheet",
+      "metadata_path": "library/primitives/ui_sheet/panel_frame_core/primitive.json",
+      "motifs": [
+        "label",
+        "panel",
+        "chrome"
+      ],
+      "primitive_dir": "library/primitives/ui_sheet/panel_frame_core",
+      "primitive_id": "panel_frame_core",
+      "promoted_at": "2026-04-05T00:00:00Z",
+      "provenance": {
+        "approved_by": "codex",
+        "critic_summary": null,
+        "lineage": [],
+        "source_asset": "player-sheet",
+        "source_kind": "demo_asset",
+        "source_path": "demo-assets/player-sheet.png",
+        "source_region": {
+          "height": 890,
+          "width": 933,
+          "x": 0,
+          "y": 0
+        },
+        "variant_id": null
+      },
+      "source_asset": "player-sheet",
+      "source_path": "demo-assets/player-sheet.png",
+      "source_region": {
+        "height": 890,
+        "width": 933,
+        "x": 0,
+        "y": 0
+      },
+      "subtype": "panel_frame",
+      "tags": [
+        "panel",
+        "frame",
+        "ui"
+      ]
+    }
+  ],
+  "version": 1
+}

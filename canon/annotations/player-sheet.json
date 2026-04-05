@@ -1,0 +1,100 @@
+{
+  "animation_tags": [
+    "idle",
+    "walk",
+    "action"
+  ],
+  "asset_id": "player-sheet",
+  "family": "character_sheet",
+  "frame_grid": {
+    "columns": 3,
+    "frame_labels": [
+      "idle_0",
+      "idle_1",
+      "idle_2",
+      "walk_0",
+      "walk_1",
+      "walk_2",
+      "action_0",
+      "action_1",
+      "action_2"
+    ],
+    "frame_order": [
+      "idle",
+      "walk",
+      "action"
+    ],
+    "rows": 3
+  },
+  "gold_reference": false,
+  "layout_type": "pose_sheet_3x3",
+  "lighting": {
+    "direction": "top_left",
+    "highlight_style": "rim_light",
+    "shadow_style": "contact_shadow"
+  },
+  "material_tags": [
+    "cloth",
+    "metal",
+    "leather"
+  ],
+  "motif_tags": [
+    "armor",
+    "staff",
+    "pouch"
+  ],
+  "notes": "A blue-armored hero sprite sheet with clear combat-ready pose changes.",
+  "outline": {
+    "continuity": "continuous",
+    "presence": "hard",
+    "thickness_px": 1
+  },
+  "palette": {
+    "dominant_colors": [
+      "#000020",
+      "#000000",
+      "#404060",
+      "#000020"
+    ],
+    "ramps": [
+      {
+        "colors": [
+          "#262641",
+          "#000020",
+          "#000017"
+        ],
+        "name": "primary",
+        "role": "dominant"
+      },
+      {
+        "colors": [
+          "#1e1e1e",
+          "#000000",
+          "#000000"
+        ],
+        "name": "secondary",
+        "role": "shadow"
+      },
+      {
+        "colors": [
+          "#62627c",
+          "#404060",
+          "#2b2b41"
+        ],
+        "name": "accent",
+        "role": "accent"
+      }
+    ]
+  },
+  "reserved_gameplay_space": [],
+  "silhouette": {
+    "bbox_usage": "tight",
+    "occupancy_band": "medium"
+  },
+  "source_path": "demo-assets/player-sheet.png",
+  "theme_tags": [
+    "hero",
+    "guardian"
+  ],
+  "version": 1
+}

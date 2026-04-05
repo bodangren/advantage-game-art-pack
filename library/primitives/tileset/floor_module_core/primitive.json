@@ -1,0 +1,59 @@
+{
+  "primitive_id": "floor_module_core",
+  "family": "tileset",
+  "subtype": "tile_module",
+  "source_asset": "tile-library",
+  "source_path": "demo-assets/tile-library.png",
+  "source_region": {
+    "x": 0,
+    "y": 0,
+    "width": 1024,
+    "height": 1024
+  },
+  "anchors": {
+    "center": {
+      "x": 512,
+      "y": 512
+    },
+    "north_edge": {
+      "x": 512,
+      "y": 8
+    }
+  },
+  "compatible_palettes": [
+    "stone_moss",
+    "library_floor"
+  ],
+  "compatible_themes": [
+    "library",
+    "ruins"
+  ],
+  "tags": [
+    "floor",
+    "stone",
+    "tile"
+  ],
+  "motifs": [
+    "tile",
+    "stone",
+    "moss"
+  ],
+  "approval_state": "approved",
+  "promoted_at": "2026-04-05T00:00:00Z",
+  "provenance": {
+    "source_kind": "demo_asset",
+    "source_asset": "tile-library",
+    "source_path": "demo-assets/tile-library.png",
+    "source_region": {
+      "x": 0,
+      "y": 0,
+      "width": 1024,
+      "height": 1024
+    },
+    "approved_by": "codex",
+    "variant_id": null,
+    "critic_summary": null,
+    "lineage": []
+  },
+  "companion_files": []
+}

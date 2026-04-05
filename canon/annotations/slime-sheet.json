@@ -1,0 +1,100 @@
+{
+  "animation_tags": [
+    "idle",
+    "squash",
+    "burst"
+  ],
+  "asset_id": "slime-sheet",
+  "family": "character_sheet",
+  "frame_grid": {
+    "columns": 3,
+    "frame_labels": [
+      "idle_0",
+      "idle_1",
+      "idle_2",
+      "squash_0",
+      "squash_1",
+      "squash_2",
+      "burst_0",
+      "burst_1",
+      "burst_2"
+    ],
+    "frame_order": [
+      "idle",
+      "squash",
+      "burst"
+    ],
+    "rows": 3
+  },
+  "gold_reference": true,
+  "layout_type": "pose_sheet_3x3",
+  "lighting": {
+    "direction": "center_glow",
+    "highlight_style": "specular",
+    "shadow_style": "soft_shadow"
+  },
+  "material_tags": [
+    "goo",
+    "glow",
+    "slime"
+  ],
+  "motif_tags": [
+    "goo",
+    "drip",
+    "squash"
+  ],
+  "notes": "A goo enemy sheet with a strong squash-and-stretch language and bright internal highlights.",
+  "outline": {
+    "continuity": "soft",
+    "presence": "soft",
+    "thickness_px": 0
+  },
+  "palette": {
+    "dominant_colors": [
+      "#200000",
+      "#400000",
+      "#000000",
+      "#600000"
+    ],
+    "ramps": [
+      {
+        "colors": [
+          "#412626",
+          "#200000",
+          "#170000"
+        ],
+        "name": "primary",
+        "role": "dominant"
+      },
+      {
+        "colors": [
+          "#561e1e",
+          "#400000",
+          "#2e0000"
+        ],
+        "name": "secondary",
+        "role": "shadow"
+      },
+      {
+        "colors": [
+          "#2d2d2d",
+          "#000000",
+          "#000000"
+        ],
+        "name": "accent",
+        "role": "accent"
+      }
+    ]
+  },
+  "reserved_gameplay_space": [],
+  "silhouette": {
+    "bbox_usage": "tight",
+    "occupancy_band": "broad"
+  },
+  "source_path": "demo-assets/slime-sheet.png",
+  "theme_tags": [
+    "ooze",
+    "enemy"
+  ],
+  "version": 1
+}

@@ -1,0 +1,101 @@
+{
+  "animation_tags": [
+    "charge",
+    "pulse",
+    "burst"
+  ],
+  "asset_id": "orb_3x3_pose_sheet",
+  "family": "fx_sheet",
+  "frame_grid": {
+    "columns": 3,
+    "frame_labels": [
+      "charge_a",
+      "charge_b",
+      "charge_c",
+      "pulse_a",
+      "pulse_b",
+      "pulse_c",
+      "burst_a",
+      "burst_b",
+      "burst_c"
+    ],
+    "frame_order": [
+      "charge",
+      "pulse",
+      "burst"
+    ],
+    "rows": 3
+  },
+  "gold_reference": true,
+  "layout_type": "pose_sheet_3x3",
+  "lighting": {
+    "direction": "center_glow",
+    "highlight_style": "radiant",
+    "shadow_style": "none"
+  },
+  "material_tags": [
+    "glow",
+    "mist",
+    "light"
+  ],
+  "motif_tags": [
+    "orb",
+    "spark",
+    "burst"
+  ],
+  "notes": "A compact effect sheet centered on luminous orb variations and burst states.",
+  "outline": {
+    "continuity": "fragmented",
+    "presence": "soft",
+    "thickness_px": 0
+  },
+  "palette": {
+    "dominant_colors": [
+      "#2060e0",
+      "#e0e0e0",
+      "#2080e0",
+      "#808080"
+    ],
+    "ramps": [
+      {
+        "colors": [
+          "#4177e4",
+          "#2060e0",
+          "#1745a1"
+        ],
+        "name": "primary",
+        "role": "dominant"
+      },
+      {
+        "colors": [
+          "#e3e3e3",
+          "#e0e0e0",
+          "#a1a1a1"
+        ],
+        "name": "secondary",
+        "role": "shadow"
+      },
+      {
+        "colors": [
+          "#4896e5",
+          "#2080e0",
+          "#155798"
+        ],
+        "name": "accent",
+        "role": "accent"
+      }
+    ]
+  },
+  "reserved_gameplay_space": [],
+  "silhouette": {
+    "bbox_usage": "tight",
+    "occupancy_band": "compact"
+  },
+  "source_path": "demo-assets/orb_3x3_pose_sheet.png",
+  "theme_tags": [
+    "magic",
+    "vfx",
+    "energy"
+  ],
+  "version": 1
+}

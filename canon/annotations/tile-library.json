@@ -1,0 +1,79 @@
+{
+  "animation_tags": [],
+  "asset_id": "tile-library",
+  "family": "background_scene",
+  "gold_reference": false,
+  "layout_type": "scene_full_frame",
+  "lighting": {
+    "direction": "top_left",
+    "highlight_style": "warm_glow",
+    "shadow_style": "soft_shadow"
+  },
+  "material_tags": [
+    "wood",
+    "stone",
+    "cloth"
+  ],
+  "motif_tags": [
+    "bookshelves",
+    "center_rug",
+    "warm_lamps"
+  ],
+  "notes": "A full-frame library scene that behaves like a composed environmental backdrop.",
+  "outline": {
+    "continuity": "none",
+    "presence": "soft",
+    "thickness_px": 0
+  },
+  "palette": {
+    "dominant_colors": [
+      "#a08060",
+      "#806040",
+      "#402000",
+      "#000000"
+    ],
+    "ramps": [
+      {
+        "colors": [
+          "#ae9377",
+          "#a08060",
+          "#735c45"
+        ],
+        "name": "primary",
+        "role": "dominant"
+      },
+      {
+        "colors": [
+          "#8f7356",
+          "#806040",
+          "#5c452e"
+        ],
+        "name": "secondary",
+        "role": "shadow"
+      },
+      {
+        "colors": [
+          "#62482d",
+          "#402000",
+          "#2b1500"
+        ],
+        "name": "accent",
+        "role": "accent"
+      }
+    ]
+  },
+  "reserved_gameplay_space": [
+    "center_walkable_circle",
+    "perimeter_shelves"
+  ],
+  "silhouette": {
+    "bbox_usage": "wide",
+    "occupancy_band": "full_frame"
+  },
+  "source_path": "demo-assets/tile-library.png",
+  "theme_tags": [
+    "library",
+    "background"
+  ],
+  "version": 1
+}

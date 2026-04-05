@@ -1,0 +1,56 @@
+{
+  "primitive_id": "ruins_horizon_core",
+  "family": "parallax_layer",
+  "subtype": "depth_layer",
+  "source_asset": "background",
+  "source_path": "demo-assets/background.png",
+  "source_region": {
+    "x": 0,
+    "y": 0,
+    "width": 1536,
+    "height": 1024
+  },
+  "anchors": {
+    "horizon": {
+      "x": 768,
+      "y": 320
+    }
+  },
+  "compatible_palettes": [
+    "distant_blue",
+    "atmosphere"
+  ],
+  "compatible_themes": [
+    "ruins",
+    "overgrowth",
+    "distance"
+  ],
+  "tags": [
+    "parallax",
+    "ruins",
+    "horizon"
+  ],
+  "motifs": [
+    "broken_stone",
+    "mist",
+    "roots"
+  ],
+  "approval_state": "approved",
+  "promoted_at": "2026-04-05T00:00:00Z",
+  "provenance": {
+    "source_kind": "demo_asset",
+    "source_asset": "background",
+    "source_path": "demo-assets/background.png",
+    "source_region": {
+      "x": 0,
+      "y": 0,
+      "width": 1536,
+      "height": 1024
+    },
+    "approved_by": "codex",
+    "variant_id": null,
+    "critic_summary": null,
+    "lineage": []
+  },
+  "companion_files": []
+}

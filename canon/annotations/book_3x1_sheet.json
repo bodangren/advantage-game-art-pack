@@ -1,0 +1,94 @@
+{
+  "animation_tags": [
+    "pose_variants",
+    "state_change"
+  ],
+  "asset_id": "book_3x1_sheet",
+  "family": "prop_sheet",
+  "frame_grid": {
+    "columns": 3,
+    "frame_labels": [
+      "closed",
+      "open",
+      "enchanted"
+    ],
+    "frame_order": [
+      "closed",
+      "open",
+      "enchanted"
+    ],
+    "rows": 1
+  },
+  "gold_reference": true,
+  "layout_type": "strip_3x1",
+  "lighting": {
+    "direction": "top_left",
+    "highlight_style": "paper_rim",
+    "shadow_style": "contact_shadow"
+  },
+  "material_tags": [
+    "paper",
+    "cloth",
+    "light"
+  ],
+  "motif_tags": [
+    "book",
+    "open_pages",
+    "glow"
+  ],
+  "notes": "A 3x1 prop strip with a readable state progression from left to right.",
+  "outline": {
+    "continuity": "continuous",
+    "presence": "soft",
+    "thickness_px": 1
+  },
+  "palette": {
+    "dominant_colors": [
+      "#e0e0c0",
+      "#e0e0a0",
+      "#e0c0a0",
+      "#a08060"
+    ],
+    "ramps": [
+      {
+        "colors": [
+          "#e4e4c9",
+          "#e0e0c0",
+          "#a1a18a"
+        ],
+        "name": "primary",
+        "role": "dominant"
+      },
+      {
+        "colors": [
+          "#e3e3ab",
+          "#e0e0a0",
+          "#a1a173"
+        ],
+        "name": "secondary",
+        "role": "shadow"
+      },
+      {
+        "colors": [
+          "#e5cbb1",
+          "#e0c0a0",
+          "#98826c"
+        ],
+        "name": "accent",
+        "role": "accent"
+      }
+    ]
+  },
+  "reserved_gameplay_space": [],
+  "silhouette": {
+    "bbox_usage": "tight",
+    "occupancy_band": "compact"
+  },
+  "source_path": "demo-assets/book_3x1_sheet.png",
+  "theme_tags": [
+    "library",
+    "artifact",
+    "knowledge"
+  ],
+  "version": 1
+}

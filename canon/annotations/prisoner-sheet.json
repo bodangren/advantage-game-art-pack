@@ -1,0 +1,100 @@
+{
+  "animation_tags": [
+    "idle",
+    "walk",
+    "action"
+  ],
+  "asset_id": "prisoner-sheet",
+  "family": "character_sheet",
+  "frame_grid": {
+    "columns": 3,
+    "frame_labels": [
+      "idle_0",
+      "idle_1",
+      "idle_2",
+      "walk_0",
+      "walk_1",
+      "walk_2",
+      "action_0",
+      "action_1",
+      "action_2"
+    ],
+    "frame_order": [
+      "idle",
+      "walk",
+      "action"
+    ],
+    "rows": 3
+  },
+  "gold_reference": false,
+  "layout_type": "pose_sheet_3x3",
+  "lighting": {
+    "direction": "top_left",
+    "highlight_style": "rim_light",
+    "shadow_style": "contact_shadow"
+  },
+  "material_tags": [
+    "cloth",
+    "iron",
+    "skin"
+  ],
+  "motif_tags": [
+    "chains",
+    "ragged_clothes",
+    "guarded"
+  ],
+  "notes": "A ragged prisoner figure that keeps the body readable while the garments stay loose.",
+  "outline": {
+    "continuity": "continuous",
+    "presence": "hard",
+    "thickness_px": 1
+  },
+  "palette": {
+    "dominant_colors": [
+      "#000000",
+      "#402020",
+      "#604020",
+      "#202020"
+    ],
+    "ramps": [
+      {
+        "colors": [
+          "#262626",
+          "#000000",
+          "#000000"
+        ],
+        "name": "primary",
+        "role": "dominant"
+      },
+      {
+        "colors": [
+          "#563a3a",
+          "#402020",
+          "#2e1717"
+        ],
+        "name": "secondary",
+        "role": "shadow"
+      },
+      {
+        "colors": [
+          "#7c6248",
+          "#604020",
+          "#412b15"
+        ],
+        "name": "accent",
+        "role": "accent"
+      }
+    ]
+  },
+  "reserved_gameplay_space": [],
+  "silhouette": {
+    "bbox_usage": "balanced",
+    "occupancy_band": "medium"
+  },
+  "source_path": "demo-assets/prisoner-sheet.png",
+  "theme_tags": [
+    "prisoner",
+    "escape"
+  ],
+  "version": 1
+}

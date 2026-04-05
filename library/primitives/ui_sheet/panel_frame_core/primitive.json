@@ -1,0 +1,56 @@
+{
+  "primitive_id": "panel_frame_core",
+  "family": "ui_sheet",
+  "subtype": "panel_frame",
+  "source_asset": "player-sheet",
+  "source_path": "demo-assets/player-sheet.png",
+  "source_region": {
+    "x": 0,
+    "y": 0,
+    "width": 933,
+    "height": 890
+  },
+  "anchors": {
+    "center": {
+      "x": 466,
+      "y": 445
+    }
+  },
+  "compatible_palettes": [
+    "neutral_ui",
+    "trim_gold"
+  ],
+  "compatible_themes": [
+    "ui",
+    "menu",
+    "catalog"
+  ],
+  "tags": [
+    "panel",
+    "frame",
+    "ui"
+  ],
+  "motifs": [
+    "label",
+    "panel",
+    "chrome"
+  ],
+  "approval_state": "approved",
+  "promoted_at": "2026-04-05T00:00:00Z",
+  "provenance": {
+    "source_kind": "demo_asset",
+    "source_asset": "player-sheet",
+    "source_path": "demo-assets/player-sheet.png",
+    "source_region": {
+      "x": 0,
+      "y": 0,
+      "width": 933,
+      "height": 890
+    },
+    "approved_by": "codex",
+    "variant_id": null,
+    "critic_summary": null,
+    "lineage": []
+  },
+  "companion_files": []
+}

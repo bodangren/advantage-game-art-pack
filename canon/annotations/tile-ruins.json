@@ -1,0 +1,79 @@
+{
+  "animation_tags": [],
+  "asset_id": "tile-ruins",
+  "family": "background_scene",
+  "gold_reference": false,
+  "layout_type": "scene_full_frame",
+  "lighting": {
+    "direction": "top_left",
+    "highlight_style": "damp_glint",
+    "shadow_style": "soft_shadow"
+  },
+  "material_tags": [
+    "stone",
+    "moss",
+    "glow"
+  ],
+  "motif_tags": [
+    "broken_stone",
+    "roots",
+    "moss"
+  ],
+  "notes": "A ruin-strewn environmental scene with moss and broken stone around the central focus.",
+  "outline": {
+    "continuity": "none",
+    "presence": "soft",
+    "thickness_px": 0
+  },
+  "palette": {
+    "dominant_colors": [
+      "#808060",
+      "#202020",
+      "#404040",
+      "#000000"
+    ],
+    "ramps": [
+      {
+        "colors": [
+          "#939377",
+          "#808060",
+          "#5c5c45"
+        ],
+        "name": "primary",
+        "role": "dominant"
+      },
+      {
+        "colors": [
+          "#3a3a3a",
+          "#202020",
+          "#171717"
+        ],
+        "name": "secondary",
+        "role": "shadow"
+      },
+      {
+        "colors": [
+          "#626262",
+          "#404040",
+          "#2b2b2b"
+        ],
+        "name": "accent",
+        "role": "accent"
+      }
+    ]
+  },
+  "reserved_gameplay_space": [
+    "center_walkable_cross",
+    "edge_debris"
+  ],
+  "silhouette": {
+    "bbox_usage": "wide",
+    "occupancy_band": "full_frame"
+  },
+  "source_path": "demo-assets/tile-ruins.png",
+  "theme_tags": [
+    "ruins",
+    "overgrowth"
+  ],
+  "version": 1
+}
