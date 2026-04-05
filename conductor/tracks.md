@@ -24,6 +24,11 @@ This file tracks all major tracks for the project.
 
 ---
 
+- [ ] **Track: Candidate generation and critic loop**
+  *Link: [./conductor/tracks/candidate_generation_critic_loop_20260405/](./conductor/tracks/candidate_generation_critic_loop_20260405/)*
+
+---
+
 - [ ] **Track: Scene layout and background assembler**
   *Link: [./conductor/tracks/scene_layout_background_assembler_20260405/](./conductor/tracks/scene_layout_background_assembler_20260405/)*
 
@@ -44,7 +49,7 @@ This file tracks all major tracks for the project.
 
 ---
 
-- [ ] **Track: Critic stack and auto-approval policy**
+- [ ] **Track: Critic calibration and auto-approval policy**
   *Link: [./conductor/tracks/critic_stack_auto_approval_20260405/](./conductor/tracks/critic_stack_auto_approval_20260405/)*
 
 ---

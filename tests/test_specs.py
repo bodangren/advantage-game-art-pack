@@ -25,6 +25,8 @@ class SpecLoadingTest(unittest.TestCase):
         self.assertEqual(spec.style_pack, "cute_chibi_v1")
         self.assertEqual(spec.frame.pivot, (32, 56))
         self.assertEqual(spec.animations["walk"], 3)
+        self.assertEqual(spec.pose.idle, ())
+        self.assertEqual(spec.fx.type, "poison_aura")
 
     def test_rejects_unsupported_style_pack(self) -> None:
         spec = load_spec(EXAMPLE_SPEC)
@@ -43,6 +45,26 @@ class SpecLoadingTest(unittest.TestCase):
             )
             with self.assertRaisesRegex(
                 SpecValidationError, "frame must be exactly 64x64"
+            ):
+                load_spec(invalid_path)
+
+    def test_rejects_missing_pose_block(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            invalid_path = Path(tmp_dir) / "missing_pose.json"
+            payload = json.loads(EXAMPLE_SPEC.read_text(encoding="utf-8"))
+            payload.pop("pose")
+            invalid_path.write_text(json.dumps(payload), encoding="utf-8")
+            with self.assertRaisesRegex(SpecValidationError, "pose"):
+                load_spec(invalid_path)
+
+    def test_rejects_unknown_top_level_key(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            invalid_path = Path(tmp_dir) / "unknown_key.json"
+            payload = json.loads(EXAMPLE_SPEC.read_text(encoding="utf-8"))
+            payload["unexpected"] = True
+            invalid_path.write_text(json.dumps(payload), encoding="utf-8")
+            with self.assertRaisesRegex(
+                SpecValidationError, "unexpected top-level key"
             ):
                 load_spec(invalid_path)
 

@@ -4,10 +4,14 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 import json
+import re
 from pathlib import Path
 from typing import Any
 
 from asf.specs import PaletteSpec, SpecValidationError
+
+
+HEX_COLOR_RE = re.compile(r"^#[0-9a-fA-F]{6}$")
 
 
 @dataclass(frozen=True)
@@ -35,7 +39,108 @@ class StylePack:
     palette_limits: int
     outline: OutlineRule
     animation_rules: AnimationRule
-    ramps: dict[str, list[str]]
+    lighting_direction: str
+    lighting_levels: int
+    shading_type: str
+    allowed_parts: tuple[str, ...]
+    ramps: dict[str, tuple[str, str, str]]
+
+    def ramp(self, ramp_name: str) -> tuple[str, str, str]:
+        """Returns the RGB ramp registered under ``ramp_name``."""
+
+        return self.ramps[ramp_name]
+
+
+def _load_json(path: Path) -> dict[str, Any]:
+    with path.open("r", encoding="utf-8") as handle:
+        payload = json.load(handle)
+    if not isinstance(payload, dict):
+        raise SpecValidationError("style pack must be a JSON object")
+    return payload
+
+
+def _require_mapping(payload: dict[str, Any], key: str) -> dict[str, Any]:
+    value = payload.get(key)
+    if not isinstance(value, dict):
+        raise SpecValidationError(f"'{key}' must be an object")
+    return value
+
+
+def _require_string(
+    payload: dict[str, Any], key: str, *, allow_empty: bool = False
+) -> str:
+    value = payload.get(key)
+    if not isinstance(value, str):
+        raise SpecValidationError(f"'{key}' must be a string")
+    if not allow_empty and not value:
+        raise SpecValidationError(f"'{key}' must be a non-empty string")
+    return value
+
+
+def _require_int(payload: dict[str, Any], key: str) -> int:
+    value = payload.get(key)
+    if not isinstance(value, int) or isinstance(value, bool):
+        raise SpecValidationError(f"'{key}' must be an integer")
+    return value
+
+
+def _require_bool(payload: dict[str, Any], key: str) -> bool:
+    value = payload.get(key)
+    if not isinstance(value, bool):
+        raise SpecValidationError(f"'{key}' must be a boolean")
+    return value
+
+
+def _require_string_list(payload: dict[str, Any], key: str) -> tuple[str, ...]:
+    value = payload.get(key)
+    if not isinstance(value, list) or not value:
+        raise SpecValidationError(f"'{key}' must be a non-empty array")
+    items: list[str] = []
+    for entry in value:
+        if not isinstance(entry, str) or not entry:
+            raise SpecValidationError(f"'{key}' must contain non-empty strings")
+        items.append(entry)
+    return tuple(items)
+
+
+def _require_exact_keys(
+    payload: dict[str, Any], expected: set[str], context: str
+) -> None:
+    missing = expected - payload.keys()
+    extra = payload.keys() - expected
+    if missing:
+        joined = ", ".join(sorted(missing))
+        raise SpecValidationError(f"{context} missing required key(s): {joined}")
+    if extra:
+        joined = ", ".join(sorted(extra))
+        raise SpecValidationError(f"{context} contains unexpected key(s): {joined}")
+
+
+def _parse_ramp(name: str, value: Any) -> tuple[str, str, str]:
+    if not isinstance(value, list) or len(value) != 3:
+        raise SpecValidationError(
+            f"style pack ramp '{name}' must contain exactly 3 colors"
+        )
+    colors: list[str] = []
+    for entry in value:
+        if not isinstance(entry, str) or not HEX_COLOR_RE.fullmatch(entry):
+            raise SpecValidationError(
+                f"style pack ramp '{name}' must contain valid hex color values"
+            )
+        colors.append(entry.lower())
+    return tuple(colors)  # type: ignore[return-value]
+
+
+def _load_ramps(payload: dict[str, Any]) -> dict[str, tuple[str, str, str]]:
+    ramps = payload.get("ramps")
+    if not isinstance(ramps, dict) or not ramps:
+        raise SpecValidationError("'ramps' must be a non-empty object")
+    result: dict[str, tuple[str, str, str]] = {}
+    for key, value in ramps.items():
+        if not isinstance(key, str) or not key:
+            raise SpecValidationError("style pack ramp names must be strings")
+        result[key] = _parse_ramp(key, value)
+    return result
 
 
 def load_style_pack(
@@ -49,39 +154,74 @@ def load_style_pack(
     path = root / f"{style_pack_name}.json"
     if not path.exists():
         raise SpecValidationError(f"unsupported style pack '{style_pack_name}'")
-    with path.open("r", encoding="utf-8") as handle:
-        payload = json.load(handle)
-    if not isinstance(payload, dict):
-        raise SpecValidationError("style pack must be a JSON object")
-    pack = StylePack(
-        name=str(payload["name"]),
-        palette_limits=int(payload["palette_limits"]),
-        outline=OutlineRule(
-            enabled=bool(payload["outline"]["enabled"]),
-            color=str(payload["outline"]["color"]),
-            thickness=int(payload["outline"]["thickness"]),
-        ),
-        animation_rules=AnimationRule(
-            max_offset=int(payload["animation_rules"]["max_offset"]),
-            max_rotation_deg=int(
-                payload["animation_rules"]["max_rotation_deg"]
-            ),
-        ),
-        ramps=_load_ramps(payload),
+
+    payload = _load_json(path)
+    _require_exact_keys(
+        payload,
+        {
+            "name",
+            "palette_limits",
+            "outline",
+            "lighting",
+            "shading",
+            "allowed_parts",
+            "animation_rules",
+            "ramps",
+        },
+        "style pack",
     )
+
+    name = _require_string(payload, "name")
+    if name != style_pack_name:
+        raise SpecValidationError(
+            f"style pack file '{path.name}' declares '{name}' instead of "
+            f"'{style_pack_name}'"
+        )
+
+    outline_payload = _require_mapping(payload, "outline")
+    _require_exact_keys(outline_payload, {"enabled", "color", "thickness"}, "outline")
+    outline = OutlineRule(
+        enabled=_require_bool(outline_payload, "enabled"),
+        color=_require_string(outline_payload, "color"),
+        thickness=_require_int(outline_payload, "thickness"),
+    )
+
+    lighting_payload = _require_mapping(payload, "lighting")
+    _require_exact_keys(lighting_payload, {"direction", "levels"}, "lighting")
+
+    shading_payload = _require_mapping(payload, "shading")
+    _require_exact_keys(shading_payload, {"type"}, "shading")
+
+    animation_payload = _require_mapping(payload, "animation_rules")
+    _require_exact_keys(
+        animation_payload, {"max_offset", "max_rotation_deg"}, "animation_rules"
+    )
+    animation_rules = AnimationRule(
+        max_offset=_require_int(animation_payload, "max_offset"),
+        max_rotation_deg=_require_int(animation_payload, "max_rotation_deg"),
+    )
+    if animation_rules.max_offset < 0 or animation_rules.max_rotation_deg < 0:
+        raise SpecValidationError("animation rules must be non-negative")
+
+    palette_limits = _require_int(payload, "palette_limits")
+    if palette_limits <= 0:
+        raise SpecValidationError("'palette_limits' must be positive")
+
+    allowed_parts = _require_string_list(payload, "allowed_parts")
+    ramps = _load_ramps(payload)
+
     for ramp_name in (palette.primary, palette.secondary, palette.accent):
-        if ramp_name not in pack.ramps:
+        if ramp_name not in ramps:
             raise SpecValidationError(f"unknown palette ramp '{ramp_name}'")
-    return pack
 
-
-def _load_ramps(payload: dict[str, Any]) -> dict[str, list[str]]:
-    ramps = payload.get("ramps")
-    if not isinstance(ramps, dict):
-        raise SpecValidationError("style pack ramps must be an object")
-    result: dict[str, list[str]] = {}
-    for key, value in ramps.items():
-        if not isinstance(key, str) or not isinstance(value, list):
-            raise SpecValidationError("style pack ramps must be string arrays")
-        result[key] = [str(entry) for entry in value]
-    return result
+    return StylePack(
+        name=name,
+        palette_limits=palette_limits,
+        outline=outline,
+        animation_rules=animation_rules,
+        lighting_direction=_require_string(lighting_payload, "direction"),
+        lighting_levels=_require_int(lighting_payload, "levels"),
+        shading_type=_require_string(shading_payload, "type"),
+        allowed_parts=allowed_parts,
+        ramps=ramps,
+    )

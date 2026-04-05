@@ -26,10 +26,14 @@ class ExporterTest(unittest.TestCase):
         spec = load_spec(EXAMPLE_SPEC)
         metadata = build_metadata(spec)
 
-        self.assertEqual(metadata["frames"]["idle"], [0, 1, 2])
-        self.assertEqual(metadata["frames"]["walk"], [3, 4, 5])
-        self.assertEqual(metadata["frames"]["action"], [6, 7, 8])
+        self.assertEqual(metadata["animation_frames"]["idle"], [0, 1, 2])
+        self.assertEqual(metadata["animation_frames"]["walk"], [3, 4, 5])
+        self.assertEqual(metadata["animation_frames"]["action"], [6, 7, 8])
+        self.assertEqual(metadata["frame_order"], ["idle", "walk", "action"])
+        self.assertEqual(metadata["frame_size"], [64, 64])
+        self.assertEqual(metadata["sheet_size"], [192, 192])
         self.assertEqual(metadata["pivot"], [32, 56])
+        self.assertEqual(metadata["pose"]["idle"], [])
 
     def test_export_writes_sheet_and_metadata(self) -> None:
         spec = load_spec(EXAMPLE_SPEC)

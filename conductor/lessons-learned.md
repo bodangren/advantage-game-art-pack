@@ -24,6 +24,9 @@
 
 - (2026-04-05, sprite_compiler_mvp_20260405) Treat sample PNGs as reference
   material while keeping runtime output generated entirely from code + specs.
+- (2026-04-05, candidate_generation_critic_loop_20260405) Demo assets are for
+  canon extraction and critic calibration, not direct pixel sources for newly
+  generated outputs.
 - (2026-04-05, review_queue_foundation_20260405) Separate primitive review
   from compiled-asset review so human approval remains bounded and auditable.
 
@@ -32,3 +35,9 @@
 - (2026-04-05, sprite_compiler_mvp_20260405) Split the roadmap into renderer
   foundation, richer part libraries, and batch orchestration to avoid scope
   collapse in the first slice.
+- (2026-04-05, candidate_generation_critic_loop_20260405) Treat quality as a
+  bounded loop: generate original variants, score them against canon and
+  novelty checks, then escalate only the survivors to review.
+- (2026-04-05, sprite_compiler_mvp_20260405) Keep pose blocks and export
+  metadata in the validation contract; that keeps the CLI and downstream
+  consumers aligned before rendering starts.
