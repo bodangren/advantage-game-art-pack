@@ -2,26 +2,28 @@
 
 ## Overview
 
-Build the critic stack and the decision policy that determines whether an asset
-can be auto-approved, must be reviewed by a human, or must be regenerated.
+Build the repo-wide critic calibration layer and decision policy that turns
+core candidate-level critic results into stable thresholds, review-facing
+explanations, and final routing decisions.
 
-The critic system must combine hard deterministic checks with softer style and
-semantic checks. It must also produce explanations that are useful in the
-review queue instead of opaque scores only.
+This track assumes the candidate-generation critic loop already produces
+structural, style, and novelty results for the core compiler families. It must
+not create a second competing scoring path.
 
 ## Dependencies
 
 - Recommended prior track: `style_canon_annotation_system_20260405`
+- Recommended prior track: `candidate_generation_critic_loop_20260405`
 - Recommended prior track: `review_queue_foundation_20260405`
 - Recommended prior track: `prompt_to_asset_program_planner_20260405`
-- Recommended prior track: `asset_family_compiler_framework_20260405`
 - Recommended prior track: `scene_layout_background_assembler_20260405`
+- Recommended prior track: `presentation_surfaces_ui_pipeline_20260405`
 
 ## Functional Requirements
 
-### FR1: Critic Result Schema
+### FR1: Shared Critic Result and Policy Schema
 
-- Define a shared result schema for all critics.
+- Define one shared result schema for all families and all policy decisions.
 - The schema must include:
   - critic name
   - pass/fail outcome
@@ -30,72 +32,82 @@ review queue instead of opaque scores only.
   - reasons
   - evidence pointers
   - recommended next action
+  - policy decision and policy version when aggregated
 
-### FR2: Structural Critic
+### FR2: Family Adapters and Coverage
 
-- Add deterministic structural checks for every family:
-  - pose-sheet dimensions and pivots
-  - tile seams and tile-grid integrity
-  - scene-manifest completeness
-  - file presence and manifest-path integrity
+- Reuse the core candidate-level critics across the remaining families that were
+  not covered by the first loop.
+- At minimum, add adapters or family-specific wrappers for:
+  - `background_scene`
+  - `parallax_layer_set`
+  - `cover_surface`
+  - `loading_surface`
+  - `ui_sheet`
+- All adapters must preserve one shared result envelope.
 
-### FR3: Style Critic
+### FR3: Calibration Workflow and Threshold Management
 
-- Compare outputs against the style canon using measurable heuristics.
-- At minimum, score:
-  - palette usage
-  - occupancy and silhouette size
-  - edge density
-  - highlight density
-  - contact-shadow area
-  - lighting consistency
+- Add a calibration workflow that replays critics against:
+  - the hand-authored demo corpus
+  - approved generated assets
+  - known failure fixtures
+- Threshold configs must support explicit target pass-rate bands such as `0.8`
+  or `0.9`, with per-family overrides stored in repo-tracked plain files.
 
-### FR4: Semantic and Novelty Critics
+### FR4: Auto-Approval and Review Routing Policy
 
-- Add a semantic critic that judges whether the output still reads as the
-  intended concept or asset family.
-- Add a novelty critic that detects:
-  - near duplicates of approved assets
-  - excessive drift from the approved reference cluster
-
-### FR5: Auto-Approval Policy
-
-- Combine critic outputs into one decision:
+- Combine critic outputs into one final decision:
   - `auto_approved`
   - `needs_review`
   - `regenerate`
-- The policy must be configurable with explicit thresholds.
+- The policy must explain which critic or threshold controlled the decision.
+- Reviewers must be able to override the policy while preserving audit history.
 
-### FR6: Review Queue Integration
+### FR5: Review and Batch Integration
 
-- Push critic results and final decisions into the review system.
-- Review pages must display explanations instead of only raw numbers.
+- Push critic results, calibrated thresholds, and policy decisions into the
+  review system and batch manifests.
+- Review pages and batch reports must display explanations instead of only raw
+  numbers.
+
+### FR6: Duplicate and Drift Monitoring
+
+- Surface near duplicates and excessive drift not only within one candidate set
+  but across the broader approved library over time.
+- Provide a repeatable recalibration command so threshold changes are auditable.
 
 ## Non-Functional Requirements
 
-- Structural critics must remain deterministic.
-- Thresholds and policy config must live in plain files, not code-only constants.
-- Reviewers must be able to understand why a candidate was escalated.
+- Thresholds and policy config must live in plain files, not code-only
+  constants.
+- Reviewers must be able to understand why a candidate was escalated or
+  auto-approved.
+- Calibration outputs must be reproducible for the same approved set and config
+  files.
 
 ## Deliverables
 
-- Critic result schema
-- Structural critic modules
-- Style critic modules
-- Semantic and novelty critic adapters
-- Decision-policy configuration
-- Integration with review candidate records
-- Tests for critic outputs and decision aggregation
+- Shared critic and policy-result schema
+- Family adapter modules for scene and presentation families
+- Threshold configuration files and calibration reports
+- Policy aggregator and override workflow
+- Integration with review candidates and batch manifests
+- Tests for calibration, aggregation, and overrides
 
 ## Acceptance Criteria
 
-- Structural failures are caught before an asset can be auto-approved.
-- Style scoring uses the canon rather than ad hoc thresholds.
+- A calibration report exists for the demo corpus and approved-set fixtures
+  under repo-tracked threshold configs.
+- Scene and presentation families can emit critic results using the same shared
+  envelope as core runtime assets.
 - The decision policy routes candidates into all three lanes when appropriate.
-- Review pages can display critic explanations and recommended next actions.
-- Duplicate or near-duplicate candidates are identified before approval.
+- Review pages and batch manifests display explanations and recommended next
+  actions.
+- Overrides preserve both the original policy result and the human decision.
 
 ## Out of Scope
 
-- Full batch orchestration
-- Human review UI implementation beyond integrating existing review pages
+- Re-implementing the core candidate-generation critic loop
+- Human review UI redesign beyond integration hooks
+- Multi-machine release orchestration

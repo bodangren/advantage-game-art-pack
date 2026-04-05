@@ -10,7 +10,7 @@ separate deterministic compilers for the main non-scene asset families:
 - `tileset`
 
 Each compiler must consume structured asset programs and approved primitives
-instead of hand-coded special cases.
+instead of hand-coded special cases or direct demo-asset pixel reuse.
 
 ## Dependencies
 
@@ -35,6 +35,8 @@ instead of hand-coded special cases.
   - equipment attachment points
   - palette selection
   - idle, walk, and action frame plans
+  - deterministic `variant_id` or equivalent bounded search controls for later
+    candidate loops
   - bounded pose deltas
   - directional variants such as `facing_up`, `facing_down`, and
     `facing_camera`
@@ -49,6 +51,8 @@ instead of hand-coded special cases.
   - glow bursts
   - slimes and other blob-like entities that fit the prop/FX family better
   - gates, castles, runes, and other interactables with row-based state changes
+- Prop/FX programs must expose bounded variation controls that can produce
+  multiple original candidates from the same program.
 
 ### FR4: Tileset Compiler
 
@@ -59,12 +63,14 @@ instead of hand-coded special cases.
   - trim modules
   - clutter tiles
   - damage/variation passes bounded by theme rules
+  - variant-safe clutter or damage controls that later critics can score
 
 ### FR5: Common Output Manifests
 
 - All compilers must export a common manifest envelope that records:
   - input program path or hash
   - compiler family and version
+  - variant ID or candidate-control inputs
   - primitive IDs used
   - output file paths
   - dimensions and grid data
@@ -73,6 +79,7 @@ instead of hand-coded special cases.
 
 - Rendering must remain deterministic for unchanged inputs.
 - Compiler outputs must be auditable and diffable in git.
+- Compilers must not read demo-asset pixels directly at render time.
 - The framework must be extensible so later tracks can add the
   `background_scene` compiler cleanly.
 
@@ -90,6 +97,9 @@ instead of hand-coded special cases.
 - A directional or row-semantic sheet sample program compiles deterministically.
 - A prop/FX sample program compiles deterministically.
 - A tileset sample program compiles deterministically.
+- The same program and `variant_id` compile deterministically, and different
+  valid variant IDs can yield bounded distinct outputs without bypassing
+  primitives.
 - All outputs include a common manifest envelope with primitive provenance.
 - The old MVP path is either removed or wrapped behind the new compiler interface.
 

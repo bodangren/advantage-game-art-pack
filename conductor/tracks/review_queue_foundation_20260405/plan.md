@@ -13,7 +13,7 @@
 - [ ] Task: Implement the database schema, repositories, and seed fixtures
   - [ ] Add migrations or schema bootstrap code
   - [ ] Add repository helpers for queue reads and decision writes
-  - [ ] Seed the database with representative primitive and compiled-asset fixtures
+  - [ ] Seed the database with representative primitive and compiled-asset fixtures, including critic summaries and variant lineage
 
 ## Phase 2: API and pages
 
@@ -28,17 +28,17 @@
 - [ ] Task: Write tests for queue-page and asset-detail rendering
   - [ ] Cover queue filters and empty states
   - [ ] Cover primitive detail pages and compiled-asset detail pages
-  - [ ] Cover rendering of source program JSON and critic summaries
+  - [ ] Cover rendering of source program JSON, critic summaries, and nearest-reference evidence
 - [ ] Task: Implement the server-rendered review UI with filters and decision forms
   - [ ] Build queue pages optimized for image scanning
-  - [ ] Build detail pages that show image, provenance, source program, and decision history
+  - [ ] Build detail pages that show image, provenance, candidate lineage, source program, critic summary, and decision history
   - [ ] Add forms or actions for the required review operations
 
 ## Phase 3: Integrations and reviewer workflow
 
 - [ ] Task: Implement primitive-promotion and variant-request actions in the UI
   - [ ] Link primitive promotion to the future promotion pipeline instead of duplicating logic
-  - [ ] Store variant-request reasons so the planner can consume them later
+  - [ ] Store variant-request reasons so the candidate loop or planner can consume them later
   - [ ] Distinguish `approved`, `rejected`, `needs_variant`, and `promoted` states cleanly
 - [ ] Task: Run verification and document the reviewer workflow
   - [ ] Run persistence, API, and UI tests

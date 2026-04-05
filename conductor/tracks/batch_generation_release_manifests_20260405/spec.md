@@ -11,6 +11,7 @@ mini-game series.
 
 - Recommended prior track: `review_queue_foundation_20260405`
 - Recommended prior track: `prompt_to_asset_program_planner_20260405`
+- Recommended prior track: `candidate_generation_critic_loop_20260405`
 - Recommended prior track: `critic_stack_auto_approval_20260405`
 - Recommended prior track: `scene_layout_background_assembler_20260405`
 
@@ -25,6 +26,7 @@ mini-game series.
   - theme pack
   - planner version
   - compiler versions
+  - candidate-loop version
   - critic policy version
   - output root
   - retry policy
@@ -34,8 +36,8 @@ mini-game series.
 - Orchestrate the following stages in order:
   - brief intake
   - planning
-  - compilation
-  - criticism
+  - compiler-driven candidate generation
+  - critic scoring and candidate selection
   - review routing
   - final export bundling
 
@@ -73,6 +75,8 @@ mini-game series.
 - Batch state must survive process restarts.
 - Release bundles must be reproducible from their manifests and version tags.
 - Failures must preserve enough context for a later rerun or reviewer audit.
+- Batch state must preserve rejected-candidate lineage as well as the final
+  selected outputs.
 
 ## Deliverables
 

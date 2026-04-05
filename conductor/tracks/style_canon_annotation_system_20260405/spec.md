@@ -5,7 +5,7 @@
 Create the formal style canon for the mini-game asset series. The goal of this
 track is to convert the current `demo-assets/` corpus into machine-readable
 annotations, family-specific style rules, and derived metrics that future
-generators, critics, and planners can consume.
+generators, candidate loops, critics, and planners can consume.
 
 This track does not generate new gameplay assets. It defines the reference
 system that all later tracks must obey.
@@ -59,6 +59,9 @@ system that all later tracks must obey.
   - contact-shadow area
   - highlight density
   - frame-to-frame drift for pose sheets
+- Metrics must also include family-level baseline summaries and reference-cluster
+  statistics that later critic calibration can consume without rescanning the
+  raw corpus.
 - Store the extracted metrics in a machine-readable canon file.
 
 ### FR4: Family-Specific Style Guides
@@ -102,6 +105,8 @@ system that all later tracks must obey.
   repeated runs with unchanged inputs.
 - Validation fails if an annotation omits a required field or uses an invalid
   family name.
+- The canon artifacts expose per-family baseline summaries and gold-reference
+  clusters that later critic calibration can consume directly.
 - The family guides clearly distinguish character-sheet, prop/FX, tile, and
   background-scene rules as well as parallax, UI-sheet, and
   presentation-surface rules.

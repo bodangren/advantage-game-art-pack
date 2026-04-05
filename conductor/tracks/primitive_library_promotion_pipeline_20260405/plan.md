@@ -27,7 +27,7 @@
 - [ ] Task: Implement the import and promotion CLI with provenance tracking
   - [ ] Add commands to crop/import candidates from source assets
   - [ ] Add promotion commands that move approved candidates into the library
-  - [ ] Persist source path, source region, and promotion timestamps
+  - [ ] Persist source path, source region, promotion timestamps, variant IDs, and critic-summary snapshots for generated candidates
 
 ## Phase 4: Seed library and consumer APIs
 
@@ -42,7 +42,7 @@
 - [ ] Task: Write the promotion SOP and verification fixtures
   - [ ] Document the exact steps to import, review, and promote a primitive
   - [ ] Add a fixture set that exercises the full promotion path end to end
-  - [ ] Ensure the SOP distinguishes reviewed primitives from draft candidates
+  - [ ] Ensure the SOP distinguishes demo-seeded primitives, critic-passed generated candidates, and draft candidates
 - [ ] Task: Run verification and capture the remaining primitive backlog
   - [ ] Run the primitive validation command
   - [ ] Rebuild `primitive_manifest.json` and verify deterministic output

@@ -42,6 +42,7 @@
 - [ ] Task: Add sample library and ruins scene manifests and verify outputs
   - [ ] Create one sample scene manifest per template
   - [ ] Compile both scenes and save their placement manifests
+  - [ ] Ensure the rendered outputs and manifests are compatible with later candidate-loop ingestion
   - [ ] Confirm the reserved gameplay zones remain usable in both outputs
 - [ ] Task: Run verification and document composition guardrails
   - [ ] Run the scene-layout and export tests

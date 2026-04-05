@@ -4,7 +4,7 @@
 
 - [ ] Task: Define the batch-job schema, artifact layout, and version-manifest format
   - [ ] Define the required batch-job fields and version tags
-  - [ ] Define where planner manifests, compiled outputs, critic results, and review decisions live on disk
+  - [ ] Define where planner manifests, candidate outputs, critic results, selected outputs, and review decisions live on disk
   - [ ] Define the release-bundle manifest format
 
 ## Phase 2: Runner and state persistence
@@ -15,17 +15,17 @@
   - [ ] Cover resuming a partially completed batch from persisted state
 - [ ] Task: Implement the batch job runner and persistent job-state storage
   - [ ] Add typed models for batch jobs and per-asset execution state
-  - [ ] Persist planner outputs, compile outputs, critic results, and review-routing decisions
+  - [ ] Persist planner outputs, candidate outputs, selected results, critic results, and review-routing decisions
   - [ ] Ensure accepted items are not regenerated on resume
 
 ## Phase 3: End-to-end orchestration
 
-- [ ] Task: Write tests for planner-to-compiler-to-critic orchestration
+- [ ] Task: Write tests for planner-to-candidate-loop-to-review orchestration
   - [ ] Cover successful end-to-end flow for at least one asset in each major family
-  - [ ] Cover planner failure, compile failure, critic failure, and review-required outcomes
+  - [ ] Cover planner failure, compile failure, candidate-loop failure, and review-required outcomes
   - [ ] Cover deterministic artifact paths and state transitions
 - [ ] Task: Implement the orchestration pipeline with bounded retries and error capture
-  - [ ] Execute planner, compiler, critic, and review-routing stages in sequence
+  - [ ] Execute planner, compiler, candidate-loop, critic-policy, and review-routing stages in sequence
   - [ ] Apply retry policy only where configured
   - [ ] Persist structured failure reasons for later inspection
 

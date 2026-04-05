@@ -24,10 +24,12 @@
 - [ ] Task: Write tests for style metric extraction and canon generation
   - [ ] Cover deterministic metric extraction on a fixed sample asset
   - [ ] Cover aggregation across multiple assets in the same family
+  - [ ] Cover per-family baseline summary output used by later critic calibration
   - [ ] Cover regeneration of `style_canon.json` without drift
 - [ ] Task: Implement the style metric extractor and canon generator
   - [ ] Add image-analysis helpers for occupancy, edge density, palette counts, and highlight density
   - [ ] Aggregate family-level metrics into a single canon artifact
+  - [ ] Emit per-family baseline ranges and gold-reference cluster summaries for later critic tuning
   - [ ] Add a CLI command to rebuild the canon from `demo-assets/` and annotations
 
 ## Phase 3: Seed data and documentation
@@ -39,6 +41,7 @@
 - [ ] Task: Write the family-specific style guides and reference manifests
   - [ ] Create one markdown guide per family using the generated canon and annotations
   - [ ] Include examples of allowed motifs, forbidden drift, and composition notes
+  - [ ] Document acceptable drift boundaries and obvious no-copy failures around gold references
   - [ ] Document the expected use of gold references in later planner and critic tracks
 - [ ] Task: Run verification and record remaining annotation gaps
   - [ ] Run the annotation validation command

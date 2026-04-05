@@ -67,6 +67,8 @@ fragments into the approved primitive library with provenance intact.
   - where did this primitive come from
   - who approved it
   - which source asset or generated candidate produced it
+  - which variant lineage or critic summary was attached when a generated
+    candidate was promoted
 
 ## Non-Functional Requirements
 
@@ -90,7 +92,8 @@ fragments into the approved primitive library with provenance intact.
 - Importing a primitive without required metadata fails with a clear error.
 - Rebuilding the primitive manifest from disk produces deterministic output.
 - Query helpers can retrieve primitives by family and tag.
-- Promotion preserves source file, source region, and approval metadata.
+- Promotion preserves source file, source region, approval metadata, and
+  candidate critic provenance when applicable.
 
 ## Out of Scope
 

@@ -17,6 +17,7 @@ The review system must support separate queues for:
 - Recommended prior track: `style_canon_annotation_system_20260405`
 - Recommended prior track: `primitive_library_promotion_pipeline_20260405`
 - Recommended prior track: `asset_family_compiler_framework_20260405`
+- Recommended prior track: `candidate_generation_critic_loop_20260405`
 
 ## Functional Requirements
 
@@ -28,9 +29,10 @@ The review system must support separate queues for:
   - family
   - source brief or source manifest
   - source program
+  - candidate group ID, variant ID, and attempt count when applicable
   - rendered files
-  - critic scores when present
-  - nearest references when present
+  - critic scores
+  - nearest references
   - current status
   - decision history
 
@@ -65,6 +67,8 @@ The review system must support separate queues for:
 
 - Expose integration points so future planner, critic, and batch-generation
   tracks can create reviewable candidates without bypassing the queue.
+- Candidate-generation runs must be able to create or update reviewable
+  compiled-asset candidates without inventing a parallel queue.
 
 ## Non-Functional Requirements
 

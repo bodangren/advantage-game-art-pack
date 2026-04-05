@@ -47,4 +47,5 @@
 - [ ] Task: Run verification and add one downstream-aligned sample pack
   - [ ] Run all presentation/UI validation and generation tests
   - [ ] Generate one sample set aligned to a known downstream title family such as `dragon-flight`, `dragon-rider`, or `wizard-vs-zombie`
+  - [ ] Verify the sample manifests can be consumed by the later candidate-generation and critic-loop flow
   - [ ] Document which surface families remain unmet for other downstream titles

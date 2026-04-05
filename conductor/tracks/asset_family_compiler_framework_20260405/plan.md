@@ -3,7 +3,7 @@
 ## Phase 1: Registry and schemas
 
 - [ ] Task: Define the compiler registry interface and family program schemas
-  - [ ] Define the shared compiler interface and output envelope
+  - [ ] Define the shared compiler interface, variant controls, and output envelope
   - [ ] Define separate JSON schemas for `character_sheet`, `prop_or_fx_sheet`, and `tileset`
   - [ ] Define the repo paths for sample programs and compiled outputs
 - [ ] Task: Write tests for compiler registry behavior and program validation
@@ -20,11 +20,13 @@
 - [ ] Task: Write tests for the primitive-based character compiler
   - [ ] Cover primitive lookup and anchor usage
   - [ ] Cover deterministic pose-sheet generation with idle, walk, and action frames
+  - [ ] Cover stable output for the same variant ID and bounded differences across different variant IDs
   - [ ] Cover directional variants and row-based state layouts
   - [ ] Cover failure when required primitives or anchors are missing
 - [ ] Task: Implement the primitive-based character sheet compiler
   - [ ] Replace ad hoc character drawing with primitive assembly and palette application
   - [ ] Support equipment attachment and bounded pose deltas
+  - [ ] Support deterministic variant IDs or candidate knobs consumed by later critic loops
   - [ ] Support directional sheet variants and nonstandard row semantics
   - [ ] Preserve the existing metadata contract where still applicable
 
@@ -34,10 +36,11 @@
   - [ ] Cover static and animated sheet layouts
   - [ ] Cover state-row layouts such as correct/incorrect, charged, or destroyed
   - [ ] Cover palette application, glow layers, and deterministic motion deltas
-  - [ ] Cover manifest output and primitive provenance
+  - [ ] Cover manifest output, primitive provenance, and variant controls
 - [ ] Task: Implement the prop/FX compiler
   - [ ] Compile books, orbs, spirits, and similar assets from approved primitives
   - [ ] Support configurable sheet layouts such as `3x1` and `3x3`
+  - [ ] Expose bounded variant controls for later candidate search without breaking determinism
   - [ ] Export manifests and metadata aligned with the shared envelope
 - [ ] Task: Write tests for the tileset compiler
   - [ ] Cover tile-grid dimensions and seam-safe output
@@ -46,11 +49,11 @@
 - [ ] Task: Implement the tileset compiler
   - [ ] Assemble floor, wall, trim, and clutter tiles from approved primitives
   - [ ] Apply bounded variation rules without changing determinism
-  - [ ] Export tile manifests that later scene assembly can consume
+  - [ ] Export tile manifests and variant metadata that later scene assembly and candidate scoring can consume
 
 ## Phase 4: Verification and extension notes
 
 - [ ] Task: Run verification and document compiler extension points
   - [ ] Run all compiler validation and determinism tests
-  - [ ] Compile one sample program for each supported family
+  - [ ] Compile one sample program for each supported family, including at least two variant IDs for one family
   - [ ] Document the extension hooks required for the later background-scene compiler
