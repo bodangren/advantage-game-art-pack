@@ -2,10 +2,18 @@
 
 ## Phase 1: Scene schema and templates
 
-- [ ] Task: Define the scene manifest schema, layout templates, and dependency rules
-  - [ ] Define the required fields for canvas, theme, template, zones, lighting, and output options
-  - [ ] Define how scene manifests reference approved tiles, props, and motifs
-  - [ ] Document dependency rules so invalid template/asset combinations fail early
+- [x] Task: Define the scene manifest schema, layout templates, and dependency rules
+  - [x] Define the required fields for canvas, theme, template, zones, lighting, and output options
+  - [x] Define how scene manifests reference approved tiles, props, and motifs
+  - [x] Document dependency rules so invalid template/asset combinations fail early
+
+> Phase 1 complete (2026-04-09). Implemented:
+> - `SceneProgram` dataclass with typed fields for all manifest elements
+> - `CanvasSpec`, `GameplayZone`, `LightingSpec`, `TileSource`, `PropPlacement`, `FocalMotif`, `DecalPass`, `OutputSpec`
+> - Supported templates: `library_room`, `ruins_courtyard`
+> - Supported lighting directions: north, northeast, east, southeast, south, southwest, west, northwest
+> - Validation errors with field-level context for all schema violations
+> - Tests in `tests/test_scene_layout.py` (13 tests, all passing)
 
 ## Phase 2: Layout resolution
 
