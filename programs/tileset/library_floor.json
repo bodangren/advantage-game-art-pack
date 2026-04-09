@@ -1,0 +1,47 @@
+{
+  "family": "tileset",
+  "program_id": "library_floor",
+  "program_version": 1,
+  "style_pack": "cute_chibi_v1",
+  "primitive_ids": [
+    "floor_module_core"
+  ],
+  "variant_controls": {
+    "variant_id": "library_floor_v1",
+    "candidate_index": 0,
+    "search_budget": 4
+  },
+  "layout": {
+    "mode": "tile_atlas",
+    "dimensions": [
+      128,
+      128
+    ],
+    "grid": [
+      8,
+      8
+    ],
+    "tile_size": [
+      16,
+      16
+    ]
+  },
+  "tile_kind": "floor",
+  "theme": "library",
+  "modules": [
+    "floor",
+    "wall",
+    "trim",
+    "clutter"
+  ],
+  "variation_rules": {
+    "damage_passes": 1,
+    "clutter_tiles": 4,
+    "bounded": true
+  },
+  "palette": {
+    "primary": "iron",
+    "secondary": "cloth_brown",
+    "accent": "gold_trim"
+  }
+}

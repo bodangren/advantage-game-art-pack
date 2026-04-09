@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "family": "prop_or_fx_sheet",
+  "critic_config_version": 1,
+  "target_pass_band": [0.8, 0.9],
+  "reference_layout_types": ["strip_3x1"],
+  "structural": {
+    "minimum_occupancy_ratio": 0.03,
+    "minimum_edge_density": 0.03
+  },
+  "style": {
+    "minimum_score": 0.52,
+    "metric_weights": {
+      "color_count": 0.18,
+      "dominant_color_count": 0.12,
+      "non_transparent_occupancy_ratio": 0.22,
+      "edge_density": 0.18,
+      "contact_shadow_area": 0.12,
+      "highlight_density": 0.12,
+      "frame_to_frame_drift": 0.06
+    }
+  },
+  "novelty": {
+    "minimum_score": 0.18,
+    "near_duplicate_similarity": 0.94
+  }
+}

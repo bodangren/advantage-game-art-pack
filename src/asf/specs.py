@@ -182,10 +182,9 @@ def _parse_pose_animation(payload: dict[str, Any], key: str) -> tuple[int, ...]:
     return tuple(value)
 
 
-def load_spec(path: str | Path) -> SpriteSpec:
-    """Loads and validates a sprite specification from disk."""
+def load_spec_payload(payload: dict[str, Any]) -> SpriteSpec:
+    """Loads and validates a sprite specification from an object payload."""
 
-    payload = _load_json(Path(path))
     _require_exact_keys(payload, ALLOWED_TOP_LEVEL_KEYS, "top-level spec")
 
     frame_payload = _require_mapping(payload, "frame")
@@ -275,3 +274,10 @@ def load_spec(path: str | Path) -> SpriteSpec:
         pose=pose,
         fx=fx,
     )
+
+
+def load_spec(path: str | Path) -> SpriteSpec:
+    """Loads and validates a sprite specification from disk."""
+
+    payload = _load_json(Path(path))
+    return load_spec_payload(payload)

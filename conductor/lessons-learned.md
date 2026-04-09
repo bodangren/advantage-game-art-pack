@@ -36,3 +36,6 @@
 - (2026-04-05, style_canon_annotation_system_20260405) Keep annotation tags human-readable and alpha-aware; bucket colors without treating transparency as black, and keep optional frame-grid or notes fields explicit in validation.
 - (2026-04-05, style_canon_annotation_system_20260405) Family guides read better when the canon exposes both representative swatches and a short narrative palette family note instead of raw hex values alone.
 - (2026-04-05, primitive_library_promotion_pipeline_20260405) Seeded primitives can reference approved demo assets directly through relative source paths, which avoids copying image binaries until the promotion workflow needs them.
+- (2026-04-05, asset_family_compiler_framework_20260405) Approved primitive images are the fastest path to high-quality smoke tests; keep the renderer deterministic, but treat the primitive crop as the visual source of truth.
+- (2026-04-05, asset_family_compiler_framework_20260405) Keep `variant_id` in the manifest envelope and normalize paths from the repo root so output hashes and audit trails stay stable across temp output directories.
+- (2026-04-05, candidate_generation_critic_loop_20260405) Calibration should read the tracked `canon/style_canon.json` snapshot and cache reference thumbnails; rebuilding canon from source assets for every report is too slow.

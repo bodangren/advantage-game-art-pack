@@ -1,0 +1,48 @@
+{
+  "family": "prop_or_fx_sheet",
+  "program_id": "book_stack",
+  "program_version": 1,
+  "style_pack": "cute_chibi_v1",
+  "primitive_ids": [
+    "book_stack_core"
+  ],
+  "variant_controls": {
+    "variant_id": "book_stack_v1",
+    "candidate_index": 0,
+    "search_budget": 3
+  },
+  "layout": {
+    "mode": "strip_3x1",
+    "dimensions": [
+      192,
+      64
+    ],
+    "grid": [
+      3,
+      1
+    ],
+    "frame_size": [
+      64,
+      64
+    ]
+  },
+  "asset_kind": "book",
+  "state_rows": [
+    "closed",
+    "open",
+    "glow"
+  ],
+  "motion": {
+    "max_offset": 1,
+    "max_rotation_deg": 0,
+    "glow_layers": 1
+  },
+  "effects": {
+    "type": "sparkle"
+  },
+  "palette": {
+    "primary": "cloth_brown",
+    "secondary": "gold_trim",
+    "accent": "iron"
+  }
+}

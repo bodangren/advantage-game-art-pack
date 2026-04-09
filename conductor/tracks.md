@@ -12,12 +12,12 @@ This file tracks all major tracks for the project.
 
 ---
 
-- [ ] **Track: Asset family compiler framework**
+- [x] **Track: Asset family compiler framework**
   *Link: [./conductor/tracks/asset_family_compiler_framework_20260405/](./conductor/tracks/asset_family_compiler_framework_20260405/)*
 
 ---
 
-- [ ] **Track: Candidate generation and critic loop**
+- [x] **Track: Candidate generation and critic loop**
   *Link: [./conductor/tracks/candidate_generation_critic_loop_20260405/](./conductor/tracks/candidate_generation_critic_loop_20260405/)*
 
 ---

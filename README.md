@@ -12,10 +12,12 @@ fragments.
 
 - Strict JSON spec loading into typed Python dataclasses
 - One reusable style pack: `cute_chibi_v1`
-- Deterministic rendering for slime and humanoid chibi archetypes
+- Deterministic rendering for legacy specs and compiler-family programs
 - Structural validation for dimensions, pivots, and palette bounds
 - CLI export flow for example assets
 - Primitive-library registry, manifest rebuilds, and query helpers
+- Family compiler registry, shared program loader, and manifest envelopes
+- Checked-in sample programs for `character_sheet`, `prop_or_fx_sheet`, and `tileset`
 - Conductor project docs and MVP track scaffold
 
 ## Repository Layout
@@ -36,6 +38,9 @@ python3 -m compileall src
 python3 -m asf.cli --spec examples/swamp_slime.json --output outputs/swamp_slime
 python3 -m asf.cli --spec examples/knight_guard.json --output outputs/knight_guard
 python3 -m asf.cli --spec examples/ragged_prisoner.json --output outputs/ragged_prisoner
+python3 -m asf.cli compile --program programs/character_sheet/knight_guard.json --output-dir outputs/character_sheet/knight_guard
+python3 -m asf.cli compile --program programs/prop_or_fx_sheet/book_stack.json --output-dir outputs/prop_or_fx/book_stack
+python3 -m asf.cli compile --program programs/tileset/library_floor.json --output-dir outputs/tileset/library_floor
 python3 -m asf.cli primitives import --repo-root . --source demo-assets/book_3x1_sheet.png --metadata tests/fixtures/primitives/book_stack_draft.json
 python3 -m asf.cli primitives promote --repo-root . --candidate-dir library/candidates/prop_sheet/book_stack_core --approved-by codex-reviewer --promoted-at 2026-04-05T03:00:00Z
 python3 -m asf.cli primitives validate --repo-root .
@@ -47,6 +52,9 @@ python3 -m asf.cli primitives rebuild --repo-root .
 - `outputs/swamp_slime/`
 - `outputs/knight_guard/`
 - `outputs/ragged_prisoner/`
+- `outputs/character_sheet/knight_guard/`
+- `outputs/prop_or_fx/book_stack/`
+- `outputs/tileset/library_floor/`
 
 ## MVP Limits
 

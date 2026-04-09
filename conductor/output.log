@@ -1,0 +1,50 @@
+[0m
+> build · minimax-m2.7
+[0m
+[0m→ [0mRead conductor/autonomous_prompt.md
+[0m→ [0mSkill "conductor"
+[0m→ [0mRead conductor/tech-debt.md
+[0m→ [0mRead conductor/tracks.md
+[0m→ [0mRead conductor/lessons-learned.md
+[0m✗ [0mread failed
+[91m[1mError: [0mFile not found: /home/daniel-bo/Desktop/pixel-art-generator/conductor/current_directive.md
+[0m
+[0m$ [0mgit log -1 --oneline
+3ce4862 chore(conductor): archive style canon track
+[0m
+[0m$ [0mgit status
+On branch main
+Your branch is ahead of 'origin/main' by 5 commits.
+  (use "git push" to publish your local commits)
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   README.md
+	modified:   asf/__init__.py
+	modified:   conductor/lessons-learned.md
+	modified:   conductor/tech-debt.md
+	modified:   conductor/tracks.md
+	modified:   conductor/tracks/asset_family_compiler_framework_20260405/metadata.json
+	modified:   conductor/tracks/asset_family_compiler_framework_20260405/plan.md
+	modified:   conductor/tracks/candidate_generation_critic_loop_20260405/metadata.json
+	modified:   conductor/tracks/candidate_generation_critic_loop_20260405/plan.md
+	modified:   src/asf/__init__.py
+	modified:   src/asf/cli.py
+	modified:   src/asf/specs.py
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	conductor/autonomous_prompt.md
+	conductor/code_styleguides/
+	conductor/output.log
+	conductor/review-prompt.md
+	critic_thresholds/
+	programs/
+	src/asf/candidate_loop.py
+	src/asf/compilers.py
+	tests/test_candidate_loop.py
+	tests/test_compilers.py
+
+no changes added to commit (use "git add" and/or "git commit -a")
+[0m
