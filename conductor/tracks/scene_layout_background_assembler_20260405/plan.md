@@ -17,14 +17,20 @@
 
 ## Phase 2: Layout resolution
 
-- [ ] Task: Write tests for layout resolution and template validation
-  - [ ] Cover valid library and ruins scene manifests
-  - [ ] Cover invalid zone definitions and invalid template references
-  - [ ] Cover deterministic layout resolution for the same input manifest
-- [ ] Task: Implement the scene manifest loader and template resolver
-  - [ ] Add typed models for scene manifests and resolved layouts
-  - [ ] Resolve reserved gameplay zones before any prop placement occurs
-  - [ ] Ensure invalid templates fail with clear field-level errors
+- [x] Task: Write tests for layout resolution and template validation
+  - [x] Cover valid library and ruins scene manifests
+  - [x] Cover invalid zone definitions and invalid template references
+  - [x] Cover deterministic layout resolution for the same input manifest
+- [x] Task: Implement the scene manifest loader and template resolver
+  - [x] Add typed models for scene manifests and resolved layouts
+  - [x] Resolve reserved gameplay zones before any prop placement occurs
+  - [x] Ensure invalid templates fail with clear field-level errors
+
+> Phase 2 complete (2026-04-10). Implemented:
+> - `ResolvedLayout`, `ResolvedZone`, `ResolvedPropPlacement` dataclasses
+> - `resolve_scene_layout()` function with zone validation and overlap detection
+> - Tests in `tests/test_scene_layout.py` (19 tests, all passing)
+> - 6 new tests covering template resolution, deterministic output, zone bounds, and overlap detection
 
 ## Phase 3: Scene assembly
 

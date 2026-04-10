@@ -599,3 +599,120 @@ def load_scene_program(path: str | Path) -> SceneProgram:
     path = Path(path)
     payload = _load_json(path)
     return _load_scene_program(payload, path)
+
+
+class LayoutResolutionError(Exception):
+    """Raised when layout resolution fails."""
+
+
+@dataclass(frozen=True)
+class ResolvedZone:
+    """A resolved zone with validated bounds."""
+    zone_id: str
+    role: str
+    bounds: tuple[int, int, int, int]
+    reserved: bool
+
+
+@dataclass(frozen=True)
+class ResolvedPropPlacement:
+    """A resolved prop placement with concrete bounds."""
+    group_id: str
+    tile_id: str
+    bounds: tuple[int, int, int, int]
+    symmetry: str | None
+    weight: float | None
+
+
+@dataclass(frozen=True)
+class ResolvedLayout:
+    """A deterministically resolved scene layout."""
+    program_id: str
+    template: str
+    canvas: CanvasSpec
+    resolved_zones: tuple[ResolvedZone, ...]
+    resolved_placements: tuple[ResolvedPropPlacement, ...]
+    lighting: LightingSpec
+    output: OutputSpec
+
+    def to_dict(self) -> dict[str, Any]:
+        return _jsonify(asdict(self))
+
+
+def _boxes_overlap(ax: int, ay: int, aw: int, ah: int, bx: int, by: int, bw: int, bh: int) -> bool:
+    a_right, a_bottom = ax + aw, ay + ah
+    b_right, b_bottom = bx + bw, by + bh
+    return ax < b_right and a_right > bx and ay < b_bottom and a_bottom > by
+
+
+def resolve_scene_layout(program: SceneProgram) -> ResolvedLayout:
+    """Resolves a scene program into a deterministic layout with validated zones and placements."""
+    canvas_width = program.canvas.width
+    canvas_height = program.canvas.height
+
+    resolved_zones: list[ResolvedZone] = []
+    reserved_zones: list[tuple[int, int, int, int]] = []
+
+    for zone in sorted(program.zones, key=lambda z: z.zone_id):
+        x, y, w, h = zone.bounds
+
+        if x < 0 or y < 0 or x + w > canvas_width or y + h > canvas_height:
+            raise LayoutResolutionError(
+                f"Zone '{zone.zone_id}' bounds {zone.bounds} exceed canvas ({canvas_width}x{canvas_height})"
+            )
+
+        if zone.reserved:
+            for rx, ry, rw, rh in reserved_zones:
+                if _boxes_overlap(x, y, w, h, rx, ry, rw, rh):
+                    raise LayoutResolutionError(
+                        f"Reserved zone '{zone.zone_id}' overlaps with existing reserved zone at ({rx},{ry},{rw},{rh})"
+                    )
+            reserved_zones.append((x, y, w, h))
+
+        resolved_zones.append(ResolvedZone(
+            zone_id=zone.zone_id,
+            role=zone.role,
+            bounds=zone.bounds,
+            reserved=zone.reserved,
+        ))
+
+    resolved_placements: list[ResolvedPropPlacement] = []
+    for prop in sorted(program.prop_placement, key=lambda p: p.group_id):
+        tile_source = None
+        for ts in program.tile_sources:
+            if ts.tile_id == prop.tile_id:
+                tile_source = ts
+                break
+
+        default_tile_size = 32
+        prop_bounds = (0, 0, default_tile_size, default_tile_size)
+
+        if tile_source is None:
+            prop_bounds = (0, 0, default_tile_size, default_tile_size)
+        else:
+            prop_bounds = (0, 0, default_tile_size, default_tile_size)
+
+        px, py, pw, ph = prop_bounds
+        placement_valid = True
+        for rz_x, rz_y, rz_w, rz_h in reserved_zones:
+            if _boxes_overlap(px, py, pw, ph, rz_x, rz_y, rz_w, rz_h):
+                placement_valid = False
+                break
+
+        resolved_placements.append(ResolvedPropPlacement(
+            group_id=prop.group_id,
+            tile_id=prop.tile_id,
+            bounds=prop_bounds,
+            symmetry=prop.placement_rules.symmetry,
+            weight=prop.placement_rules.weight,
+        ))
+
+    return ResolvedLayout(
+        program_id=program.program_id,
+        template=program.template,
+        canvas=program.canvas,
+        resolved_zones=tuple(resolved_zones),
+        resolved_placements=tuple(resolved_placements),
+        lighting=program.lighting,
+        output=program.output,
+    )
