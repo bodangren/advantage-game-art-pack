@@ -39,6 +39,17 @@ class RendererTest(unittest.TestCase):
 
         self.assertEqual(sheet.size, (192, 192))
 
+    def test_renders_visual_output_for_human_review(self) -> None:
+        spec = load_spec(EXAMPLE_SPEC)
+        style_pack = load_style_pack(spec.style_pack, spec.palette, STYLE_PACKS)
+
+        sheet = render_sheet(spec, style_pack)
+        output_path = ROOT / "outputs" / "test_render_swamp_slime.png"
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        sheet.save(output_path)
+
+        self.assertTrue(output_path.exists())
+
 
 if __name__ == "__main__":
     unittest.main()
