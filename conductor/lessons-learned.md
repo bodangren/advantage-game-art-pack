@@ -40,3 +40,4 @@
 - (2026-04-05, asset_family_compiler_framework_20260405) Keep `variant_id` in the manifest envelope and normalize paths from the repo root so output hashes and audit trails stay stable across temp output directories.
 - (2026-04-05, candidate_generation_critic_loop_20260405) Calibration should read the tracked `canon/style_canon.json` snapshot and cache reference thumbnails; rebuilding canon from source assets for every report is too slow.
 - (2026-04-09, scene_layout_background_assembler_20260405) Use strict required-keys validation combined with separate optional-keys allowlist; this catches typos early while keeping optional fields manageable.
+- (2026-04-10, scene_layout_background_assembler_20260405) Layout resolver should validate zone bounds against canvas dimensions and detect reserved-zone overlaps before any prop placement; deterministic resolution relies on sorted iteration order for zones and placements.
