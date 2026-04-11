@@ -34,14 +34,20 @@
 
 ## Phase 3: Scene assembly
 
-- [ ] Task: Write tests for tile/prop placement and negative-space reservation
-  - [ ] Cover rejection of placements that intrude into reserved gameplay zones
-  - [ ] Cover stable placement order under repeated runs
-  - [ ] Cover missing tile/prop references and overlap guardrails
+- [x] Task: Write tests for tile/prop placement and negative-space reservation
+  - [x] Cover rejection of placements that intrude into reserved gameplay zones
+  - [x] Cover stable placement order under repeated runs
+  - [x] Cover missing tile/prop references and overlap guardrails
 - [ ] Task: Implement the deterministic scene assembly pipeline
   - [ ] Assemble wall, floor, trim, focal motifs, and clutter from approved assets
   - [ ] Enforce template-specific placement rules and composition weights
   - [ ] Export a placement manifest alongside the rendered background
+
+> Phase 3 tests complete (2026-04-11). Added:
+> - `test_placement_in_gameplay_zone_rejected`: verifies prop placements that overlap reserved zones raise LayoutResolutionError
+> - `test_stable_placement_order_under_repeated_runs`: verifies 5 consecutive runs produce identical group_id ordering
+> - `test_missing_tile_reference_uses_default_bounds`: verifies unresolved tile references fall back to 32x32 default bounds
+> - Fixed bug: `resolve_scene_layout` now raises LayoutResolutionError instead of silently allowing intrusions
 
 ## Phase 4: Lighting, decals, and verification
 
