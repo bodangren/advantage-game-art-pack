@@ -503,6 +503,102 @@ class LayoutResolverTest(unittest.TestCase):
                 if _boxes_overlap(prop_box, play_zone):
                     self.fail(f"Prop placement {prop.group_id} overlaps with reserved gameplay zone")
 
+    def test_placement_in_gameplay_zone_rejected(self) -> None:
+        from asf.scene_layout import resolve_scene_layout, LayoutResolutionError
+        manifest = {
+            "family": "background_scene",
+            "program_id": "test_intrusion",
+            "program_version": 1,
+            "template": "library_room",
+            "canvas": {"width": 256, "height": 192},
+            "theme": "library",
+            "subtheme": "ancient",
+            "style_pack": "cute_chibi_v1",
+            "zones": [
+                {"zone_id": "play_area", "role": "gameplay", "bounds": [0, 0, 64, 64], "reserved": True},
+            ],
+            "tile_sources": [
+                {"tile_id": "floor_tile", "family": "tileset", "primitive_id": "stone_floor_01"},
+            ],
+            "prop_placement": [
+                {"group_id": "intruding_shelf", "tile_id": "floor_tile", "placement_rules": {"weight": 0.5}},
+            ],
+            "lighting": {"global_direction": "northwest", "ambient_strength": 0.8},
+            "output": {"variant_id": None},
+        }
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            path = Path(tmp_dir) / "scene.json"
+            path.write_text(json.dumps(manifest), encoding="utf-8")
+            program = load_scene_program(path)
+            with self.assertRaisesRegex(
+                LayoutResolutionError, "intrudes into reserved|overlaps.*reserved"
+            ):
+                resolve_scene_layout(program)
+
+    def test_stable_placement_order_under_repeated_runs(self) -> None:
+        from asf.scene_layout import resolve_scene_layout
+        manifest = {
+            "family": "background_scene",
+            "program_id": "test_stable_order",
+            "program_version": 1,
+            "template": "library_room",
+            "canvas": {"width": 256, "height": 192},
+            "theme": "library",
+            "subtheme": "ancient",
+            "style_pack": "cute_chibi_v1",
+            "zones": [
+                {"zone_id": "play_area", "role": "gameplay", "bounds": [128, 128, 64, 64], "reserved": True},
+            ],
+            "tile_sources": [
+                {"tile_id": "wall_tile", "family": "tileset", "primitive_id": "wall_01"},
+                {"tile_id": "floor_tile", "family": "tileset", "primitive_id": "floor_01"},
+            ],
+            "prop_placement": [
+                {"group_id": "alpha_group", "tile_id": "wall_tile", "placement_rules": {"weight": 0.5}},
+                {"group_id": "beta_group", "tile_id": "floor_tile", "placement_rules": {"weight": 0.3}},
+                {"group_id": "gamma_group", "tile_id": "wall_tile", "placement_rules": {"weight": 0.2}},
+            ],
+            "lighting": {"global_direction": "northwest", "ambient_strength": 0.8},
+            "output": {"variant_id": None},
+        }
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            path = Path(tmp_dir) / "scene.json"
+            path.write_text(json.dumps(manifest), encoding="utf-8")
+            runs = []
+            for _ in range(5):
+                program = load_scene_program(path)
+                resolved = resolve_scene_layout(program)
+                ids = [p.group_id for p in resolved.resolved_placements]
+                runs.append(ids)
+            self.assertEqual(len(set(tuple(r) for r in runs)), 1)
+
+    def test_missing_tile_reference_uses_default_bounds(self) -> None:
+        from asf.scene_layout import resolve_scene_layout
+        manifest = {
+            "family": "background_scene",
+            "program_id": "test_missing_ref",
+            "program_version": 1,
+            "template": "library_room",
+            "canvas": {"width": 256, "height": 192},
+            "theme": "library",
+            "subtheme": "ancient",
+            "style_pack": "cute_chibi_v1",
+            "zones": [],
+            "tile_sources": [],
+            "prop_placement": [
+                {"group_id": "orphan_prop", "tile_id": "nonexistent_tile", "placement_rules": {}},
+            ],
+            "lighting": {"global_direction": "northwest", "ambient_strength": 0.8},
+            "output": {"variant_id": None},
+        }
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            path = Path(tmp_dir) / "scene.json"
+            path.write_text(json.dumps(manifest), encoding="utf-8")
+            program = load_scene_program(path)
+            resolved = resolve_scene_layout(program)
+            self.assertEqual(len(resolved.resolved_placements), 1)
+            self.assertEqual(resolved.resolved_placements[0].group_id, "orphan_prop")
+
 
 def _boxes_overlap(a: tuple[int, int, int, int], b: tuple[int, int, int, int]) -> bool:
     ax, ay, aw, ah = a

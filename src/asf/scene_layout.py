@@ -693,11 +693,11 @@ def resolve_scene_layout(program: SceneProgram) -> ResolvedLayout:
             prop_bounds = (0, 0, default_tile_size, default_tile_size)
 
         px, py, pw, ph = prop_bounds
-        placement_valid = True
         for rz_x, rz_y, rz_w, rz_h in reserved_zones:
             if _boxes_overlap(px, py, pw, ph, rz_x, rz_y, rz_w, rz_h):
-                placement_valid = False
-                break
+                raise LayoutResolutionError(
+                    f"Prop placement '{prop.group_id}' intrudes into reserved zone"
+                )
 
         resolved_placements.append(ResolvedPropPlacement(
             group_id=prop.group_id,
