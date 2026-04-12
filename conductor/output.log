@@ -492,3 +492,76 @@ tests/test_style_packs.py::StylePackLoadingTest::test_rejects_invalid_ramp_color
 ======================== 72 passed in 87.64s (0:01:27) =========================
 [0m
 All 72 tests pass. Let me commit and push:
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && git add -A && git commit -m "Scene layout Phase 3: deterministic scene assembly pipeline
+
+Implements assemble_scene() for background_scene programs:
+- SceneAssemblyResult with image, placement manifest, debug overlay
+- PlacementManifest with zone, prop, motif, and decal entries
+- Deterministic lighting pass with direction offsets
+- Debug overlay rendering for zone/placement visualization
+- Tiles assembled from approved tile_sources via library primitives
+
+Adds 3 new dataclasses and 4 helper functions:
+- PlacementManifestEntry, PlacementManifest, SceneAssemblyResult
+- _apply_lighting_pass, _render_debug_overlay, _resolve_tile_image
+
+Tests: 72 passing"
+[main 375f6b3] Scene layout Phase 3: deterministic scene assembly pipeline
+ 2 files changed, 678 insertions(+), 1 deletion(-)
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && git push
+To https://github.com/bodangren/advantage-game-art-pack.git
+   50e70a0..375f6b3  main -> main
+[0m
+Now let me update the plan.md to mark Phase 3 complete:
+[0m← [0mEdit conductor/tracks/scene_layout_background_assembler_20260405/plan.md
+Index: /home/daniel-bo/Desktop/pixel-art-generator/conductor/tracks/scene_layout_background_assembler_20260405/plan.md
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/conductor/tracks/scene_layout_background_assembler_20260405/plan.md
++++ /home/daniel-bo/Desktop/pixel-art-generator/conductor/tracks/scene_layout_background_assembler_20260405/plan.md
+@@ -37,18 +37,20 @@
+ - [x] Task: Write tests for tile/prop placement and negative-space reservation
+   - [x] Cover rejection of placements that intrude into reserved gameplay zones
+   - [x] Cover stable placement order under repeated runs
+   - [x] Cover missing tile/prop references and overlap guardrails
+-- [ ] Task: Implement the deterministic scene assembly pipeline
+-  - [ ] Assemble wall, floor, trim, focal motifs, and clutter from approved assets
+-  - [ ] Enforce template-specific placement rules and composition weights
+-  - [ ] Export a placement manifest alongside the rendered background
++- [x] Task: Implement the deterministic scene assembly pipeline
++  - [x] Assemble wall, floor, trim, focal motifs, and clutter from approved assets
++  - [x] Enforce template-specific placement rules and composition weights
++  - [x] Export a placement manifest alongside the rendered background
+ 
+-> Phase 3 tests complete (2026-04-11). Added:
+-> - `test_placement_in_gameplay_zone_rejected`: verifies prop placements that overlap reserved zones raise LayoutResolutionError
+-> - `test_stable_placement_order_under_repeated_runs`: verifies 5 consecutive runs produce identical group_id ordering
+-> - `test_missing_tile_reference_uses_default_bounds`: verifies unresolved tile references fall back to 32x32 default bounds
+-> - Fixed bug: `resolve_scene_layout` now raises LayoutResolutionError instead of silently allowing intrusions
++> Phase 3 complete (2026-04-12). Implemented:
++> - `assemble_scene()` function producing `SceneAssemblyResult` with image, placement manifest, and debug overlay
++> - `PlacementManifest` dataclass with typed entries for zones, props, motifs, decals
++> - Deterministic lighting pass using direction offsets and ambient strength
++> - Debug overlay rendering showing zone bounds and prop placements
++> - Tiles resolved from approved tile_sources via library primitives
++> - Tests: 72 passing
+ 
+ ## Phase 4: Lighting, decals, and verification
+ 
+ - [ ] Task: Write tests for lighting passes, decal passes, and manifest export
+
+[0m
+[0m← [0mEdit conductor/lessons-learned.md
+Index: /home/daniel-bo/Desktop/pixel-art-generator/conductor/lessons-learned.md
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/conductor/lessons-learned.md
++++ /home/daniel-bo/Desktop/pixel-art-generator/conductor/lessons-learned.md
+@@ -41,4 +41,6 @@
+ - (2026-04-05, candidate_generation_critic_loop_20260405) Calibration should read the tracked `canon/style_canon.json` snapshot and cache reference thumbnails; rebuilding canon from source assets for every report is too slow.
+ - (2026-04-09, scene_layout_background_assembler_20260405) Use strict required-keys validation combined with separate optional-keys allowlist; this catches typos early while keeping optional fields manageable.
+ - (2026-04-10, scene_layout_background_assembler_20260405) Layout resolver should validate zone bounds against canvas dimensions and detect reserved-zone overlaps before any prop placement; deterministic resolution relies on sorted iteration order for zones and placements.
+ - (2026-04-11, scene_layout_background_assembler_20260405) Prop intrusions into reserved zones must raise errors rather than silently succeeding; a boolean guard flag that is set but never checked is indistinguishable from no check at all.
++- (2026-04-12, scene_layout_background_assembler_20260405) Scene assembly should resolve tile images lazily at render time rather than eagerly loading all primitives into memory; this keeps the assembly pipeline deterministic while avoiding large memory spikes.
++- (2026-04-12, scene_layout_background_assembler_20260405) Keep debug overlays as a separate RGBA image composited on top rather than mutating the base scene; this preserves the clean render for export while enabling visual inspection.
+
+[0m
