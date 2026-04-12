@@ -23,3 +23,472 @@ Changes not staged for commit:
 
 no changes added to commit (use "git add" and/or "git commit -a")
 [0m
+[0m$ [0mgit add conductor/output.log && git commit -m "Checkpoint: autonomous run"
+[main 4b5c565] Checkpoint: autonomous run
+ 1 file changed, 5 insertions(+), 7 deletions(-)
+[0m
+[0m→ [0mRead conductor/tracks/scene_layout_background_assembler_20260405/spec.md
+[0m→ [0mRead conductor/tracks/scene_layout_background_assembler_20260405/plan.md
+Picking up **Phase 3: Scene assembly** implementation. Let me explore the codebase structure.
+[0m✱ [0mGlob "**/scene_layout/**/*.py"[90m 0 matches[0m
+[0m✱ [0mGlob "**/background*.py"[90m 0 matches[0m
+[0m
+[0m$ [0mls -la
+total 80
+drwxrwxr-x 16 daniel-bo daniel-bo 4096 Apr 10 06:47 .
+drwxr-xr-x 31 daniel-bo daniel-bo 4096 Apr 12 06:54 ..
+drwxrwxr-x  3 daniel-bo daniel-bo 4096 Apr  5 08:58 asf
+drwxrwxr-x  4 daniel-bo daniel-bo 4096 Apr  5 10:36 canon
+drwxrwxr-x  5 daniel-bo daniel-bo 4096 Apr 10 11:00 conductor
+drwxrwxr-x  2 daniel-bo daniel-bo 4096 Apr  5 13:46 critic_thresholds
+drwxrwxr-x  2 daniel-bo daniel-bo 4096 Apr  5 09:00 demo-assets
+drwxrwxr-x  2 daniel-bo daniel-bo 4096 Apr  5 08:56 examples
+drwxrwxr-x  8 daniel-bo daniel-bo 4096 Apr 12 12:31 .git
+-rw-rw-r--  1 daniel-bo daniel-bo   48 Apr  5 08:58 .gitignore
+drwxrwxr-x  3 daniel-bo daniel-bo 4096 Apr  5 11:18 library
+drwxrwxr-x  8 daniel-bo daniel-bo 4096 Apr 10 07:12 outputs
+drwxrwxr-x  5 daniel-bo daniel-bo 4096 Apr  5 12:28 programs
+-rw-rw-r--  1 daniel-bo daniel-bo  371 Apr  5 08:52 pyproject.toml
+drwxrwxr-x  3 daniel-bo daniel-bo 4096 Apr 10 06:47 .pytest_cache
+-rw-rw-r--  1 daniel-bo daniel-bo 2912 Apr  5 12:40 README.md
+-rw-rw-r--  1 daniel-bo daniel-bo  368 Apr  5 08:57 sitecustomize.py
+drwxrwxr-x  3 daniel-bo daniel-bo 4096 Apr  5 08:52 src
+drwxrwxr-x  2 daniel-bo daniel-bo 4096 Apr  5 08:52 style_packs
+drwxrwxr-x  4 daniel-bo daniel-bo 4096 Apr  9 12:32 tests
+[0m
+[0m✱ [0mGlob "src/**/*.py"[90m 12 matches[0m
+[0m✱ [0mGlob "programs/**/*.py"[90m 0 matches[0m
+[0m→ [0mRead src/asf/scene_layout.py
+[0m✱ [0mGlob "tests/**/*.py"[90m 9 matches[0m
+[0m→ [0mRead tests/test_scene_layout.py
+[0m
+[0m$ [0mls -la programs/ outputs/
+outputs/:
+total 40
+drwxrwxr-x  8 daniel-bo daniel-bo 4096 Apr 10 07:12 .
+drwxrwxr-x 16 daniel-bo daniel-bo 4096 Apr 10 06:47 ..
+drwxrwxr-x  2 daniel-bo daniel-bo 4096 Apr  5 08:56 knight_guard
+drwxrwxr-x  2 daniel-bo daniel-bo 4096 Apr  5 08:58 knight_guard_plain
+drwxrwxr-x  2 daniel-bo daniel-bo 4096 Apr  5 08:56 ragged_prisoner
+drwxrwxr-x  2 daniel-bo daniel-bo 4096 Apr  5 08:58 ragged_prisoner_plain
+drwxrwxr-x  2 daniel-bo daniel-bo 4096 Apr  5 08:56 swamp_slime
+drwxrwxr-x  2 daniel-bo daniel-bo 4096 Apr  5 08:58 swamp_slime_plain
+-rw-rw-r--  1 daniel-bo daniel-bo 5955 Apr 11 12:34 test_render_swamp_slime.png
+
+programs/:
+total 20
+drwxrwxr-x  5 daniel-bo daniel-bo 4096 Apr  5 12:28 .
+drwxrwxr-x 16 daniel-bo daniel-bo 4096 Apr 10 06:47 ..
+drwxrwxr-x  2 daniel-bo daniel-bo 4096 Apr  5 12:28 character_sheet
+drwxrwxr-x  2 daniel-bo daniel-bo 4096 Apr  5 12:28 prop_or_fx_sheet
+drwxrwxr-x  2 daniel-bo daniel-bo 4096 Apr  5 12:28 tileset
+[0m
+[0m→ [0mRead src/asf/primitives.py
+[0m
+[0m$ [0mls -la library/primitives/ 2>/dev/null || ls -la library/
+total 40
+drwxrwxr-x 10 daniel-bo daniel-bo 4096 Apr  5 11:03 .
+drwxrwxr-x  3 daniel-bo daniel-bo 4096 Apr  5 11:18 ..
+drwxrwxr-x  3 daniel-bo daniel-bo 4096 Apr  5 11:03 background_scene
+drwxrwxr-x  3 daniel-bo daniel-bo 4096 Apr  5 11:03 character_sheet
+drwxrwxr-x  3 daniel-bo daniel-bo 4096 Apr  5 11:03 fx_sheet
+drwxrwxr-x  3 daniel-bo daniel-bo 4096 Apr  5 11:03 parallax_layer
+drwxrwxr-x  3 daniel-bo daniel-bo 4096 Apr  5 11:03 presentation_surface
+drwxrwxr-x  3 daniel-bo daniel-bo 4096 Apr  5 11:03 prop_sheet
+drwxrwxr-x  3 daniel-bo daniel-bo 4096 Apr  5 11:03 tileset
+drwxrwxr-x  3 daniel-bo daniel-bo 4096 Apr  5 11:03 ui_sheet
+[0m
+[0m$ [0mls -la library/primitives/background_scene/
+total 12
+drwxrwxr-x  3 daniel-bo daniel-bo 4096 Apr  5 11:03 .
+drwxrwxr-x 10 daniel-bo daniel-bo 4096 Apr  5 11:03 ..
+drwxrwxr-x  2 daniel-bo daniel-bo 4096 Apr  5 11:03 library_scene_core
+[0m
+[0m✱ [0mGlob "programs/**/*.json"[90m 3 matches[0m
+[0m
+[0m$ [0mls -la library/primitives/background_scene/library_scene_core/
+total 12
+drwxrwxr-x 2 daniel-bo daniel-bo 4096 Apr  5 11:03 .
+drwxrwxr-x 3 daniel-bo daniel-bo 4096 Apr  5 11:03 ..
+-rw-rw-r-- 1 daniel-bo daniel-bo 1083 Apr  5 11:03 primitive.json
+[0m
+[0m→ [0mRead programs/tileset/library_floor.json
+[0m→ [0mRead library/primitives/background_scene/library_scene_core/primitive.json
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && python -m pytest tests/test_scene_layout.py -v 2>&1 | head -60
+/bin/bash: line 1: python: command not found
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && python3 -m pytest tests/test_scene_layout.py -v 2>&1 | head -60
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.0.3, pluggy-1.6.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/daniel-bo/Desktop/pixel-art-generator
+configfile: pyproject.toml
+plugins: cov-7.1.0
+collecting ... collected 22 items
+
+tests/test_scene_layout.py::SceneManifestSchemaTest::test_loads_minimal_valid_scene_manifest PASSED [  4%]
+tests/test_scene_layout.py::SceneManifestSchemaTest::test_rejects_extra_toplevel_fields PASSED [  9%]
+tests/test_scene_layout.py::SceneManifestSchemaTest::test_rejects_invalid_ambient_strength PASSED [ 13%]
+tests/test_scene_layout.py::SceneManifestSchemaTest::test_rejects_invalid_canvas_dimensions PASSED [ 18%]
+tests/test_scene_layout.py::SceneManifestSchemaTest::test_rejects_invalid_lighting_direction PASSED [ 22%]
+tests/test_scene_layout.py::SceneManifestSchemaTest::test_rejects_missing_required_fields PASSED [ 27%]
+tests/test_scene_layout.py::SceneManifestSchemaTest::test_rejects_unknown_family PASSED [ 31%]
+tests/test_scene_layout.py::SceneManifestSchemaTest::test_rejects_unknown_template PASSED [ 36%]
+tests/test_scene_layout.py::SceneManifestSchemaTest::test_supported_templates_are_library_and_ruins PASSED [ 40%]
+tests/test_scene_layout.py::SceneManifestSchemaTest::test_zones_require_rectangular_bounds PASSED [ 45%]
+tests/test_scene_layout.py::SceneManifestZoneTest::test_decorative_zone_is_not_reserved_by_default PASSED [ 50%]
+tests/test_scene_layout.py::SceneManifestZoneTest::test_gameplay_zone_requires_role PASSED [ 54%]
+tests/test_scene_layout.py::SceneManifestPropPlacementTest::test_prop_placement_requires_tile_reference PASSED [ 59%]
+tests/test_scene_layout.py::LayoutResolverTest::test_deterministic_resolution_same_input PASSED [ 63%]
+tests/test_scene_layout.py::LayoutResolverTest::test_library_room_template_resolves_valid_manifest PASSED [ 68%]
+tests/test_scene_layout.py::LayoutResolverTest::test_missing_tile_reference_uses_default_bounds PASSED [ 72%]
+tests/test_scene_layout.py::LayoutResolverTest::test_overlapping_reserved_zones_fails PASSED [ 77%]
+tests/test_scene_layout.py::LayoutResolverTest::test_placement_in_gameplay_zone_rejected PASSED [ 81%]
+tests/test_scene_layout.py::LayoutResolverTest::test_prop_placement_respects_gameplay_zones PASSED [ 86%]
+tests/test_scene_layout.py::LayoutResolverTest::test_ruins_courtyard_template_resolves_valid_manifest PASSED [ 90%]
+tests/test_scene_layout.py::LayoutResolverTest::test_stable_placement_order_under_repeated_runs PASSED [ 95%]
+tests/test_scene_layout.py::LayoutResolverTest::test_zone_outside_canvas_fails PASSED [100%]
+
+============================== 22 passed in 0.19s ==============================
+[0m
+[0m→ [0mRead src/asf/renderer.py
+Now I'll implement the Phase 3 assembly pipeline. Let me add the `assemble_scene` function and related types to `scene_layout.py`:
+[0m
+[0m← [0mEdit src/asf/scene_layout.py
+Index: /home/daniel-bo/Desktop/pixel-art-generator/src/asf/scene_layout.py
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/src/asf/scene_layout.py
++++ /home/daniel-bo/Desktop/pixel-art-generator/src/asf/scene_layout.py
+@@ -638,8 +638,41 @@
+     def to_dict(self) -> dict[str, Any]:
+         return _jsonify(asdict(self))
+ 
+ 
++@dataclass(frozen=True)
++class PlacementManifestEntry:
++    """A single entry in the placement manifest."""
++    entry_type: str
++    tile_id: str | None
++    primitive_id: str | None
++    bounds: tuple[int, int, int, int]
++    role: str | None = None
++
++
++@dataclass(frozen=True)
++class PlacementManifest:
++    """Machine-readable placement manifest exported with the scene."""
++    program_id: str
++    template: str
++    canvas: tuple[int, int]
++    zones: tuple[PlacementManifestEntry, ...]
++    placements: tuple[PlacementManifestEntry, ...]
++    focal_motifs: tuple[PlacementManifestEntry, ...]
++    decal_passes: tuple[PlacementManifestEntry, ...]
++
++    def to_dict(self) -> dict[str, Any]:
++        return _jsonify(asdict(self))
++
++
++@dataclass(frozen=True)
++class SceneAssemblyResult:
++    """Result of assembling a scene program into an image and manifest."""
++    image: Image.Image
++    placement_manifest: PlacementManifest
++    debug_overlay: Image.Image | None
++
++
+ def _boxes_overlap(ax: int, ay: int, aw: int, ah: int, bx: int, by: int, bw: int, bh: int) -> bool:
+     a_right, a_bottom = ax + aw, ay + ah
+     b_right, b_bottom = bx + bw, by + bh
+     return ax < b_right and a_right > bx and ay < b_bottom and a_bottom > by
+
+[0m
+Now let me add the assembly functions at the end of the file:
+[0m→ [0mRead src/asf/scene_layout.py[90m [offset=700][0m
+[0m
+[0m← [0mEdit src/asf/scene_layout.py
+Index: /home/daniel-bo/Desktop/pixel-art-generator/src/asf/scene_layout.py
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/src/asf/scene_layout.py
++++ /home/daniel-bo/Desktop/pixel-art-generator/src/asf/scene_layout.py
+@@ -748,4 +748,179 @@
+         resolved_placements=tuple(resolved_placements),
+         lighting=program.lighting,
+         output=program.output,
+     )
++
++
++LIGHTING_DIRECTION_OFFSETS: dict[str, tuple[int, int]] = {
++    "north": (0, -1),
++    "northeast": (1, -1),
++    "east": (1, 0),
++    "southeast": (1, 1),
++    "south": (0, 1),
++    "southwest": (-1, 1),
++    "west": (-1, 0),
++    "northwest": (-1, -1),
++}
++
++
++def _resolve_tile_image(
++    tile_id: str,
++    tile_sources: tuple[TileSource, ...],
++    repo_root: Path,
++) -> Image.Image | None:
++    for ts in tile_sources:
++        if ts.tile_id == tile_id:
++            primitive_path = repo_root / "library" / "primitives" / ts.family / ts.primitive_id / "source.png"
++            if primitive_path.exists():
++                return Image.open(primitive_path).convert("RGBA")
++            primitive_json_path = repo_root / "library" / "primitives" / ts.family / ts.primitive_id / "primitive.json"
++            if primitive_json_path.exists():
++                return None
++    return None
++
++
++def _apply_lighting_pass(
++    image: Image.Image,
++    lighting: LightingSpec,
++) -> Image.Image:
++    result = image.copy()
++    directional = LIGHTING_DIRECTION_OFFSETS.get(lighting.global_direction, (0, -1))
++    dx, dy = directional
++    overlay = Image.new("RGBA", image.size, (0, 0, 0, 0))
++    darken = int((1.0 - lighting.ambient_strength) * 80)
++    if darken > 0:
++        dark_layer = Image.new("RGBA", image.size, (0, 0, 0, darken))
++        overlay.alpha_composite(dark_layer)
++    result.alpha_composite(overlay)
++    return result
++
++
++def _render_debug_overlay(
++    canvas_width: int,
++    canvas_height: int,
++    resolved_layout: ResolvedLayout,
++) -> Image.Image:
++    debug_img = Image.new("RGBA", (canvas_width, canvas_height), (0, 0, 0, 0))
++    draw = ImageDraw.Draw(debug_img)
++    for zone in resolved_layout.resolved_zones:
++        x, y, w, h = zone.bounds
++        color = (255, 100, 100, 120) if zone.reserved else (100, 255, 100, 120)
++        draw.rectangle([x, y, x + w, y + h], outline=color, width=2)
++        draw.text((x + 2, y + 2), zone.zone_id, fill=(255, 255, 255, 200))
++    for prop in resolved_layout.resolved_placements:
++        x, y, w, h = prop.bounds
++        draw.rectangle([x, y, x + w, y + h], outline=(100, 100, 255, 150), width=1)
++        draw.text((x + 1, y + 1), prop.group_id, fill=(200, 200, 255, 180))
++    return debug_img
++
++
++def assemble_scene(
++    program: SceneProgram,
++    resolved_layout: ResolvedLayout,
++    *,
++    repo_root: Path | None = None,
++) -> SceneAssemblyResult:
++    """Assembles a scene program into a rendered image and placement manifest.
++
++    Args:
++        program: The validated scene program.
++        resolved_layout: The deterministically resolved layout.
++        repo_root: Root directory for resolving primitive paths. Defaults to cwd.
++
++    Returns:
++        SceneAssemblyResult containing the rendered image, placement manifest,
++        and optional debug overlay.
++    """
++    if repo_root is None:
++        repo_root = Path.cwd()
++
++    canvas_width = program.canvas.width
++    canvas_height = program.canvas.height
++    scene_image = Image.new("RGBA", (canvas_width, canvas_height), (0, 0, 0, 0))
++
++    zone_entries: list[PlacementManifestEntry] = []
++    for zone in resolved_layout.resolved_zones:
++        zone_entries.append(PlacementManifestEntry(
++            entry_type="zone",
++            tile_id=None,
++            primitive_id=None,
++            bounds=zone.bounds,
++            role=zone.role,
++        ))
++
++    placement_entries: list[PlacementManifestEntry] = []
++    for prop in resolved_layout.resolved_placements:
++        tile_source = None
++        for ts in program.tile_sources:
++            if ts.tile_id == prop.tile_id:
++                tile_source = ts
++                break
++        primitive_id = tile_source.primitive_id if tile_source else None
++        tile_img = _resolve_tile_image(prop.tile_id, program.tile_sources, repo_root)
++        if tile_img is not None:
++            prop_x, prop_y, prop_w, prop_h = prop.bounds
++            resized = tile_img.resize((prop_w, prop_h), Image.Resampling.NEAREST)
++            scene_image.alpha_composite(resized, (prop_x, prop_y))
++        placement_entries.append(PlacementManifestEntry(
++            entry_type="prop_placement",
++            tile_id=prop.tile_id,
++            primitive_id=primitive_id,
++            bounds=prop.bounds,
++            role=None,
++        ))
++
++    motif_entries: list[PlacementManifestEntry] = []
++    for motif in program.focal_motifs:
++        motif_x, motif_y = motif.position
++        tile_img = _resolve_tile_image(motif.tile_id, program.tile_sources, repo_root)
++        if tile_img is not None:
++            mw, mh = tile_img.size
++            scene_image.alpha_composite(tile_img, (motif_x, motif_y))
++        motif_entries.append(PlacementManifestEntry(
++            entry_type="focal_motif",
++            tile_id=motif.tile_id,
++            primitive_id=None,
++            bounds=(motif_x, motif_y, motif_x + 32, motif_y + 32),
++            role=motif.motif_id,
++        ))
++
++    decal_entries: list[PlacementManifestEntry] = []
++    for decal in program.decal_passes:
++        tile_img = _resolve_tile_image(decal.tile_id, program.tile_sources, repo_root)
++        if tile_img is not None:
++            dw, dh = tile_img.size
++            coverage_count = max(1, int(decal.coverage * 4))
++            for i in range(coverage_count):
++                dx = (i * 73) % (canvas_width - dw)
++                dy = (i * 47) % (canvas_height - dh)
++                scene_image.alpha_composite(tile_img, (dx, dy))
++        decal_entries.append(PlacementManifestEntry(
++            entry_type="decal_pass",
++            tile_id=decal.tile_id,
++            primitive_id=None,
++            bounds=(0, 0, dw if tile_img else 32, dh if tile_img else 32),
++            role=decal.decal_type,
++        ))
++
++    scene_image = _apply_lighting_pass(scene_image, program.lighting)
++
++    placement_manifest = PlacementManifest(
++        program_id=program.program_id,
++        template=program.template,
++        canvas=(canvas_width, canvas_height),
++        zones=tuple(zone_entries),
++        placements=tuple(placement_entries),
++        focal_motifs=tuple(motif_entries),
++        decal_passes=tuple(decal_entries),
++    )
++
++    debug_overlay = None
++    if program.output.debug_overlay:
++        debug_overlay = _render_debug_overlay(canvas_width, canvas_height, resolved_layout)
++        scene_image = Image.alpha_composite(scene_image, debug_overlay)
++
++    return SceneAssemblyResult(
++        image=scene_image,
++        placement_manifest=placement_manifest,
++        debug_overlay=debug_overlay,
++    )
+
+[0m
+I need to add `ImageDraw` to the imports:
+[0m→ [0mRead src/asf/scene_layout.py[90m [limit=15][0m
+[0m
+[0m← [0mEdit src/asf/scene_layout.py
+Index: /home/daniel-bo/Desktop/pixel-art-generator/src/asf/scene_layout.py
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/src/asf/scene_layout.py
++++ /home/daniel-bo/Desktop/pixel-art-generator/src/asf/scene_layout.py
+@@ -7,9 +7,9 @@
+ import json
+ from pathlib import Path
+ from typing import Any
+ 
+-from PIL import Image
++from PIL import Image, ImageDraw
+ 
+ from asf.specs import PaletteSpec, SpecValidationError
+ from asf.style_packs import load_style_pack
+ 
+
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && python3 -m pytest tests/test_scene_layout.py -v 2>&1
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.0.3, pluggy-1.6.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/daniel-bo/Desktop/pixel-art-generator
+configfile: pyproject.toml
+plugins: cov-7.1.0
+collecting ... collected 22 items
+
+tests/test_scene_layout.py::SceneManifestSchemaTest::test_loads_minimal_valid_scene_manifest PASSED [  4%]
+tests/test_scene_layout.py::SceneManifestSchemaTest::test_rejects_extra_toplevel_fields PASSED [  9%]
+tests/test_scene_layout.py::SceneManifestSchemaTest::test_rejects_invalid_ambient_strength PASSED [ 13%]
+tests/test_scene_layout.py::SceneManifestSchemaTest::test_rejects_invalid_canvas_dimensions PASSED [ 18%]
+tests/test_scene_layout.py::SceneManifestSchemaTest::test_rejects_invalid_lighting_direction PASSED [ 22%]
+tests/test_scene_layout.py::SceneManifestSchemaTest::test_rejects_missing_required_fields PASSED [ 27%]
+tests/test_scene_layout.py::SceneManifestSchemaTest::test_rejects_unknown_family PASSED [ 31%]
+tests/test_scene_layout.py::SceneManifestSchemaTest::test_rejects_unknown_template PASSED [ 36%]
+tests/test_scene_layout.py::SceneManifestSchemaTest::test_supported_templates_are_library_and_ruins PASSED [ 40%]
+tests/test_scene_layout.py::SceneManifestSchemaTest::test_zones_require_rectangular_bounds PASSED [ 45%]
+tests/test_scene_layout.py::SceneManifestZoneTest::test_decorative_zone_is_not_reserved_by_default PASSED [ 50%]
+tests/test_scene_layout.py::SceneManifestZoneTest::test_gameplay_zone_requires_role PASSED [ 54%]
+tests/test_scene_layout.py::SceneManifestPropPlacementTest::test_prop_placement_requires_tile_reference PASSED [ 59%]
+tests/test_scene_layout.py::LayoutResolverTest::test_deterministic_resolution_same_input PASSED [ 63%]
+tests/test_scene_layout.py::LayoutResolverTest::test_library_room_template_resolves_valid_manifest PASSED [ 68%]
+tests/test_scene_layout.py::LayoutResolverTest::test_missing_tile_reference_uses_default_bounds PASSED [ 72%]
+tests/test_scene_layout.py::LayoutResolverTest::test_overlapping_reserved_zones_fails PASSED [ 77%]
+tests/test_scene_layout.py::LayoutResolverTest::test_placement_in_gameplay_zone_rejected PASSED [ 81%]
+tests/test_scene_layout.py::LayoutResolverTest::test_prop_placement_respects_gameplay_zones PASSED [ 86%]
+tests/test_scene_layout.py::LayoutResolverTest::test_ruins_courtyard_template_resolves_valid_manifest PASSED [ 90%]
+tests/test_scene_layout.py::LayoutResolverTest::test_stable_placement_order_under_repeated_runs PASSED [ 95%]
+tests/test_scene_layout.py::LayoutResolverTest::test_zone_outside_canvas_fails PASSED [100%]
+
+============================== 22 passed in 0.20s ==============================
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && python3 -m pytest tests/ -v 2>&1 | tail -40
+tests/test_primitives.py::PrimitiveLibraryTest::test_promotion_is_idempotent PASSED [ 48%]
+tests/test_primitives.py::PrimitiveLibraryTest::test_query_filters_by_family_and_tag PASSED [ 50%]
+tests/test_primitives.py::PrimitiveLibraryTest::test_rebuild_manifest_is_deterministic PASSED [ 51%]
+tests/test_primitives.py::PrimitiveLibraryTest::test_rejects_duplicate_primitive_ids PASSED [ 52%]
+tests/test_primitives.py::PrimitiveLibraryTest::test_rejects_missing_anchors PASSED [ 54%]
+tests/test_primitives.py::PrimitiveLibraryTest::test_rejects_missing_provenance PASSED [ 55%]
+tests/test_primitives.py::PrimitiveLibraryTest::test_validates_on_disk_manifest PASSED [ 56%]
+tests/test_renderer.py::RendererTest::test_rendered_sheet_is_deterministic PASSED [ 58%]
+tests/test_renderer.py::RendererTest::test_rendered_sheet_size_is_3x3_grid PASSED [ 59%]
+tests/test_renderer.py::RendererTest::test_renders_visual_output_for_human_review PASSED [ 61%]
+tests/test_scene_layout.py::SceneManifestSchemaTest::test_loads_minimal_valid_scene_manifest PASSED [ 62%]
+tests/test_scene_layout.py::SceneManifestSchemaTest::test_rejects_extra_toplevel_fields PASSED [ 63%]
+tests/test_scene_layout.py::SceneManifestSchemaTest::test_rejects_invalid_ambient_strength PASSED [ 65%]
+tests/test_scene_layout.py::SceneManifestSchemaTest::test_rejects_invalid_canvas_dimensions PASSED [ 66%]
+tests/test_scene_layout.py::SceneManifestSchemaTest::test_rejects_invalid_lighting_direction PASSED [ 68%]
+tests/test_scene_layout.py::SceneManifestSchemaTest::test_rejects_missing_required_fields PASSED [ 69%]
+tests/test_scene_layout.py::SceneManifestSchemaTest::test_rejects_unknown_family PASSED [ 70%]
+tests/test_scene_layout.py::SceneManifestSchemaTest::test_rejects_unknown_template PASSED [ 72%]
+tests/test_scene_layout.py::SceneManifestSchemaTest::test_supported_templates_are_library_and_ruins PASSED [ 73%]
+tests/test_scene_layout.py::SceneManifestSchemaTest::test_zones_require_rectangular_bounds PASSED [ 75%]
+tests/test_scene_layout.py::SceneManifestZoneTest::test_decorative_zone_is_not_reserved_by_default PASSED [ 76%]
+tests/test_scene_layout.py::SceneManifestZoneTest::test_gameplay_zone_requires_role PASSED [ 77%]
+tests/test_scene_layout.py::SceneManifestPropPlacementTest::test_prop_placement_requires_tile_reference PASSED [ 79%]
+tests/test_scene_layout.py::LayoutResolverTest::test_deterministic_resolution_same_input PASSED [ 80%]
+tests/test_scene_layout.py::LayoutResolverTest::test_library_room_template_resolves_valid_manifest PASSED [ 81%]
+tests/test_scene_layout.py::LayoutResolverTest::test_missing_tile_reference_uses_default_bounds PASSED [ 83%]
+tests/test_scene_layout.py::LayoutResolverTest::test_overlapping_reserved_zones_fails PASSED [ 84%]
+tests/test_scene_layout.py::LayoutResolverTest::test_placement_in_gameplay_zone_rejected PASSED [ 86%]
+tests/test_scene_layout.py::LayoutResolverTest::test_prop_placement_respects_gameplay_zones PASSED [ 87%]
+tests/test_scene_layout.py::LayoutResolverTest::test_ruins_courtyard_template_resolves_valid_manifest PASSED [ 88%]
+tests/test_scene_layout.py::LayoutResolverTest::test_stable_placement_order_under_repeated_runs PASSED [ 90%]
+tests/test_scene_layout.py::LayoutResolverTest::test_zone_outside_canvas_fails PASSED [ 91%]
+tests/test_specs.py::SpecLoadingTest::test_loads_valid_spec PASSED       [ 93%]
+tests/test_specs.py::SpecLoadingTest::test_rejects_invalid_frame_size PASSED [ 94%]
+tests/test_specs.py::SpecLoadingTest::test_rejects_missing_pose_block PASSED [ 95%]
+tests/test_specs.py::SpecLoadingTest::test_rejects_unknown_top_level_key PASSED [ 97%]
+tests/test_specs.py::SpecLoadingTest::test_rejects_unsupported_style_pack PASSED [ 98%]
+tests/test_style_packs.py::StylePackLoadingTest::test_rejects_invalid_ramp_colors PASSED [100%]
+
+======================== 72 passed in 87.64s (0:01:27) =========================
+[0m
+All 72 tests pass. Let me commit and push:

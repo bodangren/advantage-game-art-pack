@@ -8,7 +8,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-from PIL import Image
+from PIL import Image, ImageDraw
 
 from asf.specs import PaletteSpec, SpecValidationError
 from asf.style_packs import load_style_pack
@@ -639,6 +639,39 @@ class ResolvedLayout:
         return _jsonify(asdict(self))
 
 
+@dataclass(frozen=True)
+class PlacementManifestEntry:
+    """A single entry in the placement manifest."""
+    entry_type: str
+    tile_id: str | None
+    primitive_id: str | None
+    bounds: tuple[int, int, int, int]
+    role: str | None = None
+
+
+@dataclass(frozen=True)
+class PlacementManifest:
+    """Machine-readable placement manifest exported with the scene."""
+    program_id: str
+    template: str
+    canvas: tuple[int, int]
+    zones: tuple[PlacementManifestEntry, ...]
+    placements: tuple[PlacementManifestEntry, ...]
+    focal_motifs: tuple[PlacementManifestEntry, ...]
+    decal_passes: tuple[PlacementManifestEntry, ...]
+
+    def to_dict(self) -> dict[str, Any]:
+        return _jsonify(asdict(self))
+
+
+@dataclass(frozen=True)
+class SceneAssemblyResult:
+    """Result of assembling a scene program into an image and manifest."""
+    image: Image.Image
+    placement_manifest: PlacementManifest
+    debug_overlay: Image.Image | None
+
+
 def _boxes_overlap(ax: int, ay: int, aw: int, ah: int, bx: int, by: int, bw: int, bh: int) -> bool:
     a_right, a_bottom = ax + aw, ay + ah
     b_right, b_bottom = bx + bw, by + bh
@@ -715,4 +748,179 @@ def resolve_scene_layout(program: SceneProgram) -> ResolvedLayout:
         resolved_placements=tuple(resolved_placements),
         lighting=program.lighting,
         output=program.output,
+    )
+
+
+LIGHTING_DIRECTION_OFFSETS: dict[str, tuple[int, int]] = {
+    "north": (0, -1),
+    "northeast": (1, -1),
+    "east": (1, 0),
+    "southeast": (1, 1),
+    "south": (0, 1),
+    "southwest": (-1, 1),
+    "west": (-1, 0),
+    "northwest": (-1, -1),
+}
+
+
+def _resolve_tile_image(
+    tile_id: str,
+    tile_sources: tuple[TileSource, ...],
+    repo_root: Path,
+) -> Image.Image | None:
+    for ts in tile_sources:
+        if ts.tile_id == tile_id:
+            primitive_path = repo_root / "library" / "primitives" / ts.family / ts.primitive_id / "source.png"
+            if primitive_path.exists():
+                return Image.open(primitive_path).convert("RGBA")
+            primitive_json_path = repo_root / "library" / "primitives" / ts.family / ts.primitive_id / "primitive.json"
+            if primitive_json_path.exists():
+                return None
+    return None
+
+
+def _apply_lighting_pass(
+    image: Image.Image,
+    lighting: LightingSpec,
+) -> Image.Image:
+    result = image.copy()
+    directional = LIGHTING_DIRECTION_OFFSETS.get(lighting.global_direction, (0, -1))
+    dx, dy = directional
+    overlay = Image.new("RGBA", image.size, (0, 0, 0, 0))
+    darken = int((1.0 - lighting.ambient_strength) * 80)
+    if darken > 0:
+        dark_layer = Image.new("RGBA", image.size, (0, 0, 0, darken))
+        overlay.alpha_composite(dark_layer)
+    result.alpha_composite(overlay)
+    return result
+
+
+def _render_debug_overlay(
+    canvas_width: int,
+    canvas_height: int,
+    resolved_layout: ResolvedLayout,
+) -> Image.Image:
+    debug_img = Image.new("RGBA", (canvas_width, canvas_height), (0, 0, 0, 0))
+    draw = ImageDraw.Draw(debug_img)
+    for zone in resolved_layout.resolved_zones:
+        x, y, w, h = zone.bounds
+        color = (255, 100, 100, 120) if zone.reserved else (100, 255, 100, 120)
+        draw.rectangle([x, y, x + w, y + h], outline=color, width=2)
+        draw.text((x + 2, y + 2), zone.zone_id, fill=(255, 255, 255, 200))
+    for prop in resolved_layout.resolved_placements:
+        x, y, w, h = prop.bounds
+        draw.rectangle([x, y, x + w, y + h], outline=(100, 100, 255, 150), width=1)
+        draw.text((x + 1, y + 1), prop.group_id, fill=(200, 200, 255, 180))
+    return debug_img
+
+
+def assemble_scene(
+    program: SceneProgram,
+    resolved_layout: ResolvedLayout,
+    *,
+    repo_root: Path | None = None,
+) -> SceneAssemblyResult:
+    """Assembles a scene program into a rendered image and placement manifest.
+
+    Args:
+        program: The validated scene program.
+        resolved_layout: The deterministically resolved layout.
+        repo_root: Root directory for resolving primitive paths. Defaults to cwd.
+
+    Returns:
+        SceneAssemblyResult containing the rendered image, placement manifest,
+        and optional debug overlay.
+    """
+    if repo_root is None:
+        repo_root = Path.cwd()
+
+    canvas_width = program.canvas.width
+    canvas_height = program.canvas.height
+    scene_image = Image.new("RGBA", (canvas_width, canvas_height), (0, 0, 0, 0))
+
+    zone_entries: list[PlacementManifestEntry] = []
+    for zone in resolved_layout.resolved_zones:
+        zone_entries.append(PlacementManifestEntry(
+            entry_type="zone",
+            tile_id=None,
+            primitive_id=None,
+            bounds=zone.bounds,
+            role=zone.role,
+        ))
+
+    placement_entries: list[PlacementManifestEntry] = []
+    for prop in resolved_layout.resolved_placements:
+        tile_source = None
+        for ts in program.tile_sources:
+            if ts.tile_id == prop.tile_id:
+                tile_source = ts
+                break
+        primitive_id = tile_source.primitive_id if tile_source else None
+        tile_img = _resolve_tile_image(prop.tile_id, program.tile_sources, repo_root)
+        if tile_img is not None:
+            prop_x, prop_y, prop_w, prop_h = prop.bounds
+            resized = tile_img.resize((prop_w, prop_h), Image.Resampling.NEAREST)
+            scene_image.alpha_composite(resized, (prop_x, prop_y))
+        placement_entries.append(PlacementManifestEntry(
+            entry_type="prop_placement",
+            tile_id=prop.tile_id,
+            primitive_id=primitive_id,
+            bounds=prop.bounds,
+            role=None,
+        ))
+
+    motif_entries: list[PlacementManifestEntry] = []
+    for motif in program.focal_motifs:
+        motif_x, motif_y = motif.position
+        tile_img = _resolve_tile_image(motif.tile_id, program.tile_sources, repo_root)
+        if tile_img is not None:
+            mw, mh = tile_img.size
+            scene_image.alpha_composite(tile_img, (motif_x, motif_y))
+        motif_entries.append(PlacementManifestEntry(
+            entry_type="focal_motif",
+            tile_id=motif.tile_id,
+            primitive_id=None,
+            bounds=(motif_x, motif_y, motif_x + 32, motif_y + 32),
+            role=motif.motif_id,
+        ))
+
+    decal_entries: list[PlacementManifestEntry] = []
+    for decal in program.decal_passes:
+        tile_img = _resolve_tile_image(decal.tile_id, program.tile_sources, repo_root)
+        if tile_img is not None:
+            dw, dh = tile_img.size
+            coverage_count = max(1, int(decal.coverage * 4))
+            for i in range(coverage_count):
+                dx = (i * 73) % (canvas_width - dw)
+                dy = (i * 47) % (canvas_height - dh)
+                scene_image.alpha_composite(tile_img, (dx, dy))
+        decal_entries.append(PlacementManifestEntry(
+            entry_type="decal_pass",
+            tile_id=decal.tile_id,
+            primitive_id=None,
+            bounds=(0, 0, dw if tile_img else 32, dh if tile_img else 32),
+            role=decal.decal_type,
+        ))
+
+    scene_image = _apply_lighting_pass(scene_image, program.lighting)
+
+    placement_manifest = PlacementManifest(
+        program_id=program.program_id,
+        template=program.template,
+        canvas=(canvas_width, canvas_height),
+        zones=tuple(zone_entries),
+        placements=tuple(placement_entries),
+        focal_motifs=tuple(motif_entries),
+        decal_passes=tuple(decal_entries),
+    )
+
+    debug_overlay = None
+    if program.output.debug_overlay:
+        debug_overlay = _render_debug_overlay(canvas_width, canvas_height, resolved_layout)
+        scene_image = Image.alpha_composite(scene_image, debug_overlay)
+
+    return SceneAssemblyResult(
+        image=scene_image,
+        placement_manifest=placement_manifest,
+        debug_overlay=debug_overlay,
     )
