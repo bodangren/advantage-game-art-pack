@@ -53,19 +53,19 @@
 
 ## Phase 4: Lighting, decals, and verification
 
-- [ ] Task: Write tests for lighting passes, decal passes, and manifest export
-  - [ ] Cover deterministic emissive source placement and shadow application
-  - [ ] Cover decal constraints such as cracks, grass, dust, and runes
-  - [ ] Cover placement-manifest completeness and debug-overlay generation
-- [ ] Task: Implement the lighting pass, decal pass, and scene-manifest exporter
-  - [ ] Add global and local lighting passes bounded by the style canon
-  - [ ] Add deterministic ground and wall decal placement rules
-  - [ ] Export debug overlays that label zones and major placements
-- [ ] Task: Add sample library and ruins scene manifests and verify outputs
-  - [ ] Create one sample scene manifest per template
-  - [ ] Compile both scenes and save their placement manifests
-  - [ ] Ensure the rendered outputs and manifests are compatible with later candidate-loop ingestion
-  - [ ] Confirm the reserved gameplay zones remain usable in both outputs
+- [x] Task: Write tests for lighting passes, decal passes, and manifest export
+  - [x] Cover deterministic emissive source placement and shadow application
+  - [x] Cover decal constraints such as cracks, grass, dust, and runes
+  - [x] Cover placement-manifest completeness and debug-overlay generation
+- [x] Task: Implement the lighting pass, decal pass, and scene-manifest exporter
+  - [x] Add global and local lighting passes bounded by the style canon
+  - [x] Add deterministic ground and wall decal placement rules
+  - [x] Export debug overlays that label zones and major placements
+- [x] Task: Add sample library and ruins scene manifests and verify outputs
+  - [x] Create one sample scene manifest per template
+  - [x] Compile both scenes and save their placement manifests
+  - [x] Ensure the rendered outputs and manifests are compatible with later candidate-loop ingestion
+  - [x] Confirm the reserved gameplay zones remain usable in both outputs
 - [ ] Task: Run verification and document composition guardrails
   - [ ] Run the scene-layout and export tests
   - [ ] Recompile the sample scenes to confirm deterministic output
