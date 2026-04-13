@@ -1,0 +1,109 @@
+{
+  "family": "background_scene",
+  "program_id": "library_interior_main",
+  "program_version": 1,
+  "template": "library_room",
+  "canvas": {
+    "width": 256,
+    "height": 192
+  },
+  "theme": "library",
+  "subtheme": "ancient",
+  "style_pack": "cute_chibi_v1",
+  "zones": [
+    {
+      "zone_id": "gameplay_floor",
+      "role": "gameplay",
+      "bounds": [32, 128, 192, 64],
+      "reserved": true
+    },
+    {
+      "zone_id": "bookshelf_wall_north",
+      "role": "decoration",
+      "bounds": [0, 0, 256, 64],
+      "reserved": false
+    },
+    {
+      "zone_id": "side_shelf_east",
+      "role": "decoration",
+      "bounds": [224, 64, 32, 64],
+      "reserved": false
+    },
+    {
+      "zone_id": "side_shelf_west",
+      "role": "decoration",
+      "bounds": [0, 64, 32, 64],
+      "reserved": false
+    }
+  ],
+  "tile_sources": [
+    {
+      "tile_id": "stone_floor_tile",
+      "family": "tileset",
+      "primitive_id": "floor_stone_01"
+    },
+    {
+      "tile_id": "wall_tile",
+      "family": "tileset",
+      "primitive_id": "wall_library_01"
+    },
+    {
+      "tile_id": "shelf_tile",
+      "family": "props",
+      "primitive_id": "bookshelf_01"
+    }
+  ],
+  "prop_placement": [
+    {
+      "group_id": "floor_placement",
+      "tile_id": "stone_floor_tile",
+      "placement_rules": {
+        "symmetry": "horizontal",
+        "weight": 0.8
+      }
+    },
+    {
+      "group_id": "north_wall_placement",
+      "tile_id": "wall_tile",
+      "placement_rules": {
+        "weight": 0.6
+      }
+    },
+    {
+      "group_id": "shelf_east_placement",
+      "tile_id": "shelf_tile",
+      "placement_rules": {
+        "weight": 0.4
+      }
+    }
+  ],
+  "focal_motifs": [
+    {
+      "motif_id": "central_arch",
+      "tile_id": "wall_tile",
+      "position": [96, 16, 32, 32]
+    }
+  ],
+  "decal_passes": [
+    {
+      "decal_type": "dust",
+      "tile_id": "wall_tile",
+      "coverage": 0.15
+    }
+  ],
+  "lighting": {
+    "global_direction": "northwest",
+    "ambient_strength": 0.75,
+    "local_emissive_sources": [
+      {
+        "position": [128, 96],
+        "radius": 24,
+        "strength": 0.6
+      }
+    ]
+  },
+  "output": {
+    "variant_id": "library_main_v1",
+    "debug_overlay": false
+  }
+}

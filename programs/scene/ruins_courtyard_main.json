@@ -1,0 +1,114 @@
+{
+  "family": "background_scene",
+  "program_id": "ruins_courtyard_main",
+  "program_version": 1,
+  "template": "ruins_courtyard",
+  "canvas": {
+    "width": 320,
+    "height": 240
+  },
+  "theme": "ruins",
+  "subtheme": "ancient",
+  "style_pack": "cute_chibi_v1",
+  "zones": [
+    {
+      "zone_id": "gameplay_stage",
+      "role": "gameplay",
+      "bounds": [80, 160, 160, 80],
+      "reserved": true
+    },
+    {
+      "zone_id": "pillar_column_west",
+      "role": "decoration",
+      "bounds": [16, 48, 48, 112],
+      "reserved": false
+    },
+    {
+      "zone_id": "pillar_column_east",
+      "role": "decoration",
+      "bounds": [256, 48, 48, 112],
+      "reserved": false
+    },
+    {
+      "zone_id": "rubble_area_north",
+      "role": "decoration",
+      "bounds": [0, 0, 320, 48],
+      "reserved": false
+    }
+  ],
+  "tile_sources": [
+    {
+      "tile_id": "cobble_floor_tile",
+      "family": "tileset",
+      "primitive_id": "cobble_01"
+    },
+    {
+      "tile_id": "pillar_tile",
+      "family": "props",
+      "primitive_id": "ruins_pillar_01"
+    },
+    {
+      "tile_id": "rubble_tile",
+      "family": "props",
+      "primitive_id": "rubble_01"
+    }
+  ],
+  "prop_placement": [
+    {
+      "group_id": "floor_placement",
+      "tile_id": "cobble_floor_tile",
+      "placement_rules": {
+        "symmetry": "horizontal",
+        "weight": 0.7
+      }
+    },
+    {
+      "group_id": "pillar_west_placement",
+      "tile_id": "pillar_tile",
+      "placement_rules": {
+        "weight": 0.5
+      }
+    },
+    {
+      "group_id": "pillar_east_placement",
+      "tile_id": "pillar_tile",
+      "placement_rules": {
+        "weight": 0.5
+      }
+    }
+  ],
+  "focal_motifs": [
+    {
+      "motif_id": "center_sundial",
+      "tile_id": "rubble_tile",
+      "position": [144, 80, 32, 32]
+    }
+  ],
+  "decal_passes": [
+    {
+      "decal_type": "cracks",
+      "tile_id": "cobble_floor_tile",
+      "coverage": 0.2
+    },
+    {
+      "decal_type": "grass",
+      "tile_id": "rubble_tile",
+      "coverage": 0.1
+    }
+  ],
+  "lighting": {
+    "global_direction": "east",
+    "ambient_strength": 0.8,
+    "local_emissive_sources": [
+      {
+        "position": [160, 100],
+        "radius": 20,
+        "strength": 0.4
+      }
+    ]
+  },
+  "output": {
+    "variant_id": "ruins_courtyard_v1",
+    "debug_overlay": false
+  }
+}

@@ -272,7 +272,7 @@ class FocalMotif:
 
     motif_id: str
     tile_id: str
-    position: tuple[int, int]
+    position: tuple[int, int, int, int]
 
     def to_dict(self) -> dict[str, Any]:
         return _jsonify(asdict(self))
@@ -966,7 +966,7 @@ def assemble_scene(
 
     motif_entries: list[PlacementManifestEntry] = []
     for motif in program.focal_motifs:
-        motif_x, motif_y = motif.position
+        motif_x, motif_y, motif_w, motif_h = motif.position
         tile_img = _resolve_tile_image(motif.tile_id, program.tile_sources, repo_root)
         if tile_img is not None:
             mw, mh = tile_img.size
@@ -975,7 +975,7 @@ def assemble_scene(
             entry_type="focal_motif",
             tile_id=motif.tile_id,
             primitive_id=None,
-            bounds=(motif_x, motif_y, motif_x + 32, motif_y + 32),
+            bounds=(motif_x, motif_y, motif_x + motif_w, motif_y + motif_h),
             role=motif.motif_id,
         ))
 

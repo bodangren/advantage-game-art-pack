@@ -1190,3 +1190,428 @@ Index: /home/daniel-bo/Desktop/pixel-art-generator/src/asf/scene_layout.py
 87 passed in 93.13s (0:01:33)
 [0m
 All 87 tests pass. Committing Phase 4 progress:
+[0m$ [0mgit add -A && git commit -m "Phase 4: lighting pass, decal pass, manifest export, debug overlay tests
+
+- Add LightingPassTest covering directional shadows, emissive sources, ambient
+- Add DecalPassTest covering deterministic decal placement and manifest recording
+- Add ManifestExportTest covering zone/placement/canvas export completeness  
+- Add DebugOverlayTest covering overlay generation and zone labeling
+- Fix _parse_lighting to allow local_emissive_sources as optional key
+- Fix _parse_output to allow debug_overlay as optional key
+- Enhance _apply_lighting_pass with directional shadow application
+- Tests: 87 passing (was 72)"
+[main 0f619ad] Phase 4: lighting pass, decal pass, manifest export, debug overlay tests
+ 3 files changed, 1702 insertions(+), 8 deletions(-)
+[0m
+Now for Task 3 of Phase 4 - add sample scene manifests. Let me check what exists:
+[0m✱ [0mGlob "**/programs/**/*.json"[90m 3 matches[0m
+[0m✱ [0mGlob "**/scene_layouts/**/*.json"[90m 0 matches[0m
+[0m
+[0m$ [0mls -la /home/daniel-bo/Desktop/pixel-art-generator/programs/
+total 20
+drwxrwxr-x  5 daniel-bo daniel-bo 4096 Apr  5 12:28 .
+drwxrwxr-x 16 daniel-bo daniel-bo 4096 Apr 10 06:47 ..
+drwxrwxr-x  2 daniel-bo daniel-bo 4096 Apr  5 12:28 character_sheet
+drwxrwxr-x  2 daniel-bo daniel-bo 4096 Apr  5 12:28 prop_or_fx_sheet
+drwxrwxr-x  2 daniel-bo daniel-bo 4096 Apr  5 12:28 tileset
+[0m
+[0m→ [0mRead programs/tileset/library_floor.json
+[0m
+[0m$ [0mmkdir -p /home/daniel-bo/Desktop/pixel-art-generator/programs/scene
+[0m
+[0m← [0mWrite programs/scene/library_room_main.json
+Wrote file successfully.
+[0m
+[0m← [0mWrite programs/scene/ruins_courtyard_main.json
+Wrote file successfully.
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && python3 -c "
+from src.asf.scene_layout import load_scene_program, resolve_scene_layout, assemble_scene
+from pathlib import Path
+
+# Test library scene
+lib_path = Path('programs/scene/library_room_main.json')
+program = load_scene_program(lib_path)
+print(f'Library scene loaded: {program.program_id}, template={program.template}')
+
+resolved = resolve_scene_layout(program)
+print(f'Library resolved: {len(resolved.resolved_zones)} zones, {len(resolved.resolved_placements)} placements')
+
+result = assemble_scene(program, resolved, repo_root=Path('.'))
+print(f'Library assembled: image size={result.image.size}')
+
+# Test ruins scene  
+ruins_path = Path('programs/scene/ruins_courtyard_main.json')
+program2 = load_scene_program(ruins_path)
+print(f'Ruins scene loaded: {program2.program_id}, template={program2.template}')
+
+resolved2 = resolve_scene_layout(program2)
+print(f'Ruins resolved: {len(resolved2.resolved_zones)} zones, {len(resolved2.resolved_placements)} placements')
+
+result2 = assemble_scene(program2, resolved2, repo_root=Path('.'))
+print(f'Ruins assembled: image size={result2.image.size}')
+
+print('Both sample scenes verified successfully')
+"
+Traceback (most recent call last):
+  File "<string>", line 7, in <module>
+  File "/home/daniel-bo/Desktop/pixel-art-generator/src/asf/scene_layout.py", line 629, in load_scene_program
+    return _load_scene_program(payload, path)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daniel-bo/Desktop/pixel-art-generator/src/asf/scene_layout.py", line 587, in _load_scene_program
+    focal_motifs = tuple(
+                   ^^^^^^
+  File "/home/daniel-bo/Desktop/pixel-art-generator/src/asf/scene_layout.py", line 588, in <genexpr>
+    _parse_focal_motif(m, path=path, context="background_scene program.focal_motifs", index=i)
+  File "/home/daniel-bo/Desktop/pixel-art-generator/src/asf/scene_layout.py", line 459, in _parse_focal_motif
+    position = _require_rect(payload["position"], f"{context}[{index}].position", path)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/daniel-bo/Desktop/pixel-art-generator/src/asf/scene_layout.py", line 185, in _require_rect
+    raise SceneManifestValidationError(
+src.asf.scene_layout.SceneManifestValidationError: programs/scene/library_room_main.json: background_scene program.focal_motifs[0].position must be a four-item array
+[0m
+[0m→ [0mRead src/asf/scene_layout.py[90m [offset=453, limit=20][0m
+[0m
+[0m← [0mEdit programs/scene/library_room_main.json
+Index: /home/daniel-bo/Desktop/pixel-art-generator/programs/scene/library_room_main.json
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/programs/scene/library_room_main.json
++++ /home/daniel-bo/Desktop/pixel-art-generator/programs/scene/library_room_main.json
+@@ -80,9 +80,9 @@
+ "focal_motifs": [
+   {
+     "motif_id": "central_arch",
+     "tile_id": "wall_tile",
+-    "position": [96, 16]
++    "position": [96, 16, 32, 32]
+   }
+ ],
+ "decal_passes": [
+   {
+
+[0m
+[0m← [0mEdit programs/scene/ruins_courtyard_main.json
+Index: /home/daniel-bo/Desktop/pixel-art-generator/programs/scene/ruins_courtyard_main.json
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/programs/scene/ruins_courtyard_main.json
++++ /home/daniel-bo/Desktop/pixel-art-generator/programs/scene/ruins_courtyard_main.json
+@@ -80,9 +80,9 @@
+ "focal_motifs": [
+   {
+     "motif_id": "center_sundial",
+     "tile_id": "rubble_tile",
+-    "position": [144, 80]
++    "position": [144, 80, 32, 32]
+   }
+ ],
+ "decal_passes": [
+   {
+
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && python3 -c "
+from src.asf.scene_layout import load_scene_program, resolve_scene_layout, assemble_scene
+from pathlib import Path
+
+# Test library scene
+lib_path = Path('programs/scene/library_room_main.json')
+program = load_scene_program(lib_path)
+print(f'Library scene loaded: {program.program_id}, template={program.template}')
+
+resolved = resolve_scene_layout(program)
+print(f'Library resolved: {len(resolved.resolved_zones)} zones, {len(resolved.resolved_placements)} placements')
+
+result = assemble_scene(program, resolved, repo_root=Path('.'))
+print(f'Library assembled: image size={result.image.size}')
+
+# Verify manifest
+manifest = result.placement_manifest
+print(f'  Manifest: program_id={manifest.program_id}, template={manifest.template}, canvas={manifest.canvas}')
+print(f'  Zones: {len(manifest.zones)}, Placements: {len(manifest.placements)}')
+print(f'  Decal passes: {len(manifest.decal_passes)}')
+
+# Test ruins scene  
+ruins_path = Path('programs/scene/ruins_courtyard_main.json')
+program2 = load_scene_program(ruins_path)
+print(f'Ruins scene loaded: {program2.program_id}, template={program2.template}')
+
+resolved2 = resolve_scene_layout(program2)
+print(f'Ruins resolved: {len(resolved2.resolved_zones)} zones, {len(resolved2.resolved_placements)} placements')
+
+result2 = assemble_scene(program2, resolved2, repo_root=Path('.'))
+print(f'Ruins assembled: image size={result2.image.size}')
+
+# Verify manifest
+manifest2 = result2.placement_manifest
+print(f'  Manifest: program_id={manifest2.program_id}, template={manifest2.template}, canvas={manifest2.canvas}')
+print(f'  Zones: {len(manifest2.zones)}, Placements: {len(manifest2.placements)}')
+print(f'  Decal passes: {len(manifest2.decal_passes)}')
+
+print('Both sample scenes verified successfully')
+"
+Traceback (most recent call last):
+  File "<string>", line 13, in <module>
+  File "/home/daniel-bo/Desktop/pixel-art-generator/src/asf/scene_layout.py", line 969, in assemble_scene
+    motif_x, motif_y = motif.position
+    ^^^^^^^^^^^^^^^^
+ValueError: too many values to unpack (expected 2)
+Library scene loaded: library_interior_main, template=library_room
+Library resolved: 4 zones, 3 placements
+[0m
+[0m→ [0mRead src/asf/scene_layout.py[90m [offset=281, limit=15][0m
+[0m✱ [0mGrep "class FocalMotif"[90m 1 match[0m
+[0m→ [0mRead src/asf/scene_layout.py[90m [offset=268, limit=15][0m
+The `FocalMotif.position` is defined as 2-tuple but the parser uses `_require_rect` (4-tuple). Let me fix the dataclass:
+[0m
+[0m← [0mEdit src/asf/scene_layout.py
+Index: /home/daniel-bo/Desktop/pixel-art-generator/src/asf/scene_layout.py
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/src/asf/scene_layout.py
++++ /home/daniel-bo/Desktop/pixel-art-generator/src/asf/scene_layout.py
+@@ -271,9 +271,9 @@
+ """Defines a focal motif placement within a scene."""
+ 
+ motif_id: str
+ tile_id: str
+-position: tuple[int, int]
++position: tuple[int, int, int, int]
+ 
+ def to_dict(self) -> dict[str, Any]:
+     return _jsonify(asdict(self))
+ 
+
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && python3 -c "
+from src.asf.scene_layout import load_scene_program, resolve_scene_layout, assemble_scene
+from pathlib import Path
+
+# Test library scene
+lib_path = Path('programs/scene/library_room_main.json')
+program = load_scene_program(lib_path)
+print(f'Library scene loaded: {program.program_id}, template={program.template}')
+
+resolved = resolve_scene_layout(program)
+print(f'Library resolved: {len(resolved.resolved_zones)} zones, {len(resolved.resolved_placements)} placements')
+
+result = assemble_scene(program, resolved, repo_root=Path('.'))
+print(f'Library assembled: image size={result.image.size}')
+
+# Verify manifest
+manifest = result.placement_manifest
+print(f'  Manifest: program_id={manifest.program_id}, template={manifest.template}, canvas={manifest.canvas}')
+print(f'  Zones: {len(manifest.zones)}, Placements: {len(manifest.placements)}')
+print(f'  Decal passes: {len(manifest.decal_passes)}')
+
+# Check gameplay zones are reserved
+gameplay_zones = [z for z in manifest.zones if z.role == 'gameplay']
+print(f'  Gameplay zones (reserved): {len(gameplay_zones)}')
+
+# Test ruins scene  
+ruins_path = Path('programs/scene/ruins_courtyard_main.json')
+program2 = load_scene_program(ruins_path)
+print(f'Ruins scene loaded: {program2.program_id}, template={program2.template}')
+
+resolved2 = resolve_scene_layout(program2)
+print(f'Ruins resolved: {len(resolved2.resolved_zones)} zones, {len(resolved2.resolved_placements)} placements')
+
+result2 = assemble_scene(program2, resolved2, repo_root=Path('.'))
+print(f'Ruins assembled: image size={result2.image.size}')
+
+# Verify manifest
+manifest2 = result2.placement_manifest
+print(f'  Manifest: program_id={manifest2.program_id}, template={manifest2.template}, canvas={manifest2.canvas}')
+print(f'  Zones: {len(manifest2.zones)}, Placements: {len(manifest2.placements)}')
+print(f'  Decal passes: {len(manifest2.decal_passes)}')
+
+# Check gameplay zones are reserved
+gameplay_zones2 = [z for z in manifest2.zones if z.role == 'gameplay']
+print(f'  Gameplay zones (reserved): {len(gameplay_zones2)}')
+
+print()
+print('Both sample scenes verified successfully!')
+"
+Traceback (most recent call last):
+  File "<string>", line 13, in <module>
+  File "/home/daniel-bo/Desktop/pixel-art-generator/src/asf/scene_layout.py", line 969, in assemble_scene
+    motif_x, motif_y = motif.position
+    ^^^^^^^^^^^^^^^^
+ValueError: too many values to unpack (expected 2)
+Library scene loaded: library_interior_main, template=library_room
+Library resolved: 4 zones, 3 placements
+[0m
+[0m→ [0mRead src/asf/scene_layout.py[90m [offset=963, limit=20][0m
+[0m
+[0m← [0mEdit src/asf/scene_layout.py
+Index: /home/daniel-bo/Desktop/pixel-art-generator/src/asf/scene_layout.py
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/src/asf/scene_layout.py
++++ /home/daniel-bo/Desktop/pixel-art-generator/src/asf/scene_layout.py
+@@ -965,18 +965,18 @@
+     ))
+ 
+ motif_entries: list[PlacementManifestEntry] = []
+ for motif in program.focal_motifs:
+-    motif_x, motif_y = motif.position
++    motif_x, motif_y, motif_w, motif_h = motif.position
+     tile_img = _resolve_tile_image(motif.tile_id, program.tile_sources, repo_root)
+     if tile_img is not None:
+         mw, mh = tile_img.size
+         scene_image.alpha_composite(tile_img, (motif_x, motif_y))
+     motif_entries.append(PlacementManifestEntry(
+         entry_type="focal_motif",
+         tile_id=motif.tile_id,
+         primitive_id=None,
+-        bounds=(motif_x, motif_y, motif_x + 32, motif_y + 32),
++        bounds=(motif_x, motif_y, motif_x + motif_w, motif_y + motif_h),
+         role=motif.motif_id,
+     ))
+ 
+ decal_entries: list[PlacementManifestEntry] = []
+
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && python3 -c "
+from src.asf.scene_layout import load_scene_program, resolve_scene_layout, assemble_scene
+from pathlib import Path
+
+# Test library scene
+lib_path = Path('programs/scene/library_room_main.json')
+program = load_scene_program(lib_path)
+print(f'Library scene loaded: {program.program_id}, template={program.template}')
+
+resolved = resolve_scene_layout(program)
+print(f'Library resolved: {len(resolved.resolved_zones)} zones, {len(resolved.resolved_placements)} placements')
+
+result = assemble_scene(program, resolved, repo_root=Path('.'))
+print(f'Library assembled: image size={result.image.size}')
+
+# Verify manifest
+manifest = result.placement_manifest
+print(f'  Manifest: program_id={manifest.program_id}, template={manifest.template}, canvas={manifest.canvas}')
+print(f'  Zones: {len(manifest.zones)}, Placements: {len(manifest.placements)}')
+print(f'  Decal passes: {len(manifest.decal_passes)}')
+
+# Check gameplay zones are reserved
+gameplay_zones = [z for z in manifest.zones if z.role == 'gameplay']
+print(f'  Gameplay zones (reserved): {len(gameplay_zones)}')
+
+# Test ruins scene  
+ruins_path = Path('programs/scene/ruins_courtyard_main.json')
+program2 = load_scene_program(ruins_path)
+print(f'Ruins scene loaded: {program2.program_id}, template={program2.template}')
+
+resolved2 = resolve_scene_layout(program2)
+print(f'Ruins resolved: {len(resolved2.resolved_zones)} zones, {len(resolved2.resolved_placements)} placements')
+
+result2 = assemble_scene(program2, resolved2, repo_root=Path('.'))
+print(f'Ruins assembled: image size={result2.image.size}')
+
+# Verify manifest
+manifest2 = result2.placement_manifest
+print(f'  Manifest: program_id={manifest2.program_id}, template={manifest2.template}, canvas={manifest2.canvas}')
+print(f'  Zones: {len(manifest2.zones)}, Placements: {len(manifest2.placements)}')
+print(f'  Decal passes: {len(manifest2.decal_passes)}')
+
+# Check gameplay zones are reserved
+gameplay_zones2 = [z for z in manifest2.zones if z.role == 'gameplay']
+print(f'  Gameplay zones (reserved): {len(gameplay_zones2)}')
+
+print()
+print('Both sample scenes verified successfully!')
+"
+Library scene loaded: library_interior_main, template=library_room
+Library resolved: 4 zones, 3 placements
+Library assembled: image size=(256, 192)
+  Manifest: program_id=library_interior_main, template=library_room, canvas=(256, 192)
+  Zones: 4, Placements: 3
+  Decal passes: 1
+  Gameplay zones (reserved): 1
+Ruins scene loaded: ruins_courtyard_main, template=ruins_courtyard
+Ruins resolved: 4 zones, 3 placements
+Ruins assembled: image size=(320, 240)
+  Manifest: program_id=ruins_courtyard_main, template=ruins_courtyard, canvas=(320, 240)
+  Zones: 4, Placements: 3
+  Decal passes: 2
+  Gameplay zones (reserved): 1
+
+Both sample scenes verified successfully!
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && python3 -c "
+from src.asf.scene_layout import load_scene_program, resolve_scene_layout, assemble_scene
+from pathlib import Path
+
+# Verify deterministic output for library scene
+lib_path = Path('programs/scene/library_room_main.json')
+program = load_scene_program(lib_path)
+resolved = resolve_scene_layout(program)
+result1 = assemble_scene(program, resolved, repo_root=Path('.'))
+result2 = assemble_scene(program, resolved, repo_root=Path('.'))
+
+pixels1 = list(result1.image.getdata())
+pixels2 = list(result2.image.getdata())
+
+if pixels1 == pixels2:
+    print('Library scene: DETERMINISTIC (pass)')
+else:
+    print('Library scene: NOT DETERMINISTIC (FAIL)')
+
+# Verify deterministic output for ruins scene
+ruins_path = Path('programs/scene/ruins_courtyard_main.json')
+program2 = load_scene_program(ruins_path)
+resolved2 = resolve_scene_layout(program2)
+result3 = assemble_scene(program2, resolved2, repo_root=Path('.'))
+result4 = assemble_scene(program2, resolved2, repo_root=Path('.'))
+
+pixels3 = list(result3.image.getdata())
+pixels4 = list(result4.image.getdata())
+
+if pixels3 == pixels4:
+    print('Ruins scene: DETERMINISTIC (pass)')
+else:
+    print('Ruins scene: NOT DETERMINISTIC (FAIL)')
+"
+Library scene: DETERMINISTIC (pass)
+Ruins scene: DETERMINISTIC (pass)
+[0m
+[0m$ [0mpython3 -m pytest --tb=short -q 2>&1 | tail -20
+........................................................................ [ 82%]
+...............                                                          [100%]
+87 passed in 92.42s (0:01:32)
+[0m
+[0m← [0mEdit conductor/tracks/scene_layout_background_assembler_20260405/metadata.json
+Index: /home/daniel-bo/Desktop/pixel-art-generator/conductor/tracks/scene_layout_background_assembler_20260405/metadata.json
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/conductor/tracks/scene_layout_background_assembler_20260405/metadata.json
++++ /home/daniel-bo/Desktop/pixel-art-generator/conductor/tracks/scene_layout_background_assembler_20260405/metadata.json
+@@ -2,10 +2,10 @@
+   "track_id": "scene_layout_background_assembler_20260405",
+   "type": "feature",
+   "status": "in_progress",
+   "created_at": "2026-04-05T00:00:00Z",
+-  "updated_at": "2026-04-09T00:00:00Z",
++  "updated_at": "2026-04-13T00:00:00Z",
+   "description": "Scene layout and background assembler",
+   "estimated_tasks": 9,
+-  "actual_tasks": 3,
+-  "deviation_notes": "Phase 1 complete. Phase 2 (layout resolution) next."
++  "actual_tasks": 4,
++  "deviation_notes": "Phase 1-3 complete. Phase 4 tasks 1-3 done (tests, lighting/decals, sample manifests)."
+ }
+
+[0m
+[0m$ [0mgit status
+On branch main
+Your branch is ahead of 'origin/main' by 2 commits.
+  (use "git push" to publish your local commits)
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   conductor/output.log
+	modified:   conductor/tracks/scene_layout_background_assembler_20260405/metadata.json
+	modified:   src/asf/scene_layout.py
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	programs/scene/
+
+no changes added to commit (use "git add" and/or "git commit -a")
+[0m
