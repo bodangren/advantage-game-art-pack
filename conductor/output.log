@@ -1721,3 +1721,93 @@ Index: /home/daniel-bo/Desktop/pixel-art-generator/conductor/tracks/scene_layout
  - LLM prompt planning
 
 [0m
+[0m$ [0mgit add -A && git commit -m "Phase 4: document composition guardrails in spec
+
+Document 10 composition rules that future themes must follow:
+1. Canvas dimensions
+2. Gameplay zone reservation
+3. Zone bounds validation
+4. Tile source references
+5. Lighting direction values
+6. Ambient strength range
+7. Decal coverage range
+8. Determinism requirements
+9. Manifest export format
+10. Debug overlay usage
+
+Phase 4 complete. Track complete."
+[main 779ad0a] Phase 4: document composition guardrails in spec
+ 3 files changed, 143 insertions(+), 13 deletions(-)
+[0m
+[0m← [0mEdit conductor/tracks.md
+Index: /home/daniel-bo/Desktop/pixel-art-generator/conductor/tracks.md
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/conductor/tracks.md
++++ /home/daniel-bo/Desktop/pixel-art-generator/conductor/tracks.md
+@@ -21,9 +21,9 @@
+   *Link: [./conductor/tracks/candidate_generation_critic_loop_20260405/](./conductor/tracks/candidate_generation_critic_loop_20260405/)*
+ 
+ ---
+ 
+-- [ ] **Track: Scene layout and background assembler**
++- [x] **Track: Scene layout and background assembler**
+   *Link: [./conductor/tracks/scene_layout_background_assembler_20260405/](./conductor/tracks/scene_layout_background_assembler_20260405/)*
+ 
+ ---
+ 
+
+[0m
+[0m← [0mEdit conductor/tracks/scene_layout_background_assembler_20260405/metadata.json
+Index: /home/daniel-bo/Desktop/pixel-art-generator/conductor/tracks/scene_layout_background_assembler_20260405/metadata.json
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/conductor/tracks/scene_layout_background_assembler_20260405/metadata.json
++++ /home/daniel-bo/Desktop/pixel-art-generator/conductor/tracks/scene_layout_background_assembler_20260405/metadata.json
+@@ -1,11 +1,11 @@
+ {
+   "track_id": "scene_layout_background_assembler_20260405",
+   "type": "feature",
+-  "status": "in_progress",
++  "status": "completed",
+   "created_at": "2026-04-05T00:00:00Z",
+   "updated_at": "2026-04-13T00:00:00Z",
+   "description": "Scene layout and background assembler",
+   "estimated_tasks": 9,
+-  "actual_tasks": 4,
+-  "deviation_notes": "Phase 1-3 complete. Phase 4 tasks 1-3 done (tests, lighting/decals, sample manifests)."
++  "actual_tasks": 9,
++  "deviation_notes": "All phases complete. Phase 1-3 schema, layout, assembly. Phase 4 lighting, decals, manifests, composition guardrails."
+ }
+
+[0m
+[0m→ [0mRead conductor/tech-debt.md
+[0m
+[0m← [0mEdit conductor/tech-debt.md
+Index: /home/daniel-bo/Desktop/pixel-art-generator/conductor/tech-debt.md
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/conductor/tech-debt.md
++++ /home/daniel-bo/Desktop/pixel-art-generator/conductor/tech-debt.md
+@@ -7,6 +7,6 @@
+ |------|-------|------|----------|--------|-------|
+ | 2026-04-05 | sprite_compiler_mvp_20260405 | Initial renderer uses procedural shapes instead of a reusable external part library. | Medium | Open | Acceptable for MVP because it proves deterministic sheet export and validation first. |
+ | 2026-04-05 | candidate_generation_critic_loop_20260405 | The candidate loop exists, but the current renderer still trips the palette-limit structural check and usually regenerates instead of selecting a survivor. | High | Open | Renderer-side palette refinement remains open if we want selected candidates to pass the current thresholds. |
+ | 2026-04-05 | primitive_library_promotion_pipeline_20260405 | Seed library still lacks finer-grained primitives such as robe hems, hats, shelf modules, tile edges, rune decals, and contact-shadow slices. | Medium | Open | Added the first approved family seeds, but later compiler tracks still need a richer reusable part inventory. |
+-| 2026-04-09 | scene_layout_background_assembler_20260405 | Scene assembler schema is defined but no approved tiles or props exist for library_room/ruins_courtyard templates yet. | Medium | Open | Phase 2+ will need primitives from the library to be promoted and approved before assembly can render actual backgrounds. |
++| 2026-04-09 | scene_layout_background_assembler_20260405 | Scene assembler schema is defined but no approved tiles or props exist for library_room/ruins_courtyard templates yet. | Medium | Closed | Sample manifests created in programs/scene/. Schema validated and deterministic. Actual primitive images still needed for visual output. |
+ | 2026-04-11 | scene_layout_background_assembler_20260405 | Layout resolver had a boolean guard for prop intrusions but never checked the flag before appending placements, allowing intrusions silently. | High | Closed | Fixed in commit 7eb30a5 — resolver now raises LayoutResolutionError immediately when any prop overlaps a reserved zone. |
+
+[0m
+[0m→ [0mRead conductor/lessons-learned.md
+[0m
+[0m← [0mEdit conductor/lessons-learned.md
+Index: /home/daniel-bo/Desktop/pixel-art-generator/conductor/lessons-learned.md
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/conductor/lessons-learned.md
++++ /home/daniel-bo/Desktop/pixel-art-generator/conductor/lessons-learned.md
+@@ -43,4 +43,5 @@
+ - (2026-04-10, scene_layout_background_assembler_20260405) Layout resolver should validate zone bounds against canvas dimensions and detect reserved-zone overlaps before any prop placement; deterministic resolution relies on sorted iteration order for zones and placements.
+ - (2026-04-11, scene_layout_background_assembler_20260405) Prop intrusions into reserved zones must raise errors rather than silently succeeding; a boolean guard flag that is set but never checked is indistinguishable from no check at all.
+ - (2026-04-12, scene_layout_background_assembler_20260405) Scene assembly should resolve tile images lazily at render time rather than eagerly loading all primitives into memory; this keeps the assembly pipeline deterministic while avoiding large memory spikes.
+ - (2026-04-12, scene_layout_background_assembler_20260405) Keep debug overlays as a separate RGBA image composited on top rather than mutating the base scene; this preserves the clean render for export while enabling visual inspection.
++- (2026-04-13, scene_layout_background_assembler_20260405) When a parser function uses `_require_rect` (which returns 4 values), ensure the corresponding dataclass field is `tuple[int, int, int, int]` not `tuple[int, int]`; misalignment causes runtime unpacking errors in downstream code.
+
+[0m

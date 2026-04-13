@@ -22,7 +22,7 @@ This file tracks all major tracks for the project.
 
 ---
 
-- [ ] **Track: Scene layout and background assembler**
+- [x] **Track: Scene layout and background assembler**
   *Link: [./conductor/tracks/scene_layout_background_assembler_20260405/](./conductor/tracks/scene_layout_background_assembler_20260405/)*
 
 ---
