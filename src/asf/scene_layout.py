@@ -328,7 +328,21 @@ class SceneProgram:
 def _parse_lighting(
     payload: dict[str, Any], *, path: Path, context: str
 ) -> LightingSpec:
-    _require_exact_keys(payload, {"global_direction", "ambient_strength"}, context, path)
+    REQUIRED_LIGHTING_KEYS = {"global_direction", "ambient_strength"}
+    OPTIONAL_LIGHTING_KEYS = {"local_emissive_sources"}
+    ALLOWED_LIGHTING_KEYS = REQUIRED_LIGHTING_KEYS | OPTIONAL_LIGHTING_KEYS
+    missing = REQUIRED_LIGHTING_KEYS - payload.keys()
+    extra = payload.keys() - ALLOWED_LIGHTING_KEYS
+    if missing:
+        joined = ", ".join(sorted(missing))
+        raise SceneManifestValidationError(
+            f"{path}: {context} missing required key(s): {joined}"
+        )
+    if extra:
+        joined = ", ".join(sorted(extra))
+        raise SceneManifestValidationError(
+            f"{path}: {context} contains unexpected key(s): {joined}"
+        )
     direction = _require_string(payload, "global_direction", path=path, context=context)
     if direction not in SUPPORTED_LIGHTING_DIRECTIONS:
         raise SceneManifestValidationError(
@@ -469,7 +483,21 @@ def _parse_decal_pass(
 
 
 def _parse_output(payload: dict[str, Any], *, path: Path, context: str) -> OutputSpec:
-    _require_exact_keys(payload, {"variant_id"}, context, path)
+    REQUIRED_OUTPUT_KEYS = {"variant_id"}
+    OPTIONAL_OUTPUT_KEYS = {"debug_overlay"}
+    ALLOWED_OUTPUT_KEYS = REQUIRED_OUTPUT_KEYS | OPTIONAL_OUTPUT_KEYS
+    missing = REQUIRED_OUTPUT_KEYS - payload.keys()
+    extra = payload.keys() - ALLOWED_OUTPUT_KEYS
+    if missing:
+        joined = ", ".join(sorted(missing))
+        raise SceneManifestValidationError(
+            f"{path}: {context} missing required key(s): {joined}"
+        )
+    if extra:
+        joined = ", ".join(sorted(extra))
+        raise SceneManifestValidationError(
+            f"{path}: {context} contains unexpected key(s): {joined}"
+        )
     variant_id = _optional_string(payload, "variant_id", path=path, context=context)
     debug_overlay = payload.get("debug_overlay", False)
     if not isinstance(debug_overlay, bool):
@@ -786,12 +814,79 @@ def _apply_lighting_pass(
     result = image.copy()
     directional = LIGHTING_DIRECTION_OFFSETS.get(lighting.global_direction, (0, -1))
     dx, dy = directional
-    overlay = Image.new("RGBA", image.size, (0, 0, 0, 0))
-    darken = int((1.0 - lighting.ambient_strength) * 80)
-    if darken > 0:
-        dark_layer = Image.new("RGBA", image.size, (0, 0, 0, darken))
-        overlay.alpha_composite(dark_layer)
-    result.alpha_composite(overlay)
+
+    darken_amount = int((1.0 - lighting.ambient_strength) * 100)
+    width, height = result.size
+
+    if dx != 0 or dy != 0 or darken_amount > 0 or lighting.local_emissive_sources:
+        pixels = result.load()
+
+        if dx != 0 or dy != 0:
+            shadow_intensity = darken_amount // 2 if darken_amount > 0 else 15
+            if dx > 0:
+                for y in range(height):
+                    for x in range(width // 2):
+                        r, g, b, a = pixels[x, y]
+                        if a > 0 and shadow_intensity > 0:
+                            pixels[x, y] = (max(0, r - shadow_intensity), max(0, g - shadow_intensity), max(0, b - shadow_intensity), a)
+            elif dx < 0:
+                for y in range(height):
+                    for x in range(width - 1, width // 2 - 1, -1):
+                        r, g, b, a = pixels[x, y]
+                        if a > 0 and shadow_intensity > 0:
+                            pixels[x, y] = (max(0, r - shadow_intensity), max(0, g - shadow_intensity), max(0, b - shadow_intensity), a)
+            if dy > 0:
+                for y in range(height // 2):
+                    for x in range(width):
+                        r, g, b, a = pixels[x, y]
+                        if a > 0 and shadow_intensity > 0:
+                            pixels[x, y] = (max(0, r - shadow_intensity), max(0, g - shadow_intensity), max(0, b - shadow_intensity), a)
+            elif dy < 0:
+                for y in range(height - 1, height // 2 - 1, -1):
+                    for x in range(width):
+                        r, g, b, a = pixels[x, y]
+                        if a > 0 and shadow_intensity > 0:
+                            pixels[x, y] = (max(0, r - shadow_intensity), max(0, g - shadow_intensity), max(0, b - shadow_intensity), a)
+
+        for emissive in lighting.local_emissive_sources:
+            em_x = emissive.get("position", [0, 0])[0]
+            em_y = emissive.get("position", [0, 0])[1]
+            em_radius = emissive.get("radius", 16)
+            em_strength = emissive.get("strength", 0.5)
+
+            for y in range(max(0, em_y - em_radius), min(height, em_y + em_radius)):
+                for x in range(max(0, em_x - em_radius), min(width, em_x + em_radius)):
+                    dist = ((x - em_x) ** 2 + (y - em_y) ** 2) ** 0.5
+                    if dist <= em_radius:
+                        r, g, b, a = pixels[x, y]
+                        if a > 0:
+                            brighten = int(em_strength * 60 * (1 - dist / em_radius))
+                            if brighten > 0:
+                                pixels[x, y] = (min(255, r + brighten), min(255, g + brighten), min(255, b + brighten), a)
+
+        if darken_amount > 0:
+            dark_pixels = int(darken_amount * 0.6)
+            if dx > 0:
+                for y in range(height):
+                    for x in range(width // 2):
+                        r, g, b, a = pixels[x, y]
+                        pixels[x, y] = (max(0, r - dark_pixels), max(0, g - dark_pixels), max(0, b - dark_pixels), a)
+            elif dx < 0:
+                for y in range(height):
+                    for x in range(width - 1, width // 2 - 1, -1):
+                        r, g, b, a = pixels[x, y]
+                        pixels[x, y] = (max(0, r - dark_pixels), max(0, g - dark_pixels), max(0, b - dark_pixels), a)
+            if dy > 0:
+                for y in range(height // 2):
+                    for x in range(width):
+                        r, g, b, a = pixels[x, y]
+                        pixels[x, y] = (max(0, r - dark_pixels), max(0, g - dark_pixels), max(0, b - dark_pixels), a)
+            elif dy < 0:
+                for y in range(height - 1, height // 2 - 1, -1):
+                    for x in range(width):
+                        r, g, b, a = pixels[x, y]
+                        pixels[x, y] = (max(0, r - dark_pixels), max(0, g - dark_pixels), max(0, b - dark_pixels), a)
+
     return result
 
 
