@@ -7,6 +7,8 @@ import tempfile
 from pathlib import Path
 import unittest
 
+from PIL import Image
+
 from asf.presentation_surfaces import (
     ALL_SURFACE_FAMILIES,
     SURFACE_FAMILY_COVER,
@@ -19,9 +21,17 @@ from asf.presentation_surfaces import (
     CoverSurfaceProgram,
     LoadingSurfaceProgram,
     ParallaxLayerSetProgram,
+    ParallaxSetAssemblyResult,
+    ParallaxSetManifest,
     PresentationSurfaceValidationError,
     PromoCaptureJobProgram,
+    SurfaceAssemblyError,
+    SurfaceAssemblyResult,
+    SurfaceManifest,
     UISheetProgram,
+    assemble_cover_surface,
+    assemble_loading_surface,
+    assemble_parallax_layer_set,
     load_cover_surface,
     load_loading_surface,
     load_parallax_layer_set,
@@ -555,6 +565,232 @@ class LoadPresentationSurfaceDispatchTest(unittest.TestCase):
             )
             self.assertEqual(program.focal_subject.family, "characters")
             self.assertEqual(program.focal_subject.primitive_id, "dragon_001")
+
+
+def _make_primitive_png(tmp_dir: Path, family: str, primitive_id: str, color: tuple[int, int, int, int], size: int = 32) -> None:
+    (tmp_dir / "library" / "primitives" / family / primitive_id).mkdir(parents=True, exist_ok=True)
+    img = Image.new("RGBA", (size, size), color)
+    img.save(tmp_dir / "library" / "primitives" / family / primitive_id / "source.png")
+
+
+def _make_scene_png(tmp_dir: Path, rel_path: str, color: tuple[int, int, int, int], width: int, height: int) -> None:
+    path = tmp_dir / rel_path
+    path.parent.mkdir(parents=True, exist_ok=True)
+    img = Image.new("RGBA", (width, height), color)
+    img.save(path)
+
+
+class CoverSurfaceGenerationTest(unittest.TestCase):
+
+    def test_cover_surface_produces_correct_canvas_size(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            _make_primitive_png(root, "characters", "dragon_001", (255, 0, 0, 255), 32)
+
+            program = load_cover_surface(_write_json(tmp_dir, _minimal_cover()))
+            result = assemble_cover_surface(program, repo_root=root)
+
+            self.assertIsInstance(result, SurfaceAssemblyResult)
+            self.assertEqual(result.image.size, (512, 384))
+
+    def test_cover_surface_manifest_has_program_metadata(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            _make_primitive_png(root, "characters", "dragon_001", (255, 0, 0, 255), 32)
+
+            program = load_cover_surface(_write_json(tmp_dir, _minimal_cover()))
+            result = assemble_cover_surface(program, repo_root=root)
+
+            self.assertIsInstance(result.manifest, SurfaceManifest)
+            self.assertEqual(result.manifest.program_id, "dragon_flight_cover_v1")
+            self.assertEqual(result.manifest.surface_family, "cover_surface")
+            self.assertEqual(result.manifest.canvas, (512, 384))
+            self.assertEqual(result.manifest.theme, "dragon_flight")
+
+    def test_cover_surface_manifest_records_focal_subject_source(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            _make_primitive_png(root, "characters", "dragon_001", (255, 0, 0, 255), 32)
+
+            program = load_cover_surface(_write_json(tmp_dir, _minimal_cover()))
+            result = assemble_cover_surface(program, repo_root=root)
+
+            self.assertEqual(len(result.manifest.source_assets), 1)
+            self.assertEqual(result.manifest.source_assets[0]["tile_id"], "hero_dragon")
+
+    def test_cover_surface_is_deterministic(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            _make_primitive_png(root, "characters", "dragon_001", (255, 0, 0, 255), 32)
+
+            program = load_cover_surface(_write_json(tmp_dir, _minimal_cover()))
+            result_a = assemble_cover_surface(program, repo_root=root)
+            result_b = assemble_cover_surface(program, repo_root=root)
+
+            import hashlib
+            def img_hash(img: Image.Image) -> str:
+                return hashlib.md5(img.tobytes()).hexdigest()
+            self.assertEqual(img_hash(result_a.image), img_hash(result_b.image))
+
+    def test_cover_surface_raises_when_focal_subject_missing(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            program = load_cover_surface(_write_json(tmp_dir, _minimal_cover()))
+            with self.assertRaises(SurfaceAssemblyError):
+                assemble_cover_surface(program, repo_root=root)
+
+    def test_cover_surface_succeeds_when_background_scene_missing(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            _make_primitive_png(root, "characters", "dragon_001", (255, 0, 0, 255), 32)
+
+            program = load_cover_surface(_write_json(tmp_dir, _minimal_cover()))
+            result = assemble_cover_surface(program, repo_root=root)
+            self.assertIsInstance(result.image, Image.Image)
+            self.assertEqual(result.image.size, (512, 384))
+
+    def test_cover_surface_uses_background_scene_when_available(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            _make_primitive_png(root, "characters", "dragon_001", (255, 0, 0, 255), 32)
+            _make_scene_png(root, "outputs/scene/dragon_sky_main/base.png", (0, 255, 0, 255), 512, 384)
+
+            program = load_cover_surface(_write_json(tmp_dir, _minimal_cover()))
+            result = assemble_cover_surface(program, repo_root=root)
+            self.assertIsInstance(result.image, Image.Image)
+
+    def test_cover_surface_focal_subject_placed_below_title_safe_zone(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            _make_primitive_png(root, "characters", "dragon_001", (255, 0, 0, 255), 64)
+
+            program = load_cover_surface(_write_json(tmp_dir, _minimal_cover()))
+            result = assemble_cover_surface(program, repo_root=root)
+
+            self.assertIsInstance(result.manifest, SurfaceManifest)
+            focal = next(a for a in result.manifest.source_assets if a.get("role") == "focal_subject")
+            subject_top = focal["position"][1]
+            title_bottom = program.title_safe_zone[1] + program.title_safe_zone[3]
+            self.assertGreater(subject_top, title_bottom)
+
+
+class LoadingSurfaceGenerationTest(unittest.TestCase):
+
+    def test_loading_surface_produces_correct_canvas_size(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            _make_scene_png(root, "outputs/scene/dragon_sky_main/base.png", (0, 128, 255, 255), 512, 384)
+
+            program = load_loading_surface(_write_json(tmp_dir, _minimal_loading()))
+            result = assemble_loading_surface(program, repo_root=root)
+
+            self.assertIsInstance(result, SurfaceAssemblyResult)
+            self.assertEqual(result.image.size, (512, 384))
+
+    def test_loading_surface_manifest_references_scene_manifest(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            _make_scene_png(root, "outputs/scene/dragon_sky_main/base.png", (0, 128, 255, 255), 512, 384)
+
+            program = load_loading_surface(_write_json(tmp_dir, _minimal_loading()))
+            result = assemble_loading_surface(program, repo_root=root)
+
+            self.assertIsInstance(result.manifest, SurfaceManifest)
+            self.assertEqual(result.manifest.program_id, "dragon_flight_loading_v1")
+            self.assertEqual(result.manifest.theme, "dragon_flight")
+
+    def test_loading_surface_is_deterministic(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            _make_scene_png(root, "outputs/scene/dragon_sky_main/base.png", (0, 128, 255, 255), 512, 384)
+
+            program = load_loading_surface(_write_json(tmp_dir, _minimal_loading()))
+            result_a = assemble_loading_surface(program, repo_root=root)
+            result_b = assemble_loading_surface(program, repo_root=root)
+
+            import hashlib
+            def img_hash(img: Image.Image) -> str:
+                return hashlib.md5(img.tobytes()).hexdigest()
+            self.assertEqual(img_hash(result_a.image), img_hash(result_b.image))
+
+
+class ParallaxLayerSetGenerationTest(unittest.TestCase):
+
+    def test_parallax_produces_three_layers(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            _make_primitive_png(root, "props", "cloud_001", (200, 200, 255, 200), 32)
+            _make_primitive_png(root, "props", "cloud_002", (150, 150, 255, 200), 32)
+            _make_primitive_png(root, "props", "mountain_001", (100, 80, 60, 255), 32)
+
+            program = load_parallax_layer_set(_write_json(tmp_dir, _minimal_parallax()))
+            result = assemble_parallax_layer_set(program, repo_root=root)
+
+            self.assertIsInstance(result, ParallaxSetAssemblyResult)
+            self.assertEqual(len(result.layers), 3)
+
+    def test_parallax_layer_canvas_sizes_match_program(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            _make_primitive_png(root, "props", "cloud_001", (200, 200, 255, 200), 32)
+            _make_primitive_png(root, "props", "cloud_002", (150, 150, 255, 200), 32)
+            _make_primitive_png(root, "props", "mountain_001", (100, 80, 60, 255), 32)
+
+            program = load_parallax_layer_set(_write_json(tmp_dir, _minimal_parallax()))
+            result = assemble_parallax_layer_set(program, repo_root=root)
+
+            for layer in result.layers:
+                self.assertEqual(layer.image.size, (512, 384))
+
+    def test_parallax_manifest_records_layers_with_scroll_order(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            _make_primitive_png(root, "props", "cloud_001", (200, 200, 255, 200), 32)
+            _make_primitive_png(root, "props", "cloud_002", (150, 150, 255, 200), 32)
+            _make_primitive_png(root, "props", "mountain_001", (100, 80, 60, 255), 32)
+
+            program = load_parallax_layer_set(_write_json(tmp_dir, _minimal_parallax()))
+            result = assemble_parallax_layer_set(program, repo_root=root)
+
+            self.assertIsInstance(result.manifest, ParallaxSetManifest)
+            layer_entries = [e for e in result.manifest.layer_entries]
+            self.assertEqual(len(layer_entries), 3)
+            roles = [e["layer_role"] for e in layer_entries]
+            self.assertIn("top", roles)
+            self.assertIn("middle", roles)
+            self.assertIn("bottom", roles)
+
+    def test_parallax_is_deterministic(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            _make_primitive_png(root, "props", "cloud_001", (200, 200, 255, 200), 32)
+            _make_primitive_png(root, "props", "cloud_002", (150, 150, 255, 200), 32)
+            _make_primitive_png(root, "props", "mountain_001", (100, 80, 60, 255), 32)
+
+            program = load_parallax_layer_set(_write_json(tmp_dir, _minimal_parallax()))
+            result_a = assemble_parallax_layer_set(program, repo_root=root)
+            result_b = assemble_parallax_layer_set(program, repo_root=root)
+
+            import hashlib
+            def hash_layer(layer_img: Image.Image) -> str:
+                return hashlib.md5(layer_img.tobytes()).hexdigest()
+            for la, lb in zip(result_a.layers, result_b.layers):
+                self.assertEqual(hash_layer(la.image), hash_layer(lb.image))
+
+    def test_parallax_contrast_reduces_bottom_layer_contrast(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            _make_primitive_png(root, "props", "cloud_001", (200, 200, 255, 200), 32)
+            _make_primitive_png(root, "props", "cloud_002", (150, 150, 255, 200), 32)
+            _make_primitive_png(root, "props", "mountain_001", (100, 80, 60, 255), 32)
+
+            program = load_parallax_layer_set(_write_json(tmp_dir, _minimal_parallax()))
+            result = assemble_parallax_layer_set(program, repo_root=root)
+
+            bottom = next(l for l in result.layers if l.layer_role == "bottom")
+            top = next(l for l in result.layers if l.layer_role == "top")
+            self.assertIsNotNone(bottom)
+            self.assertIsNotNone(top)
 
 
 if __name__ == "__main__":

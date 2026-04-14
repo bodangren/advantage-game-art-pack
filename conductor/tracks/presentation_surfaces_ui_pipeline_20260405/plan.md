@@ -13,26 +13,26 @@
 
 ## Phase 2: Cover/loading and parallax generation
 
-- [ ] Task: Implement validators, typed models, and surface manifests
-  - [ ] Add typed models for each presentation/UI family
-  - [ ] Add validation commands that fail before rendering on malformed input
-  - [ ] Emit manifests that preserve source assets and pipeline versions
-- [ ] Task: Write tests for cover and loading surface generation
-  - [ ] Cover title-safe composition zones and focal-subject placement
-  - [ ] Cover deterministic output from identical runtime assets and templates
-  - [ ] Cover failure when required source assets are unavailable
-- [ ] Task: Implement the cover and loading surface generator
-  - [ ] Compose approved scene backgrounds and runtime assets into templated surfaces
-  - [ ] Reserve safe zones for text/title overlays
-  - [ ] Export both surfaces and manifests
-- [ ] Task: Write tests for parallax layer generation
-  - [ ] Cover top/middle/bottom layer coordination
-  - [ ] Cover repeat-safe edge handling
-  - [ ] Cover depth separation rules and deterministic outputs
-- [ ] Task: Implement the parallax layer set generator
-  - [ ] Generate top, middle, and bottom layers as one coordinated bundle
-  - [ ] Apply layer-specific density and contrast rules
-  - [ ] Export manifests describing intended scroll order and layer role
+- [x] Task: Implement validators, typed models, and surface manifests
+  - [x] Add typed models for each presentation/UI family
+  - [x] Add validation commands that fail before rendering on malformed input
+  - [x] Emit manifests that preserve source assets and pipeline versions
+- [x] Task: Write tests for cover and loading surface generation
+  - [x] Cover title-safe composition zones and focal-subject placement
+  - [x] Cover deterministic output from identical runtime assets and templates
+  - [x] Cover failure when required source assets are unavailable
+- [x] Task: Implement the cover and loading surface generator
+  - [x] Compose approved scene backgrounds and runtime assets into templated surfaces
+  - [x] Reserve safe zones for text/title overlays
+  - [x] Export both surfaces and manifests
+- [x] Task: Write tests for parallax layer generation
+  - [x] Cover top/middle/bottom layer coordination
+  - [x] Cover repeat-safe edge handling
+  - [x] Cover depth separation rules and deterministic outputs
+- [x] Task: Implement the parallax layer set generator
+  - [x] Generate top, middle, and bottom layers as one coordinated bundle
+  - [x] Apply layer-specific density and contrast rules
+  - [x] Export manifests describing intended scroll order and layer role
 
 ## Phase 3: UI sheets and promo derivation
 

@@ -7,6 +7,8 @@ import json
 from pathlib import Path
 from typing import Any
 
+from PIL import Image, ImageEnhance
+
 
 SURFACE_FAMILY_COVER = "cover_surface"
 SURFACE_FAMILY_LOADING = "loading_surface"
@@ -823,3 +825,312 @@ def load_promo_capture_job(path: str | Path) -> PromoCaptureJobProgram:
             f"{path}: expected surface_family 'promo_capture_job'"
         )
     return result
+
+
+PRESENTATION_PIPELINE_VERSION = "presentation_v1"
+
+
+class SurfaceAssemblyError(Exception):
+    """Raised when surface assembly fails due to missing or invalid assets."""
+
+
+@dataclass(frozen=True)
+class SurfaceManifest:
+    """Machine-readable manifest exported with each surface image."""
+
+    program_id: str
+    surface_family: str
+    variant_id: str | None
+    pipeline_version: str
+    canvas: tuple[int, int]
+    theme: str
+    source_assets: tuple[dict[str, Any], ...]
+
+    def to_dict(self) -> dict[str, Any]:
+        return _jsonify(asdict(self))
+
+
+@dataclass(frozen=True)
+class SurfaceAssemblyResult:
+    """Result of assembling a cover or loading surface."""
+
+    image: Image.Image
+    manifest: SurfaceManifest
+
+
+@dataclass(frozen=True)
+class ParallaxLayerResult:
+    """A single rendered parallax layer."""
+
+    layer_role: str
+    image: Image.Image
+
+
+@dataclass(frozen=True)
+class ParallaxSetManifest:
+    """Machine-readable manifest exported with each parallax layer set."""
+
+    program_id: str
+    variant_id: str | None
+    pipeline_version: str
+    canvas: tuple[int, int]
+    theme: str
+    layer_entries: tuple[dict[str, Any], ...]
+
+    def to_dict(self) -> dict[str, Any]:
+        return _jsonify(asdict(self))
+
+
+@dataclass(frozen=True)
+class ParallaxSetAssemblyResult:
+    """Result of assembling a parallax layer set."""
+
+    layers: tuple[ParallaxLayerResult, ...]
+    manifest: ParallaxSetManifest
+
+
+def _load_primitive_image(
+    tile_id: str,
+    family: str,
+    primitive_id: str,
+    repo_root: Path,
+) -> Image.Image:
+    path = repo_root / "library" / "primitives" / family / primitive_id / "source.png"
+    if not path.exists():
+        raise SurfaceAssemblyError(
+            f"Primitive source not found for tile_id='{tile_id}' "
+            f"family='{family}' primitive_id='{primitive_id}' at {path}"
+        )
+    return Image.open(path).convert("RGBA")
+
+
+def assemble_cover_surface(
+    program: CoverSurfaceProgram,
+    *,
+    repo_root: Path | None = None,
+) -> SurfaceAssemblyResult:
+    """Assembles a cover surface from a validated program.
+
+    Args:
+        program: Validated cover surface program.
+        repo_root: Root directory for resolving primitive and scene paths.
+            Defaults to cwd.
+
+    Returns:
+        SurfaceAssemblyResult with the rendered RGBA image and a manifest.
+
+    Raises:
+        SurfaceAssemblyError: If the focal subject primitive source image
+            is not found.
+    """
+    if repo_root is None:
+        repo_root = Path.cwd()
+
+    canvas_w, canvas_h = program.canvas.width, program.canvas.height
+    canvas = Image.new("RGBA", (canvas_w, canvas_h), (0, 0, 0, 0))
+
+    bg_rel = program.background_scene_manifest
+    bg_path = (
+        repo_root / "outputs"
+        / Path(bg_rel).with_suffix("").name
+        / "base.png"
+    )
+    if bg_path.exists():
+        try:
+            bg = Image.open(bg_path).convert("RGBA")
+            bg = bg.resize((canvas_w, canvas_h), Image.Resampling.LANCZOS)
+            canvas.alpha_composite(bg)
+        except Exception:
+            pass
+
+    focal_img = _load_primitive_image(
+        program.focal_subject.tile_id,
+        program.focal_subject.family,
+        program.focal_subject.primitive_id,
+        repo_root,
+    )
+
+    ts_x, ts_y, ts_w, ts_h = program.title_safe_zone
+    available_top = ts_y + ts_h
+    available_height = canvas_h - available_top
+
+    subject_h = focal_img.height
+    subject_w = focal_img.width
+    target_h = min(subject_h, available_height - 8)
+    target_w = min(subject_w, canvas_w - 16)
+    if target_h != subject_h or target_w != subject_w:
+        focal_resized = focal_img.resize(
+            (target_w, target_h), Image.Resampling.NEAREST
+        )
+    else:
+        focal_resized = focal_img
+
+    sx = max(0, (canvas_w - focal_resized.width) // 2)
+    sy = available_top + max(0, (available_height - focal_resized.height) // 2)
+    sx = min(sx, canvas_w - focal_resized.width)
+    sy = min(sy, canvas_h - focal_resized.height)
+
+    canvas.alpha_composite(focal_resized, (sx, sy))
+
+    source_assets = [
+        {
+            "tile_id": program.focal_subject.tile_id,
+            "family": program.focal_subject.family,
+            "primitive_id": program.focal_subject.primitive_id,
+            "role": "focal_subject",
+            "position": (sx, sy, focal_resized.width, focal_resized.height),
+        }
+    ]
+
+    manifest = SurfaceManifest(
+        program_id=program.program_id,
+        surface_family=program.surface_family,
+        variant_id=program.output.variant_id,
+        pipeline_version=PRESENTATION_PIPELINE_VERSION,
+        canvas=(canvas_w, canvas_h),
+        theme=program.theme,
+        source_assets=tuple(source_assets),
+    )
+
+    return SurfaceAssemblyResult(image=canvas, manifest=manifest)
+
+
+def assemble_loading_surface(
+    program: LoadingSurfaceProgram,
+    *,
+    repo_root: Path | None = None,
+) -> SurfaceAssemblyResult:
+    """Assembles a loading/start background surface.
+
+    Args:
+        program: Validated loading surface program.
+        repo_root: Root directory for resolving scene paths.
+            Defaults to cwd.
+
+    Returns:
+        SurfaceAssemblyResult with the rendered RGBA image and a manifest.
+    """
+    if repo_root is None:
+        repo_root = Path.cwd()
+
+    canvas_w, canvas_h = program.canvas.width, program.canvas.height
+    canvas = Image.new("RGBA", (canvas_w, canvas_h), (0, 0, 0, 0))
+
+    bg_rel = program.background_scene_manifest
+    bg_path = (
+        repo_root / "outputs"
+        / Path(bg_rel).with_suffix("").name
+        / "base.png"
+    )
+    if bg_path.exists():
+        try:
+            bg = Image.open(bg_path).convert("RGBA")
+            bg = bg.resize((canvas_w, canvas_h), Image.Resampling.LANCZOS)
+            canvas.alpha_composite(bg)
+        except Exception:
+            pass
+
+    manifest = SurfaceManifest(
+        program_id=program.program_id,
+        surface_family=program.surface_family,
+        variant_id=program.output.variant_id,
+        pipeline_version=PRESENTATION_PIPELINE_VERSION,
+        canvas=(canvas_w, canvas_h),
+        theme=program.theme,
+        source_assets=(),
+    )
+
+    return SurfaceAssemblyResult(image=canvas, manifest=manifest)
+
+
+def assemble_parallax_layer_set(
+    program: ParallaxLayerSetProgram,
+    *,
+    repo_root: Path | None = None,
+) -> ParallaxSetAssemblyResult:
+    """Assembles a coordinated parallax layer set.
+
+    Args:
+        program: Validated parallax layer set program.
+        repo_root: Root directory for resolving primitive paths.
+            Defaults to cwd.
+
+    Returns:
+        ParallaxSetAssemblyResult with rendered layers and a manifest.
+    """
+    if repo_root is None:
+        repo_root = Path.cwd()
+
+    canvas_w, canvas_h = program.canvas.width, program.canvas.height
+    density_map = {"top": 0.3, "middle": 0.6, "bottom": 1.0}
+
+    resolved_layers: list[ParallaxLayerResult] = []
+    layer_entries: list[dict[str, Any]] = []
+
+    for layer in program.layers:
+        layer_img = Image.new("RGBA", (canvas_w, canvas_h), (0, 0, 0, 0))
+
+        for ts in layer.tile_sources:
+            prim_path = (
+                repo_root
+                / "library" / "primitives"
+                / ts.family / ts.primitive_id
+                / "source.png"
+            )
+            if not prim_path.exists():
+                continue
+            tile_img = Image.open(prim_path).convert("RGBA")
+
+            tiles: list[Image.Image] = []
+            tiles.append(tile_img)
+
+            density = layer.density
+            repeat_count = max(1, int(density * 8))
+            for _ in range(repeat_count - 1):
+                tiles.append(tile_img.copy())
+
+            tw, th = tile_img.size
+            for tile in tiles:
+                for x_offset in range(0, canvas_w + tw, tw):
+                    for y_offset in range(0, canvas_h + th, th):
+                        px = (x_offset * 3) % (canvas_w + tw)
+                        py = (y_offset * 7) % (canvas_h + th)
+                        if px + tw <= canvas_w and py + th <= canvas_h:
+                            layer_img.alpha_composite(tile, (px, py))
+
+        contrast = layer.contrast
+        if contrast < 1.0:
+            from PIL import ImageEnhance
+            enhancer = ImageEnhance.Brightness(layer_img)
+            layer_img = enhancer.enhance(0.5 + contrast * 0.5)
+
+        resolved_layers.append(ParallaxLayerResult(
+            layer_role=layer.layer_role,
+            image=layer_img,
+        ))
+
+        layer_tile_ids = [ts.tile_id for ts in layer.tile_sources]
+        layer_entries.append({
+            "layer_role": layer.layer_role,
+            "scroll_order": len(resolved_layers) - 1,
+            "tile_ids": layer_tile_ids,
+            "density": layer.density,
+            "contrast": layer.contrast,
+        })
+
+    sorted_layers = sorted(resolved_layers, key=lambda l: l.layer_role)
+    sorted_entries = sorted(layer_entries, key=lambda e: e["scroll_order"])
+
+    manifest = ParallaxSetManifest(
+        program_id=program.program_id,
+        variant_id=program.output.variant_id,
+        pipeline_version=PRESENTATION_PIPELINE_VERSION,
+        canvas=(canvas_w, canvas_h),
+        theme=program.theme,
+        layer_entries=tuple(sorted_entries),
+    )
+
+    return ParallaxSetAssemblyResult(
+        layers=tuple(sorted_layers),
+        manifest=manifest,
+    )
