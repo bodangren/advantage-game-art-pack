@@ -2,14 +2,14 @@
 
 ## Phase 1: Schemas and downstream audit fixtures
 
-- [ ] Task: Define schemas for cover surfaces, loading surfaces, parallax bundles, UI sheets, and promo capture jobs
-  - [ ] Define required fields, output paths, and manifest envelopes for each surface family
-  - [ ] Define how these schemas reference runtime assets, scene outputs, and theme packs
-  - [ ] Document which downstream `advantage-games` examples each schema is intended to match
-- [ ] Task: Write tests for presentation-surface validation
-  - [ ] Cover valid cover, loading, parallax, UI, and promo-capture job definitions
-  - [ ] Cover missing template references and invalid asset dependencies
-  - [ ] Cover deterministic manifest generation for unchanged inputs
+- [x] Task: Define schemas for cover surfaces, loading surfaces, parallax bundles, UI sheets, and promo capture jobs
+  - [x] Define required fields, output paths, and manifest envelopes for each surface family
+  - [x] Define how these schemas reference runtime assets, scene outputs, and theme packs
+  - [x] Document which downstream `advantage-games` examples each schema is intended to match
+- [x] Task: Write tests for presentation-surface validation
+  - [x] Cover valid cover, loading, parallax, UI, and promo-capture job definitions
+  - [x] Cover missing template references and invalid asset dependencies
+  - [x] Cover deterministic manifest generation for unchanged inputs
 
 ## Phase 2: Cover/loading and parallax generation
 

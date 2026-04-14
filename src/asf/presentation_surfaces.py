@@ -1,0 +1,825 @@
+"""Presentation surface schemas for cover, loading, parallax, UI, and promo surfaces."""
+
+from __future__ import annotations
+
+from dataclasses import asdict, dataclass
+import json
+from pathlib import Path
+from typing import Any
+
+
+SURFACE_FAMILY_COVER = "cover_surface"
+SURFACE_FAMILY_LOADING = "loading_surface"
+SURFACE_FAMILY_PARALLAX = "parallax_layer_set"
+SURFACE_FAMILY_UI_SHEET = "ui_sheet"
+SURFACE_FAMILY_PROMO = "promo_capture_job"
+
+ALL_SURFACE_FAMILIES = (
+    SURFACE_FAMILY_COVER,
+    SURFACE_FAMILY_LOADING,
+    SURFACE_FAMILY_PARALLAX,
+    SURFACE_FAMILY_UI_SHEET,
+    SURFACE_FAMILY_PROMO,
+)
+
+SUPPORTED_PARALLAX_LAYER_ROLES = ("top", "middle", "bottom")
+
+SUPPORTED_UI_SHEET_TYPES = (
+    "icon_sheet",
+    "panel_strip",
+    "stateful_button",
+)
+
+PROGRAM_ROOT_DIRNAME = "programs"
+OUTPUT_ROOT_DIRNAME = "outputs"
+
+
+class PresentationSurfaceValidationError(ValueError):
+    """Raised when a presentation surface program is malformed."""
+
+
+def _jsonify(value: Any) -> Any:
+    if isinstance(value, dict):
+        return {key: _jsonify(v) for key, v in value.items()}
+    if isinstance(value, tuple):
+        return [_jsonify(v) for v in value]
+    if isinstance(value, list):
+        return [_jsonify(v) for v in value]
+    return value
+
+
+def _load_json(path: Path) -> dict[str, Any]:
+    with path.open("r", encoding="utf-8") as handle:
+        payload = json.load(handle)
+    if not isinstance(payload, dict):
+        raise PresentationSurfaceValidationError(f"{path}: expected a JSON object")
+    return payload
+
+
+def _require_exact_keys(
+    payload: dict[str, Any], expected: set[str], context: str, path: Path
+) -> None:
+    missing = expected - payload.keys()
+    extra = payload.keys() - expected
+    if missing:
+        joined = ", ".join(sorted(missing))
+        raise PresentationSurfaceValidationError(
+            f"{path}: {context} missing required key(s): {joined}"
+        )
+    if extra:
+        joined = ", ".join(sorted(extra))
+        raise PresentationSurfaceValidationError(
+            f"{path}: {context} contains unexpected key(s): {joined}"
+        )
+
+
+def _require_keys_with_optional(
+    payload: dict[str, Any],
+    required: set[str],
+    optional: set[str],
+    context: str,
+    path: Path,
+) -> None:
+    missing = required - payload.keys()
+    extra = payload.keys() - (required | optional)
+    if missing:
+        joined = ", ".join(sorted(missing))
+        raise PresentationSurfaceValidationError(
+            f"{path}: {context} missing required key(s): {joined}"
+        )
+    if extra:
+        joined = ", ".join(sorted(extra))
+        raise PresentationSurfaceValidationError(
+            f"{path}: {context} contains unexpected key(s): {joined}"
+        )
+
+
+def _require_string(
+    payload: dict[str, Any],
+    key: str,
+    *,
+    path: Path,
+    context: str,
+    allow_empty: bool = False,
+) -> str:
+    value = payload.get(key)
+    if not isinstance(value, str):
+        raise PresentationSurfaceValidationError(
+            f"{path}: {context}.{key} must be a string"
+        )
+    if not allow_empty and not value:
+        raise PresentationSurfaceValidationError(
+            f"{path}: {context}.{key} must be a non-empty string"
+        )
+    return value
+
+
+def _optional_string(
+    payload: dict[str, Any], key: str, *, path: Path, context: str
+) -> str | None:
+    value = payload.get(key)
+    if value is None:
+        return None
+    if not isinstance(value, str) or not value:
+        raise PresentationSurfaceValidationError(
+            f"{path}: {context}.{key} must be null or a non-empty string"
+        )
+    return value
+
+
+def _require_int(
+    payload: dict[str, Any], key: str, *, path: Path, context: str
+) -> int:
+    value = payload.get(key)
+    if not isinstance(value, int) or isinstance(value, bool):
+        raise PresentationSurfaceValidationError(
+            f"{path}: {context}.{key} must be an integer"
+        )
+    return value
+
+
+def _require_float(
+    payload: dict[str, Any], key: str, *, path: Path, context: str
+) -> float:
+    value = payload.get(key)
+    if not isinstance(value, (int, float)) or isinstance(value, bool):
+        raise PresentationSurfaceValidationError(
+            f"{path}: {context}.{key} must be a number"
+        )
+    return float(value)
+
+
+def _require_bool(
+    payload: dict[str, Any], key: str, *, path: Path, context: str
+) -> bool:
+    value = payload.get(key)
+    if not isinstance(value, bool):
+        raise PresentationSurfaceValidationError(
+            f"{path}: {context}.{key} must be a boolean"
+        )
+    return value
+
+
+def _require_mapping(
+    payload: dict[str, Any], key: str, *, path: Path, context: str
+) -> dict[str, Any]:
+    value = payload.get(key)
+    if not isinstance(value, dict):
+        raise PresentationSurfaceValidationError(
+            f"{path}: {context}.{key} must be an object"
+        )
+    return value
+
+
+def _require_list(
+    payload: dict[str, Any], key: str, *, path: Path, context: str
+) -> list[Any]:
+    value = payload.get(key)
+    if not isinstance(value, list):
+        raise PresentationSurfaceValidationError(
+            f"{path}: {context}.{key} must be an array"
+        )
+    return value
+
+
+def _require_rect(
+    payload: list[Any], context: str, path: Path
+) -> tuple[int, int, int, int]:
+    if not isinstance(payload, list) or len(payload) != 4:
+        raise PresentationSurfaceValidationError(
+            f"{path}: {context} must be a four-item array"
+        )
+    if not all(isinstance(v, int) and not isinstance(v, bool) for v in payload):
+        raise PresentationSurfaceValidationError(
+            f"{path}: {context} must contain integers"
+        )
+    x, y, w, h = payload
+    if w <= 0 or h <= 0:
+        raise PresentationSurfaceValidationError(
+            f"{path}: {context} width and height must be positive"
+        )
+    return x, y, w, h
+
+
+def _parse_canvas_size(
+    payload: dict[str, Any], *, path: Path, context: str
+) -> tuple[int, int]:
+    if not isinstance(payload, dict):
+        raise PresentationSurfaceValidationError(
+            f"{path}: {context} must be an object"
+        )
+    _require_exact_keys(payload, {"width", "height"}, context, path)
+    width = _require_int(payload, "width", path=path, context=context)
+    height = _require_int(payload, "height", path=path, context=context)
+    if width <= 0 or height <= 0:
+        raise PresentationSurfaceValidationError(
+            f"{path}: {context} dimensions must be positive"
+        )
+    return width, height
+
+
+def _parse_output(
+    payload: dict[str, Any], *, path: Path, context: str
+) -> "OutputSpec":
+    _require_keys_with_optional(
+        payload,
+        required={"variant_id"},
+        optional={"debug_overlay"},
+        context=context,
+        path=path,
+    )
+    variant_id = _optional_string(payload, "variant_id", path=path, context=context)
+    debug_overlay = payload.get("debug_overlay", False)
+    if not isinstance(debug_overlay, bool):
+        raise PresentationSurfaceValidationError(
+            f"{path}: {context}.debug_overlay must be a boolean"
+        )
+    return OutputSpec(variant_id=variant_id, debug_overlay=debug_overlay)
+
+
+def _parse_tile_source_item(
+    payload: dict[str, Any], *, path: Path, context: str, index: int
+) -> "TileSourceRef":
+    _require_exact_keys(payload, {"tile_id", "family", "primitive_id"}, context, path)
+    tile_id = _require_string(payload, "tile_id", path=path, context=context)
+    family = _require_string(payload, "family", path=path, context=context)
+    primitive_id = _require_string(payload, "primitive_id", path=path, context=context)
+    return TileSourceRef(tile_id=tile_id, family=family, primitive_id=primitive_id)
+
+
+@dataclass(frozen=True)
+class OutputSpec:
+    """Shared output configuration for all surface families."""
+
+    variant_id: str | None
+    debug_overlay: bool = False
+
+    def to_dict(self) -> dict[str, Any]:
+        return _jsonify(asdict(self))
+
+
+@dataclass(frozen=True)
+class CanvasSpec:
+    """Canvas dimensions for a surface."""
+
+    width: int
+    height: int
+
+    def to_dict(self) -> dict[str, Any]:
+        return _jsonify(asdict(self))
+
+
+@dataclass(frozen=True)
+class TileSourceRef:
+    """Reference to an approved tile primitive."""
+
+    tile_id: str
+    family: str
+    primitive_id: str
+
+    def to_dict(self) -> dict[str, Any]:
+        return _jsonify(asdict(self))
+
+
+@dataclass(frozen=True)
+class FocalSubject:
+    """Focal subject reference for cover surfaces."""
+
+    tile_id: str
+    family: str
+    primitive_id: str
+
+    def to_dict(self) -> dict[str, Any]:
+        return _jsonify(asdict(self))
+
+
+@dataclass(frozen=True)
+class CoverSurfaceProgram:
+    """Typed program for generating a cover surface."""
+
+    surface_family: str
+    program_id: str
+    program_version: int
+    style_pack: str
+    theme: str
+    canvas: CanvasSpec
+    focal_subject: FocalSubject
+    background_scene_manifest: str
+    title_safe_zone: tuple[int, int, int, int]
+    negative_space_zones: tuple[tuple[int, int, int, int], ...]
+    output: OutputSpec
+
+    def to_dict(self) -> dict[str, Any]:
+        return _jsonify(asdict(self))
+
+
+@dataclass(frozen=True)
+class LoadingSurfaceProgram:
+    """Typed program for generating a loading/start background surface."""
+
+    surface_family: str
+    program_id: str
+    program_version: int
+    style_pack: str
+    theme: str
+    canvas: CanvasSpec
+    background_scene_manifest: str
+    output: OutputSpec
+
+    def to_dict(self) -> dict[str, Any]:
+        return _jsonify(asdict(self))
+
+
+@dataclass(frozen=True)
+class ParallaxLayer:
+    """A single layer in a parallax layer set."""
+
+    layer_role: str
+    tile_sources: tuple[TileSourceRef, ...]
+    density: float
+    contrast: float
+
+    def to_dict(self) -> dict[str, Any]:
+        return _jsonify(asdict(self))
+
+
+@dataclass(frozen=True)
+class ParallaxLayerSetProgram:
+    """Typed program for generating a coordinated parallax layer set."""
+
+    surface_family: str
+    program_id: str
+    program_version: int
+    style_pack: str
+    theme: str
+    canvas: CanvasSpec
+    layers: tuple[ParallaxLayer, ...]
+    output: OutputSpec
+
+    def to_dict(self) -> dict[str, Any]:
+        return _jsonify(asdict(self))
+
+
+@dataclass(frozen=True)
+class UISheetProgram:
+    """Typed program for generating a UI sheet or atlas."""
+
+    surface_family: str
+    program_id: str
+    program_version: int
+    style_pack: str
+    sheet_type: str
+    canvas: CanvasSpec
+    tile_sources: tuple[TileSourceRef, ...]
+    states: tuple[str, ...]
+    output: OutputSpec
+
+    def to_dict(self) -> dict[str, Any]:
+        return _jsonify(asdict(self))
+
+
+@dataclass(frozen=True)
+class CaptureConditions:
+    """Capture conditions for a promo still derivation job."""
+
+    scene_program: str
+    timing: float | None = None
+    frame_index: int | None = None
+
+    def to_dict(self) -> dict[str, Any]:
+        return _jsonify(asdict(self))
+
+
+@dataclass(frozen=True)
+class PromoCaptureJobProgram:
+    """Typed program defining a reproducible gameplay promo still derivation job."""
+
+    surface_family: str
+    program_id: str
+    program_version: int
+    source_bundle: str
+    capture_conditions: CaptureConditions
+    output: OutputSpec
+
+    def to_dict(self) -> dict[str, Any]:
+        return _jsonify(asdict(self))
+
+
+def _parse_focal_subject(
+    payload: dict[str, Any], *, path: Path, context: str
+) -> FocalSubject:
+    _require_exact_keys(payload, {"tile_id", "family", "primitive_id"}, context, path)
+    return FocalSubject(
+        tile_id=_require_string(payload, "tile_id", path=path, context=context),
+        family=_require_string(payload, "family", path=path, context=context),
+        primitive_id=_require_string(payload, "primitive_id", path=path, context=context),
+    )
+
+
+def _parse_cover_surface(payload: dict[str, Any], path: Path) -> CoverSurfaceProgram:
+    REQUIRED = {
+        "surface_family",
+        "program_id",
+        "program_version",
+        "style_pack",
+        "theme",
+        "canvas",
+        "focal_subject",
+        "background_scene_manifest",
+        "title_safe_zone",
+        "output",
+    }
+    OPTIONAL = {"negative_space_zones"}
+    _require_keys_with_optional(payload, REQUIRED, OPTIONAL, "cover_surface program", path)
+
+    program_id = _require_string(payload, "program_id", path=path, context="cover_surface program")
+    program_version = _require_int(payload, "program_version", path=path, context="cover_surface program")
+    style_pack = _require_string(payload, "style_pack", path=path, context="cover_surface program")
+    theme = _require_string(payload, "theme", path=path, context="cover_surface program")
+
+    canvas_payload = _require_mapping(payload, "canvas", path=path, context="cover_surface program")
+    canvas_w, canvas_h = _parse_canvas_size(canvas_payload, path=path, context="cover_surface program.canvas")
+    canvas = CanvasSpec(width=canvas_w, height=canvas_h)
+
+    focal_payload = _require_mapping(payload, "focal_subject", path=path, context="cover_surface program")
+    focal_subject = _parse_focal_subject(focal_payload, path=path, context="cover_surface program.focal_subject")
+
+    background_scene_manifest = _require_string(
+        payload, "background_scene_manifest", path=path, context="cover_surface program"
+    )
+
+    title_safe_zone = _require_rect(
+        payload["title_safe_zone"], "cover_surface program.title_safe_zone", path
+    )
+
+    negative_space_raw = payload.get("negative_space_zones", [])
+    if not isinstance(negative_space_raw, list):
+        raise PresentationSurfaceValidationError(
+            f"{path}: cover_surface program.negative_space_zones must be an array"
+        )
+    negative_space_zones = tuple(
+        _require_rect(z, f"cover_surface program.negative_space_zones[{i}]", path)
+        for i, z in enumerate(negative_space_raw)
+    )
+
+    output_payload = _require_mapping(payload, "output", path=path, context="cover_surface program")
+    output = _parse_output(output_payload, path=path, context="cover_surface program.output")
+
+    return CoverSurfaceProgram(
+        surface_family=SURFACE_FAMILY_COVER,
+        program_id=program_id,
+        program_version=program_version,
+        style_pack=style_pack,
+        theme=theme,
+        canvas=canvas,
+        focal_subject=focal_subject,
+        background_scene_manifest=background_scene_manifest,
+        title_safe_zone=title_safe_zone,
+        negative_space_zones=negative_space_zones,
+        output=output,
+    )
+
+
+def _parse_loading_surface(payload: dict[str, Any], path: Path) -> LoadingSurfaceProgram:
+    REQUIRED = {
+        "surface_family",
+        "program_id",
+        "program_version",
+        "style_pack",
+        "theme",
+        "canvas",
+        "background_scene_manifest",
+        "output",
+    }
+    _require_exact_keys(payload, REQUIRED, "loading_surface program", path)
+
+    program_id = _require_string(payload, "program_id", path=path, context="loading_surface program")
+    program_version = _require_int(payload, "program_version", path=path, context="loading_surface program")
+    style_pack = _require_string(payload, "style_pack", path=path, context="loading_surface program")
+    theme = _require_string(payload, "theme", path=path, context="loading_surface program")
+
+    canvas_payload = _require_mapping(payload, "canvas", path=path, context="loading_surface program")
+    canvas_w, canvas_h = _parse_canvas_size(canvas_payload, path=path, context="loading_surface program.canvas")
+    canvas = CanvasSpec(width=canvas_w, height=canvas_h)
+
+    background_scene_manifest = _require_string(
+        payload, "background_scene_manifest", path=path, context="loading_surface program"
+    )
+
+    output_payload = _require_mapping(payload, "output", path=path, context="loading_surface program")
+    output = _parse_output(output_payload, path=path, context="loading_surface program.output")
+
+    return LoadingSurfaceProgram(
+        surface_family=SURFACE_FAMILY_LOADING,
+        program_id=program_id,
+        program_version=program_version,
+        style_pack=style_pack,
+        theme=theme,
+        canvas=canvas,
+        background_scene_manifest=background_scene_manifest,
+        output=output,
+    )
+
+
+def _parse_parallax_layer(
+    payload: dict[str, Any], *, path: Path, context: str, index: int
+) -> ParallaxLayer:
+    _require_exact_keys(
+        payload, {"layer_role", "tile_sources", "density", "contrast"}, f"{context}[{index}]", path
+    )
+    layer_role = _require_string(payload, "layer_role", path=path, context=f"{context}[{index}]")
+    if layer_role not in SUPPORTED_PARALLAX_LAYER_ROLES:
+        raise PresentationSurfaceValidationError(
+            f"{path}: {context}[{index}].layer_role must be one of {', '.join(SUPPORTED_PARALLAX_LAYER_ROLES)}"
+        )
+    tile_sources_raw = _require_list(payload, "tile_sources", path=path, context=f"{context}[{index}]")
+    tile_sources = tuple(
+        _parse_tile_source_item(ts, path=path, context=f"{context}[{index}].tile_sources", index=j)
+        for j, ts in enumerate(tile_sources_raw)
+    )
+    density = _require_float(payload, "density", path=path, context=f"{context}[{index}]")
+    if not (0.0 <= density <= 1.0):
+        raise PresentationSurfaceValidationError(
+            f"{path}: {context}[{index}].density must be between 0 and 1"
+        )
+    contrast = _require_float(payload, "contrast", path=path, context=f"{context}[{index}]")
+    if not (0.0 <= contrast <= 1.0):
+        raise PresentationSurfaceValidationError(
+            f"{path}: {context}[{index}].contrast must be between 0 and 1"
+        )
+    return ParallaxLayer(
+        layer_role=layer_role,
+        tile_sources=tile_sources,
+        density=density,
+        contrast=contrast,
+    )
+
+
+def _parse_parallax_layer_set(payload: dict[str, Any], path: Path) -> ParallaxLayerSetProgram:
+    REQUIRED = {
+        "surface_family",
+        "program_id",
+        "program_version",
+        "style_pack",
+        "theme",
+        "canvas",
+        "layers",
+        "output",
+    }
+    _require_exact_keys(payload, REQUIRED, "parallax_layer_set program", path)
+
+    program_id = _require_string(payload, "program_id", path=path, context="parallax_layer_set program")
+    program_version = _require_int(payload, "program_version", path=path, context="parallax_layer_set program")
+    style_pack = _require_string(payload, "style_pack", path=path, context="parallax_layer_set program")
+    theme = _require_string(payload, "theme", path=path, context="parallax_layer_set program")
+
+    canvas_payload = _require_mapping(payload, "canvas", path=path, context="parallax_layer_set program")
+    canvas_w, canvas_h = _parse_canvas_size(canvas_payload, path=path, context="parallax_layer_set program.canvas")
+    canvas = CanvasSpec(width=canvas_w, height=canvas_h)
+
+    layers_raw = _require_list(payload, "layers", path=path, context="parallax_layer_set program")
+    if len(layers_raw) < 1:
+        raise PresentationSurfaceValidationError(
+            f"{path}: parallax_layer_set program.layers must have at least one layer"
+        )
+
+    layer_roles = []
+    layers = []
+    for i, layer_payload in enumerate(layers_raw):
+        if not isinstance(layer_payload, dict):
+            raise PresentationSurfaceValidationError(
+                f"{path}: parallax_layer_set program.layers[{i}] must be an object"
+            )
+        layer = _parse_parallax_layer(
+            layer_payload, path=path, context="parallax_layer_set program.layers", index=i
+        )
+        if layer.layer_role in layer_roles:
+            raise PresentationSurfaceValidationError(
+                f"{path}: parallax_layer_set program.layers contains duplicate layer_role '{layer.layer_role}'"
+            )
+        layer_roles.append(layer.layer_role)
+        layers.append(layer)
+
+    output_payload = _require_mapping(payload, "output", path=path, context="parallax_layer_set program")
+    output = _parse_output(output_payload, path=path, context="parallax_layer_set program.output")
+
+    return ParallaxLayerSetProgram(
+        surface_family=SURFACE_FAMILY_PARALLAX,
+        program_id=program_id,
+        program_version=program_version,
+        style_pack=style_pack,
+        theme=theme,
+        canvas=canvas,
+        layers=tuple(layers),
+        output=output,
+    )
+
+
+def _parse_ui_sheet(payload: dict[str, Any], path: Path) -> UISheetProgram:
+    REQUIRED = {
+        "surface_family",
+        "program_id",
+        "program_version",
+        "style_pack",
+        "sheet_type",
+        "canvas",
+        "tile_sources",
+        "states",
+        "output",
+    }
+    _require_exact_keys(payload, REQUIRED, "ui_sheet program", path)
+
+    program_id = _require_string(payload, "program_id", path=path, context="ui_sheet program")
+    program_version = _require_int(payload, "program_version", path=path, context="ui_sheet program")
+    style_pack = _require_string(payload, "style_pack", path=path, context="ui_sheet program")
+    sheet_type = _require_string(payload, "sheet_type", path=path, context="ui_sheet program")
+    if sheet_type not in SUPPORTED_UI_SHEET_TYPES:
+        raise PresentationSurfaceValidationError(
+            f"{path}: ui_sheet program.sheet_type must be one of {', '.join(SUPPORTED_UI_SHEET_TYPES)}"
+        )
+
+    canvas_payload = _require_mapping(payload, "canvas", path=path, context="ui_sheet program")
+    canvas_w, canvas_h = _parse_canvas_size(canvas_payload, path=path, context="ui_sheet program.canvas")
+    canvas = CanvasSpec(width=canvas_w, height=canvas_h)
+
+    tile_sources_raw = _require_list(payload, "tile_sources", path=path, context="ui_sheet program")
+    tile_sources = tuple(
+        _parse_tile_source_item(ts, path=path, context="ui_sheet program.tile_sources", index=i)
+        for i, ts in enumerate(tile_sources_raw)
+    )
+
+    states_raw = _require_list(payload, "states", path=path, context="ui_sheet program")
+    states = []
+    for i, state in enumerate(states_raw):
+        if not isinstance(state, str) or not state:
+            raise PresentationSurfaceValidationError(
+                f"{path}: ui_sheet program.states[{i}] must be a non-empty string"
+            )
+        states.append(state)
+
+    output_payload = _require_mapping(payload, "output", path=path, context="ui_sheet program")
+    output = _parse_output(output_payload, path=path, context="ui_sheet program.output")
+
+    return UISheetProgram(
+        surface_family=SURFACE_FAMILY_UI_SHEET,
+        program_id=program_id,
+        program_version=program_version,
+        style_pack=style_pack,
+        sheet_type=sheet_type,
+        canvas=canvas,
+        tile_sources=tile_sources,
+        states=tuple(states),
+        output=output,
+    )
+
+
+def _parse_capture_conditions(
+    payload: dict[str, Any], *, path: Path, context: str
+) -> CaptureConditions:
+    REQUIRED = {"scene_program"}
+    OPTIONAL = {"timing", "frame_index"}
+    _require_keys_with_optional(payload, REQUIRED, OPTIONAL, context, path)
+
+    scene_program = _require_string(payload, "scene_program", path=path, context=context)
+
+    timing: float | None = None
+    if "timing" in payload:
+        timing = _require_float(payload, "timing", path=path, context=context)
+        if timing < 0.0:
+            raise PresentationSurfaceValidationError(
+                f"{path}: {context}.timing must be non-negative"
+            )
+
+    frame_index: int | None = None
+    if "frame_index" in payload:
+        frame_index = _require_int(payload, "frame_index", path=path, context=context)
+        if frame_index < 0:
+            raise PresentationSurfaceValidationError(
+                f"{path}: {context}.frame_index must be non-negative"
+            )
+
+    return CaptureConditions(
+        scene_program=scene_program,
+        timing=timing,
+        frame_index=frame_index,
+    )
+
+
+def _parse_promo_capture_job(payload: dict[str, Any], path: Path) -> PromoCaptureJobProgram:
+    REQUIRED = {
+        "surface_family",
+        "program_id",
+        "program_version",
+        "source_bundle",
+        "capture_conditions",
+        "output",
+    }
+    _require_exact_keys(payload, REQUIRED, "promo_capture_job program", path)
+
+    program_id = _require_string(payload, "program_id", path=path, context="promo_capture_job program")
+    program_version = _require_int(payload, "program_version", path=path, context="promo_capture_job program")
+    source_bundle = _require_string(payload, "source_bundle", path=path, context="promo_capture_job program")
+
+    capture_payload = _require_mapping(
+        payload, "capture_conditions", path=path, context="promo_capture_job program"
+    )
+    capture_conditions = _parse_capture_conditions(
+        capture_payload, path=path, context="promo_capture_job program.capture_conditions"
+    )
+
+    output_payload = _require_mapping(payload, "output", path=path, context="promo_capture_job program")
+    output = _parse_output(output_payload, path=path, context="promo_capture_job program.output")
+
+    return PromoCaptureJobProgram(
+        surface_family=SURFACE_FAMILY_PROMO,
+        program_id=program_id,
+        program_version=program_version,
+        source_bundle=source_bundle,
+        capture_conditions=capture_conditions,
+        output=output,
+    )
+
+
+def load_presentation_surface(path: str | Path) -> (
+    CoverSurfaceProgram
+    | LoadingSurfaceProgram
+    | ParallaxLayerSetProgram
+    | UISheetProgram
+    | PromoCaptureJobProgram
+):
+    """Loads and validates a presentation surface program from disk.
+
+    Dispatches to the appropriate parser based on the surface_family field.
+    """
+    path = Path(path)
+    payload = _load_json(path)
+
+    surface_family = payload.get("surface_family")
+    if not isinstance(surface_family, str) or not surface_family:
+        raise PresentationSurfaceValidationError(
+            f"{path}: 'surface_family' must be a non-empty string"
+        )
+    if surface_family not in ALL_SURFACE_FAMILIES:
+        raise PresentationSurfaceValidationError(
+            f"{path}: unknown surface_family '{surface_family}'"
+        )
+
+    if surface_family == SURFACE_FAMILY_COVER:
+        return _parse_cover_surface(payload, path)
+    if surface_family == SURFACE_FAMILY_LOADING:
+        return _parse_loading_surface(payload, path)
+    if surface_family == SURFACE_FAMILY_PARALLAX:
+        return _parse_parallax_layer_set(payload, path)
+    if surface_family == SURFACE_FAMILY_UI_SHEET:
+        return _parse_ui_sheet(payload, path)
+    return _parse_promo_capture_job(payload, path)
+
+
+def load_cover_surface(path: str | Path) -> CoverSurfaceProgram:
+    """Loads and validates a cover surface program from disk."""
+    result = load_presentation_surface(path)
+    if not isinstance(result, CoverSurfaceProgram):
+        raise PresentationSurfaceValidationError(
+            f"{path}: expected surface_family 'cover_surface'"
+        )
+    return result
+
+
+def load_loading_surface(path: str | Path) -> LoadingSurfaceProgram:
+    """Loads and validates a loading surface program from disk."""
+    result = load_presentation_surface(path)
+    if not isinstance(result, LoadingSurfaceProgram):
+        raise PresentationSurfaceValidationError(
+            f"{path}: expected surface_family 'loading_surface'"
+        )
+    return result
+
+
+def load_parallax_layer_set(path: str | Path) -> ParallaxLayerSetProgram:
+    """Loads and validates a parallax layer set program from disk."""
+    result = load_presentation_surface(path)
+    if not isinstance(result, ParallaxLayerSetProgram):
+        raise PresentationSurfaceValidationError(
+            f"{path}: expected surface_family 'parallax_layer_set'"
+        )
+    return result
+
+
+def load_ui_sheet(path: str | Path) -> UISheetProgram:
+    """Loads and validates a UI sheet program from disk."""
+    result = load_presentation_surface(path)
+    if not isinstance(result, UISheetProgram):
+        raise PresentationSurfaceValidationError(
+            f"{path}: expected surface_family 'ui_sheet'"
+        )
+    return result
+
+
+def load_promo_capture_job(path: str | Path) -> PromoCaptureJobProgram:
+    """Loads and validates a promo capture job program from disk."""
+    result = load_presentation_surface(path)
+    if not isinstance(result, PromoCaptureJobProgram):
+        raise PresentationSurfaceValidationError(
+            f"{path}: expected surface_family 'promo_capture_job'"
+        )
+    return result
