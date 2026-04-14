@@ -1,0 +1,12 @@
+{
+  "surface_family": "promo_capture_job",
+  "program_id": "wizard_vs_zombie_promo_v1",
+  "program_version": 1,
+  "source_bundle": "outputs/wizard_vs_zombie/bundle_v1",
+  "capture_conditions": {
+    "scene_program": "programs/scene/library_room_main.json",
+    "timing": 2.0,
+    "frame_index": 30
+  },
+  "output": {"variant_id": "v1"}
+}

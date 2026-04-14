@@ -1,0 +1,10 @@
+{
+  "surface_family": "loading_surface",
+  "program_id": "wizard_vs_zombie_loading_v1",
+  "program_version": 1,
+  "style_pack": "cute_chibi_v1",
+  "theme": "wizard_vs_zombie",
+  "canvas": {"width": 512, "height": 384},
+  "background_scene_manifest": "programs/scene/library_room_main.json",
+  "output": {"variant_id": "v1"}
+}

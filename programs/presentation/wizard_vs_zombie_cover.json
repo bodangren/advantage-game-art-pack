@@ -1,0 +1,17 @@
+{
+  "surface_family": "cover_surface",
+  "program_id": "wizard_vs_zombie_cover_v1",
+  "program_version": 1,
+  "style_pack": "cute_chibi_v1",
+  "theme": "wizard_vs_zombie",
+  "canvas": {"width": 512, "height": 384},
+  "focal_subject": {
+    "tile_id": "hero_wizard",
+    "family": "character_sheet",
+    "primitive_id": "wizard_core"
+  },
+  "background_scene_manifest": "programs/scene/library_room_main.json",
+  "title_safe_zone": [32, 16, 448, 72],
+  "negative_space_zones": [[0, 320, 512, 64]],
+  "output": {"variant_id": "v1"}
+}

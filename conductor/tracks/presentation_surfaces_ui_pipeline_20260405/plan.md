@@ -36,16 +36,16 @@
 
 ## Phase 3: UI sheets and promo derivation
 
-- [ ] Task: Write tests for UI-sheet generation and promo-capture manifests
-  - [ ] Cover stateful UI atlas generation
-  - [ ] Cover reproducible promo-capture job definitions
-  - [ ] Cover linkage back to the source runtime asset bundle
-- [ ] Task: Implement the UI-sheet generator and promo-capture workflow
-  - [ ] Generate item/icon/support atlases from approved primitives and motifs
-  - [ ] Define a reproducible promo still derivation path from running games or compiled scenes
-  - [ ] Persist source bundle, capture conditions, and manifest metadata
-- [ ] Task: Run verification and add one downstream-aligned sample pack
-  - [ ] Run all presentation/UI validation and generation tests
-  - [ ] Generate one sample set aligned to a known downstream title family such as `dragon-flight`, `dragon-rider`, or `wizard-vs-zombie`
-  - [ ] Verify the sample manifests can be consumed by the later candidate-generation and critic-loop flow
-  - [ ] Document which surface families remain unmet for other downstream titles
+- [x] Task: Write tests for UI-sheet generation and promo-capture manifests
+  - [x] Cover stateful UI atlas generation
+  - [x] Cover reproducible promo-capture job definitions
+  - [x] Cover linkage back to the source runtime asset bundle
+- [x] Task: Implement the UI-sheet generator and promo-capture workflow
+  - [x] Generate item/icon/support atlases from approved primitives and motifs
+  - [x] Define a reproducible promo still derivation path from running games or compiled scenes
+  - [x] Persist source bundle, capture conditions, and manifest metadata
+- [x] Task: Run verification and add one downstream-aligned sample pack
+  - [x] Run all presentation/UI validation and generation tests
+  - [x] Generate one sample set aligned to a known downstream title family such as `dragon-flight`, `dragon-rider`, or `wizard-vs-zombie`
+  - [x] Verify the sample manifests can be consumed by the later candidate-generation and critic-loop flow
+  - [x] Document which surface families remain unmet for other downstream titles

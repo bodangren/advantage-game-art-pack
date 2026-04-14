@@ -1,0 +1,13 @@
+{
+  "surface_family": "ui_sheet",
+  "program_id": "wizard_vs_zombie_ui_v1",
+  "program_version": 1,
+  "style_pack": "cute_chibi_v1",
+  "sheet_type": "icon_sheet",
+  "canvas": {"width": 128, "height": 128},
+  "tile_sources": [
+    {"tile_id": "panel_frame", "family": "ui_sheet", "primitive_id": "panel_frame_core"}
+  ],
+  "states": ["normal", "hover", "pressed"],
+  "output": {"variant_id": "v1"}
+}

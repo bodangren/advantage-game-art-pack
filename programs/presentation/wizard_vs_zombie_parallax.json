@@ -1,0 +1,35 @@
+{
+  "surface_family": "parallax_layer_set",
+  "program_id": "wizard_vs_zombie_parallax_v1",
+  "program_version": 1,
+  "style_pack": "cute_chibi_v1",
+  "theme": "wizard_vs_zombie",
+  "canvas": {"width": 512, "height": 384},
+  "layers": [
+    {
+      "layer_role": "top",
+      "tile_sources": [
+        {"tile_id": "cloud_far", "family": "parallax_layer", "primitive_id": "ruins_horizon_core"}
+      ],
+      "density": 0.3,
+      "contrast": 0.5
+    },
+    {
+      "layer_role": "middle",
+      "tile_sources": [
+        {"tile_id": "mist_layer", "family": "parallax_layer", "primitive_id": "ruins_horizon_core"}
+      ],
+      "density": 0.6,
+      "contrast": 0.7
+    },
+    {
+      "layer_role": "bottom",
+      "tile_sources": [
+        {"tile_id": "ruins_ground", "family": "parallax_layer", "primitive_id": "ruins_horizon_core"}
+      ],
+      "density": 0.9,
+      "contrast": 1.0
+    }
+  ],
+  "output": {"variant_id": "v1"}
+}

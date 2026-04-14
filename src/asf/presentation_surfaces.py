@@ -1134,3 +1134,129 @@ def assemble_parallax_layer_set(
         layers=tuple(sorted_layers),
         manifest=manifest,
     )
+
+
+def assemble_ui_sheet(
+    program: UISheetProgram,
+    *,
+    repo_root: Path | None = None,
+) -> SurfaceAssemblyResult:
+    """Assembles a UI sheet atlas from approved primitives.
+
+    Args:
+        program: Validated UI sheet program.
+        repo_root: Root directory for resolving primitive paths.
+            Defaults to cwd.
+
+    Returns:
+        SurfaceAssemblyResult with the rendered atlas image and a manifest.
+
+    Raises:
+        SurfaceAssemblyError: If a tile source primitive image is not found.
+    """
+    if repo_root is None:
+        repo_root = Path.cwd()
+
+    canvas_w, canvas_h = program.canvas.width, program.canvas.height
+    canvas = Image.new("RGBA", (canvas_w, canvas_h), (0, 0, 0, 0))
+
+    source_assets: list[dict[str, Any]] = []
+    tile_x = 0
+    tile_y = 0
+    max_tile_height = 0
+
+    for ts in program.tile_sources:
+        prim_path = (
+            repo_root
+            / "library" / "primitives"
+            / ts.family / ts.primitive_id
+            / "source.png"
+        )
+        if not prim_path.exists():
+            raise SurfaceAssemblyError(
+                f"UI primitive not found: tile_id='{ts.tile_id}' "
+                f"family='{ts.family}' primitive_id='{ts.primitive_id}'"
+            )
+
+        tile_img = Image.open(prim_path).convert("RGBA")
+        tw, th = tile_img.size
+
+        if tile_x + tw > canvas_w:
+            tile_x = 0
+            tile_y += max_tile_height + 2
+            max_tile_height = 0
+
+        canvas.alpha_composite(tile_img, (tile_x, tile_y))
+        source_assets.append({
+            "tile_id": ts.tile_id,
+            "family": ts.family,
+            "primitive_id": ts.primitive_id,
+            "position": (tile_x, tile_y, tw, th),
+        })
+        tile_x += tw + 2
+        max_tile_height = max(max_tile_height, th)
+
+    manifest = SurfaceManifest(
+        program_id=program.program_id,
+        surface_family=program.surface_family,
+        variant_id=program.output.variant_id,
+        pipeline_version=PRESENTATION_PIPELINE_VERSION,
+        canvas=(canvas_w, canvas_h),
+        theme=program.style_pack,
+        source_assets=tuple(source_assets),
+    )
+
+    return SurfaceAssemblyResult(image=canvas, manifest=manifest)
+
+
+def assemble_promo_capture_job(
+    program: PromoCaptureJobProgram,
+    *,
+    repo_root: Path | None = None,
+) -> SurfaceAssemblyResult:
+    """Derives a promo still from a pre-rendered source bundle.
+
+    Args:
+        program: Validated promo capture job program.
+        repo_root: Root directory for resolving the source bundle path.
+            Defaults to cwd.
+
+    Returns:
+        SurfaceAssemblyResult with the promo still image and a manifest.
+
+    Raises:
+        SurfaceAssemblyError: If the source bundle image cannot be loaded.
+    """
+    if repo_root is None:
+        repo_root = Path.cwd()
+
+    bundle_path = repo_root / program.source_bundle / "promo.png"
+    if not bundle_path.exists():
+        raise SurfaceAssemblyError(
+            f"Source bundle promo image not found at {bundle_path}"
+        )
+
+    image = Image.open(bundle_path).convert("RGBA")
+    canvas_w, canvas_h = image.size
+
+    capture_asset: dict[str, Any] = {
+        "asset_id": "capture_conditions",
+        "source_bundle": program.source_bundle,
+        "scene_program": program.capture_conditions.scene_program,
+    }
+    if program.capture_conditions.timing is not None:
+        capture_asset["timing"] = program.capture_conditions.timing
+    if program.capture_conditions.frame_index is not None:
+        capture_asset["frame_index"] = program.capture_conditions.frame_index
+
+    manifest = SurfaceManifest(
+        program_id=program.program_id,
+        surface_family=program.surface_family,
+        variant_id=program.output.variant_id,
+        pipeline_version=PRESENTATION_PIPELINE_VERSION,
+        canvas=(canvas_w, canvas_h),
+        theme="",
+        source_assets=(capture_asset,),
+    )
+
+    return SurfaceAssemblyResult(image=image, manifest=manifest)

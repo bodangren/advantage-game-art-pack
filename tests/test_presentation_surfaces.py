@@ -793,5 +793,102 @@ class ParallaxLayerSetGenerationTest(unittest.TestCase):
             self.assertIsNotNone(top)
 
 
+class UISheetGenerationTest(unittest.TestCase):
+
+    def test_ui_sheet_produces_correct_canvas_size(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            _make_primitive_png(root, "ui", "coin_001", (255, 215, 0, 255), 32)
+
+            program = load_ui_sheet(_write_json(tmp_dir, _minimal_ui_sheet()))
+            from asf.presentation_surfaces import assemble_ui_sheet
+            result = assemble_ui_sheet(program, repo_root=root)
+
+            self.assertIsInstance(result, SurfaceAssemblyResult)
+            self.assertEqual(result.image.size, (128, 128))
+
+    def test_ui_sheet_manifest_records_program_metadata(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            _make_primitive_png(root, "ui", "coin_001", (255, 215, 0, 255), 32)
+
+            program = load_ui_sheet(_write_json(tmp_dir, _minimal_ui_sheet()))
+            from asf.presentation_surfaces import assemble_ui_sheet
+            result = assemble_ui_sheet(program, repo_root=root)
+
+            self.assertIsInstance(result.manifest, SurfaceManifest)
+            self.assertEqual(result.manifest.program_id, "dragon_flight_icons_v1")
+            self.assertEqual(result.manifest.surface_family, "ui_sheet")
+
+    def test_ui_sheet_is_deterministic(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            _make_primitive_png(root, "ui", "coin_001", (255, 215, 0, 255), 32)
+
+            program = load_ui_sheet(_write_json(tmp_dir, _minimal_ui_sheet()))
+            from asf.presentation_surfaces import assemble_ui_sheet
+            result_a = assemble_ui_sheet(program, repo_root=root)
+            result_b = assemble_ui_sheet(program, repo_root=root)
+
+            import hashlib
+            def img_hash(img: Image.Image) -> str:
+                return hashlib.md5(img.tobytes()).hexdigest()
+            self.assertEqual(img_hash(result_a.image), img_hash(result_b.image))
+
+
+class PromoCaptureJobGenerationTest(unittest.TestCase):
+
+    def test_promo_capture_loads_source_bundle_image(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            _make_scene_png(root, "outputs/dragon_flight/bundle_v1/promo.png", (100, 100, 255, 255), 512, 384)
+
+            program = load_promo_capture_job(_write_json(tmp_dir, _minimal_promo()))
+            from asf.presentation_surfaces import assemble_promo_capture_job
+            result = assemble_promo_capture_job(program, repo_root=root)
+
+            self.assertIsInstance(result, SurfaceAssemblyResult)
+            self.assertEqual(result.image.size, (512, 384))
+
+    def test_promo_manifest_records_source_bundle_and_scene_program(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            _make_scene_png(root, "outputs/dragon_flight/bundle_v1/promo.png", (100, 100, 255, 255), 512, 384)
+
+            program = load_promo_capture_job(_write_json(tmp_dir, _minimal_promo()))
+            from asf.presentation_surfaces import assemble_promo_capture_job
+            result = assemble_promo_capture_job(program, repo_root=root)
+
+            self.assertIsInstance(result.manifest, SurfaceManifest)
+            self.assertEqual(
+                result.manifest.source_assets[0]["source_bundle"],
+                "outputs/dragon_flight/bundle_v1",
+            )
+
+    def test_promo_manifest_records_timing_and_frame_index(self) -> None:
+        payload = _minimal_promo()
+        payload["capture_conditions"]["timing"] = 1.5
+        payload["capture_conditions"]["frame_index"] = 15
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            _make_scene_png(root, "outputs/dragon_flight/bundle_v1/promo.png", (100, 100, 255, 255), 512, 384)
+
+            program = load_promo_capture_job(_write_json(tmp_dir, payload))
+            from asf.presentation_surfaces import assemble_promo_capture_job
+            result = assemble_promo_capture_job(program, repo_root=root)
+
+            assets = {a["asset_id"]: a for a in result.manifest.source_assets}
+            self.assertAlmostEqual(assets["capture_conditions"]["timing"], 1.5)
+            self.assertEqual(assets["capture_conditions"]["frame_index"], 15)
+
+    def test_promo_capture_raises_when_source_bundle_missing(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            program = load_promo_capture_job(_write_json(tmp_dir, _minimal_promo()))
+            from asf.presentation_surfaces import assemble_promo_capture_job
+            with self.assertRaises(SurfaceAssemblyError):
+                assemble_promo_capture_job(program, repo_root=root)
+
+
 if __name__ == "__main__":
     unittest.main()
