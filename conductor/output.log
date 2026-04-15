@@ -23,3 +23,250 @@ Changes not staged for commit:
 no changes added to commit (use "git add" and/or "git commit -a")
 [0m
 Dirty workspace. Committing and then picking up the first pending track.
+[0m$ [0mgit add conductor/output.log && git commit -m "checkpoint: autonomous run"
+[main 6d51044] checkpoint: autonomous run
+ 1 file changed, 17 insertions(+), 11 deletions(-)
+[0m
+[0m→ [0mRead conductor/tracks/presentation_surfaces_ui_pipeline_20260405/plan.md
+The presentation surfaces track appears complete (all plan tasks done but not marked in tracks.md). Checking spec for acceptance:
+[0m→ [0mRead conductor/tracks/presentation_surfaces_ui_pipeline_20260405/spec.md
+[0m
+[0m$ [0mls -la /home/daniel-bo/Desktop/pixel-art-generator/conductor/tracks/presentation_surfaces_ui_pipeline_20260405/
+total 24
+drwxrwxr-x  2 daniel-bo daniel-bo 4096 Apr  5 09:23 .
+drwxrwxr-x 10 daniel-bo daniel-bo 4096 Apr  5 11:23 ..
+-rw-rw-r--  1 daniel-bo daniel-bo  121 Apr  5 09:23 index.md
+-rw-rw-r--  1 daniel-bo daniel-bo  315 Apr  5 09:24 metadata.json
+-rw-rw-r--  1 daniel-bo daniel-bo 3138 Apr 14 12:48 plan.md
+-rw-rw-r--  1 daniel-bo daniel-bo 3860 Apr  5 10:06 spec.md
+[0m
+Track has no implementation code — plan was written but not executed. I need to implement this track. Let me explore the project structure first.
+[0m$ [0mls /home/daniel-bo/Desktop/pixel-art-generator/
+asf
+canon
+conductor
+critic_thresholds
+demo-assets
+examples
+library
+outputs
+programs
+pyproject.toml
+README.md
+sitecustomize.py
+src
+style_packs
+tests
+[0m
+[0m$ [0mls /home/daniel-bo/Desktop/pixel-art-generator/src/
+asf
+[0m
+[0m$ [0mls /home/daniel-bo/Desktop/pixel-art-generator/conductor/archive/style_canon_annotation_system_20260405/
+index.md
+metadata.json
+plan.md
+spec.md
+[0m
+[0m$ [0mls /home/daniel-bo/Desktop/pixel-art-generator/src/asf/
+candidate_loop.py
+canon.py
+cli.py
+compilers.py
+critic.py
+exporter.py
+__init__.py
+presentation_surfaces.py
+primitives.py
+__pycache__
+renderer.py
+scene_layout.py
+specs.py
+style_packs.py
+[0m
+[0m→ [0mRead src/asf/presentation_surfaces.py
+[0m
+[0m$ [0mls /home/daniel-bo/Desktop/pixel-art-generator/tests/
+fixtures
+__pycache__
+test_candidate_loop.py
+test_canon.py
+test_compilers.py
+test_exporter.py
+test_presentation_surfaces.py
+test_primitives.py
+test_renderer.py
+test_scene_layout.py
+test_specs.py
+test_style_packs.py
+[0m
+Implementation exists. Let me run the tests to verify everything works.
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && python -m pytest tests/test_presentation_surfaces.py -v 2>&1 | head -80
+/bin/bash: line 1: python: command not found
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && python3 -m pytest tests/test_presentation_surfaces.py -v 2>&1 | head -80
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.0.3, pluggy-1.6.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/daniel-bo/Desktop/pixel-art-generator
+configfile: pyproject.toml
+plugins: cov-7.1.0
+collecting ... collected 75 items
+
+tests/test_presentation_surfaces.py::SurfaceFamilyConstantsTest::test_all_surface_families_contains_five_families PASSED [  1%]
+tests/test_presentation_surfaces.py::SurfaceFamilyConstantsTest::test_parallax_layer_roles PASSED [  2%]
+tests/test_presentation_surfaces.py::SurfaceFamilyConstantsTest::test_surface_family_values PASSED [  4%]
+tests/test_presentation_surfaces.py::SurfaceFamilyConstantsTest::test_ui_sheet_types PASSED [  5%]
+tests/test_presentation_surfaces.py::CoverSurfaceValidationTest::test_deterministic_output_for_identical_inputs PASSED [  6%]
+tests/test_presentation_surfaces.py::CoverSurfaceValidationTest::test_loads_cover_with_debug_overlay PASSED [  8%]
+tests/test_presentation_surfaces.py::CoverSurfaceValidationTest::test_loads_cover_with_negative_space_zones PASSED [  9%]
+tests/test_presentation_surfaces.py::CoverSurfaceValidationTest::test_loads_valid_cover_surface PASSED [ 10%]
+tests/test_presentation_surfaces.py::CoverSurfaceValidationTest::test_rejects_invalid_title_safe_zone PASSED [ 12%]
+tests/test_presentation_surfaces.py::CoverSurfaceValidationTest::test_rejects_missing_required_field PASSED [ 13%]
+tests/test_presentation_surfaces.py::CoverSurfaceValidationTest::test_rejects_non_integer_title_safe_zone PASSED [ 14%]
+tests/test_presentation_surfaces.py::CoverSurfaceValidationTest::test_rejects_unexpected_field PASSED [ 16%]
+tests/test_presentation_surfaces.py::CoverSurfaceValidationTest::test_rejects_zero_canvas_dimension PASSED [ 17%]
+tests/test_presentation_surfaces.py::CoverSurfaceValidationTest::test_to_dict_is_json_serializable PASSED [ 18%]
+tests/test_presentation_surfaces.py::LoadingSurfaceValidationTest::test_deterministic_for_identical_inputs PASSED [ 20%]
+tests/test_presentation_surfaces.py::LoadingSurfaceValidationTest::test_loads_valid_loading_surface PASSED [ 21%]
+tests/test_presentation_surfaces.py::LoadingSurfaceValidationTest::test_rejects_empty_background_manifest PASSED [ 22%]
+tests/test_presentation_surfaces.py::LoadingSurfaceValidationTest::test_rejects_missing_background_manifest PASSED [ 24%]
+tests/test_presentation_surfaces.py::LoadingSurfaceValidationTest::test_wrong_family_raises_on_typed_loader PASSED [ 25%]
+tests/test_presentation_surfaces.py::ParallaxLayerSetValidationTest::test_deterministic_for_identical_inputs PASSED [ 26%]
+tests/test_presentation_surfaces.py::ParallaxLayerSetValidationTest::test_layer_density_and_contrast_preserved PASSED [ 28%]
+tests/test_presentation_surfaces.py::ParallaxLayerSetValidationTest::test_loads_valid_parallax_layer_set PASSED [ 29%]
+tests/test_presentation_surfaces.py::ParallaxLayerSetValidationTest::test_rejects_contrast_out_of_range PASSED [ 30%]
+tests/test_presentation_surfaces.py::ParallaxLayerSetValidationTest::test_rejects_density_out_of_range PASSED [ 32%]
+tests/test_presentation_surfaces.py::ParallaxLayerSetValidationTest::test_rejects_duplicate_layer_roles PASSED [ 33%]
+tests/test_presentation_surfaces.py::ParallaxLayerSetValidationTest::test_rejects_empty_layers PASSED [ 34%]
+tests/test_presentation_surfaces.py::ParallaxLayerSetValidationTest::test_rejects_unknown_layer_role PASSED [ 36%]
+tests/test_presentation_surfaces.py::ParallaxLayerSetValidationTest::test_tile_sources_in_layer_are_parsed PASSED [ 37%]
+tests/test_presentation_surfaces.py::UISheetValidationTest::test_deterministic_for_identical_inputs PASSED [ 38%]
+tests/test_presentation_surfaces.py::UISheetValidationTest::test_loads_stateful_button_with_multiple_states PASSED [ 40%]
+tests/test_presentation_surfaces.py::UISheetValidationTest::test_loads_valid_ui_sheet PASSED [ 41%]
+tests/test_presentation_surfaces.py::UISheetValidationTest::test_rejects_empty_state_string PASSED [ 42%]
+tests/test_presentation_surfaces.py::UISheetValidationTest::test_rejects_missing_canvas PASSED [ 44%]
+tests/test_presentation_surfaces.py::UISheetValidationTest::test_rejects_unknown_sheet_type PASSED [ 45%]
+tests/test_presentation_surfaces.py::UISheetValidationTest::test_to_dict_is_json_serializable PASSED [ 46%]
+tests/test_presentation_surfaces.py::PromoCaptureJobValidationTest::test_deterministic_for_identical_inputs PASSED [ 48%]
+tests/test_presentation_surfaces.py::PromoCaptureJobValidationTest::test_loads_promo_with_timing_and_frame_index PASSED [ 49%]
+tests/test_presentation_surfaces.py::PromoCaptureJobValidationTest::test_loads_valid_promo_capture_job PASSED [ 50%]
+tests/test_presentation_surfaces.py::PromoCaptureJobValidationTest::test_rejects_missing_capture_conditions PASSED [ 52%]
+tests/test_presentation_surfaces.py::PromoCaptureJobValidationTest::test_rejects_missing_scene_program_in_conditions PASSED [ 53%]
+tests/test_presentation_surfaces.py::PromoCaptureJobValidationTest::test_rejects_missing_source_bundle PASSED [ 54%]
+tests/test_presentation_surfaces.py::PromoCaptureJobValidationTest::test_rejects_negative_frame_index PASSED [ 56%]
+tests/test_presentation_surfaces.py::PromoCaptureJobValidationTest::test_rejects_negative_timing PASSED [ 57%]
+tests/test_presentation_surfaces.py::LoadPresentationSurfaceDispatchTest::test_cover_surface_manifest_includes_asset_dependencies PASSED [ 58%]
+tests/test_presentation_surfaces.py::LoadPresentationSurfaceDispatchTest::test_dispatches_to_cover PASSED [ 60%]
+tests/test_presentation_surfaces.py::LoadPresentationSurfaceDispatchTest::test_dispatches_to_loading PASSED [ 61%]
+tests/test_presentation_surfaces.py::LoadPresentationSurfaceDispatchTest::test_dispatches_to_parallax PASSED [ 62%]
+tests/test_presentation_surfaces.py::LoadPresentationSurfaceDispatchTest::test_dispatches_to_promo PASSED [ 64%]
+tests/test_presentation_surfaces.py::LoadPresentationSurfaceDispatchTest::test_dispatches_to_ui_sheet PASSED [ 65%]
+tests/test_presentation_surfaces.py::LoadPresentationSurfaceDispatchTest::test_rejects_missing_surface_family PASSED [ 66%]
+tests/test_presentation_surfaces.py::LoadPresentationSurfaceDispatchTest::test_rejects_non_object_json PASSED [ 68%]
+tests/test_presentation_surfaces.py::LoadPresentationSurfaceDispatchTest::test_rejects_unknown_surface_family PASSED [ 69%]
+tests/test_presentation_surfaces.py::CoverSurfaceGenerationTest::test_cover_surface_focal_subject_placed_below_title_safe_zone PASSED [ 70%]
+tests/test_presentation_surfaces.py::CoverSurfaceGenerationTest::test_cover_surface_is_deterministic PASSED [ 72%]
+tests/test_presentation_surfaces.py::CoverSurfaceGenerationTest::test_cover_surface_manifest_has_program_metadata PASSED [ 73%]
+tests/test_presentation_surfaces.py::CoverSurfaceGenerationTest::test_cover_surface_manifest_records_focal_subject_source PASSED [ 74%]
+tests/test_presentation_surfaces.py::CoverSurfaceGenerationTest::test_cover_surface_produces_correct_canvas_size PASSED [ 76%]
+tests/test_presentation_surfaces.py::CoverSurfaceGenerationTest::test_cover_surface_raises_when_focal_subject_missing PASSED [ 77%]
+tests/test_presentation_surfaces.py::CoverSurfaceGenerationTest::test_cover_surface_succeeds_when_background_scene_missing PASSED [ 78%]
+tests/test_presentation_surfaces.py::CoverSurfaceGenerationTest::test_cover_surface_uses_background_scene_when_available PASSED [ 80%]
+tests/test_presentation_surfaces.py::LoadingSurfaceGenerationTest::test_loading_surface_is_deterministic PASSED [ 81%]
+tests/test_presentation_surfaces.py::LoadingSurfaceGenerationTest::test_loading_surface_manifest_references_scene_manifest PASSED [ 82%]
+tests/test_presentation_surfaces.py::LoadingSurfaceGenerationTest::test_loading_surface_produces_correct_canvas_size PASSED [ 84%]
+tests/test_presentation_surfaces.py::ParallaxLayerSetGenerationTest::test_parallax_contrast_reduces_bottom_layer_contrast PASSED [ 85%]
+tests/test_presentation_surfaces.py::ParallaxLayerSetGenerationTest::test_parallax_is_deterministic PASSED [ 86%]
+tests/test_presentation_surfaces.py::ParallaxLayerSetGenerationTest::test_parallax_layer_canvas_sizes_match_program PASSED [ 88%]
+tests/test_presentation_surfaces.py::ParallaxLayerSetGenerationTest::test_parallax_manifest_records_layers_with_scroll_order PASSED [ 89%]
+tests/test_presentation_surfaces.py::ParallaxLayerSetGenerationTest::test_parallax_produces_three_layers PASSED [ 90%]
+tests/test_presentation_surfaces.py::UISheetGenerationTest::test_ui_sheet_is_deterministic PASSED [ 92%]
+tests/test_presentation_surfaces.py::UISheetGenerationTest::test_ui_sheet_manifest_records_program_metadata PASSED [ 93%]
+tests/test_presentation_surfaces.py::UISheetGenerationTest::test_ui_sheet_produces_correct_canvas_size PASSED [ 94%]
+tests/test_presentation_surfaces.py::PromoCaptureJobGenerationTest::test_promo_capture_loads_source_bundle_image PASSED [ 96%]
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && python3 -m pytest tests/test_presentation_surfaces.py -v 2>&1 | tail -20
+tests/test_presentation_surfaces.py::CoverSurfaceGenerationTest::test_cover_surface_raises_when_focal_subject_missing PASSED [ 77%]
+tests/test_presentation_surfaces.py::CoverSurfaceGenerationTest::test_cover_surface_succeeds_when_background_scene_missing PASSED [ 78%]
+tests/test_presentation_surfaces.py::CoverSurfaceGenerationTest::test_cover_surface_uses_background_scene_when_available PASSED [ 80%]
+tests/test_presentation_surfaces.py::LoadingSurfaceGenerationTest::test_loading_surface_is_deterministic PASSED [ 81%]
+tests/test_presentation_surfaces.py::LoadingSurfaceGenerationTest::test_loading_surface_manifest_references_scene_manifest PASSED [ 82%]
+tests/test_presentation_surfaces.py::LoadingSurfaceGenerationTest::test_loading_surface_produces_correct_canvas_size PASSED [ 84%]
+tests/test_presentation_surfaces.py::ParallaxLayerSetGenerationTest::test_parallax_contrast_reduces_bottom_layer_contrast PASSED [ 85%]
+tests/test_presentation_surfaces.py::ParallaxLayerSetGenerationTest::test_parallax_is_deterministic PASSED [ 86%]
+tests/test_presentation_surfaces.py::ParallaxLayerSetGenerationTest::test_parallax_layer_canvas_sizes_match_program PASSED [ 88%]
+tests/test_presentation_surfaces.py::ParallaxLayerSetGenerationTest::test_parallax_manifest_records_layers_with_scroll_order PASSED [ 89%]
+tests/test_presentation_surfaces.py::ParallaxLayerSetGenerationTest::test_parallax_produces_three_layers PASSED [ 90%]
+tests/test_presentation_surfaces.py::UISheetGenerationTest::test_ui_sheet_is_deterministic PASSED [ 92%]
+tests/test_presentation_surfaces.py::UISheetGenerationTest::test_ui_sheet_manifest_records_program_metadata PASSED [ 93%]
+tests/test_presentation_surfaces.py::UISheetGenerationTest::test_ui_sheet_produces_correct_canvas_size PASSED [ 94%]
+tests/test_presentation_surfaces.py::PromoCaptureJobGenerationTest::test_promo_capture_loads_source_bundle_image PASSED [ 96%]
+tests/test_presentation_surfaces.py::PromoCaptureJobGenerationTest::test_promo_capture_raises_when_source_bundle_missing PASSED [ 97%]
+tests/test_presentation_surfaces.py::PromoCaptureJobGenerationTest::test_promo_manifest_records_source_bundle_and_scene_program PASSED [ 98%]
+tests/test_presentation_surfaces.py::PromoCaptureJobGenerationTest::test_promo_manifest_records_timing_and_frame_index PASSED [100%]
+
+============================== 75 passed in 0.97s ==============================
+[0m
+All 75 tests pass. Now marking the track complete and finalizing.
+[0m← [0mEdit conductor/tracks.md
+Index: /home/daniel-bo/Desktop/pixel-art-generator/conductor/tracks.md
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/conductor/tracks.md
++++ /home/daniel-bo/Desktop/pixel-art-generator/conductor/tracks.md
+@@ -26,9 +26,9 @@
+   *Link: [./conductor/tracks/scene_layout_background_assembler_20260405/](./conductor/tracks/scene_layout_background_assembler_20260405/)*
+ 
+ ---
+ 
+-- [ ] **Track: Presentation surfaces and UI pipeline**
++- [x] **Track: Presentation surfaces and UI pipeline**
+   *Link: [./conductor/tracks/presentation_surfaces_ui_pipeline_20260405/](./conductor/tracks/presentation_surfaces_ui_pipeline_20260405/)*
+ 
+ ---
+ 
+
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && python3 -m pytest tests/ -v --tb=short 2>&1 | tail -40
+tests/test_scene_layout.py::SceneManifestSchemaTest::test_rejects_missing_required_fields PASSED [ 77%]
+tests/test_scene_layout.py::SceneManifestSchemaTest::test_rejects_unknown_family PASSED [ 77%]
+tests/test_scene_layout.py::SceneManifestSchemaTest::test_rejects_unknown_template PASSED [ 78%]
+tests/test_scene_layout.py::SceneManifestSchemaTest::test_supported_templates_are_library_and_ruins PASSED [ 79%]
+tests/test_scene_layout.py::SceneManifestSchemaTest::test_zones_require_rectangular_bounds PASSED [ 79%]
+tests/test_scene_layout.py::SceneManifestZoneTest::test_decorative_zone_is_not_reserved_by_default PASSED [ 80%]
+tests/test_scene_layout.py::SceneManifestZoneTest::test_gameplay_zone_requires_role PASSED [ 80%]
+tests/test_scene_layout.py::SceneManifestPropPlacementTest::test_prop_placement_requires_tile_reference PASSED [ 81%]
+tests/test_scene_layout.py::LayoutResolverTest::test_deterministic_resolution_same_input PASSED [ 82%]
+tests/test_scene_layout.py::LayoutResolverTest::test_library_room_template_resolves_valid_manifest PASSED [ 82%]
+tests/test_scene_layout.py::LayoutResolverTest::test_missing_tile_reference_uses_default_bounds PASSED [ 83%]
+tests/test_scene_layout.py::LayoutResolverTest::test_overlapping_reserved_zones_fails PASSED [ 83%]
+tests/test_scene_layout.py::LayoutResolverTest::test_placement_in_gameplay_zone_rejected PASSED [ 84%]
+tests/test_scene_layout.py::LayoutResolverTest::test_prop_placement_respects_gameplay_zones PASSED [ 85%]
+tests/test_scene_layout.py::LayoutResolverTest::test_ruins_courtyard_template_resolves_valid_manifest PASSED [ 85%]
+tests/test_scene_layout.py::LayoutResolverTest::test_stable_placement_order_under_repeated_runs PASSED [ 86%]
+tests/test_scene_layout.py::LayoutResolverTest::test_zone_outside_canvas_fails PASSED [ 87%]
+tests/test_scene_layout.py::LightingPassTest::test_emissive_sources_contribute_light PASSED [ 87%]
+tests/test_scene_layout.py::LightingPassTest::test_lighting_pass_affects_image PASSED [ 88%]
+tests/test_scene_layout.py::LightingPassTest::test_lighting_pass_different_directions_produce_different_shadows PASSED [ 88%]
+tests/test_scene_layout.py::LightingPassTest::test_low_ambient_produces_darker_scene PASSED [ 89%]
+tests/test_scene_layout.py::DecalPassTest::test_decal_pass_uses_coverage_to_place_decals PASSED [ 90%]
+tests/test_scene_layout.py::DecalPassTest::test_decal_placement_is_deterministic PASSED [ 90%]
+tests/test_scene_layout.py::DecalPassTest::test_multiple_decal_types_are_recorded_in_manifest PASSED [ 91%]
+tests/test_scene_layout.py::ManifestExportTest::test_manifest_canvas_dimensions_match_input PASSED [ 91%]
+tests/test_scene_layout.py::ManifestExportTest::test_manifest_contains_all_placement_entries PASSED [ 92%]
+tests/test_scene_layout.py::ManifestExportTest::test_manifest_contains_all_zone_entries PASSED [ 93%]
+tests/test_scene_layout.py::ManifestExportTest::test_manifest_program_id_matches_input PASSED [ 93%]
+tests/test_scene_layout.py::ManifestExportTest::test_manifest_template_matches_input PASSED [ 94%]
+tests/test_scene_layout.py::DebugOverlayTest::test_debug_overlay_disabled_produces_none PASSED [ 95%]
+tests/test_scene_layout.py::DebugOverlayTest::test_debug_overlay_enabled_produces_overlay PASSED [ 95%]
+tests/test_scene_layout.py::DebugOverlayTest::test_debug_overlay_shows_zone_bounds PASSED [ 96%]
+tests/test_specs.py::SpecLoadingTest::test_loads_valid_spec PASSED       [ 96%]
+tests/test_specs.py::SpecLoadingTest::test_rejects_invalid_frame_size PASSED [ 97%]
+tests/test_specs.py::SpecLoadingTest::test_rejects_missing_pose_block PASSED [ 98%]
+tests/test_specs.py::SpecLoadingTest::test_rejects_unknown_top_level_key PASSED [ 98%]
+tests/test_specs.py::SpecLoadingTest::test_rejects_unsupported_style_pack PASSED [ 99%]
+tests/test_style_packs.py::StylePackLoadingTest::test_rejects_invalid_ramp_colors PASSED [100%]
+
+======================== 162 passed in 85.37s (0:01:25) ========================
+[0m
+All 162 tests pass. Updating lessons-learned and committing.
+[0m→ [0mRead conductor/lessons-learned.md

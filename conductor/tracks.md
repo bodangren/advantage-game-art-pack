@@ -27,7 +27,7 @@ This file tracks all major tracks for the project.
 
 ---
 
-- [ ] **Track: Presentation surfaces and UI pipeline**
+- [x] **Track: Presentation surfaces and UI pipeline**
   *Link: [./conductor/tracks/presentation_surfaces_ui_pipeline_20260405/](./conductor/tracks/presentation_surfaces_ui_pipeline_20260405/)*
 
 ---
