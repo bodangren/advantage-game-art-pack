@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+
+{% block title %}{{ candidate.family }} - Candidate Detail{% endblock %}
+
+{% block content %}
+<div style="margin-bottom: 1rem;">
+    <a href="/queue{% if query_string %}?{{ query_string }}{% endif %}" style="color: #3498db; text-decoration: none;">← Back to Queue</a>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+    <div>
+        <div style="background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+            <h2 style="margin-bottom: 1rem;">Candidate Details</h2>
+
+            <div style="margin-bottom: 1rem;">
+                <span class="card-type {{ candidate.candidate_type }}" style="font-size: 0.9rem;">{{ candidate.candidate_type.replace('_', ' ') }}</span>
+                <span class="card-status {{ candidate.status }}" style="margin-left: 0.5rem;">{{ candidate.status.replace('_', ' ') }}</span>
+            </div>
+
+            <dl style="display: grid; grid-template-columns: 140px 1fr; gap: 0.5rem;">
+                <dt style="color: #666; font-weight: 500;">Family</dt>
+                <dd>{{ candidate.family }}</dd>
+
+                <dt style="color: #666; font-weight: 500;">Source Program</dt>
+                <dd>{{ candidate.source_program }}</dd>
+
+                <dt style="color: #666; font-weight: 500;">Theme</dt>
+                <dd>{{ candidate.theme or 'none' }}</dd>
+
+                <dt style="color: #666; font-weight: 500;">Confidence</dt>
+                <dd>{{ "%.0f"|format((candidate.confidence or 0) * 100) }}%</dd>
+
+                <dt style="color: #666; font-weight: 500;">Created</dt>
+                <dd>{{ candidate.created_at }}</dd>
+
+                <dt style="color: #666; font-weight: 500;">Updated</dt>
+                <dd>{{ candidate.updated_at }}</dd>
+
+                {% if candidate.candidate_group_id %}
+                <dt style="color: #666; font-weight: 500;">Group ID</dt>
+                <dd>{{ candidate.candidate_group_id }}</dd>
+                {% endif %}
+
+                {% if candidate.variant_id %}
+                <dt style="color: #666; font-weight: 500;">Variant ID</dt>
+                <dd>{{ candidate.variant_id }}</dd>
+                {% endif %}
+
+                {% if candidate.attempt_count %}
+                <dt style="color: #666; font-weight: 500;">Attempt</dt>
+                <dd>{{ candidate.attempt_count }}</dd>
+                {% endif %}
+            </dl>
+        </div>
+
+        <div style="background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-top: 1rem;">
+            <h3 style="margin-bottom: 1rem;">Review Actions</h3>
+
+            <form method="post" action="/candidate/{{ candidate.id }}/action" style="display: flex; flex-direction: column; gap: 0.75rem;">
+                <div>
+                    <label for="reason" style="display: block; margin-bottom: 0.25rem; font-size: 0.85rem; color: #666;">Reason (optional)</label>
+                    <input type="hidden" name="action" value="" id="action-input">
+                    <input type="text" name="reason" id="reason" placeholder="Add a note..." style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 4px;">
+                </div>
+
+                <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                    <button type="submit" onclick="document.getElementById('action-input').value='approve'" style="padding: 0.5rem 1rem; background: #27ae60; color: white; border: none; border-radius: 4px; cursor: pointer;">Approve</button>
+                    <button type="submit" onclick="document.getElementById('action-input').value='reject'" style="padding: 0.5rem 1rem; background: #e74c3c; color: white; border: none; border-radius: 4px; cursor: pointer;">Reject</button>
+                    <button type="submit" onclick="document.getElementById('action-input').value='request_variant'" style="padding: 0.5rem 1rem; background: #f39c12; color: white; border: none; border-radius: 4px; cursor: pointer;">Request Variant</button>
+                    <button type="submit" onclick="document.getElementById('action-input').value='promote'" style="padding: 0.5rem 1rem; background: #9b59b6; color: white; border: none; border-radius: 4px; cursor: pointer;">Promote</button>
+                    <button type="submit" onclick="document.getElementById('action-input').value='mark_gold'" style="padding: 0.5rem 1rem; background: #3498db; color: white; border: none; border-radius: 4px; cursor: pointer;">Mark Gold</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <div style="background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+            <h3 style="margin-bottom: 1rem;">Preview</h3>
+            <div style="background: #ecf0f1; padding: 2rem; border-radius: 4px; text-align: center; min-height: 200px; display: flex; align-items: center; justify-content: center;">
+                {% if rendered_files %}
+                <span style="color: #95a5a6;">Preview image would display here</span>
+                {% else %}
+                <span style="color: #95a5a6;">No rendered files</span>
+                {% endif %}
+            </div>
+        </div>
+
+        {% if critic_scores %}
+        <div style="background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-top: 1rem;">
+            <h3 style="margin-bottom: 1rem;">Critic Scores</h3>
+            <dl style="display: grid; grid-template-columns: 1fr 100px; gap: 0.5rem;">
+                {% for key, value in critic_scores.items() %}
+                <dt style="color: #666;">{{ key }}</dt>
+                <dd>{{ "%.0f"|format(value * 100) }}%</dd>
+                {% endfor %}
+            </dl>
+        </div>
+        {% endif %}
+
+        {% if source_brief %}
+        <div style="background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-top: 1rem;">
+            <h3 style="margin-bottom: 1rem;">Source Brief</h3>
+            <pre style="background: #f8f9fa; padding: 1rem; border-radius: 4px; overflow-x: auto; font-size: 0.85rem;">{{ source_brief | tojson(indent=2) }}</pre>
+        </div>
+        {% endif %}
+
+        {% if source_manifest %}
+        <div style="background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-top: 1rem;">
+            <h3 style="margin-bottom: 1rem;">Source Manifest</h3>
+            <pre style="background: #f8f9fa; padding: 1rem; border-radius: 4px; overflow-x: auto; font-size: 0.85rem;">{{ source_manifest | tojson(indent=2) }}</pre>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+{% if candidate.decisions %}
+<div style="background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-top: 1rem;">
+    <h3 style="margin-bottom: 1rem;">Decision History</h3>
+    <table style="width: 100%; border-collapse: collapse;">
+        <thead>
+            <tr style="border-bottom: 2px solid #ecf0f1;">
+                <th style="text-align: left; padding: 0.5rem; color: #666;">Action</th>
+                <th style="text-align: left; padding: 0.5rem; color: #666;">Reason</th>
+                <th style="text-align: left; padding: 0.5rem; color: #666;">Timestamp</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for decision in candidate.decisions %}
+            <tr style="border-bottom: 1px solid #ecf0f1;">
+                <td style="padding: 0.5rem;">
+                    <span class="card-status {{ decision.action }}" style="text-transform: capitalize;">{{ decision.action.replace('_', ' ') }}</span>
+                </td>
+                <td style="padding: 0.5rem; color: #666;">{{ decision.reason or '-' }}</td>
+                <td style="padding: 0.5rem; color: #95a5a6; font-size: 0.85rem;">{{ decision.created_at }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+{% endblock %}

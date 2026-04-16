@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block title %}Review Queue{% endblock %}
+
+{% block content %}
+<div class="filters">
+    <form method="get">
+        <label>
+            Type
+            <select name="candidate_type">
+                <option value="">All</option>
+                <option value="primitive" {% if filters.candidate_type == 'primitive' %}selected{% endif %}>Primitive</option>
+                <option value="compiled_asset" {% if filters.candidate_type == 'compiled_asset' %}selected{% endif %}>Compiled Asset</option>
+            </select>
+        </label>
+        <label>
+            Status
+            <select name="status">
+                <option value="">All</option>
+                <option value="pending" {% if filters.status == 'pending' %}selected{% endif %}>Pending</option>
+                <option value="approved" {% if filters.status == 'approved' %}selected{% endif %}>Approved</option>
+                <option value="rejected" {% if filters.status == 'rejected' %}selected{% endif %}>Rejected</option>
+                <option value="needs_variant" {% if filters.status == 'needs_variant' %}selected{% endif %}>Needs Variant</option>
+                <option value="promoted" {% if filters.status == 'promoted' %}selected{% endif %}>Promoted</option>
+            </select>
+        </label>
+        <label>
+            Theme
+            <select name="theme">
+                <option value="">All</option>
+                <option value="fantasy" {% if filters.theme == 'fantasy' %}selected{% endif %}>Fantasy</option>
+                <option value="scifi" {% if filters.theme == 'scifi' %}selected{% endif %}>SciFi</option>
+            </select>
+        </label>
+        <label>
+            Min Confidence
+            <input type="number" name="min_confidence" step="0.1" min="0" max="1" value="{{ filters.min_confidence or '' }}">
+        </label>
+        <label>
+            Sort By
+            <select name="sort_by">
+                <option value="created_at" {% if filters.sort_by == 'created_at' %}selected{% endif %}>Recency</option>
+                <option value="confidence" {% if filters.sort_by == 'confidence' %}selected{% endif %}>Confidence</option>
+            </select>
+        </label>
+        <label>
+            Order
+            <select name="sort_order">
+                <option value="DESC" {% if filters.sort_order == 'DESC' %}selected{% endif %}>Descending</option>
+                <option value="ASC" {% if filters.sort_order == 'ASC' %}selected{% endif %}>Ascending</option>
+            </select>
+        </label>
+        <button type="submit">Filter</button>
+        {% if query_string %}
+        <a href="/queue">Clear</a>
+        {% endif %}
+    </form>
+</div>
+
+<p class="count">{{ candidates|length }} candidate{% if candidates|length != 1 %}s{% endif %}</p>
+
+{% if candidates %}
+<div class="card-grid">
+    {% for candidate in candidates %}
+    <a href="/candidate/{{ candidate.id }}">
+        <div class="card">
+            <div class="card-image">
+                {% if candidate.rendered_files and candidate.rendered_files != '[]' %}
+                <span>Preview</span>
+                {% else %}
+                <span>No preview</span>
+                {% endif %}
+            </div>
+            <div class="card-body">
+                <span class="card-type {{ candidate.candidate_type }}">{{ candidate.candidate_type.replace('_', ' ') }}</span>
+                <h3 class="card-title">{{ candidate.family }}</h3>
+                <div class="card-meta">
+                    <span>Program: {{ candidate.source_program }}</span><br>
+                    <span>Theme: {{ candidate.theme or 'none' }}</span>
+                </div>
+                <div style="margin-top: 0.5rem;">
+                    <span class="card-status {{ candidate.status }}">{{ candidate.status.replace('_', ' ') }}</span>
+                </div>
+                <div class="confidence-bar">
+                    <div class="confidence-fill" style="width: {{ (candidate.confidence or 0) * 100 }}%"></div>
+                </div>
+            </div>
+        </div>
+    </a>
+    {% endfor %}
+</div>
+{% else %}
+<div class="empty-state">
+    <p>No candidates found matching the current filters.</p>
+</div>
+{% endif %}
+{% endblock %}
