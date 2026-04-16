@@ -1002,3 +1002,75 @@ tests/test_style_packs.py .                                              [100%]
 
 ======================== 193 passed in 87.54s (0:01:27) ========================
 [0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && git add -A && git status
+On branch main
+Your branch is ahead of 'origin/main' by 1 commit.
+  (use "git push" to publish your local commits)
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	modified:   conductor/lessons-learned.md
+	modified:   conductor/output.log
+	modified:   conductor/tech-debt.md
+	modified:   conductor/tracks.md
+	modified:   conductor/tracks/review_queue_foundation_20260405/plan.md
+	new file:   conductor/tracks/review_queue_foundation_20260405/reviewer_runbook.md
+	new file:   src/review_app/integrations.py
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && git commit -m "feat(MiniMax-M2.7): Complete review_queue_foundation track
+
+Phase 3 - Integrations and reviewer workflow:
+- Add integration hooks module for creating candidates from other tracks
+- Add get_variant_requests() to consume variant requests in planner/loop
+- Write reviewer runbook documenting approval workflow
+
+Track completion:
+- Mark all plan.md tasks as complete
+- Update tracks.md to mark track complete
+- Add tech-debt items for open issues (no auth, no static file serving)
+- Add lessons-learned for FastAPI+SQLite+Jinja2 stack
+
+Total: 31 review tests, 193 project tests passing"
+[main 5a68613] feat(MiniMax-M2.7): Complete review_queue_foundation track
+ 7 files changed, 601 insertions(+), 37 deletions(-)
+ create mode 100644 conductor/tracks/review_queue_foundation_20260405/reviewer_runbook.md
+ create mode 100644 src/review_app/integrations.py
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && git push 2>&1 || echo "Push failed - network issue"
+fatal: unable to access 'https://github.com/bodangren/advantage-game-art-pack.git/': Could not resolve host: github.com
+Push failed - network issue
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && git log --oneline -5
+5a68613 feat(MiniMax-M2.7): Complete review_queue_foundation track
+36ad03d feat(MiniMax-M2.7): Phase 2 review queue - API and server-rendered UI
+05aece7 feat(MiniMax-M2.7): Phase 1 review queue foundation - database schema and persistence
+7bb4bce Update autonomous prompt and output log
+94fe56e complete: presentation_surfaces_ui_pipeline_20260405 (MiniMax-M2.7)
+[0m
+**Completed: review_queue_foundation track**
+
+**Summary of work:**
+
+1. **Phase 1 - Tech stack and persistence:**
+   - Documented FastAPI + SQLite + server-rendered HTML stack
+   - Implemented `review_app.db` with SQLite schema (candidates + decisions tables)
+   - 18 persistence and filtering tests passing
+
+2. **Phase 2 - API and pages:**
+   - FastAPI app with `/queue` and `/candidate/{id}` routes
+   - JSON API endpoints for programmatic access
+   - Server-rendered Jinja2 templates for queue and detail views
+   - 13 API tests passing
+
+3. **Phase 3 - Integrations:**
+   - `review_app.integrations` module with `create_primitive_candidate()`, `create_compiled_asset_candidate()`, `get_variant_requests()`
+   - Reviewer runbook documenting workflow
+
+**Files created:**
+- `src/review_app/{__init__.py, db.py, api.py, fixtures.py, integrations.py}`
+- `src/review_app/templates/{base.html, queue.html, candidate_detail.html}`
+- `tests/test_review_app.py`, `tests/test_review_api.py`
+
+**Tests:** 193 total passing (31 review-specific)
+
+**Status:** Committed locally (network issue prevented push). Ready for next track.
