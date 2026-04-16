@@ -32,7 +32,7 @@ This file tracks all major tracks for the project.
 
 ---
 
-- [ ] **Track: Review queue foundation**
+- [x] **Track: Review queue foundation**
   *Link: [./conductor/tracks/review_queue_foundation_20260405/](./conductor/tracks/review_queue_foundation_20260405/)*
 
 ---

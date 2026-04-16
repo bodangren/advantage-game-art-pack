@@ -48,3 +48,6 @@
 - (2026-04-13, scene_layout_background_assembler_20260405) Identical if/else branches are a smell that the resolver is stubbed, not implemented; tests that only exercise single-prop sample scenes won't catch piled-at-origin placements. Add a multi-prop bounds-distinctness test before declaring a resolver done.
 - (2026-04-13, scene_layout_background_assembler_20260405) Pick one bounds convention for machine-readable manifests and enforce it at the dataclass boundary; mixing (x,y,w,h) for zones with (x,y,x2,y2) for motifs guarantees a downstream consumer will misread one.
 - (2026-04-14, presentation_surfaces_ui_pipeline_20260405) Surface assembly must be deterministic; test manifests not pixels; raise `SurfaceAssemblyError` on missing required inputs.
+- (2026-04-16, review_queue_foundation_20260405) FastAPI + SQLite + server-rendered Jinja2 is a lightweight stack ideal for local dev; avoid adding heavy frontend deps until the review UX actually needs them.
+- (2026-04-16, review_queue_foundation_20260405) Store critic scores and rendered files as JSON strings in SQLite; parse on read rather than over-normalizing into separate columns.
+- (2026-04-16, review_queue_foundation_20260405) Provide integration hooks (create_primitive_candidate, create_compiled_asset_candidate) so other tracks can feed the queue without inventing parallel workflows.
