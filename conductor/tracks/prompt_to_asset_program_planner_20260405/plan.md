@@ -2,15 +2,15 @@
 
 ## Phase 1: Interfaces and schemas
 
-- [ ] Task: Update the tech-stack proposal and define the planner/provider interfaces
-  - [ ] Document the chosen provider-agnostic interface before coding
-  - [ ] Define how API keys, model names, and request tracing are configured
-  - [ ] Document how planner traces are stored for later debugging and review
-- [ ] Task: Define the brief schema, asset-program schema, and theme-pack schema
-  - [ ] Define one user-brief schema and one batch-brief schema
-  - [ ] Define the planner outputs for `character_sheet`, `prop_or_fx_sheet`, `tileset`, and `background_scene`
-  - [ ] Define how planner outputs request directional variants, row-state layouts, and per-game presentation surfaces
-  - [ ] Define theme-pack references and validation rules
+- [x] Task: Update the tech-stack proposal and define the planner/provider interfaces
+  - [x] Document the chosen provider-agnostic interface before coding
+  - [x] Define how API keys, model names, and request tracing are configured
+  - [x] Document how planner traces are stored for later debugging and review
+- [x] Task: Define the brief schema, asset-program schema, and theme-pack schema
+  - [x] Define one user-brief schema and one batch-brief schema
+  - [x] Define the planner outputs for `character_sheet`, `prop_or_fx_sheet`, `tileset`, and `background_scene`
+  - [x] Define how planner outputs request directional variants, row-state layouts, and per-game presentation surfaces
+  - [x] Define theme-pack references and validation rules
 
 ## Phase 2: Planner and repair loop
 
