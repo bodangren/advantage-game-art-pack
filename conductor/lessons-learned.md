@@ -5,18 +5,13 @@
 
 ## Architecture & Design
 
-- (2026-04-05, sprite_compiler_mvp_20260405) Start with typed specs and one
-  renderer path; it keeps the asset contract stable while the part library is
-  still thin.
-- (2026-04-05, style_canon_annotation_system_20260405) Treat backgrounds as
-  scene assembly from approved tiles, props, and layout templates, not as
-  another sprite-sheet renderer.
-- (2026-04-05, presentation_surfaces_ui_pipeline_20260405) The downstream game series needs runtime assets and presentation surfaces; covers, loading backgrounds, parallax layers, and UI atlases must be tracked explicitly.
+- (2026-04-05, sprite_compiler_mvp_20260405) Start with typed specs and one renderer path; keeps asset contract stable while part library is thin.
+- (2026-04-05, style_canon_annotation_system_20260405) Treat backgrounds as scene assembly from approved tiles, props, and layout templates, not another sprite-sheet renderer.
+- (2026-04-05, presentation_surfaces_ui_pipeline_20260405) Track covers, loading backgrounds, parallax layers, and UI atlases explicitly for downstream game series.
 
 ## Recurring Gotchas
 
-- (2026-04-05, sprite_compiler_mvp_20260405) Local environments may have Pillow
-  but not pytest, so default automation should use `unittest`.
+- (2026-04-05, sprite_compiler_mvp_20260405) Local envs may have Pillow but not pytest; default automation should use `unittest`.
 
 ## Patterns That Worked Well
 
@@ -28,13 +23,11 @@
 
 ## Planning Improvements
 
-- (2026-04-05, sprite_compiler_mvp_20260405) Split the roadmap into renderer
-  foundation, richer part libraries, and batch orchestration to avoid scope
-  collapse in the first slice.
+- (2026-04-05, sprite_compiler_mvp_20260405) Split roadmap into renderer foundation, richer part libraries, and batch orchestration to avoid scope collapse.
 - (2026-04-05, candidate_generation_critic_loop_20260405) Treat quality as a bounded loop: generate original variants, score them against canon and novelty checks, then escalate only the survivors to review.
 - (2026-04-05, sprite_compiler_mvp_20260405) Keep pose blocks and export metadata in the validation contract; that keeps the CLI and downstream consumers aligned before rendering starts.
 - (2026-04-05, style_canon_annotation_system_20260405) Keep annotation tags human-readable and alpha-aware; bucket colors without treating transparency as black, and keep optional frame-grid or notes fields explicit in validation.
-- (2026-04-05, style_canon_annotation_system_20260405) Family guides read better when the canon exposes both representative swatches and a short narrative palette family note instead of raw hex values alone.
+- (2026-04-17, prompt_to_asset_program_planner_20260405) Define provider abstraction before concrete implementations; this keeps the interface stable while allowing OpenAI/Anthropic/etc. to be swapped in.
 - (2026-04-05, primitive_library_promotion_pipeline_20260405) Seeded primitives can reference approved demo assets directly through relative source paths, which avoids copying image binaries until the promotion workflow needs them.
 - (2026-04-05, asset_family_compiler_framework_20260405) Approved primitive images are the fastest path to high-quality smoke tests; keep the renderer deterministic, but treat the primitive crop as the visual source of truth.
 - (2026-04-05, asset_family_compiler_framework_20260405) Keep `variant_id` in the manifest envelope and normalize paths from the repo root so output hashes and audit trails stay stable across temp output directories.
