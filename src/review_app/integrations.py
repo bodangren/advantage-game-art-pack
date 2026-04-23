@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import json
 import os
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Optional
 
@@ -187,7 +188,6 @@ def update_candidate_status(
     """
     db = get_database(db_path)
     conn = db._get_conn()
-    from datetime import datetime, timezone
 
     now = datetime.now(timezone.utc).isoformat()
     conn.execute(
@@ -243,7 +243,6 @@ def record_policy_decision(
         references = []
     references.append(policy_record)
     conn = db._get_conn()
-    from datetime import datetime, timezone
 
     now = datetime.now(timezone.utc).isoformat()
     conn.execute(
@@ -272,7 +271,6 @@ def attach_critic_results(
 
     scores = {k: v.get("score", 0.0) for k, v in critic_results.items() if isinstance(v, dict)}
     conn = db._get_conn()
-    from datetime import datetime, timezone
 
     now = datetime.now(timezone.utc).isoformat()
     conn.execute(

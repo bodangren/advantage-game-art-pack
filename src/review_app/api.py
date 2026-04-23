@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import os
 from typing import Optional
 from urllib.parse import urlencode
@@ -198,9 +199,7 @@ def _parse_json_field(value: Optional[str]) -> Optional[dict]:
     if value is None:
         return None
     try:
-        import json as _json
-
-        return _json.loads(value)
+        return json.loads(value)
     except (ValueError, TypeError):
         return None
 

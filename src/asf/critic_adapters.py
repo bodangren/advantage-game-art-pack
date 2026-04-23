@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from pathlib import Path
+from statistics import mean, stdev
 from typing import Any
 
 from PIL import Image
@@ -158,8 +159,7 @@ def _compute_style_baseline(
         values = [r.get(metric_name) for r in metrics_records if r.get(metric_name) is not None]
         if not values:
             continue
-        from statistics import mean, stdev
-        baseline[metric_name] = {"mean": sum(values) / len(values), "stdev": stdev(values) if len(values) > 1 else 0.0}
+        baseline[metric_name] = {"mean": mean(values), "stdev": stdev(values) if len(values) > 1 else 0.0}
     return baseline
 
 
