@@ -608,6 +608,86 @@ def _boxes_overlap(a: tuple[int, int, int, int], b: tuple[int, int, int, int]) -
     return ax < b_right and a_right > bx and ay < b_bottom and a_bottom > by
 
 
+class LightingMathTest(unittest.TestCase):
+    """Tests for correct lighting math — single combined ambient+directional factor."""
+
+    def test_lighting_pass_applies_single_combined_factor(self) -> None:
+        from PIL import Image
+        from asf.scene_layout import _apply_lighting_pass, LightingSpec
+
+        base_color = (200, 200, 200, 255)
+        test_image = Image.new("RGBA", (16, 16), base_color)
+
+        lighting = LightingSpec(global_direction="east", ambient_strength=0.6)
+
+        result = _apply_lighting_pass(test_image.copy(), lighting)
+
+        pixels = list(result.getdata())
+        for y in range(8, 16):
+            for x in range(10, 16):
+                idx = y * 16 + x
+                r, g, b, a = pixels[idx]
+                if a > 0:
+                    expected = int(200 * 0.6)
+                    self.assertAlmostEqual(r, expected, delta=10)
+
+    def test_lighting_no_darken_at_full_ambient(self) -> None:
+        from PIL import Image
+        from asf.scene_layout import _apply_lighting_pass, LightingSpec
+
+        base_color = (180, 180, 180, 255)
+        test_image = Image.new("RGBA", (16, 16), base_color)
+
+        lighting = LightingSpec(global_direction="north", ambient_strength=1.0)
+
+        result = _apply_lighting_pass(test_image.copy(), lighting)
+
+        pixels = list(result.getdata())
+        for r, g, b, a in pixels:
+            if a > 0:
+                self.assertAlmostEqual(r, 180, delta=5)
+                self.assertAlmostEqual(g, 180, delta=5)
+                self.assertAlmostEqual(b, 180, delta=5)
+
+    def test_lighting_half_ambient_produces_half_brightness(self) -> None:
+        from PIL import Image
+        from asf.scene_layout import _apply_lighting_pass, LightingSpec
+
+        base_color = (128, 128, 128, 255)
+        test_image = Image.new("RGBA", (16, 16), base_color)
+
+        lighting = LightingSpec(global_direction="north", ambient_strength=0.5)
+
+        result = _apply_lighting_pass(test_image.copy(), lighting)
+
+        pixels = list(result.getdata())
+        for y in range(0, 8):
+            for x in range(0, 16):
+                idx = y * 16 + x
+                r, g, b, a = pixels[idx]
+                if a > 0:
+                    expected = int(128 * 0.5)
+                    self.assertAlmostEqual(r, expected, delta=8)
+
+    def test_lighting_does_not_double_darken(self) -> None:
+        from PIL import Image
+        from asf.scene_layout import _apply_lighting_pass, LightingSpec
+
+        base_color = (160, 160, 160, 255)
+        test_image = Image.new("RGBA", (16, 16), base_color)
+
+        lighting = LightingSpec(global_direction="south", ambient_strength=0.5)
+
+        result = _apply_lighting_pass(test_image.copy(), lighting)
+
+        pixels = list(result.getdata())
+        for r, g, b, a in pixels:
+            if a > 0:
+                self.assertGreater(r, 40)
+                self.assertGreater(g, 40)
+                self.assertGreater(b, 40)
+
+
 class LightingPassTest(unittest.TestCase):
     """Tests for deterministic lighting passes and shadow application."""
 

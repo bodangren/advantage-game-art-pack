@@ -814,46 +814,15 @@ def _apply_lighting_pass(
     result = image.copy()
     directional = LIGHTING_DIRECTION_OFFSETS.get(lighting.global_direction, (0, -1))
     dx, dy = directional
-
-    darken_amount = int((1.0 - lighting.ambient_strength) * 100)
     width, height = result.size
 
-    if dx != 0 or dy != 0 or darken_amount > 0 or lighting.local_emissive_sources:
+    if lighting.local_emissive_sources:
         pixels = result.load()
-
-        if dx != 0 or dy != 0:
-            shadow_intensity = darken_amount // 2 if darken_amount > 0 else 15
-            if dx > 0:
-                for y in range(height):
-                    for x in range(width // 2):
-                        r, g, b, a = pixels[x, y]
-                        if a > 0 and shadow_intensity > 0:
-                            pixels[x, y] = (max(0, r - shadow_intensity), max(0, g - shadow_intensity), max(0, b - shadow_intensity), a)
-            elif dx < 0:
-                for y in range(height):
-                    for x in range(width - 1, width // 2 - 1, -1):
-                        r, g, b, a = pixels[x, y]
-                        if a > 0 and shadow_intensity > 0:
-                            pixels[x, y] = (max(0, r - shadow_intensity), max(0, g - shadow_intensity), max(0, b - shadow_intensity), a)
-            if dy > 0:
-                for y in range(height // 2):
-                    for x in range(width):
-                        r, g, b, a = pixels[x, y]
-                        if a > 0 and shadow_intensity > 0:
-                            pixels[x, y] = (max(0, r - shadow_intensity), max(0, g - shadow_intensity), max(0, b - shadow_intensity), a)
-            elif dy < 0:
-                for y in range(height - 1, height // 2 - 1, -1):
-                    for x in range(width):
-                        r, g, b, a = pixels[x, y]
-                        if a > 0 and shadow_intensity > 0:
-                            pixels[x, y] = (max(0, r - shadow_intensity), max(0, g - shadow_intensity), max(0, b - shadow_intensity), a)
-
         for emissive in lighting.local_emissive_sources:
             em_x = emissive.get("position", [0, 0])[0]
             em_y = emissive.get("position", [0, 0])[1]
             em_radius = emissive.get("radius", 16)
             em_strength = emissive.get("strength", 0.5)
-
             for y in range(max(0, em_y - em_radius), min(height, em_y + em_radius)):
                 for x in range(max(0, em_x - em_radius), min(width, em_x + em_radius)):
                     dist = ((x - em_x) ** 2 + (y - em_y) ** 2) ** 0.5
@@ -864,28 +833,34 @@ def _apply_lighting_pass(
                             if brighten > 0:
                                 pixels[x, y] = (min(255, r + brighten), min(255, g + brighten), min(255, b + brighten), a)
 
-        if darken_amount > 0:
-            dark_pixels = int(darken_amount * 0.6)
-            if dx > 0:
-                for y in range(height):
-                    for x in range(width // 2):
-                        r, g, b, a = pixels[x, y]
-                        pixels[x, y] = (max(0, r - dark_pixels), max(0, g - dark_pixels), max(0, b - dark_pixels), a)
-            elif dx < 0:
-                for y in range(height):
-                    for x in range(width - 1, width // 2 - 1, -1):
-                        r, g, b, a = pixels[x, y]
-                        pixels[x, y] = (max(0, r - dark_pixels), max(0, g - dark_pixels), max(0, b - dark_pixels), a)
-            if dy > 0:
-                for y in range(height // 2):
-                    for x in range(width):
-                        r, g, b, a = pixels[x, y]
-                        pixels[x, y] = (max(0, r - dark_pixels), max(0, g - dark_pixels), max(0, b - dark_pixels), a)
-            elif dy < 0:
-                for y in range(height - 1, height // 2 - 1, -1):
-                    for x in range(width):
-                        r, g, b, a = pixels[x, y]
-                        pixels[x, y] = (max(0, r - dark_pixels), max(0, g - dark_pixels), max(0, b - dark_pixels), a)
+    if lighting.ambient_strength >= 1.0 and not lighting.local_emissive_sources:
+        return result
+
+    pixels = result.load()
+    ambient = lighting.ambient_strength
+    shadow_penalty = 0.08
+
+    for y in range(height):
+        for x in range(width):
+            r, g, b, a = pixels[x, y]
+            if a > 0:
+                in_shadow = False
+                if dx > 0 and x < width // 2:
+                    in_shadow = True
+                elif dx < 0 and x >= width // 2:
+                    in_shadow = True
+                elif dy < 0 and y >= height // 2:
+                    in_shadow = True
+                elif dy > 0 and y < height // 2:
+                    in_shadow = True
+
+                factor = ambient if not in_shadow else max(0.0, ambient - shadow_penalty)
+                pixels[x, y] = (
+                    int(r * factor),
+                    int(g * factor),
+                    int(b * factor),
+                    a,
+                )
 
     return result
 
