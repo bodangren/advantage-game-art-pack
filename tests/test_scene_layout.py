@@ -572,6 +572,73 @@ class LayoutResolverTest(unittest.TestCase):
                 runs.append(ids)
             self.assertEqual(len(set(tuple(r) for r in runs)), 1)
 
+    def test_multiple_props_get_distinct_bounds(self) -> None:
+        from asf.scene_layout import resolve_scene_layout
+        manifest = {
+            "family": "background_scene",
+            "program_id": "test_distinct_bounds",
+            "program_version": 1,
+            "template": "library_room",
+            "canvas": {"width": 256, "height": 192},
+            "theme": "library",
+            "subtheme": "ancient",
+            "style_pack": "cute_chibi_v1",
+            "zones": [],
+            "tile_sources": [
+                {"tile_id": "wall_tile", "family": "tileset", "primitive_id": "wall_01"},
+                {"tile_id": "floor_tile", "family": "tileset", "primitive_id": "floor_01"},
+                {"tile_id": "shelf_tile", "family": "props", "primitive_id": "shelf_01"},
+            ],
+            "prop_placement": [
+                {"group_id": "wall_group", "tile_id": "wall_tile", "placement_rules": {"weight": 0.6}},
+                {"group_id": "floor_group", "tile_id": "floor_tile", "placement_rules": {"weight": 0.8}},
+                {"group_id": "shelf_group", "tile_id": "shelf_tile", "placement_rules": {"weight": 0.4}},
+            ],
+            "lighting": {"global_direction": "northwest", "ambient_strength": 0.8},
+            "output": {"variant_id": None},
+        }
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            path = Path(tmp_dir) / "scene.json"
+            path.write_text(json.dumps(manifest), encoding="utf-8")
+            program = load_scene_program(path)
+            resolved = resolve_scene_layout(program)
+            self.assertEqual(len(resolved.resolved_placements), 3)
+            bounds_set = set()
+            for prop in resolved.resolved_placements:
+                bounds_set.add(prop.bounds)
+            self.assertEqual(len(bounds_set), 3, f"Expected 3 distinct bounds, got {bounds_set}")
+
+    def test_prop_positions_are_not_all_origin(self) -> None:
+        from asf.scene_layout import resolve_scene_layout
+        manifest = {
+            "family": "background_scene",
+            "program_id": "test_not_origin",
+            "program_version": 1,
+            "template": "library_room",
+            "canvas": {"width": 256, "height": 192},
+            "theme": "library",
+            "subtheme": "ancient",
+            "style_pack": "cute_chibi_v1",
+            "zones": [],
+            "tile_sources": [
+                {"tile_id": "wall_tile", "family": "tileset", "primitive_id": "wall_01"},
+                {"tile_id": "floor_tile", "family": "tileset", "primitive_id": "floor_01"},
+            ],
+            "prop_placement": [
+                {"group_id": "wall_group", "tile_id": "wall_tile", "placement_rules": {"weight": 0.5}},
+                {"group_id": "floor_group", "tile_id": "floor_tile", "placement_rules": {"weight": 0.5}},
+            ],
+            "lighting": {"global_direction": "northwest", "ambient_strength": 0.8},
+            "output": {"variant_id": None},
+        }
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            path = Path(tmp_dir) / "scene.json"
+            path.write_text(json.dumps(manifest), encoding="utf-8")
+            program = load_scene_program(path)
+            resolved = resolve_scene_layout(program)
+            origin_count = sum(1 for p in resolved.resolved_placements if p.bounds == (0, 0, 32, 32))
+            self.assertLess(origin_count, len(resolved.resolved_placements), "All props piled at origin")
+
     def test_missing_tile_reference_uses_default_bounds(self) -> None:
         from asf.scene_layout import resolve_scene_layout
         manifest = {

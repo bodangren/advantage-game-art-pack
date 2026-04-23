@@ -706,7 +706,7 @@ def _boxes_overlap(ax: int, ay: int, aw: int, ah: int, bx: int, by: int, bw: int
     return ax < b_right and a_right > bx and ay < b_bottom and a_bottom > by
 
 
-def resolve_scene_layout(program: SceneProgram) -> ResolvedLayout:
+def resolve_scene_layout(program: SceneProgram, repo_root: Path = Path(".")) -> ResolvedLayout:
     """Resolves a scene program into a deterministic layout with validated zones and placements."""
     canvas_width = program.canvas.width
     canvas_height = program.canvas.height
@@ -738,6 +738,10 @@ def resolve_scene_layout(program: SceneProgram) -> ResolvedLayout:
         ))
 
     resolved_placements: list[ResolvedPropPlacement] = []
+    canvas_area = canvas_width * canvas_height
+    default_tile_size = 32
+
+    placement_grid: list[tuple[int, int, int, int]] = []
     for prop in sorted(program.prop_placement, key=lambda p: p.group_id):
         tile_source = None
         for ts in program.tile_sources:
@@ -745,13 +749,54 @@ def resolve_scene_layout(program: SceneProgram) -> ResolvedLayout:
                 tile_source = ts
                 break
 
-        default_tile_size = 32
-        prop_bounds = (0, 0, default_tile_size, default_tile_size)
-
-        if tile_source is None:
-            prop_bounds = (0, 0, default_tile_size, default_tile_size)
+        if tile_source is not None:
+            primitive_path = repo_root / "library" / "primitives" / tile_source.family / tile_source.primitive_id / "source.png"
+            if primitive_path.exists():
+                with Image.open(primitive_path) as img:
+                    tw, th = img.size
+                    prop_bounds = (0, 0, tw, th)
+            else:
+                prop_bounds = (0, 0, default_tile_size, default_tile_size)
         else:
             prop_bounds = (0, 0, default_tile_size, default_tile_size)
+
+        if placement_grid:
+            px, py, pw, ph = prop_bounds
+            attempts = 0
+            max_attempts = 100
+            placed = False
+            for weight in [1.0, 0.8, 0.6, 0.4, 0.2]:
+                if placed:
+                    break
+                for i in range(max_attempts):
+                    seed = hash((prop.group_id, i))
+                    row = (seed % 7) * (canvas_height // 8)
+                    col = ((seed // 7) % 15) * (canvas_width // 16)
+                    if col + pw > canvas_width:
+                        col = canvas_width - pw
+                    if row + ph > canvas_height:
+                        row = canvas_height - ph
+                    test_bounds = (col, row, pw, ph)
+                    overlaps = False
+                    for existing in placement_grid:
+                        if _boxes_overlap(test_bounds[0], test_bounds[1], test_bounds[2], test_bounds[3],
+                                         existing[0], existing[1], existing[2], existing[3]):
+                            overlaps = True
+                            break
+                    if not overlaps:
+                        for rz_x, rz_y, rz_w, rz_h in reserved_zones:
+                            if _boxes_overlap(test_bounds[0], test_bounds[1], test_bounds[2], test_bounds[3],
+                                             rz_x, rz_y, rz_w, rz_h):
+                                overlaps = True
+                                break
+                    if not overlaps:
+                        prop_bounds = test_bounds
+                        placed = True
+                        break
+        else:
+            prop_bounds = (0, 0, prop_bounds[2], prop_bounds[3])
+
+        placement_grid.append(prop_bounds)
 
         px, py, pw, ph = prop_bounds
         for rz_x, rz_y, rz_w, rz_h in reserved_zones:
