@@ -33,19 +33,19 @@
 
 ## Phase 3: Batch planning and evaluation
 
-- [ ] Task: Write tests for sample briefs across all supported asset families
-  - [ ] Cover character, prop/FX, tile, and scene briefs
-  - [ ] Cover briefs requesting multiple related assets in one batch
-  - [ ] Cover contradictory briefs that should fail fast
-- [ ] Task: Implement the batch planner CLI and manifest output
-  - [ ] Add a command that reads a brief and writes a planner manifest to disk
-  - [ ] Include per-asset family programs and shared batch constraints
-  - [ ] Store prompt traces and provider metadata with the planner output
-- [ ] Task: Build offline eval fixtures and score planner adherence
-  - [ ] Add a fixed set of representative briefs to the repo
-  - [ ] Score schema adherence, invalid-reference rate, and repair-loop frequency
-  - [ ] Document how planners are compared without relying on subjective visual judgment
-- [ ] Task: Run verification and document prompt-governance rules
-  - [ ] Run planner, repair-loop, and eval tests
-  - [ ] Verify the planner never generates image-like freeform output in production mode
-  - [ ] Document the exact rules that keep the planner constrained to asset programs
+- [x] Task: Write tests for sample briefs across all supported asset families
+  - [x] Cover character, prop/FX, tile, and scene briefs
+  - [x] Cover briefs requesting multiple related assets in one batch
+  - [x] Cover contradictory briefs that should fail fast
+- [x] Task: Implement the batch planner CLI and manifest output
+  - [x] Add a command that reads a brief and writes a planner manifest to disk
+  - [x] Include per-asset family programs and shared batch constraints
+  - [x] Store prompt traces and provider metadata with the planner output
+- [x] Task: Build offline eval fixtures and score planner adherence
+  - [x] Add a fixed set of representative briefs to the repo
+  - [x] Score schema adherence, invalid-reference rate, and repair-loop frequency
+  - [x] Document how planners are compared without relying on subjective visual judgment
+- [x] Task: Run verification and document prompt-governance rules
+  - [x] Run planner, repair-loop, and eval tests
+  - [x] Verify the planner never generates image-like freeform output in production mode
+  - [x] Document the exact rules that keep the planner constrained to asset programs

@@ -37,8 +37,9 @@ This file tracks all major tracks for the project.
 
 ---
 
-- [ ] **Track: Prompt-to-asset-program planner**
+- [x] **Track: Prompt-to-asset-program planner**
   *Link: [./conductor/tracks/prompt_to_asset_program_planner_20260405/](./conductor/tracks/prompt_to_asset_program_planner_20260405/)*
+  Provider abstraction, prompt builder, structured parser, repair loop, eval fixtures, and CLI.
 
 ---
 
