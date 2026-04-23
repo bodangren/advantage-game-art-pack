@@ -1,0 +1,60 @@
+{
+  "job_id": "ruins_minigame_001",
+  "brief": {
+    "request": "Ruins-themed mini-game asset pack featuring undead skeleton warriors and ancient stone environment",
+    "families": ["character_sheet", "background_scene", "cover_surface", "loading_surface"],
+    "counts": {
+      "character_sheet": 2,
+      "background_scene": 1,
+      "cover_surface": 1,
+      "loading_surface": 1
+    },
+    "style_pack": "cute_chibi_v1",
+    "theme_pack": {
+      "theme_id": "ruins",
+      "motif_ids": ["ancient", "undead"]
+    },
+    "shared_constraints": {
+      "canvas_size": [64, 64],
+      "palette_limit": 12
+    },
+    "per_asset_constraints": {
+      "character_sheet": {
+        "entity_type": "enemy",
+        "directions": ["facing_up", "facing_down", "facing_camera"],
+        "animations": ["idle", "walk", "attack"]
+      },
+      "background_scene": {
+        "template": "ruins_courtyard",
+        "canvas": [256, 192]
+      },
+      "cover_surface": {
+        "canvas": [512, 384],
+        "title_safe_zone": [32, 16, 448, 72]
+      },
+      "loading_surface": {
+        "canvas": [256, 192],
+        "parallax_layers": ["background", "midground"]
+      }
+    }
+  },
+  "families": ["character_sheet", "background_scene", "cover_surface", "loading_surface"],
+  "counts": {
+    "character_sheet": 2,
+    "background_scene": 1,
+    "cover_surface": 1,
+    "loading_surface": 1
+  },
+  "style_pack": "cute_chibi_v1",
+  "theme_pack": {
+    "theme_id": "ruins",
+    "motif_ids": ["ancient", "undead"]
+  },
+  "retry_policy": {
+    "max_planner_retries": 2,
+    "max_compile_retries": 2,
+    "max_candidate_loop_retries": 1
+  },
+  "seeded": true,
+  "seed_description": "Ruins-themed mini-game with skeleton enemy warriors, crumbling courtyard, and dramatic undead atmosphere"
+}

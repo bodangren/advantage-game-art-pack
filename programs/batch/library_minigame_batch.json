@@ -1,0 +1,54 @@
+{
+  "job_id": "library_minigame_001",
+  "brief": {
+    "request": "Library-themed mini-game asset pack featuring wizard and undead characters",
+    "families": ["character_sheet", "background_scene", "cover_surface"],
+    "counts": {
+      "character_sheet": 3,
+      "background_scene": 1,
+      "cover_surface": 1
+    },
+    "style_pack": "cute_chibi_v1",
+    "theme_pack": {
+      "theme_id": "library",
+      "motif_ids": ["ancient", "arcane"]
+    },
+    "shared_constraints": {
+      "canvas_size": [64, 64],
+      "palette_limit": 12
+    },
+    "per_asset_constraints": {
+      "character_sheet": {
+        "entity_type": "player",
+        "directions": ["facing_up", "facing_down", "facing_camera"],
+        "animations": ["idle", "walk", "action"]
+      },
+      "background_scene": {
+        "template": "library_room",
+        "canvas": [256, 192]
+      },
+      "cover_surface": {
+        "canvas": [512, 384],
+        "title_safe_zone": [32, 16, 448, 72]
+      }
+    }
+  },
+  "families": ["character_sheet", "background_scene", "cover_surface"],
+  "counts": {
+    "character_sheet": 3,
+    "background_scene": 1,
+    "cover_surface": 1
+  },
+  "style_pack": "cute_chibi_v1",
+  "theme_pack": {
+    "theme_id": "library",
+    "motif_ids": ["ancient", "arcane"]
+  },
+  "retry_policy": {
+    "max_planner_retries": 2,
+    "max_compile_retries": 2,
+    "max_candidate_loop_retries": 1
+  },
+  "seeded": true,
+  "seed_description": "Library-themed mini-game with wizard player, zombie enemy, and ancient library background"
+}
