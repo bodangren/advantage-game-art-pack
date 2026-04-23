@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "family": "ui_sheet",
+  "critic_config_version": 1,
+  "target_pass_band": [0.8, 0.9],
+  "reference_layout_types": ["ui_sheet"],
+  "structural": {
+    "minimum_occupancy_ratio": 0.03,
+    "minimum_edge_density": 0.04
+  },
+  "style": {
+    "minimum_score": 0.50,
+    "metric_weights": {
+      "color_count": 0.25,
+      "dominant_color_count": 0.15,
+      "non_transparent_occupancy_ratio": 0.20,
+      "edge_density": 0.15,
+      "contact_shadow_area": 0.08,
+      "highlight_density": 0.10,
+      "frame_to_frame_drift": 0.07
+    }
+  },
+  "novelty": {
+    "minimum_score": 0.10,
+    "near_duplicate_similarity": 0.95
+  }
+}

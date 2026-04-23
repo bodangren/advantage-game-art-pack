@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "family": "cover_surface",
+  "critic_config_version": 1,
+  "target_pass_band": [0.8, 0.9],
+  "reference_layout_types": ["cover_surface"],
+  "structural": {
+    "minimum_occupancy_ratio": 0.06,
+    "minimum_edge_density": 0.05
+  },
+  "style": {
+    "minimum_score": 0.55,
+    "metric_weights": {
+      "color_count": 0.18,
+      "dominant_color_count": 0.14,
+      "non_transparent_occupancy_ratio": 0.22,
+      "edge_density": 0.18,
+      "contact_shadow_area": 0.12,
+      "highlight_density": 0.10,
+      "frame_to_frame_drift": 0.06
+    }
+  },
+  "novelty": {
+    "minimum_score": 0.18,
+    "near_duplicate_similarity": 0.92
+  }
+}

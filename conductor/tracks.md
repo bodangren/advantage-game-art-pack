@@ -43,8 +43,9 @@ This file tracks all major tracks for the project.
 
 ---
 
-- [ ] **Track: Critic calibration and auto-approval policy**
+- [x] **Track: Critic calibration and auto-approval policy**
   *Link: [./conductor/tracks/critic_stack_auto_approval_20260405/](./conductor/tracks/critic_stack_auto_approval_20260405/)*
+  Shared critic-result schema, policy decision types, family adapters, threshold packs for scene/presentation families, drift monitoring, review integration hooks.*
 
 ---
 

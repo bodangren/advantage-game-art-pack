@@ -18,6 +18,25 @@ from asf.candidate_loop import (
     run_candidate_job,
     select_best_candidate,
 )
+from asf.critic_policy import (
+    CriticEvidence,
+    CriticOutcome,
+    CriticResult,
+    PolicyDecision,
+    PolicyOutcome,
+    aggregate_policy_decision,
+    build_novelty_result,
+    build_style_result,
+    build_structural_result,
+)
+from asf.critic_adapters import (
+    SUPPORTED_SCENE_AND_SURFACE_FAMILIES,
+    adapt_novelty_critic,
+    adapt_structural_critic,
+    adapt_style_critic,
+    check_near_duplicate,
+    evaluate_family_candidate,
+)
 from asf.compilers import (
     CHARACTER_DIRECTION_NAMES,
     COMPILER_VERSION,
@@ -64,13 +83,25 @@ from asf.specs import (
 )
 
 __all__ = [
+    "adapt_novelty_critic",
+    "adapt_structural_critic",
+    "adapt_style_critic",
+    "aggregate_policy_decision",
     "BodySpec",
+    "build_novelty_result",
+    "build_style_result",
+    "build_structural_result",
     "CANDIDATE_LOOP_VERSION",
     "CHARACTER_DIRECTION_NAMES",
+    "check_near_duplicate",
+    "CriticEvidence",
+    "CriticOutcome",
     "CandidateEvaluation",
     "CandidateJob",
     "CandidateLoopValidationError",
     "CandidateSelectionResult",
+    "CriticResult",
+    "evaluate_family_candidate",
     "EquipmentSpec",
     "FxSpec",
     "FrameSpec",
@@ -85,8 +116,11 @@ __all__ = [
     "PrimitiveValidationError",
     "ReferenceAsset",
     "PaletteSpec",
+    "PolicyDecision",
+    "PolicyOutcome",
     "PoseSpec",
     "SpriteSpec",
+    "SUPPORTED_SCENE_AND_SURFACE_FAMILIES",
     "ThresholdPack",
     "MotionPlan",
     "OUTPUT_ROOT_DIRNAME",

@@ -195,3 +195,88 @@ def update_candidate_status(
         (status, now, candidate_id),
     )
     conn.commit()
+
+
+def record_policy_decision(
+    candidate_id: str,
+    policy_decision: str,
+    policy_version: int,
+    deciding_critic: Optional[str],
+    override: bool,
+    override_reason: Optional[str],
+    summary: str,
+    db_path: Optional[str] = None,
+) -> None:
+    """Record the policy decision on a candidate.
+
+    Stores the policy decision and explanation as structured JSON in the
+    nearest_references field so it is available on the candidate record
+    without changing the schema.
+
+    Args:
+        candidate_id: The candidate to annotate
+        policy_decision: One of "auto_approved", "needs_review", "regenerate"
+        policy_version: Version of the policy that made the decision
+        deciding_critic: Which critic controlled the decision
+        override: Whether a reviewer overrode the policy
+        override_reason: Human-provided reason for override
+        summary: Human-readable explanation
+        db_path: Optional path to database file
+    """
+    db = get_database(db_path)
+    policy_record = {
+        "policy_decision": policy_decision,
+        "policy_version": policy_version,
+        "deciding_critic": deciding_critic,
+        "override": override,
+        "override_reason": override_reason,
+        "summary": summary,
+    }
+    existing = db.get_candidate(candidate_id)
+    if existing is None:
+        raise ValueError(f"{candidate_id}: candidate not found")
+
+    references_raw = existing.get("nearest_references", "[]")
+    try:
+        references = json.loads(references_raw) if references_raw else []
+    except Exception:
+        references = []
+    references.append(policy_record)
+    conn = db._get_conn()
+    from datetime import datetime, timezone
+
+    now = datetime.now(timezone.utc).isoformat()
+    conn.execute(
+        "UPDATE candidates SET nearest_references = ?, updated_at = ? WHERE id = ?",
+        (json.dumps(references), now, candidate_id),
+    )
+    conn.commit()
+
+
+def attach_critic_results(
+    candidate_id: str,
+    critic_results: dict[str, Any],
+    db_path: Optional[str] = None,
+) -> None:
+    """Attach structured critic results to a candidate record.
+
+    Args:
+        candidate_id: The candidate to annotate
+        critic_results: Dict with structural, style, novelty critic results
+        db_path: Optional path to database file
+    """
+    db = get_database(db_path)
+    existing = db.get_candidate(candidate_id)
+    if existing is None:
+        raise ValueError(f"{candidate_id}: candidate not found")
+
+    scores = {k: v.get("score", 0.0) for k, v in critic_results.items() if isinstance(v, dict)}
+    conn = db._get_conn()
+    from datetime import datetime, timezone
+
+    now = datetime.now(timezone.utc).isoformat()
+    conn.execute(
+        "UPDATE candidates SET critic_scores = ?, updated_at = ? WHERE id = ?",
+        (json.dumps(scores), now, candidate_id),
+    )
+    conn.commit()
