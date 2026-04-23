@@ -52,6 +52,6 @@ This file tracks all major tracks for the project.
 
 ---
 
-- [ ] **Track: Lighting renderer fixes**
+- [x] **Track: Lighting renderer fixes**
   *Link: [./conductor/tracks/lighting_renderer_fixes_20260423/](./conductor/tracks/lighting_renderer_fixes_20260423/)*
   Fix lighting pass double-darken bug and layout resolver origin pile-up bug.

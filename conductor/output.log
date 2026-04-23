@@ -2476,3 +2476,42 @@ Index: /home/daniel-bo/Desktop/pixel-art-generator/conductor/lessons-learned.md
 +- (2026-04-23, lighting_renderer_fixes_20260423) When adding `repo_root` parameter to existing functions, all call sites must be updated. Prefer default arguments (`Path(".")`) to maintain backward compatibility with existing callers.
 
 [0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && git add -A && git commit -m "chore: update tech-debt and lessons-learned [lighting-renderer-fixes]
+
+Tech debt:
+- Close #13 (layout resolver origin pile-up) as fixed in cb8dd1b
+- Close #15 (lighting double-darken) as fixed in a94c307
+- Add note about Phase 3 visual regression needing primitive PNGs
+
+Lessons learned:
+- Add 4 entries about lighting math, shadow direction, layout placement, and repo_root parameter handling" --allow-empty
+[main efe5cf8] chore: update tech-debt and lessons-learned [lighting-renderer-fixes]
+ 3 files changed, 81 insertions(+), 3 deletions(-)
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && git push 2>&1
+To https://github.com/bodangren/advantage-game-art-pack.git
+   7b3197a..efe5cf8  main -> main
+[0m
+[0m→ [0mRead conductor/tracks.md[90m [limit=10, offset=53][0m
+[0m
+[0m← [0mEdit conductor/tracks.md
+Index: /home/daniel-bo/Desktop/pixel-art-generator/conductor/tracks.md
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/conductor/tracks.md
++++ /home/daniel-bo/Desktop/pixel-art-generator/conductor/tracks.md
+@@ -51,7 +51,7 @@
+   *Link: [./conductor/tracks/batch_generation_release_manifests_20260405/](./conductor/tracks/batch_generation_release_manifests_20260405/)*
+ 
+ ---
+ 
+-- [ ] **Track: Lighting renderer fixes**
++- [x] **Track: Lighting renderer fixes**
+   *Link: [./conductor/tracks/lighting_renderer_fixes_20260423/](./conductor/tracks/lighting_renderer_fixes_20260423/)*
+   Fix lighting pass double-darken bug and layout resolver origin pile-up bug.
+
+[0m
+[0m→ [0mRead conductor/tracks/lighting_renderer_fixes_20260423/plan.md
+[0m
+[0m← [0mWrite conductor/tracks/lighting_renderer_fixes_20260423/plan.md
+Wrote file successfully.
+[0m
