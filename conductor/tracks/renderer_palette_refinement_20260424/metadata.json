@@ -1,0 +1,11 @@
+{
+  "track_id": "renderer_palette_refinement_20260424",
+  "type": "feature",
+  "status": "pending",
+  "created_at": "2026-04-24T00:00:00Z",
+  "updated_at": "2026-04-24T00:00:00Z",
+  "description": "Fix renderer-side palette refinement so candidate loop survivors pass the palette-limit structural check instead of always regenerating",
+  "estimated_tasks": 5,
+  "actual_tasks": null,
+  "deviation_notes": ""
+}

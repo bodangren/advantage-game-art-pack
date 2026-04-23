@@ -13,38 +13,38 @@ This file tracks all major tracks for the project.
 ---
 
 - [x] **Track: Asset family compiler framework**
-  *Link: [./conductor/tracks/asset_family_compiler_framework_20260405/](./conductor/tracks/asset_family_compiler_framework_20260405/)*
+  *Link: [./conductor/archive/asset_family_compiler_framework_20260405/](./conductor/archive/asset_family_compiler_framework_20260405/)*
 
 ---
 
 - [x] **Track: Candidate generation and critic loop**
-  *Link: [./conductor/tracks/candidate_generation_critic_loop_20260405/](./conductor/tracks/candidate_generation_critic_loop_20260405/)*
+  *Link: [./conductor/archive/candidate_generation_critic_loop_20260405/](./conductor/archive/candidate_generation_critic_loop_20260405/)*
 
 ---
 
 - [x] **Track: Scene layout and background assembler**
-  *Link: [./conductor/tracks/scene_layout_background_assembler_20260405/](./conductor/tracks/scene_layout_background_assembler_20260405/)*
+  *Link: [./conductor/archive/scene_layout_background_assembler_20260405/](./conductor/archive/scene_layout_background_assembler_20260405/)*
 
 ---
 
 - [x] **Track: Presentation surfaces and UI pipeline**
-  *Link: [./conductor/tracks/presentation_surfaces_ui_pipeline_20260405/](./conductor/tracks/presentation_surfaces_ui_pipeline_20260405/)*
+  *Link: [./conductor/archive/presentation_surfaces_ui_pipeline_20260405/](./conductor/archive/presentation_surfaces_ui_pipeline_20260405/)*
 
 ---
 
 - [x] **Track: Review queue foundation**
-  *Link: [./conductor/tracks/review_queue_foundation_20260405/](./conductor/tracks/review_queue_foundation_20260405/)*
+  *Link: [./conductor/archive/review_queue_foundation_20260405/](./conductor/archive/review_queue_foundation_20260405/)*
 
 ---
 
 - [x] **Track: Prompt-to-asset-program planner**
-  *Link: [./conductor/tracks/prompt_to_asset_program_planner_20260405/](./conductor/tracks/prompt_to_asset_program_planner_20260405/)*
+  *Link: [./conductor/archive/prompt_to_asset_program_planner_20260405/](./conductor/archive/prompt_to_asset_program_planner_20260405/)*
   Provider abstraction, prompt builder, structured parser, repair loop, eval fixtures, and CLI.
 
 ---
 
 - [x] **Track: Critic calibration and auto-approval policy**
-  *Link: [./conductor/tracks/critic_stack_auto_approval_20260405/](./conductor/tracks/critic_stack_auto_approval_20260405/)*
+  *Link: [./conductor/archive/critic_stack_auto_approval_20260405/](./conductor/archive/critic_stack_auto_approval_20260405/)*
   Shared critic-result schema, policy decision types, family adapters, threshold packs for scene/presentation families, drift monitoring, review integration hooks.*
 
 ---
@@ -54,6 +54,24 @@ This file tracks all major tracks for the project.
 
 ---
 
+- [ ] **Track: Renderer Palette Refinement**
+  *Fix renderer-side palette refinement so candidate loop survivors pass palette-limit structural check instead of always regenerating*
+  *Link: [./conductor/tracks/renderer_palette_refinement_20260424/](./conductor/tracks/renderer_palette_refinement_20260424/)*
+
+---
+
+- [ ] **Track: Review App Auth and Image Serving**
+  *Add authentication and static image serving to the review queue FastAPI app*
+  *Link: [./conductor/tracks/review_app_auth_and_images_20260424/](./conductor/tracks/review_app_auth_and_images_20260424/)*
+
+---
+
+- [ ] **Track: LLM Planner Provider Implementations**
+  *Implement concrete OpenAI and Anthropic provider adapters for the prompt-to-asset-program planner*
+  *Link: [./conductor/tracks/llm_planner_provider_impl_20260424/](./conductor/tracks/llm_planner_provider_impl_20260424/)*
+
+---
+
 - [x] **Track: Lighting renderer fixes**
-  *Link: [./conductor/tracks/lighting_renderer_fixes_20260423/](./conductor/tracks/lighting_renderer_fixes_20260423/)*
+  *Link: [./conductor/archive/lighting_renderer_fixes_20260423/](./conductor/archive/lighting_renderer_fixes_20260423/)*
   Fix lighting pass double-darken bug and layout resolver origin pile-up bug.

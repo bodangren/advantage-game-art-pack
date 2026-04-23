@@ -1,0 +1,11 @@
+{
+  "track_id": "review_app_auth_and_images_20260424",
+  "type": "feature",
+  "status": "pending",
+  "created_at": "2026-04-24T00:00:00Z",
+  "updated_at": "2026-04-24T00:00:00Z",
+  "description": "Add authentication and static image serving to the review queue FastAPI app — currently has no auth and shows placeholder text instead of actual images",
+  "estimated_tasks": 5,
+  "actual_tasks": null,
+  "deviation_notes": ""
+}
