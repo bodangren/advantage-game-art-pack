@@ -49,3 +49,9 @@ This file tracks all major tracks for the project.
 
 - [ ] **Track: Batch generation and release manifests**
   *Link: [./conductor/tracks/batch_generation_release_manifests_20260405/](./conductor/tracks/batch_generation_release_manifests_20260405/)*
+
+---
+
+- [ ] **Track: Lighting renderer fixes**
+  *Link: [./conductor/tracks/lighting_renderer_fixes_20260423/](./conductor/tracks/lighting_renderer_fixes_20260423/)*
+  Fix lighting pass double-darken bug and layout resolver origin pile-up bug.
