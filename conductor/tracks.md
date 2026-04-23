@@ -49,8 +49,9 @@ This file tracks all major tracks for the project.
 
 ---
 
-- [ ] **Track: Batch generation and release manifests**
-  *Link: [./conductor/tracks/batch_generation_release_manifests_20260405/](./conductor/tracks/batch_generation_release_manifests_20260405/)*
+- [x] **Track: Batch generation and release manifests**
+  *Link: [./conductor/archive/batch_generation_release_manifests_20260405/](./conductor/archive/batch_generation_release_manifests_20260405/)*
+  Batch job schema, artifact layout, state machine, orchestrator with bounded retries, release bundle exporter, and seeded batch briefs for library and ruins mini-game themes.
 
 ---
 
