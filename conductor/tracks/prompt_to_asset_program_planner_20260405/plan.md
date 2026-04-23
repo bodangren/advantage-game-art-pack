@@ -14,22 +14,22 @@
 
 ## Phase 2: Planner and repair loop
 
-- [ ] Task: Write tests for planner prompt assembly and structured-output parsing
-  - [ ] Cover context assembly from canon, theme packs, and primitive availability
-  - [ ] Cover parsing of valid structured planner output
-  - [ ] Cover malformed JSON and missing required fields
-- [ ] Task: Implement the provider abstraction, prompt builder, and structured parser
-  - [ ] Add a provider interface and at least one concrete implementation
-  - [ ] Build prompts from canon, themes, and family-specific constraints
-  - [ ] Parse and validate structured planner output into typed models
-- [ ] Task: Write tests for the validation and repair loop
-  - [ ] Cover malformed JSON returned by the provider
-  - [ ] Cover unknown primitive references and unknown theme references
-  - [ ] Cover final failure when repair attempts are exhausted
-- [ ] Task: Implement validation, repair prompts, and failure reporting
-  - [ ] Add schema validation before any compiler receives planner output
-  - [ ] Add a repair prompt path that can fix invalid planner JSON
-  - [ ] Return structured errors when planner output cannot be repaired
+- [x] Task: Write tests for planner prompt assembly and structured-output parsing
+  - [x] Cover context assembly from canon, theme packs, and primitive availability
+  - [x] Cover parsing of valid structured planner output
+  - [x] Cover malformed JSON and missing required fields
+- [x] Task: Implement the provider abstraction, prompt builder, and structured parser
+  - [x] Add a provider interface and at least one concrete implementation
+  - [x] Build prompts from canon, themes, and family-specific constraints
+  - [x] Parse and validate structured planner output into typed models
+- [x] Task: Write tests for the validation and repair loop
+  - [x] Cover malformed JSON returned by the provider
+  - [x] Cover unknown primitive references and unknown theme references
+  - [x] Cover final failure when repair attempts are exhausted
+- [x] Task: Implement validation, repair prompts, and failure reporting
+  - [x] Add schema validation before any compiler receives planner output
+  - [x] Add a repair prompt path that can fix invalid planner JSON
+  - [x] Return structured errors when planner output cannot be repaired
 
 ## Phase 3: Batch planning and evaluation
 
