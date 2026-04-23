@@ -502,3 +502,45 @@ Index: /home/daniel-bo/Desktop/pixel-art-generator/conductor/tracks/prompt_to_as
 \ No newline at end of file
 
 [0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && git add -A && git commit -m "tracker: mark phase_2 complete for prompt_to_asset_program_planner (minimax-cn-coding-plan/MiniMax-M2.7)"
+[main e4c91dc] tracker: mark phase_2 complete for prompt_to_asset_program_planner (minimax-cn-coding-plan/MiniMax-M2.7)
+ 3 files changed, 501 insertions(+), 19 deletions(-)
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && git push
+To https://github.com/bodangren/advantage-game-art-pack.git
+   5f62714..e4c91dc  main -> main
+[0m
+[0m→ [0mRead conductor/tech-debt.md
+[0m→ [0mRead conductor/lessons-learned.md
+[0m
+[0m← [0mEdit conductor/tech-debt.md
+Index: /home/daniel-bo/Desktop/pixel-art-generator/conductor/tech-debt.md
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/conductor/tech-debt.md
++++ /home/daniel-bo/Desktop/pixel-art-generator/conductor/tech-debt.md
+@@ -21,4 +21,5 @@
+ | 2026-04-16 | review_queue_foundation_20260405 | Review app serves server-rendered HTML but has no image file serving; preview placeholders show "Preview" text instead of actual images. | Medium | Open | Serve static files from REVIEW_APP_ROOT or configure a static file mount in FastAPI; currently templates just show placeholder text. |
+ | 2026-04-16 | review_queue_foundation_20260405 | No authentication on review app; any user can approve/reject candidates. | High | Open | Add authentication middleware or IP allowlist for production use. |
+ | 2026-04-16 | review_queue_foundation_20260405 | Seed fixtures are not automatically loaded; new deployments start with empty queue. | Low | Open | Add a --seed flag to the startup or an admin endpoint to load fixtures. |
+ | 2026-04-17 | prompt_to_asset_program_planner_20260405 | Planner provider interface is defined but no concrete implementation exists yet (OpenAI, Anthropic, etc.). | Medium | Open | Provider abstraction allows swapping implementations; actual API calls need credentials and implementation. |
++| 2026-04-23 | prompt_to_asset_program_planner_20260405 | Planner prompt builder, structured parser, and repair loop implemented. No concrete OpenAI/Anthropic provider yet. | Medium | Open | Concrete provider needs API credentials and actual API integration. |
+
+[0m
+[0m✗ [0medit failed
+[91m[1mError: [0mCould not find oldString in the file. It must match exactly, including whitespace, indentation, and line endings.
+[0m→ [0mRead conductor/lessons-learned.md[90m [offset=45][0m
+[0m
+[0m← [0mEdit conductor/lessons-learned.md
+Index: /home/daniel-bo/Desktop/pixel-art-generator/conductor/lessons-learned.md
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/conductor/lessons-learned.md
++++ /home/daniel-bo/Desktop/pixel-art-generator/conductor/lessons-learned.md
+@@ -47,4 +47,6 @@
+ - (2026-04-23, lighting_renderer_fixes_20260423) Lighting double-darken: when directional shadow AND ambient darkening are both applied separately as darken steps, pixels get hit twice and become too dark. The fix is a single combined ambient+directional factor applied once. Spec: `base * clamp(ambient + directional, 0, 1)`.
+ - (2026-04-23, lighting_renderer_fixes_20260423) Shadow direction: for directional light, the OPPOSITE quadrant from the light source is shadow. For `dx>0` (east), left half (x<width//2) is shadow. For `dy<0` (north), bottom half (y>=height//2) is shadow. This inverts the naive interpretation.
+ - (2026-04-23, lighting_renderer_fixes_20260423) Layout resolver origin pile-up: when every prop gets `(0,0,32,32)` regardless of tile_source, all props stack at origin. The fix is to use actual tile dimensions and implement collision-aware placement. Multi-prop tests must verify bounds-distinctness, not just count.
+ - (2026-04-23, lighting_renderer_fixes_20260423) When adding `repo_root` parameter to existing functions, all call sites must be updated. Prefer default arguments (`Path(".")`) to maintain backward compatibility with existing callers.
++- (2026-04-23, prompt_to_asset_program_planner_20260405) Planner context assembly (canon + style packs + primitives) must filter by family before exposing primitives to the prompt. This prevents the planner from referencing primitives that don't match the requested asset family.
++- (2026-04-23, prompt_to_asset_program_planner_20260405) The repair loop should return a structured dict (not attempt re-parsing) so the caller controls the retry flow. Keep repair attempts bounded (max 3) to avoid infinite loops.
+
+[0m
