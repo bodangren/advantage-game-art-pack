@@ -28,6 +28,8 @@ from asf.specs import (
 )
 from asf.style_packs import load_style_pack
 
+from asf.palette import quantize_image_to_palette
+
 
 COMPILER_VERSION = 1
 SUPPORTED_COMPILER_FAMILIES = (
@@ -965,6 +967,8 @@ def _compile_character_sheet(
         palette=program.render_spec.palette,
         style_pack_name=style_pack.name,
     )
+    if style_pack.palette_limits > 0:
+        rendered = quantize_image_to_palette(rendered, style_pack.palette_limits)
     rendered.save(sheet_path, format="PNG", optimize=False, compress_level=9)
     manifest = build_output_manifest(
         program,
@@ -1008,6 +1012,8 @@ def _compile_prop_or_fx_sheet(
         palette=program.palette,
         style_pack_name=style_pack.name,
     )
+    if style_pack.palette_limits > 0:
+        rendered = quantize_image_to_palette(rendered, style_pack.palette_limits)
     rendered.save(sheet_path, format="PNG", optimize=False, compress_level=9)
     manifest = build_output_manifest(
         program,
@@ -1051,6 +1057,8 @@ def _compile_tileset(
         palette=program.palette,
         style_pack_name=style_pack.name,
     )
+    if style_pack.palette_limits > 0:
+        rendered = quantize_image_to_palette(rendered, style_pack.palette_limits)
     rendered.save(sheet_path, format="PNG", optimize=False, compress_level=9)
     manifest = build_output_manifest(
         program,

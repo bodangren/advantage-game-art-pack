@@ -102,6 +102,10 @@ from asf.batch import (
     write_review_decisions,
 )
 
+from asf.palette import (
+    quantize_image_to_palette,
+)
+
 __all__ = [
     "adapt_novelty_critic",
     "adapt_structural_critic",
@@ -141,6 +145,7 @@ __all__ = [
     "PaletteSpec",
     "PolicyDecision",
     "PolicyOutcome",
+    "quantize_image_to_palette",
     "PoseSpec",
     "SpriteSpec",
     "SUPPORTED_SCENE_AND_SURFACE_FAMILIES",
