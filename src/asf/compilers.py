@@ -17,11 +17,8 @@ from asf.primitives import (
     query_primitives,
 )
 from asf.specs import (
-    BodySpec,
-    EquipmentSpec,
     FxSpec,
     PaletteSpec,
-    PoseSpec,
     SpriteSpec,
     SpecValidationError,
     load_spec_payload,

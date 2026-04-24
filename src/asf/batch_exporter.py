@@ -4,27 +4,19 @@ from __future__ import annotations
 
 import json
 import logging
-import zipfile
+import shutil
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
 from asf.batch import (
-    AssetExecutionState,
     AssetState,
     BatchJob,
-    JobState,
     ReleaseBundleManifest,
-    VersionInfo,
     asset_candidates_dir,
-    asset_critic_result_path,
-    asset_program_path,
     asset_selected_dir,
     load_job_state,
-    load_review_decisions,
     release_bundle_path,
-    write_job_state,
-    write_review_decisions,
 )
 from asf.batch_orchestrator import generate_release_bundle
 
@@ -62,25 +54,24 @@ class ReleaseBundleExporter:
     def _write_audit_report(
         self, bundle_dir: Path, job: BatchJob, manifest: ReleaseBundleManifest
     ) -> None:
-        report_path = bundle_dir / "audit_report.md"
         lines = [
-            f"# Release Audit Report",
-            f"",
+            "# Release Audit Report",
+            "",
             f"**Job ID**: {job.job_id}",
             f"**Bundle ID**: {manifest.bundle_id}",
             f"**Generated**: {manifest.created_at}",
-            f"",
-            f"## Summary",
-            f"",
-            f"| Metric | Count |",
-            f"|--------|-------|",
+            "",
+            "## Summary",
+            "",
+            "| Metric | Count |",
+            "|--------|-------|",
             f"| Accepted (auto-approved) | {manifest.accepted_count} |",
             f"| Needs review | {manifest.review_required_count} |",
             f"| Rejected | {manifest.rejected_count} |",
             f"| Regenerated | {manifest.regenerated_count} |",
-            f"",
-            f"## Families",
-            f"",
+            "",
+            "## Families",
+            "",
         ]
         for family in manifest.families:
             lines.append(f"- {family}")
@@ -118,7 +109,6 @@ class ReleaseBundleExporter:
                 )
                 selected.mkdir(parents=True, exist_ok=True)
                 for src_file in candidate_dir.glob("*.png"):
-                    import shutil
                     shutil.copy2(src_file, selected / src_file.name)
 
 

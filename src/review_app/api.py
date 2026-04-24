@@ -7,7 +7,7 @@ import os
 from typing import Optional
 from urllib.parse import urlencode
 
-from fastapi import Depends, FastAPI, Form, HTTPException, Query, Request
+from fastapi import Depends, FastAPI, Form, HTTPException, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 from starlette.staticfiles import StaticFiles
@@ -194,23 +194,18 @@ def api_list_candidates(
         for c in candidates:
             c["rendered_files"] = _parse_json_field(c.get("rendered_files", "[]")) or []
 
-        return templates.TemplateResponse(
-            "queue.html",
-            {
-                "request": request,
-                "candidates": candidates,
-                "filters": {
-                    "candidate_type": candidate_type,
-                    "family": family,
-                    "status": status,
-                    "theme": theme,
-                    "min_confidence": min_confidence,
-                    "sort_by": sort_by,
-                    "sort_order": sort_order,
-                },
-                "query_string": urlencode(query_params) if query_params else "",
+        return {
+            "candidates": candidates,
+            "filters": {
+                "candidate_type": candidate_type,
+                "family": family,
+                "status": status,
+                "theme": theme,
+                "min_confidence": min_confidence,
+                "sort_by": sort_by,
+                "sort_order": sort_order,
             },
-        )
+        }
     finally:
         db.close()
 

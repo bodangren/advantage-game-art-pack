@@ -7,50 +7,26 @@ import json
 import logging
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
 
 from asf.batch import (
-    AssetExecutionState,
     AssetState,
     BatchJob,
     JobState,
     ReleaseBundleManifest,
-    RetryPolicy,
     VersionInfo,
     asset_candidates_dir,
     asset_critic_result_path,
     asset_program_path,
-    job_state_path,
     load_job_state,
     load_review_decisions,
-    planner_manifest_path,
-    review_decisions_path,
     write_job_state,
     write_review_decisions,
 )
-from asf.batch_runner import BatchRunner, create_batch_job
 from asf.compilers import (
     COMPILER_VERSION,
-    compile_program,
-    load_compiler_program,
-    CompilerOutputManifest,
 )
 from asf.candidate_loop import (
     CANDIDATE_LOOP_VERSION,
-    run_candidate_job,
-    select_best_candidate,
-    load_candidate_job,
-    load_threshold_pack,
-    load_reference_assets,
-    evaluate_against_references,
-)
-from asf.critic_policy import (
-    PolicyDecision,
-    PolicyOutcome,
-    aggregate_policy_decision,
-)
-from asf.critic_adapters import (
-    evaluate_family_candidate,
 )
 
 logger = logging.getLogger(__name__)
@@ -123,9 +99,9 @@ class BatchOrchestrator:
                     f"{asset_state.family}/{asset_state.program_index}: max planner retries reached"
                 )
                 job.asset_states = tuple(
-                    replace(asset_state, state=AssetState.FAILED, failure_reason="max planner retries")
-                    if i == idx else a
-                    for i, asset_state in enumerate(job.asset_states)
+                    replace(s, state=AssetState.FAILED, failure_reason="max planner retries")
+                    if i == idx else s
+                    for i, s in enumerate(job.asset_states)
                 )
                 job = replace(job, state=JobState.FAILED, updated_at=_utc_now())
                 return job

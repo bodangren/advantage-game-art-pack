@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import asdict, replace
+from dataclasses import replace
 import json
 import logging
 from datetime import datetime, timezone
@@ -19,43 +19,20 @@ from asf.batch import (
     asset_candidates_dir,
     asset_critic_result_path,
     asset_program_path,
-    job_state_path,
     load_job_state,
-    planner_manifest_path,
     write_job_state,
     write_review_decisions,
 )
 from asf.planner.schemas import (
     AssetFamily,
-    BatchBrief,
-    BatchPlannerManifest,
-    CharacterSheetProgram,
-    PrimitiveReference,
-    PropOrFxSheetProgram,
-    TilesetProgram,
-    write_program,
 )
 from asf.candidate_loop import (
     CANDIDATE_LOOP_VERSION,
-    run_candidate_job,
-    select_best_candidate,
-    evaluate_against_references,
-    load_candidate_job,
-    load_threshold_pack,
-    load_reference_assets,
-    ThresholdPack,
 )
 from asf.compilers import (
     COMPILER_VERSION,
-    compile_program,
-    load_compiler_program,
-    CompilerOutputManifest,
 )
-from asf.critic_policy import (
-    PolicyDecision,
-    aggregate_policy_decision,
-)
-from asf.planner.planner import PlannerContext, PromptBuilder
+from asf.planner.planner import PlannerContext
 
 logger = logging.getLogger(__name__)
 
@@ -121,7 +98,6 @@ class BatchRunner:
 
     def _finish_planning(self, job: BatchJob) -> BatchJob:
         try:
-            brief_dict = job.brief
             programs = self._generate_programs(job)
             self._write_programs(job, programs)
             updated_map: dict[int, AssetExecutionState] = {}
@@ -164,7 +140,7 @@ class BatchRunner:
             family = AssetFamily(family_str)
             family_programs = []
             for idx in range(count):
-                asset_state = AssetExecutionState(
+                AssetExecutionState(
                     family=family_str,
                     program_index=idx,
                     state=AssetState.PLANNED,
@@ -200,9 +176,6 @@ class BatchRunner:
                 if asset_state.state != AssetState.PLANNED:
                     continue
                 family = asset_state.family
-                program_path = asset_program_path(
-                    self.job_root, job.job_id, family, asset_state.program_index
-                )
                 output_dir = asset_candidates_dir(
                     self.job_root, job.job_id, family, asset_state.program_index
                 )
@@ -217,7 +190,7 @@ class BatchRunner:
                     for i, a in enumerate(job.asset_states)
                 )
             job = replace(job, state=JobState.CANDIDATE_LOOP, updated_at=_utc_now())
-        except Exception as exc:
+        except Exception:
             logger.exception("Compiling failed for job %s", job.job_id)
             job = replace(job, state=JobState.FAILED, updated_at=_utc_now())
         write_job_state(self.job_root, job)
@@ -228,10 +201,6 @@ class BatchRunner:
             for idx, asset_state in enumerate(job.asset_states):
                 if asset_state.state != AssetState.COMPILED:
                     continue
-                family = asset_state.family
-                candidate_dir = asset_candidates_dir(
-                    self.job_root, job.job_id, family, asset_state.program_index
-                )
                 asset_state = replace(
                     asset_state,
                     state=AssetState.CANDIDATES_GENERATED,
@@ -241,7 +210,7 @@ class BatchRunner:
                     for i, a in enumerate(job.asset_states)
                 )
             job = replace(job, state=JobState.CRITIC_SCORING, updated_at=_utc_now())
-        except Exception as exc:
+        except Exception:
             logger.exception("Candidate loop failed for job %s", job.job_id)
             job = replace(job, state=JobState.FAILED, updated_at=_utc_now())
         write_job_state(self.job_root, job)
@@ -267,7 +236,7 @@ class BatchRunner:
                     for i, a in enumerate(job.asset_states)
                 )
             job = replace(job, state=JobState.REVIEW_ROUTING, updated_at=_utc_now())
-        except Exception as exc:
+        except Exception:
             logger.exception("Critic scoring failed for job %s", job.job_id)
             job = replace(job, state=JobState.FAILED, updated_at=_utc_now())
         write_job_state(self.job_root, job)
@@ -302,7 +271,7 @@ class BatchRunner:
                 )
             write_review_decisions(self.job_root, job.job_id, decisions)
             job = replace(job, state=JobState.COMPLETED, updated_at=_utc_now())
-        except Exception as exc:
+        except Exception:
             logger.exception("Review routing failed for job %s", job.job_id)
             job = replace(job, state=JobState.FAILED, updated_at=_utc_now())
         write_job_state(self.job_root, job)

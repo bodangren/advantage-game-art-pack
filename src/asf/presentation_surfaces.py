@@ -1064,7 +1064,6 @@ def assemble_parallax_layer_set(
         repo_root = Path.cwd()
 
     canvas_w, canvas_h = program.canvas.width, program.canvas.height
-    density_map = {"top": 0.3, "middle": 0.6, "bottom": 1.0}
 
     resolved_layers: list[ParallaxLayerResult] = []
     layer_entries: list[dict[str, Any]] = []
@@ -1102,7 +1101,6 @@ def assemble_parallax_layer_set(
 
         contrast = layer.contrast
         if contrast < 1.0:
-            from PIL import ImageEnhance
             enhancer = ImageEnhance.Brightness(layer_img)
             layer_img = enhancer.enhance(0.5 + contrast * 0.5)
 
@@ -1120,7 +1118,7 @@ def assemble_parallax_layer_set(
             "contrast": layer.contrast,
         })
 
-    sorted_layers = sorted(resolved_layers, key=lambda l: l.layer_role)
+    sorted_layers = sorted(resolved_layers, key=lambda lr: lr.layer_role)
     sorted_entries = sorted(layer_entries, key=lambda e: e["scroll_order"])
 
     manifest = ParallaxSetManifest(
