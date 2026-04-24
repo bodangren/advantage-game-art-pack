@@ -57,19 +57,19 @@ This file tracks all major tracks for the project.
 
 - [x] **Track: Renderer Palette Refinement**
   *Fix renderer-side palette refinement so candidate loop survivors pass palette-limit structural check instead of always regenerating*
-  *Link: [./conductor/tracks/renderer_palette_refinement_20260424/](./conductor/tracks/renderer_palette_refinement_20260424/)*
+  *Link: [./archive/renderer_palette_refinement_20260424/](./archive/renderer_palette_refinement_20260424/)*
 
 ---
 
 - [x] **Track: Review App Auth and Image Serving**
   *Add authentication and static image serving to the review queue FastAPI app*
-  *Link: [./conductor/tracks/review_app_auth_and_images_20260424/](./conductor/tracks/review_app_auth_and_images_20260424/)*
+  *Link: [./archive/review_app_auth_and_images_20260424/](./archive/review_app_auth_and_images_20260424/)*
 
 ---
 
 - [x] **Track: LLM Planner Provider Implementations**
   *Implement concrete OpenAI and Anthropic provider adapters for the prompt-to-asset-program planner*
-  *Link: [./conductor/tracks/llm_planner_provider_impl_20260424/](./conductor/tracks/llm_planner_provider_impl_20260424/)*
+  *Link: [./archive/llm_planner_provider_impl_20260424/](./archive/llm_planner_provider_impl_20260424/)*
 
 ---
 
@@ -81,4 +81,11 @@ This file tracks all major tracks for the project.
 
 - [x] **Track: Promo Capture Scene Renderer**
   *Wire promo capture job to scene renderer so capture_conditions are honored instead of loading a static promo.png*
-  *Link: [./conductor/tracks/promo_capture_scene_renderer_20260425/](./conductor/tracks/promo_capture_scene_renderer_20260425/)*
+  *Link: [./archive/promo_capture_scene_renderer_20260425/](./archive/promo_capture_scene_renderer_20260425/)*
+
+## Upcoming Tracks
+
+- [ ] **Track: Batch Release Bundle Exporter** *Link: [./tracks/batch_release_bundle_20260425/](./tracks/batch_release_bundle_20260425/)*
+- [ ] **Track: Scene Primitive Library Expansion** *Link: [./tracks/scene_primitive_library_20260425/](./tracks/scene_primitive_library_20260425/)*
+- [ ] **Track: Critic Calibration CLI** *Link: [./tracks/critic_calibration_cli_20260425/](./tracks/critic_calibration_cli_20260425/)*
+- [ ] **Track: Review App Static File Serving** *Link: [./tracks/review_app_serving_20260425/](./tracks/review_app_serving_20260425/)*

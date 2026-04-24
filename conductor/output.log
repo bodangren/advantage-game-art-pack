@@ -1323,3 +1323,271 @@ Index: /home/daniel-bo/Desktop/pixel-art-generator/conductor/lessons-learned.md
 [0m← [0mWrite conductor/tracks/promo_capture_scene_renderer_20260425/index.md
 Wrote file successfully.
 [0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && git add -A && git commit -m "feat(presentation): wire promo capture to scene renderer (MiniMax-M2)
+
+- assemble_promo_capture_job now checks capture_conditions.scene_program
+- When set, renders scene via assemble_scene instead of loading static promo.png
+- Falls back to static promo.png when scene_program is empty string
+- Updated schema to allow empty string for scene_program field
+- Added tests for scene rendering path and fallback path
+- Fixed existing tests to use empty scene_program for static image path
+- Updated tech-debt to mark promo capture stub as closed
+- Updated lessons-learned with conditional rendering and schema validation notes"
+[main ba0d6bb] feat(presentation): wire promo capture to scene renderer (MiniMax-M2)
+ 10 files changed, 1549 insertions(+), 17 deletions(-)
+ create mode 100644 conductor/tracks/promo_capture_scene_renderer_20260425/index.md
+ create mode 100644 conductor/tracks/promo_capture_scene_renderer_20260425/metadata.json
+ create mode 100644 conductor/tracks/promo_capture_scene_renderer_20260425/plan.md
+ create mode 100644 conductor/tracks/promo_capture_scene_renderer_20260425/spec.md
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && git push
+To https://github.com/bodangren/advantage-game-art-pack.git
+   6d1db30..ba0d6bb  main -> main
+[0m
+Now let me update the plan.md to mark the completed tasks:
+[0m→ [0mRead conductor/tracks/promo_capture_scene_renderer_20260425/plan.md
+[0m
+[0m← [0mEdit conductor/tracks/promo_capture_scene_renderer_20260425/plan.md
+Index: /home/daniel-bo/Desktop/pixel-art-generator/conductor/tracks/promo_capture_scene_renderer_20260425/plan.md
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/conductor/tracks/promo_capture_scene_renderer_20260425/plan.md
++++ /home/daniel-bo/Desktop/pixel-art-generator/conductor/tracks/promo_capture_scene_renderer_20260425/plan.md
+@@ -2,29 +2,29 @@
+ 
+ ## Phase 1: Test Infrastructure & Scene Rendering Path
+ 
+ ### Task 1.1: Write failing test for promo capture with scene_program rendering
+-- [ ] Write a test that creates a minimal scene program fixture and a promo capture job referencing it
+-- [ ] Assert that when `capture_conditions.scene_program` is set, `assemble_promo_capture_job` renders the scene instead of loading static promo.png
+-- [ ] Verify the rendered image differs from a fallback static image
+-- [ ] Run test and confirm it fails (Red phase)
++- [x] Write a test that creates a minimal scene program fixture and a promo capture job referencing it
++- [x] Assert that when `capture_conditions.scene_program` is set, `assemble_promo_capture_job` renders the scene instead of loading static promo.png
++- [x] Verify the rendered image differs from a fallback static image
++- [x] Run test and confirm it fails (Red phase)
+ 
+ ### Task 1.2: Implement scene rendering path in assemble_promo_capture_job
+-- [ ] Modify `assemble_promo_capture_job` to check if `capture_conditions.scene_program` is set
+-- [ ] If set, load the scene program via `load_scene_program`
+-- [ ] Resolve the layout via `resolve_scene_layout`
+-- [ ] Assemble via `assemble_scene`
+-- [ ] Return the rendered scene image and manifest
+-- [ ] Run tests and confirm they pass (Green phase)
++- [x] Modify `assemble_promo_capture_job` to check if `capture_conditions.scene_program` is set
++- [x] If set, load the scene program via `load_scene_program`
++- [x] Resolve the layout via `resolve_scene_layout`
++- [x] Assemble via `assemble_scene`
++- [x] Return the rendered scene image and manifest
++- [x] Run tests and confirm they pass (Green phase)
+ 
+ ### Task 1.3: Write failing test for missing scene program error
+-- [ ] Write a test where `scene_program` points to a non-existent file
+-- [ ] Assert that `SurfaceAssemblyError` is raised with a clear message
+-- [ ] Run test and confirm it fails (Red phase)
++- [x] Write a test where `scene_program` points to a non-existent file
++- [x] Assert that `SurfaceAssemblyError` is raised with a clear message
++- [x] Run test and confirm it fails (Red phase)
+ 
+ ### Task 1.4: Implement error handling for missing scene program
+-- [ ] Add validation that raises `SurfaceAssemblyError` when scene program file does not exist
+-- [ ] Run tests and confirm they pass (Green phase)
++- [x] Add validation that raises `SurfaceAssemblyError` when scene program file does not exist
++- [x] Run tests and confirm they pass (Green phase)
+ 
+ ---
+ 
+ ## Phase 2: Fallback Path & Regression Prevention
+
+[0m
+[0m← [0mEdit conductor/tracks/promo_capture_scene_renderer_20260425/plan.md
+Index: /home/daniel-bo/Desktop/pixel-art-generator/conductor/tracks/promo_capture_scene_renderer_20260425/plan.md
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/conductor/tracks/promo_capture_scene_renderer_20260425/plan.md
++++ /home/daniel-bo/Desktop/pixel-art-generator/conductor/tracks/promo_capture_scene_renderer_20260425/plan.md
+@@ -29,20 +29,20 @@
+ 
+ ## Phase 2: Fallback Path & Regression Prevention
+ 
+ ### Task 2.1: Write failing test for fallback when scene_program is absent
+-- [ ] Write a test where `capture_conditions.scene_program` is null/empty
+-- [ ] Ensure static `promo.png` is loaded (current behavior)
+-- [ ] Run test and confirm it fails because current implementation ignores scene_program entirely
++- [x] Write a test where `capture_conditions.scene_program` is null/empty
++- [x] Ensure static `promo.png` is loaded (current behavior)
++- [x] Run test and confirm it fails because current implementation ignores scene_program entirely
+ 
+ ### Task 2.2: Implement fallback path
+-- [ ] Modify `assemble_promo_capture_job` to fall back to static `promo.png` when `scene_program` is absent
+-- [ ] Run tests and confirm they pass (Green phase)
++- [x] Modify `assemble_promo_capture_job` to fall back to static `promo.png` when `scene_program` is absent
++- [x] Run tests and confirm they pass (Green phase)
+ 
+ ### Task 2.3: Run full test suite for regression
+-- [ ] Run all existing tests in `test_presentation_surfaces.py`
+-- [ ] Ensure no regressions in other surface families
+-- [ ] Fix any failures
++- [x] Run all existing tests in `test_presentation_surfaces.py`
++- [x] Ensure no regressions in other surface families
++- [x] Fix any failures
+ 
+ ---
+ 
+ ## Phase 3: Manifest & Capture Conditions Recording
+
+[0m
+[0m← [0mEdit conductor/tracks/promo_capture_scene_renderer_20260425/plan.md
+Index: /home/daniel-bo/Desktop/pixel-art-generator/conductor/tracks/promo_capture_scene_renderer_20260425/plan.md
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/conductor/tracks/promo_capture_scene_renderer_20260425/plan.md
++++ /home/daniel-bo/Desktop/pixel-art-generator/conductor/tracks/promo_capture_scene_renderer_20260425/plan.md
+@@ -47,15 +47,15 @@
+ 
+ ## Phase 3: Manifest & Capture Conditions Recording
+ 
+ ### Task 3.1: Verify manifest records scene_program as source asset
+-- [ ] Write/extend test to verify manifest's `source_assets` includes the scene_program path
+-- [ ] Run test and confirm it captures the scene_program
++- [x] Write/extend test to verify manifest's `source_assets` includes the scene_program path
++- [x] Run test and confirm it captures the scene_program
+ 
+ ### Task 3.2: Ensure timing and frame_index are passed through
+-- [ ] Write/extend test for `timing` and `frame_index` in capture_conditions
+-- [ ] These are currently stored in manifest but not used; document that frame_index pass-through is for future animation support
+-- [ ] Run tests and confirm they pass
++- [x] Write/extend test for `timing` and `frame_index` in capture_conditions
++- [x] These are currently stored in manifest but not used; document that frame_index pass-through is for future animation support
++- [x] Run tests and confirm they pass
+ 
+ ---
+ 
+ ## Phase 4: Finalization
+
+[0m
+[0m← [0mEdit conductor/tracks/promo_capture_scene_renderer_20260425/plan.md
+Index: /home/daniel-bo/Desktop/pixel-art-generator/conductor/tracks/promo_capture_scene_renderer_20260425/plan.md
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/conductor/tracks/promo_capture_scene_renderer_20260425/plan.md
++++ /home/daniel-bo/Desktop/pixel-art-generator/conductor/tracks/promo_capture_scene_renderer_20260425/plan.md
+@@ -60,15 +60,15 @@
+ 
+ ## Phase 4: Finalization
+ 
+ ### Task 4.1: Update tech-debt.md
+-- [ ] Mark tech debt item "promo capture job stub" as Closed
+-- [ ] Add note about frame_index pass-through for future animation support as a new Open item if applicable
++- [x] Mark tech debt item "promo capture job stub" as Closed
++- [x] Add note about frame_index pass-through for future animation support as a new Open item if applicable
+ 
+ ### Task 4.2: Update lessons-learned.md
+-- [ ] Add lesson about conditional rendering based on optional program fields
+-- [ ] Keep under 50 lines
++- [x] Add lesson about conditional rendering based on optional program fields
++- [x] Keep under 50 lines
+ 
+ ### Task 4.3: Commit checkpoint
+-- [ ] Stage all changes
+-- [ ] Commit with message referencing MiniMax-M2 model
+-- [ ] Push
+\ No newline at end of file
++- [x] Stage all changes
++- [x] Commit with message referencing MiniMax-M2 model
++- [x] Push
+\ No newline at end of file
+
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && git add conductor/tracks/promo_capture_scene_renderer_20260425/plan.md && git commit -m "conductor(plan): mark promo_capture_scene_renderer tasks complete (MiniMax-M2)"
+[main 9c5c0ef] conductor(plan): mark promo_capture_scene_renderer tasks complete (MiniMax-M2)
+ 1 file changed, 35 insertions(+), 35 deletions(-)
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && git push
+To https://github.com/bodangren/advantage-game-art-pack.git
+   ba0d6bb..9c5c0ef  main -> main
+[0m
+[0m← [0mEdit conductor/tracks.md
+Index: /home/daniel-bo/Desktop/pixel-art-generator/conductor/tracks.md
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/conductor/tracks.md
++++ /home/daniel-bo/Desktop/pixel-art-generator/conductor/tracks.md
+@@ -78,7 +78,7 @@
+   Fix lighting pass double-darken bug and layout resolver origin pile-up bug.
+ 
+ ---
+ 
+-- [ ] **Track: Promo Capture Scene Renderer**
++- [x] **Track: Promo Capture Scene Renderer**
+   *Wire promo capture job to scene renderer so capture_conditions are honored instead of loading a static promo.png*
+   *Link: [./conductor/tracks/promo_capture_scene_renderer_20260425/](./conductor/tracks/promo_capture_scene_renderer_20260425/)*
+
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && git add conductor/tracks.md && git commit -m "conductor: mark promo_capture_scene_renderer track complete (MiniMax-M2)"
+[main 8690329] conductor: mark promo_capture_scene_renderer track complete (MiniMax-M2)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && python3 -m pytest tests/test_presentation_surfaces.py -v -q 2>&1 | tail -10
+platform linux -- Python 3.12.3, pytest-9.0.3, pluggy-1.6.0
+rootdir: /home/daniel-bo/Desktop/pixel-art-generator
+configfile: pyproject.toml
+plugins: cov-7.1.0
+collected 78 items
+
+tests/test_presentation_surfaces.py .................................... [ 46%]
+..........................................                               [100%]
+
+============================== 78 passed in 2.62s ==============================
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && git push
+To https://github.com/bodangren/advantage-game-art-pack.git
+   9c5c0ef..8690329  main -> main
+[0m
+[0m← [0mEdit conductor/tracks/promo_capture_scene_renderer_20260425/metadata.json
+Index: /home/daniel-bo/Desktop/pixel-art-generator/conductor/tracks/promo_capture_scene_renderer_20260425/metadata.json
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/conductor/tracks/promo_capture_scene_renderer_20260425/metadata.json
++++ /home/daniel-bo/Desktop/pixel-art-generator/conductor/tracks/promo_capture_scene_renderer_20260425/metadata.json
+@@ -1,11 +1,11 @@
+ {
+   "track_id": "promo_capture_scene_renderer_20260425",
+   "type": "feature",
+-  "status": "new",
++  "status": "completed",
+   "created_at": "2026-04-25T00:00:00Z",
+   "updated_at": "2026-04-25T00:00:00Z",
+   "description": "Wire promo capture job to scene renderer so capture_conditions are honored instead of loading a static promo.png",
+   "estimated_tasks": 4,
+-  "actual_tasks": null,
++  "actual_tasks": 4,
+   "deviation_notes": ""
+ }
+\ No newline at end of file
+
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && git add conductor/tracks/promo_capture_scene_renderer_20260425/metadata.json && git commit -m "conductor: finalize promo_capture_scene_renderer metadata (MiniMax-M2)"
+[main bd87786] conductor: finalize promo_capture_scene_renderer metadata (MiniMax-M2)
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && git push
+To https://github.com/bodangren/advantage-game-art-pack.git
+   8690329..bd87786  main -> main
+[0m
+**Autonomous Run Complete**
+
+Created and implemented **Track: Promo Capture Scene Renderer** to fix the tech debt where `assemble_promo_capture_job` ignored `capture_conditions.scene_program`.
+
+**Changes made:**
+1. Modified `src/asf/presentation_surfaces.py` to:
+   - Import `assemble_scene`, `load_scene_program`, `resolve_scene_layout` from scene_layout
+   - Check `capture_conditions.scene_program` - if set, render the scene; if empty, fall back to static `promo.png`
+   - Allow empty string for `scene_program` via `allow_empty=True` in schema validation
+
+2. Added tests in `tests/test_presentation_surfaces.py`:
+   - `test_promo_capture_renders_scene_when_scene_program_specified`
+   - `test_promo_capture_raises_when_scene_program_missing`
+   - `test_promo_capture_falls_back_to_static_image_when_scene_program_absent`
+
+3. Updated `conductor/tech-debt.md` - marked promo capture stub as Closed
+
+4. Updated `conductor/lessons-learned.md` with 2 new entries about conditional rendering and schema validation
+
+5. Created track files in `conductor/tracks/promo_capture_scene_renderer_20260425/`
+
+**Verification:** All 78 presentation surfaces tests pass, 290 broader tests pass.
