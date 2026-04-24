@@ -263,18 +263,58 @@ class ReleaseBundleManifest:
     metadata: dict[str, Any] = field(default_factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        result = asdict(self)
-        result["planner_version"] = (
-            asdict(self.planner_version) if self.planner_version else None
-        )
-        result["compiler_versions"] = [asdict(v) for v in self.compiler_versions]
-        result["candidate_loop_version"] = (
-            asdict(self.candidate_loop_version) if self.candidate_loop_version else None
-        )
-        result["critic_policy_version"] = (
-            asdict(self.critic_policy_version) if self.critic_policy_version else None
-        )
+        result: dict[str, Any] = {
+            "job_id": self.job_id,
+            "bundle_id": self.bundle_id,
+            "created_at": self.created_at,
+            "families": self.families,
+            "accepted_count": self.accepted_count,
+            "review_required_count": self.review_required_count,
+            "rejected_count": self.rejected_count,
+            "regenerated_count": self.regenerated_count,
+            "provenance": list(self.provenance),
+            "metadata": dict(self.metadata),
+        }
+        if self.planner_version:
+            result["planner_version"] = (
+                asdict(self.planner_version) if isinstance(self.planner_version, VersionInfo) else self.planner_version
+            )
+        result["compiler_versions"] = [
+            asdict(v) if isinstance(v, VersionInfo) else v for v in self.compiler_versions
+        ]
+        if self.candidate_loop_version:
+            result["candidate_loop_version"] = (
+                asdict(self.candidate_loop_version) if isinstance(self.candidate_loop_version, VersionInfo) else self.candidate_loop_version
+            )
+        if self.critic_policy_version:
+            result["critic_policy_version"] = (
+                asdict(self.critic_policy_version) if isinstance(self.critic_policy_version, VersionInfo) else self.critic_policy_version
+            )
         return result
+
+    @classmethod
+    def from_dict(cls, data: dict[str, Any]) -> ReleaseBundleManifest:
+        pv = data.get("planner_version")
+        cv = tuple(data.get("compiler_versions", ()))
+        clv = data.get("candidate_loop_version")
+        cpv = data.get("critic_policy_version")
+        provenance = tuple(data.get("provenance", ()))
+        return cls(
+            job_id=data["job_id"],
+            bundle_id=data["bundle_id"],
+            created_at=data["created_at"],
+            families=tuple(data.get("families", ())),
+            accepted_count=data.get("accepted_count", 0),
+            review_required_count=data.get("review_required_count", 0),
+            rejected_count=data.get("rejected_count", 0),
+            regenerated_count=data.get("regenerated_count", 0),
+            planner_version=pv,
+            compiler_versions=cv,
+            candidate_loop_version=clv,
+            critic_policy_version=cpv,
+            provenance=provenance,
+            metadata=data.get("metadata", {}),
+        )
 
 
 def write_job_state(job_root: Path, job: BatchJob) -> None:
