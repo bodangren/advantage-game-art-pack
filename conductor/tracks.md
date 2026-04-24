@@ -55,7 +55,7 @@ This file tracks all major tracks for the project.
 
 ---
 
-- [ ] **Track: Renderer Palette Refinement**
+- [x] **Track: Renderer Palette Refinement**
   *Fix renderer-side palette refinement so candidate loop survivors pass palette-limit structural check instead of always regenerating*
   *Link: [./conductor/tracks/renderer_palette_refinement_20260424/](./conductor/tracks/renderer_palette_refinement_20260424/)*
 
