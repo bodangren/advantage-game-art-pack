@@ -9,6 +9,8 @@ from typing import Any
 
 from PIL import Image, ImageEnhance
 
+from asf.scene_layout import assemble_scene, load_scene_program, resolve_scene_layout
+
 
 SURFACE_FAMILY_COVER = "cover_surface"
 SURFACE_FAMILY_LOADING = "loading_surface"
@@ -682,7 +684,7 @@ def _parse_capture_conditions(
     OPTIONAL = {"timing", "frame_index"}
     _require_keys_with_optional(payload, REQUIRED, OPTIONAL, context, path)
 
-    scene_program = _require_string(payload, "scene_program", path=path, context=context)
+    scene_program = _require_string(payload, "scene_program", path=path, context=context, allow_empty=True)
 
     timing: float | None = None
     if "timing" in payload:
@@ -1214,7 +1216,7 @@ def assemble_promo_capture_job(
     *,
     repo_root: Path | None = None,
 ) -> SurfaceAssemblyResult:
-    """Derives a promo still from a pre-rendered source bundle.
+    """Derives a promo still from a pre-rendered source bundle or scene renderer.
 
     Args:
         program: Validated promo capture job program.
@@ -1225,19 +1227,11 @@ def assemble_promo_capture_job(
         SurfaceAssemblyResult with the promo still image and a manifest.
 
     Raises:
-        SurfaceAssemblyError: If the source bundle image cannot be loaded.
+        SurfaceAssemblyError: If the source bundle image cannot be loaded or
+            if scene_program is specified but the file cannot be found/loaded.
     """
     if repo_root is None:
         repo_root = Path.cwd()
-
-    bundle_path = repo_root / program.source_bundle / "promo.png"
-    if not bundle_path.exists():
-        raise SurfaceAssemblyError(
-            f"Source bundle promo image not found at {bundle_path}"
-        )
-
-    image = Image.open(bundle_path).convert("RGBA")
-    canvas_w, canvas_h = image.size
 
     capture_asset: dict[str, Any] = {
         "asset_id": "capture_conditions",
@@ -1248,6 +1242,26 @@ def assemble_promo_capture_job(
         capture_asset["timing"] = program.capture_conditions.timing
     if program.capture_conditions.frame_index is not None:
         capture_asset["frame_index"] = program.capture_conditions.frame_index
+
+    if program.capture_conditions.scene_program:
+        scene_program_path = repo_root / program.capture_conditions.scene_program
+        if not scene_program_path.exists():
+            raise SurfaceAssemblyError(
+                f"Scene program not found at {scene_program_path}"
+            )
+        scene_program = load_scene_program(scene_program_path)
+        resolved_layout = resolve_scene_layout(scene_program)
+        scene_result = assemble_scene(scene_program, resolved_layout, repo_root=repo_root)
+        image = scene_result.image
+        canvas_w, canvas_h = image.size
+    else:
+        bundle_path = repo_root / program.source_bundle / "promo.png"
+        if not bundle_path.exists():
+            raise SurfaceAssemblyError(
+                f"Source bundle promo image not found at {bundle_path}"
+            )
+        image = Image.open(bundle_path).convert("RGBA")
+        canvas_w, canvas_h = image.size
 
     manifest = SurfaceManifest(
         program_id=program.program_id,

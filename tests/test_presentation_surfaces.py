@@ -842,8 +842,9 @@ class PromoCaptureJobGenerationTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp_dir:
             root = Path(tmp_dir)
             _make_scene_png(root, "outputs/dragon_flight/bundle_v1/promo.png", (100, 100, 255, 255), 512, 384)
-
-            program = load_promo_capture_job(_write_json(tmp_dir, _minimal_promo()))
+            promo_payload = _minimal_promo()
+            promo_payload["capture_conditions"]["scene_program"] = ""
+            program = load_promo_capture_job(_write_json(tmp_dir, promo_payload))
             from asf.presentation_surfaces import assemble_promo_capture_job
             result = assemble_promo_capture_job(program, repo_root=root)
 
@@ -854,8 +855,9 @@ class PromoCaptureJobGenerationTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp_dir:
             root = Path(tmp_dir)
             _make_scene_png(root, "outputs/dragon_flight/bundle_v1/promo.png", (100, 100, 255, 255), 512, 384)
-
-            program = load_promo_capture_job(_write_json(tmp_dir, _minimal_promo()))
+            promo_payload = _minimal_promo()
+            promo_payload["capture_conditions"]["scene_program"] = ""
+            program = load_promo_capture_job(_write_json(tmp_dir, promo_payload))
             from asf.presentation_surfaces import assemble_promo_capture_job
             result = assemble_promo_capture_job(program, repo_root=root)
 
@@ -867,6 +869,7 @@ class PromoCaptureJobGenerationTest(unittest.TestCase):
 
     def test_promo_manifest_records_timing_and_frame_index(self) -> None:
         payload = _minimal_promo()
+        payload["capture_conditions"]["scene_program"] = ""
         payload["capture_conditions"]["timing"] = 1.5
         payload["capture_conditions"]["frame_index"] = 15
         with tempfile.TemporaryDirectory() as tmp_dir:
@@ -888,6 +891,62 @@ class PromoCaptureJobGenerationTest(unittest.TestCase):
             from asf.presentation_surfaces import assemble_promo_capture_job
             with self.assertRaises(SurfaceAssemblyError):
                 assemble_promo_capture_job(program, repo_root=root)
+
+    def test_promo_capture_renders_scene_when_scene_program_specified(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            scene_program_path = Path(tmp_dir) / "programs" / "scene" / "test_scene.json"
+            scene_program_path.parent.mkdir(parents=True, exist_ok=True)
+            scene_manifest = {
+                "family": "background_scene",
+                "program_id": "test_scene_promo",
+                "program_version": 1,
+                "template": "library_room",
+                "canvas": {"width": 64, "height": 64},
+                "theme": "library",
+                "subtheme": "ancient",
+                "style_pack": "cute_chibi_v1",
+                "tile_sources": [],
+                "zones": [],
+                "prop_placement": [],
+                "focal_motifs": [],
+                "decal_passes": [],
+                "lighting": {"global_direction": "north", "ambient_strength": 0.5},
+                "output": {"variant_id": None},
+            }
+            scene_program_path.write_text(json.dumps(scene_manifest), encoding="utf-8")
+            promo_payload = _minimal_promo()
+            promo_payload["capture_conditions"]["scene_program"] = "programs/scene/test_scene.json"
+            promo_payload["capture_conditions"]["frame_index"] = 0
+            program = load_promo_capture_job(_write_json(tmp_dir, promo_payload))
+            from asf.presentation_surfaces import assemble_promo_capture_job
+            result = assemble_promo_capture_job(program, repo_root=root)
+            self.assertIsInstance(result, SurfaceAssemblyResult)
+            self.assertEqual(result.image.size, (64, 64))
+            self.assertIn("scene_program", str(result.manifest.source_assets))
+
+    def test_promo_capture_raises_when_scene_program_missing(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            promo_payload = _minimal_promo()
+            promo_payload["capture_conditions"]["scene_program"] = "programs/scene/nonexistent.json"
+            program = load_promo_capture_job(_write_json(tmp_dir, promo_payload))
+            from asf.presentation_surfaces import assemble_promo_capture_job
+            with self.assertRaises(SurfaceAssemblyError) as ctx:
+                assemble_promo_capture_job(program, repo_root=root)
+            self.assertIn("Scene program not found", str(ctx.exception))
+
+    def test_promo_capture_falls_back_to_static_image_when_scene_program_absent(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            _make_scene_png(root, "outputs/dragon_flight/bundle_v1/promo.png", (100, 100, 255, 255), 512, 384)
+            promo_payload = _minimal_promo()
+            promo_payload["capture_conditions"]["scene_program"] = ""
+            program = load_promo_capture_job(_write_json(tmp_dir, promo_payload))
+            from asf.presentation_surfaces import assemble_promo_capture_job
+            result = assemble_promo_capture_job(program, repo_root=root)
+            self.assertIsInstance(result, SurfaceAssemblyResult)
+            self.assertEqual(result.image.size, (512, 384))
 
 
 if __name__ == "__main__":

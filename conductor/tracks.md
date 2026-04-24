@@ -76,3 +76,9 @@ This file tracks all major tracks for the project.
 - [x] **Track: Lighting renderer fixes**
   *Link: [./conductor/archive/lighting_renderer_fixes_20260423/](./conductor/archive/lighting_renderer_fixes_20260423/)*
   Fix lighting pass double-darken bug and layout resolver origin pile-up bug.
+
+---
+
+- [ ] **Track: Promo Capture Scene Renderer**
+  *Wire promo capture job to scene renderer so capture_conditions are honored instead of loading a static promo.png*
+  *Link: [./conductor/tracks/promo_capture_scene_renderer_20260425/](./conductor/tracks/promo_capture_scene_renderer_20260425/)*

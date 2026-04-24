@@ -39,3 +39,5 @@
 - (2026-04-24, batch_generation_release_manifests_202605)) Per-asset state updates must check the existing state before overwriting to preserve already-completed work when resuming interrupted jobs.
 - (2026-04-24, batch_generation_release_manifests_202605) Bounded retry loops must check `asset_state.X_retries >= max_X_retries` before marking FAILED, not after incrementing.
 - (2026-04-24, renderer_palette_refinement_20260424) Palette quantization must be deterministic: use fixed bucket boundaries rather than floating-point operations that depend on iteration order.
+- (2026-04-25, promo_capture_scene_renderer_20260425) When implementing conditional rendering paths (e.g., render scene vs load static), test both branches explicitly. Existing tests using `_minimal_promo()` had scene_program set to a non-existent path, causing failures after wiring the scene rendering path.
+- (2026-04-25, promo_capture_scene_renderer_20260425) Schema validation: `_require_string(allow_empty=True)` allows empty strings as valid values, while `None` fails isinstance check. Use empty string `""` for "absent but valid" string fields, not `None`.
