@@ -79,6 +79,6 @@ This file tracks all major tracks for the project.
 
 ---
 
-- [ ] **Track: Promo Capture Scene Renderer**
+- [x] **Track: Promo Capture Scene Renderer**
   *Wire promo capture job to scene renderer so capture_conditions are honored instead of loading a static promo.png*
   *Link: [./conductor/tracks/promo_capture_scene_renderer_20260425/](./conductor/tracks/promo_capture_scene_renderer_20260425/)*
