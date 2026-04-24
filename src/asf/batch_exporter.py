@@ -103,13 +103,16 @@ class ReleaseBundleExporter:
             candidate_dir = asset_candidates_dir(
                 self.job_root, job.job_id, family, idx
             )
-            if candidate_dir.exists():
-                selected = asset_selected_dir(
-                    self.job_root, job.job_id, family, idx
-                )
-                selected.mkdir(parents=True, exist_ok=True)
-                for src_file in candidate_dir.glob("*.png"):
-                    shutil.copy2(src_file, selected / src_file.name)
+            selected_dir = asset_selected_dir(
+                self.job_root, job.job_id, family, idx
+            )
+            selected_dir.mkdir(parents=True, exist_ok=True)
+            if asset_state.selected_path and Path(asset_state.selected_path).exists():
+                shutil.copy2(Path(asset_state.selected_path), selected_dir / Path(asset_state.selected_path).name)
+            elif (candidate_dir / "selected").exists():
+                selected_src = candidate_dir / "selected"
+                for src_file in selected_src.glob("*.png"):
+                    shutil.copy2(src_file, selected_dir / src_file.name)
 
 
 def create_seeded_batch_brief(

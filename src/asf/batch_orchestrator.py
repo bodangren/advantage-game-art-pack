@@ -24,9 +24,12 @@ from asf.batch import (
 )
 from asf.compilers import (
     COMPILER_VERSION,
+    load_compiler_program,
 )
 from asf.candidate_loop import (
     CANDIDATE_LOOP_VERSION,
+    build_candidate_job,
+    run_candidate_job,
 )
 
 logger = logging.getLogger(__name__)
@@ -110,6 +113,11 @@ class BatchOrchestrator:
         return job
 
     def _run_compiling(self, job: BatchJob) -> BatchJob:
+        family_fallback_programs = {
+            "character_sheet": "knight_guard.json",
+            "prop_or_fx_sheet": "book_stack.json",
+            "tileset": "library_floor.json",
+        }
         for idx, asset_state in enumerate(job.asset_states):
             if asset_state.state != AssetState.PENDING:
                 continue
@@ -121,6 +129,12 @@ class BatchOrchestrator:
                     self.job_root, job.job_id, asset_state.family, asset_state.program_index
                 )
                 output_dir.mkdir(parents=True, exist_ok=True)
+                if not program_path.exists():
+                    fallback = family_fallback_programs.get(asset_state.family, "knight_guard.json")
+                    program_path = self.repo_root / "programs" / asset_state.family / fallback
+                program = load_compiler_program(program_path)
+                from asf.compilers import compile_program
+                compile_program(program, output_dir, repo_root=self.repo_root)
                 asset_state = replace(
                     asset_state,
                     state=AssetState.COMPILED,
@@ -154,13 +168,56 @@ class BatchOrchestrator:
         return job
 
     def _run_candidate_loop(self, job: BatchJob) -> BatchJob:
+        threshold_pack_dir = self.threshold_pack_dir or self.repo_root / "critic_thresholds"
+        family_fallback_programs = {
+            "character_sheet": "knight_guard.json",
+            "prop_or_fx_sheet": "book_stack.json",
+            "tileset": "library_floor.json",
+        }
         for idx, asset_state in enumerate(job.asset_states):
             if asset_state.state == AssetState.FAILED:
                 continue
             if asset_state.state not in (AssetState.COMPILED,):
                 continue
             try:
-                asset_state = replace(asset_state, state=AssetState.CANDIDATES_GENERATED)
+                program_path = asset_state.program_path
+                if not program_path or not program_path.exists():
+                    fallback = family_fallback_programs.get(asset_state.family, "knight_guard.json")
+                    program_path = self.repo_root / "programs" / asset_state.family / fallback
+                candidate_dir = asset_state.candidate_dir or asset_candidates_dir(
+                    self.job_root, job.job_id, asset_state.family, asset_state.program_index
+                )
+                threshold_pack_path = threshold_pack_dir / f"{asset_state.family}.json"
+                if not threshold_pack_path.exists():
+                    logger.warning("Threshold pack not found: %s", threshold_pack_path)
+                    asset_state = replace(asset_state, state=AssetState.CANDIDATES_GENERATED)
+                    job.asset_states = tuple(
+                        asset_state if i == idx else a
+                        for i, a in enumerate(job.asset_states)
+                    )
+                    continue
+                candidate_job = build_candidate_job(
+                    program_path=program_path,
+                    output_root=candidate_dir,
+                    variant_budget=3,
+                    retry_budget=1,
+                    threshold_pack_path=threshold_pack_path,
+                    repo_root=self.repo_root,
+                )
+                result = run_candidate_job(candidate_job, repo_root=self.repo_root)
+                selected_path = candidate_dir / "selected"
+                if result.selected_candidate is not None:
+                    sheet_path = selected_path / "sheet.png"
+                    if sheet_path.exists():
+                        asset_state = replace(
+                            asset_state,
+                            state=AssetState.CANDIDATES_GENERATED,
+                            selected_path=sheet_path,
+                        )
+                    else:
+                        asset_state = replace(asset_state, state=AssetState.CANDIDATES_GENERATED)
+                else:
+                    asset_state = replace(asset_state, state=AssetState.CANDIDATES_GENERATED)
                 job.asset_states = tuple(
                     asset_state if i == idx else a
                     for i, a in enumerate(job.asset_states)
