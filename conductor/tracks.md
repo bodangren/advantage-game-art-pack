@@ -67,7 +67,7 @@ This file tracks all major tracks for the project.
 
 ---
 
-- [ ] **Track: LLM Planner Provider Implementations**
+- [x] **Track: LLM Planner Provider Implementations**
   *Implement concrete OpenAI and Anthropic provider adapters for the prompt-to-asset-program planner*
   *Link: [./conductor/tracks/llm_planner_provider_impl_20260424/](./conductor/tracks/llm_planner_provider_impl_20260424/)*
 
