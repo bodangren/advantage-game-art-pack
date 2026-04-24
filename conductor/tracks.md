@@ -61,7 +61,7 @@ This file tracks all major tracks for the project.
 
 ---
 
-- [ ] **Track: Review App Auth and Image Serving**
+- [x] **Track: Review App Auth and Image Serving**
   *Add authentication and static image serving to the review queue FastAPI app*
   *Link: [./conductor/tracks/review_app_auth_and_images_20260424/](./conductor/tracks/review_app_auth_and_images_20260424/)*
 

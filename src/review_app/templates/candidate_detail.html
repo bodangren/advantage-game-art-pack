@@ -77,9 +77,14 @@
     <div>
         <div style="background: white; padding: 1.5rem; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
             <h3 style="margin-bottom: 1rem;">Preview</h3>
-            <div style="background: #ecf0f1; padding: 2rem; border-radius: 4px; text-align: center; min-height: 200px; display: flex; align-items: center; justify-content: center;">
+            <div style="background: #ecf0f1; padding: 2rem; border-radius: 4px; text-align: center; min-height: 200px; display: flex; align-items: center; justify-content: center; flex-direction: column;">
                 {% if rendered_files %}
-                <span style="color: #95a5a6;">Preview image would display here</span>
+                {% for file in rendered_files %}
+                <img src="{{ file }}" alt="{{ file }}" style="max-width: 100%; max-height: 300px; margin-bottom: 0.5rem;" onerror="this.style.display='none';">
+                {% endfor %}
+                {% if not rendered_files %}
+                <span style="color: #95a5a6;">No rendered files</span>
+                {% endif %}
                 {% else %}
                 <span style="color: #95a5a6;">No rendered files</span>
                 {% endif %}

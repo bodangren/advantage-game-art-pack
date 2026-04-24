@@ -65,8 +65,9 @@
     <a href="/candidate/{{ candidate.id }}">
         <div class="card">
             <div class="card-image">
-                {% if candidate.rendered_files and candidate.rendered_files != '[]' %}
-                <span>Preview</span>
+                {% if candidate.rendered_files and candidate.rendered_files|length > 0 %}
+                <img src="{{ candidate.rendered_files[0] }}" alt="{{ candidate.family }}" onerror="this.style.display='none'; this.nextElementSibling && (this.nextElementSibling.style.display='flex');">
+                <span class="preview-fallback" style="display: none;">Preview</span>
                 {% else %}
                 <span>No preview</span>
                 {% endif %}
