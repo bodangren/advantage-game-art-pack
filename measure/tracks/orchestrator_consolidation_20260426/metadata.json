@@ -1,0 +1,9 @@
+{
+  "id": "orchestrator_consolidation_20260426",
+  "title": "Orchestrator Consolidation",
+  "status": "pending",
+  "priority": "medium",
+  "type": "refactor",
+  "created": "2026-04-26",
+  "depends_on": []
+}

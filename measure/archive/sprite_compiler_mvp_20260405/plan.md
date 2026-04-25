@@ -1,6 +1,6 @@
 # Implementation Plan
 
-## Phase 1: Conductor and project foundation
+## Phase 1: Measure and project foundation
 
 - [x] Task: Define project docs and initial MVP track
   - [x] Capture product definition from the supplied PRD

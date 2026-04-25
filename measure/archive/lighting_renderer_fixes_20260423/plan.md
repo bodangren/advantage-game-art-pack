@@ -10,7 +10,7 @@
   - [x] Remove the intermediate darken step.
   - [x] Apply ambient and directional in a single combine pass.
   - [x] Run lighting tests and verify they pass.
-- [x] Task: Conductor — User Manual Verification 'Phase 1: Lighting Fix and Tests' (Protocol in workflow.md)
+- [x] Task: Measure — User Manual Verification 'Phase 1: Lighting Fix and Tests' (Protocol in workflow.md)
 
 ## Phase 2: Layout Resolver Fix and Tests
 
@@ -23,7 +23,7 @@
   - [x] Use `(0,0,32,32)` only as a fallback when no position data exists.
   - [x] Ensure deterministic output for the same scene graph.
   - [x] Run layout tests and verify they pass.
-- [x] Task: Conductor — User Manual Verification 'Phase 2: Layout Resolver Fix and Tests' (Protocol in workflow.md)
+- [x] Task: Measure — User Manual Verification 'Phase 2: Layout Resolver Fix and Tests' (Protocol in workflow.md)
 
 ## Phase 3: Visual Regression Verification
 
@@ -39,7 +39,7 @@
   - [x] Run all unit tests (lighting, layout).
   - [x] Run all visual regression tests.
   - [x] Verify existing scene definitions render correctly.
-- [x] Task: Conductor — User Manual Verification 'Phase 3: Visual Regression Verification' (Protocol in workflow.md)
+- [x] Task: Measure — User Manual Verification 'Phase 3: Visual Regression Verification' (Protocol in workflow.md)
 
 ## Notes
 

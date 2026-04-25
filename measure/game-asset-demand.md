@@ -5,7 +5,7 @@
 This document summarizes the current downstream asset demand observed in
 `/home/daniel-bo/Desktop/advantage-games` by reviewing:
 
-- `conductor/tracks.md`
+- `measure/tracks.md`
 - `public/games/**`
 - game modules under `src/app/[locale]/(student)/student/games/**`
 - component implementations under `src/components/games/**`

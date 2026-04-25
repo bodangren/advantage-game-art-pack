@@ -7,11 +7,11 @@ You are reviewing all work done in the past 24 hours. Be thorough but focused.
 1. Gather recent changes:
    - Run: git log --since="24 hours ago" --oneline
    - Run: git diff --name-only HEAD~20 HEAD
-   - Read: conductor/tracks.md, conductor/tech-debt.md
+   - Read: measure/tracks.md, measure/tech-debt.md
 
 2. Review each changed code file for:
    - Correctness: logic errors, edge cases, type safety
-   - Style: follows project conventions (see conductor/code_styleguides/)
+   - Style: follows project conventions (see measure/code_styleguides/)
    - Tests: each changed module has corresponding tests
    - Security: no hardcoded secrets, inputs sanitized
    - Performance: no obvious N+1 queries, unnecessary re-renders, memory leaks

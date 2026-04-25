@@ -3,54 +3,54 @@
 This file tracks all major tracks for the project.
 
 - [x] **Track: Style canon and annotation system**
-  *Link: [./conductor/archive/style_canon_annotation_system_20260405/](./conductor/archive/style_canon_annotation_system_20260405/)*
+  *Link: [./measure/archive/style_canon_annotation_system_20260405/](./measure/archive/style_canon_annotation_system_20260405/)*
 
 ---
 
 - [x] **Track: Primitive library and promotion pipeline**
-  *Link: [./conductor/archive/primitive_library_promotion_pipeline_20260405/](./conductor/archive/primitive_library_promotion_pipeline_20260405/)*
+  *Link: [./measure/archive/primitive_library_promotion_pipeline_20260405/](./measure/archive/primitive_library_promotion_pipeline_20260405/)*
 
 ---
 
 - [x] **Track: Asset family compiler framework**
-  *Link: [./conductor/archive/asset_family_compiler_framework_20260405/](./conductor/archive/asset_family_compiler_framework_20260405/)*
+  *Link: [./measure/archive/asset_family_compiler_framework_20260405/](./measure/archive/asset_family_compiler_framework_20260405/)*
 
 ---
 
 - [x] **Track: Candidate generation and critic loop**
-  *Link: [./conductor/archive/candidate_generation_critic_loop_20260405/](./conductor/archive/candidate_generation_critic_loop_20260405/)*
+  *Link: [./measure/archive/candidate_generation_critic_loop_20260405/](./measure/archive/candidate_generation_critic_loop_20260405/)*
 
 ---
 
 - [x] **Track: Scene layout and background assembler**
-  *Link: [./conductor/archive/scene_layout_background_assembler_20260405/](./conductor/archive/scene_layout_background_assembler_20260405/)*
+  *Link: [./measure/archive/scene_layout_background_assembler_20260405/](./measure/archive/scene_layout_background_assembler_20260405/)*
 
 ---
 
 - [x] **Track: Presentation surfaces and UI pipeline**
-  *Link: [./conductor/archive/presentation_surfaces_ui_pipeline_20260405/](./conductor/archive/presentation_surfaces_ui_pipeline_20260405/)*
+  *Link: [./measure/archive/presentation_surfaces_ui_pipeline_20260405/](./measure/archive/presentation_surfaces_ui_pipeline_20260405/)*
 
 ---
 
 - [x] **Track: Review queue foundation**
-  *Link: [./conductor/archive/review_queue_foundation_20260405/](./conductor/archive/review_queue_foundation_20260405/)*
+  *Link: [./measure/archive/review_queue_foundation_20260405/](./measure/archive/review_queue_foundation_20260405/)*
 
 ---
 
 - [x] **Track: Prompt-to-asset-program planner**
-  *Link: [./conductor/archive/prompt_to_asset_program_planner_20260405/](./conductor/archive/prompt_to_asset_program_planner_20260405/)*
+  *Link: [./measure/archive/prompt_to_asset_program_planner_20260405/](./measure/archive/prompt_to_asset_program_planner_20260405/)*
   Provider abstraction, prompt builder, structured parser, repair loop, eval fixtures, and CLI.
 
 ---
 
 - [x] **Track: Critic calibration and auto-approval policy**
-  *Link: [./conductor/archive/critic_stack_auto_approval_20260405/](./conductor/archive/critic_stack_auto_approval_20260405/)*
+  *Link: [./measure/archive/critic_stack_auto_approval_20260405/](./measure/archive/critic_stack_auto_approval_20260405/)*
   Shared critic-result schema, policy decision types, family adapters, threshold packs for scene/presentation families, drift monitoring, review integration hooks.*
 
 ---
 
 - [x] **Track: Batch generation and release manifests**
-  *Link: [./conductor/archive/batch_generation_release_manifests_20260405/](./conductor/archive/batch_generation_release_manifests_20260405/)*
+  *Link: [./measure/archive/batch_generation_release_manifests_20260405/](./measure/archive/batch_generation_release_manifests_20260405/)*
   Batch job schema, artifact layout, state machine, orchestrator with bounded retries, release bundle exporter, and seeded batch briefs for library and ruins mini-game themes.
 
 ---
@@ -74,7 +74,7 @@ This file tracks all major tracks for the project.
 ---
 
 - [x] **Track: Lighting renderer fixes**
-  *Link: [./conductor/archive/lighting_renderer_fixes_20260423/](./conductor/archive/lighting_renderer_fixes_20260423/)*
+  *Link: [./measure/archive/lighting_renderer_fixes_20260423/](./measure/archive/lighting_renderer_fixes_20260423/)*
   Fix lighting pass double-darken bug and layout resolver origin pile-up bug.
 
 ---
@@ -91,3 +91,11 @@ This file tracks all major tracks for the project.
 - [ ] **Track: Scene Primitive Library Expansion** *Link: [./tracks/scene_primitive_library_20260425/](./tracks/scene_primitive_library_20260425/)*
 - [ ] **Track: Critic Calibration CLI** *Link: [./tracks/critic_calibration_cli_20260425/](./tracks/critic_calibration_cli_20260425/)*
 - [ ] **Track: Review App Static File Serving** *Link: [./tracks/review_app_serving_20260425/](./tracks/review_app_serving_20260425/)*
+
+- [x] **Track: Visual Refresh: Define Unique Identity**
+  *Link: [./archive/visual_refresh_20260425/](./archive/visual_refresh_20260425/)*
+  *Status: Complete*
+
+- [ ] **Track: Orchestrator Consolidation**
+  *Link: [./tracks/orchestrator_consolidation_20260426/](./tracks/orchestrator_consolidation_20260426/)*
+  Merge BatchRunner and BatchOrchestrator into single state machine.

@@ -2,8 +2,8 @@
 > build · glm-5.1
 [0m
 [0m✱ [0mGlob "**/*review-prompt*"[90m 1 match[0m
-[0m✱ [0mGlob "**/conductor/review-prompt.md"[90m 1 match[0m
-[0m→ [0mRead conductor/review-prompt.md
+[0m✱ [0mGlob "**/measure/review-prompt.md"[90m 1 match[0m
+[0m→ [0mRead measure/review-prompt.md
 [0m
 [0m# [0mTodos
 [ ] Gather recent changes (git log, diff, read tracks/tech-debt)
@@ -14,14 +14,14 @@
 [ ] Note architectural problems in tech-debt.md
 [ ] Commit fixes and report
 [0m
-[0m✱ [0mGlob "conductor/tracks.md"[90m 1 match[0m
-[0m✱ [0mGlob "conductor/current-priority.md"[90m 0 matches[0m
-[0m✱ [0mGlob "conductor/tech-debt.md"[90m 1 match[0m
+[0m✱ [0mGlob "measure/tracks.md"[90m 1 match[0m
+[0m✱ [0mGlob "measure/current-priority.md"[90m 0 matches[0m
+[0m✱ [0mGlob "measure/tech-debt.md"[90m 1 match[0m
 [0m
 [0m$ [0mgit log --since="24 hours ago" --oneline
-bd87786 conductor: finalize promo_capture_scene_renderer metadata (MiniMax-M2)
-8690329 conductor: mark promo_capture_scene_renderer track complete (MiniMax-M2)
-9c5c0ef conductor(plan): mark promo_capture_scene_renderer tasks complete (MiniMax-M2)
+bd87786 measure: finalize promo_capture_scene_renderer metadata (MiniMax-M2)
+8690329 measure: mark promo_capture_scene_renderer track complete (MiniMax-M2)
+9c5c0ef measure(plan): mark promo_capture_scene_renderer tasks complete (MiniMax-M2)
 ba0d6bb feat(presentation): wire promo capture to scene renderer (MiniMax-M2)
 8e03a6e checkpoint: save output log
 6d1db30 chore: archive completed renderer_palette_refinement (MiniMax-M2)
@@ -38,65 +38,65 @@ e58c497 batch: Phase 4 - release bundle exporter, seeded briefs, audit report ge
 2841026 batch: Phase 3 - orchestration pipeline with bounded retries and error capture
 ed453d5 batch: Phase 1-2 - job schema, artifact layout, state persistence, runner
 abe40c5 update output log
-92964c9 conductor: archive 8 completed tracks, create 3 new pending tracks
+92964c9 measure: archive 8 completed tracks, create 3 new pending tracks
 fe42cf3 chore(review): fix 5 lint/style issues
 [0m
 [0m$ [0mgit diff --name-only HEAD~20 HEAD
-conductor/archive/asset_family_compiler_framework_20260405/index.md
-conductor/archive/asset_family_compiler_framework_20260405/metadata.json
-conductor/archive/asset_family_compiler_framework_20260405/plan.md
-conductor/archive/asset_family_compiler_framework_20260405/spec.md
-conductor/archive/batch_generation_release_manifests_20260405/index.md
-conductor/archive/batch_generation_release_manifests_20260405/plan.md
-conductor/archive/batch_generation_release_manifests_20260405/spec.md
-conductor/archive/candidate_generation_critic_loop_20260405/index.md
-conductor/archive/candidate_generation_critic_loop_20260405/metadata.json
-conductor/archive/candidate_generation_critic_loop_20260405/plan.md
-conductor/archive/candidate_generation_critic_loop_20260405/spec.md
-conductor/archive/critic_stack_auto_approval_20260405/index.md
-conductor/archive/critic_stack_auto_approval_20260405/metadata.json
-conductor/archive/critic_stack_auto_approval_20260405/plan.md
-conductor/archive/critic_stack_auto_approval_20260405/spec.md
-conductor/archive/lighting_renderer_fixes_20260423/metadata.json
-conductor/archive/lighting_renderer_fixes_20260423/plan.md
-conductor/archive/lighting_renderer_fixes_20260423/spec.md
-conductor/archive/presentation_surfaces_ui_pipeline_20260405/index.md
-conductor/archive/presentation_surfaces_ui_pipeline_20260405/metadata.json
-conductor/archive/presentation_surfaces_ui_pipeline_20260405/plan.md
-conductor/archive/presentation_surfaces_ui_pipeline_20260405/spec.md
-conductor/archive/prompt_to_asset_program_planner_20260405/index.md
-conductor/archive/prompt_to_asset_program_planner_20260405/metadata.json
-conductor/archive/prompt_to_asset_program_planner_20260405/phase_1.md
-conductor/archive/prompt_to_asset_program_planner_20260405/plan.md
-conductor/archive/prompt_to_asset_program_planner_20260405/spec.md
-conductor/archive/review_queue_foundation_20260405/index.md
-conductor/archive/review_queue_foundation_20260405/metadata.json
-conductor/archive/review_queue_foundation_20260405/plan.md
-conductor/archive/review_queue_foundation_20260405/reviewer_runbook.md
-conductor/archive/review_queue_foundation_20260405/spec.md
-conductor/archive/review_queue_foundation_20260405/tech_stack.md
-conductor/archive/scene_layout_background_assembler_20260405/index.md
-conductor/archive/scene_layout_background_assembler_20260405/metadata.json
-conductor/archive/scene_layout_background_assembler_20260405/plan.md
-conductor/archive/scene_layout_background_assembler_20260405/spec.md
-conductor/lessons-learned.md
-conductor/output.log
-conductor/review-output.log
-conductor/tech-debt.md
-conductor/tracks.md
-conductor/tracks/llm_planner_provider_impl_20260424/metadata.json
-conductor/tracks/llm_planner_provider_impl_20260424/plan.md
-conductor/tracks/llm_planner_provider_impl_20260424/spec.md
-conductor/tracks/promo_capture_scene_renderer_20260425/index.md
-conductor/tracks/promo_capture_scene_renderer_20260425/metadata.json
-conductor/tracks/promo_capture_scene_renderer_20260425/plan.md
-conductor/tracks/promo_capture_scene_renderer_20260425/spec.md
-conductor/tracks/renderer_palette_refinement_20260424/metadata.json
-conductor/tracks/renderer_palette_refinement_20260424/plan.md
-conductor/tracks/renderer_palette_refinement_20260424/spec.md
-conductor/tracks/review_app_auth_and_images_20260424/metadata.json
-conductor/tracks/review_app_auth_and_images_20260424/plan.md
-conductor/tracks/review_app_auth_and_images_20260424/spec.md
+measure/archive/asset_family_compiler_framework_20260405/index.md
+measure/archive/asset_family_compiler_framework_20260405/metadata.json
+measure/archive/asset_family_compiler_framework_20260405/plan.md
+measure/archive/asset_family_compiler_framework_20260405/spec.md
+measure/archive/batch_generation_release_manifests_20260405/index.md
+measure/archive/batch_generation_release_manifests_20260405/plan.md
+measure/archive/batch_generation_release_manifests_20260405/spec.md
+measure/archive/candidate_generation_critic_loop_20260405/index.md
+measure/archive/candidate_generation_critic_loop_20260405/metadata.json
+measure/archive/candidate_generation_critic_loop_20260405/plan.md
+measure/archive/candidate_generation_critic_loop_20260405/spec.md
+measure/archive/critic_stack_auto_approval_20260405/index.md
+measure/archive/critic_stack_auto_approval_20260405/metadata.json
+measure/archive/critic_stack_auto_approval_20260405/plan.md
+measure/archive/critic_stack_auto_approval_20260405/spec.md
+measure/archive/lighting_renderer_fixes_20260423/metadata.json
+measure/archive/lighting_renderer_fixes_20260423/plan.md
+measure/archive/lighting_renderer_fixes_20260423/spec.md
+measure/archive/presentation_surfaces_ui_pipeline_20260405/index.md
+measure/archive/presentation_surfaces_ui_pipeline_20260405/metadata.json
+measure/archive/presentation_surfaces_ui_pipeline_20260405/plan.md
+measure/archive/presentation_surfaces_ui_pipeline_20260405/spec.md
+measure/archive/prompt_to_asset_program_planner_20260405/index.md
+measure/archive/prompt_to_asset_program_planner_20260405/metadata.json
+measure/archive/prompt_to_asset_program_planner_20260405/phase_1.md
+measure/archive/prompt_to_asset_program_planner_20260405/plan.md
+measure/archive/prompt_to_asset_program_planner_20260405/spec.md
+measure/archive/review_queue_foundation_20260405/index.md
+measure/archive/review_queue_foundation_20260405/metadata.json
+measure/archive/review_queue_foundation_20260405/plan.md
+measure/archive/review_queue_foundation_20260405/reviewer_runbook.md
+measure/archive/review_queue_foundation_20260405/spec.md
+measure/archive/review_queue_foundation_20260405/tech_stack.md
+measure/archive/scene_layout_background_assembler_20260405/index.md
+measure/archive/scene_layout_background_assembler_20260405/metadata.json
+measure/archive/scene_layout_background_assembler_20260405/plan.md
+measure/archive/scene_layout_background_assembler_20260405/spec.md
+measure/lessons-learned.md
+measure/output.log
+measure/review-output.log
+measure/tech-debt.md
+measure/tracks.md
+measure/tracks/llm_planner_provider_impl_20260424/metadata.json
+measure/tracks/llm_planner_provider_impl_20260424/plan.md
+measure/tracks/llm_planner_provider_impl_20260424/spec.md
+measure/tracks/promo_capture_scene_renderer_20260425/index.md
+measure/tracks/promo_capture_scene_renderer_20260425/metadata.json
+measure/tracks/promo_capture_scene_renderer_20260425/plan.md
+measure/tracks/promo_capture_scene_renderer_20260425/spec.md
+measure/tracks/renderer_palette_refinement_20260424/metadata.json
+measure/tracks/renderer_palette_refinement_20260424/plan.md
+measure/tracks/renderer_palette_refinement_20260424/spec.md
+measure/tracks/review_app_auth_and_images_20260424/metadata.json
+measure/tracks/review_app_auth_and_images_20260424/plan.md
+measure/tracks/review_app_auth_and_images_20260424/spec.md
 programs/batch/library_minigame_batch.json
 programs/batch/ruins_minigame_batch.json
 src/asf/__init__.py
@@ -122,10 +122,10 @@ tests/test_planner_providers.py
 tests/test_presentation_surfaces.py
 tests/test_review_auth.py
 [0m
-[0m✱ [0mGlob "conductor/code_styleguides/**"[90m 4 matches[0m
-[0m→ [0mRead conductor/tracks.md
-[0m→ [0mRead conductor/tech-debt.md
-[0m→ [0mRead conductor/code_styleguides/general.md
+[0m✱ [0mGlob "measure/code_styleguides/**"[90m 4 matches[0m
+[0m→ [0mRead measure/tracks.md
+[0m→ [0mRead measure/tech-debt.md
+[0m→ [0mRead measure/code_styleguides/general.md
 Now let me read the key changed code files:
 [0m
 [0m$ [0mgit diff HEAD~20 HEAD --stat -- 'src/**/*.py' 'tests/**/*.py'
@@ -2259,13 +2259,13 @@ tests/test_review_auth.py::GetAPIKeyFromRequestTest::test_get_api_key_missing PA
 [ ] Commit fixes and report
 [0m
 All 73 tests pass, 0 lint errors. Now let me note architectural concerns in tech-debt.md:
-[0m→ [0mRead conductor/tech-debt.md
+[0m→ [0mRead measure/tech-debt.md
 [0m
-[0m← [0mEdit conductor/tech-debt.md
-Index: /home/daniel-bo/Desktop/pixel-art-generator/conductor/tech-debt.md
+[0m← [0mEdit measure/tech-debt.md
+Index: /home/daniel-bo/Desktop/pixel-art-generator/measure/tech-debt.md
 ===================================================================
---- /home/daniel-bo/Desktop/pixel-art-generator/conductor/tech-debt.md
-+++ /home/daniel-bo/Desktop/pixel-art-generator/conductor/tech-debt.md
+--- /home/daniel-bo/Desktop/pixel-art-generator/measure/tech-debt.md
++++ /home/daniel-bo/Desktop/pixel-art-generator/measure/tech-debt.md
 @@ -26,4 +26,6 @@
  | 2026-04-24 | review_app_auth_and_images_20260424 | Review app serves server-rendered HTML but has no image file serving; preview placeholders show "Preview" text instead of actual images. | Medium | Closed | Added StaticFiles mount at /static for outputs directory; templates now render actual images from rendered_files paths. |
  | 2026-04-17 | prompt_to_asset_program_planner_20260405 | Planner provider interface is defined but no concrete implementation exists yet (OpenAI, Anthropic, etc.). | Medium | Open | Provider abstraction allows swapping implementations; actual API calls need credentials and implementation. |
@@ -2286,9 +2286,9 @@ Index: /home/daniel-bo/Desktop/pixel-art-generator/conductor/tech-debt.md
 [0m
 Now commit:
 [0m$ [0mgit log --oneline -3
-bd87786 conductor: finalize promo_capture_scene_renderer metadata (MiniMax-M2)
-8690329 conductor: mark promo_capture_scene_renderer track complete (MiniMax-M2)
-9c5c0ef conductor(plan): mark promo_capture_scene_renderer tasks complete (MiniMax-M2)
+bd87786 measure: finalize promo_capture_scene_renderer metadata (MiniMax-M2)
+8690329 measure: mark promo_capture_scene_renderer track complete (MiniMax-M2)
+9c5c0ef measure(plan): mark promo_capture_scene_renderer tasks complete (MiniMax-M2)
 [0m
 [0m$ [0mgit status
 On branch main
@@ -2297,9 +2297,9 @@ Your branch is up to date with 'origin/main'.
 Changes not staged for commit:
   (use "git add <file>..." to update what will be committed)
   (use "git restore <file>..." to discard changes in working directory)
-	modified:   conductor/output.log
-	modified:   conductor/review-output.log
-	modified:   conductor/tech-debt.md
+	modified:   measure/output.log
+	modified:   measure/review-output.log
+	modified:   measure/tech-debt.md
 	modified:   src/asf/batch_exporter.py
 	modified:   src/asf/batch_orchestrator.py
 	modified:   src/asf/batch_runner.py
@@ -2312,9 +2312,9 @@ Changes not staged for commit:
 no changes added to commit (use "git add" and/or "git commit -a")
 [0m
 [0m$ [0mgit diff --stat
-conductor/output.log             |  268 ++++
- conductor/review-output.log      | 2492 ++++++++++++++++++++++++++++++++------
- conductor/tech-debt.md           |    2 +
+measure/output.log             |  268 ++++
+ measure/review-output.log      | 2492 ++++++++++++++++++++++++++++++++------
+ measure/tech-debt.md           |    2 +
  src/asf/batch_exporter.py        |   32 +-
  src/asf/batch_orchestrator.py    |   30 +-
  src/asf/batch_runner.py          |   45 +-
@@ -2325,7 +2325,7 @@ conductor/output.log             |  268 ++++
  src/review_app/api.py            |   29 +-
  11 files changed, 2447 insertions(+), 462 deletions(-)
 [0m
-[0m$ [0mgit add src/asf/batch_exporter.py src/asf/batch_orchestrator.py src/asf/batch_runner.py src/asf/compilers.py src/asf/palette.py src/asf/planner/provider.py src/asf/presentation_surfaces.py src/review_app/api.py conductor/tech-debt.md && git commit -m "chore(review): fix 2 runtime bugs and 85 lint/style issues"
+[0m$ [0mgit add src/asf/batch_exporter.py src/asf/batch_orchestrator.py src/asf/batch_runner.py src/asf/compilers.py src/asf/palette.py src/asf/planner/provider.py src/asf/presentation_surfaces.py src/review_app/api.py measure/tech-debt.md && git commit -m "chore(review): fix 2 runtime bugs and 85 lint/style issues"
 [main cfe1683] chore(review): fix 2 runtime bugs and 85 lint/style issues
  9 files changed, 37 insertions(+), 112 deletions(-)
 [0m
@@ -2337,8 +2337,8 @@ Your branch is ahead of 'origin/main' by 1 commit.
 Changes not staged for commit:
   (use "git add <file>..." to update what will be committed)
   (use "git restore <file>..." to discard changes in working directory)
-	modified:   conductor/output.log
-	modified:   conductor/review-output.log
+	modified:   measure/output.log
+	modified:   measure/review-output.log
 
 no changes added to commit (use "git add" and/or "git commit -a")
 [0m

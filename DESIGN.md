@@ -1,0 +1,113 @@
+---
+version: alpha
+name: Pixel Art Generator Design System
+colors:
+  surface: "#F5F5F5"
+  header: "#2C3E50"
+  primary: "#3498DB"
+  primary-hover: "#2980B9"
+  success: "#2ECC71"
+  success-text: "#2E7D32"
+  success-bg: "#E8F5E9"
+  error: "#E74C3C"
+  error-text: "#C62828"
+  error-bg: "#FFEBEE"
+  warning: "#F1C40F"
+  warning-text: "#E65100"
+  warning-bg: "#FFF3E0"
+  neutral: "#7F8C8D"
+  text-main: "#333333"
+  text-muted: "#666666"
+  border: "#DDDDDD"
+typography:
+  display-lg:
+    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+    fontSize: 24px
+    fontWeight: 600
+    lineHeight: 1.2
+  title-md:
+    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+    fontSize: 16px
+    fontWeight: 600
+    lineHeight: 1.4
+  body-md:
+    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+    fontSize: 14px
+    fontWeight: 400
+    lineHeight: 1.6
+  label-sm:
+    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+    fontSize: 12px
+    fontWeight: 600
+    lineHeight: 1.0
+rounded:
+  round-sm: 4px
+  round-md: 8px
+spacing:
+  space-xs: 8px
+  space-sm: 12px
+  space-md: 16px
+  space-lg: 24px
+  space-xl: 32px
+---
+
+# Design System
+
+## Overview
+The Pixel Art Generator Review App uses a clean, functional design system focused on clarity and ease of use for asset review tasks.
+
+## Colors
+The color palette uses a dark header for strong branding, with status-based semantic colors for at-a-glance information processing.
+
+- **Primary (#3498DB):** Used for main actions and filters.
+- **Header (#2C3E50):** Provides deep contrast for the navigation area.
+- **Success (#2ECC71):** Indicates approved or promoted status.
+- **Error (#E74C3C):** Highlights rejected assets.
+- **Warning (#F1C40F):** Signals pending actions or variant requests.
+
+## Typography
+Typography is optimized for readability of technical metadata and asset labels.
+
+- **Display LG (24px):** Used for page headings like "Review Queue".
+- **Title MD (16px):** Used for card titles and section headers.
+- **Body MD (14px):** Standard text for metadata and descriptions.
+- **Label SM (12px):** Used for status tags and small captions.
+
+## Spacing
+A consistent 8px-based grid ensures balanced layouts.
+
+- **Space MD (16px):** The standard gutter and padding for containers.
+- **Space LG (24px):** Used between major sections and detail views.
+- **Space XL (32px):** Page-level margins and large empty states.
+
+## Roundness
+Rounded corners soften the UI and distinguish interactive elements.
+
+- **Round SM (4px):** Applied to buttons, inputs, and small tags.
+- **Round MD (8px):** Used for cards and main content areas.
+
+## Components
+
+### Status Tags
+Tags use semantic background colors with darkened text for high accessibility and contrast.
+
+- **Approved:** `success-bg` background with `success-text` text.
+- **Rejected:** `error-bg` background with `error-text` text.
+- **Pending:** `warning-bg` background with `warning-text` text.
+
+### Action Buttons
+Buttons provide clear interactive feedback with hover states.
+
+- **Filter Button:** `primary` background, transitions to `primary-hover`.
+
+## Do's and Don'ts
+
+### Do
+- Use semantic colors consistently to indicate asset status.
+- Maintain the 8px grid for all layout adjustments.
+- Ensure all text has sufficient contrast against its background.
+
+### Don't
+- Use custom colors outside the defined palette for UI elements.
+- Mix different border-radii on adjacent components.
+- Overcrowd the metadata section; use `text-muted` for less critical info.

@@ -1,0 +1,23 @@
+YOLO mode is enabled. All tool calls will be automatically approved.
+YOLO mode is enabled. All tool calls will be automatically approved.
+Skill "skill-creator" from "/home/daniel-bo/.agents/skills/skill-creator/SKILL.md" is overriding the built-in skill.
+Error when talking to Gemini API Full report available at: /tmp/gemini-client-error-Turn.run-sendMessageStream-2026-04-24T23-41-14-049Z.json TerminalQuotaError: You have exhausted your capacity on this model. Your quota will reset after 22h48m42s.
+    at classifyGoogleError (file:///home/daniel-bo/.nvm/versions/node/v24.4.0/lib/node_modules/@google/gemini-cli/bundle/chunk-UIBQS45C.js:274720:18)
+    at retryWithBackoff (file:///home/daniel-bo/.nvm/versions/node/v24.4.0/lib/node_modules/@google/gemini-cli/bundle/chunk-UIBQS45C.js:275324:31)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async GeminiChat.makeApiCallAndProcessStream (file:///home/daniel-bo/.nvm/versions/node/v24.4.0/lib/node_modules/@google/gemini-cli/bundle/chunk-UIBQS45C.js:312614:28)
+    at async GeminiChat.streamWithRetries (file:///home/daniel-bo/.nvm/versions/node/v24.4.0/lib/node_modules/@google/gemini-cli/bundle/chunk-UIBQS45C.js:312452:29)
+    at async Turn.run (file:///home/daniel-bo/.nvm/versions/node/v24.4.0/lib/node_modules/@google/gemini-cli/bundle/chunk-UIBQS45C.js:312945:24)
+    at async GeminiClient.processTurn (file:///home/daniel-bo/.nvm/versions/node/v24.4.0/lib/node_modules/@google/gemini-cli/bundle/chunk-UIBQS45C.js:323362:22)
+    at async GeminiClient.sendMessageStream (file:///home/daniel-bo/.nvm/versions/node/v24.4.0/lib/node_modules/@google/gemini-cli/bundle/chunk-UIBQS45C.js:323475:14)
+    at async file:///home/daniel-bo/.nvm/versions/node/v24.4.0/lib/node_modules/@google/gemini-cli/bundle/gemini-JN2NUSDI.js:10213:26
+    at async main (file:///home/daniel-bo/.nvm/versions/node/v24.4.0/lib/node_modules/@google/gemini-cli/bundle/gemini-JN2NUSDI.js:15258:5) {
+  cause: {
+    code: 429,
+    message: 'You have exhausted your capacity on this model. Your quota will reset after 22h48m42s.',
+    details: [ [Object], [Object] ]
+  },
+  retryDelayMs: 82122988.526759,
+  reason: 'QUOTA_EXHAUSTED'
+}
+An unexpected critical error occurred:[object Object]

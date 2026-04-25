@@ -18,7 +18,7 @@ fragments.
 - Primitive-library registry, manifest rebuilds, and query helpers
 - Family compiler registry, shared program loader, and manifest envelopes
 - Checked-in sample programs for `character_sheet`, `prop_or_fx_sheet`, and `tileset`
-- Conductor project docs and MVP track scaffold
+- Measure project docs and MVP track scaffold
 
 ## Repository Layout
 
@@ -28,7 +28,7 @@ fragments.
 - `outputs/`: generated example artifacts
 - `library/`: primitive registry, seed metadata, and manifest
 - `demo-assets/`: reference quality targets supplied with the repo
-- `conductor/`: product, workflow, and track artifacts
+- `measure/`: product, workflow, and track artifacts
 
 ## Commands
 
