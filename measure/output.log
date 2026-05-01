@@ -4,23 +4,21 @@
 [0m→ [0mRead measure/autonomous_prompt.md
 [0m→ [0mSkill "measure"
 [0m→ [0mRead measure/tracks.md
-[0m→ [0mRead measure/lessons-learned.md
 [0m→ [0mRead measure/tech-debt.md
+[0m→ [0mRead measure/lessons-learned.md
 [0m✗ [0mread failed
 [91m[1mError: [0mFile not found: /home/daniel-bo/Desktop/pixel-art-generator/measure/current_directive.md
 [0m
-[0m$ [0mgit log -1 --oneline
-df9ae6a refactor(orchestrator): consolidate BatchRunner into BatchOrchestrator [mimo-v2.5]
-[0m
 [0m$ [0mgit status
 On branch main
-Your branch is up to date with 'origin/main'.
+Your branch is ahead of 'origin/main' by 1 commit.
+  (use "git push" to publish your local commits)
 
 Changes not staged for commit:
   (use "git add <file>..." to update what will be committed)
   (use "git restore <file>..." to discard changes in working directory)
 	modified:   measure/output.log
+	modified:   measure/review-output.log
 
 no changes added to commit (use "git add" and/or "git commit -a")
 [0m
-Dirty workspace. Committing `measure/output.log` before proceeding.
