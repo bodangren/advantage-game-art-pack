@@ -795,3 +795,75 @@ Index: /home/daniel-bo/Desktop/pixel-art-generator/measure/lessons-learned.md
    48 measure/lessons-learned.md
    81 total
 [0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && git add -A && git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	modified:   critic_thresholds/calibration_report.md
+	renamed:    measure/tracks/critic_calibration_cli_20260425/metadata.json -> measure/archive/critic_calibration_cli_20260425/metadata.json
+	renamed:    measure/tracks/critic_calibration_cli_20260425/plan.md -> measure/archive/critic_calibration_cli_20260425/plan.md
+	renamed:    measure/tracks/critic_calibration_cli_20260425/spec.md -> measure/archive/critic_calibration_cli_20260425/spec.md
+	modified:   measure/lessons-learned.md
+	modified:   measure/output.log
+	modified:   measure/tech-debt.md
+	modified:   measure/tracks.md
+	modified:   src/asf/cli.py
+[0m
+[0m$ [0mgit commit -m "feat(cli): add candidate recalibrate command for scripted threshold adjustment
+
+- Add 'recalibrate --family X' subcommand to candidate CLI for updating thresholds
+- Support --style-threshold, --novelty-threshold, --target-pass-band adjustments
+- Add --dry-run flag to preview changes before writing
+- Add --family filter to calibrate command for scoped reports
+- Archive completed critic_calibration_cli_20260425 track
+- Update tech-debt and lessons-learned
+
+MiniMax-M2-20260502"
+[main 4a71381] feat(cli): add candidate recalibrate command for scripted threshold adjustment
+ 9 files changed, 921 insertions(+), 5 deletions(-)
+ rename measure/{tracks => archive}/critic_calibration_cli_20260425/metadata.json (71%)
+ rename measure/{tracks => archive}/critic_calibration_cli_20260425/plan.md (100%)
+ rename measure/{tracks => archive}/critic_calibration_cli_20260425/spec.md (100%)
+[0m
+[0m$ [0mgit log --oneline -5
+4a71381 feat(cli): add candidate recalibrate command for scripted threshold adjustment
+d2dabe8 Checkpoint: autonomous measure run
+382e02e chore(review): fix 1 dead code issue and note architectural concern
+5fff1e5 feat(scene): add scene primitive library expansion
+7ccbb55 chore: flush output log
+[0m
+[0m$ [0mgit push
+To https://github.com/bodangren/advantage-game-art-pack.git
+   d2dabe8..4a71381  main -> main
+[0m
+[0m# [0mTodos
+[x] Verify existing functionality works (smoke test)
+[x] Analyze critic calibration CLI requirements
+[x] Implement Critic Calibration CLI (Phase 1-3)
+[x] Finalize track and commit
+[0m
+**Autonomous Measure run complete.**
+
+### Summary
+
+1. **Checkpoint**: Pushed previous session's dirty state (output logs)
+
+2. **Functionality verification**: 
+   - Ran test suite: 308 tests pass
+   - Verified `asf candidate calibrate` already existed and works
+
+3. **Implemented Critic Calibration CLI** (`src/asf/cli.py:328-380`):
+   - **`candidate recalibrate --family X`**: Scripted threshold adjustment with:
+     - `--style-threshold`, `--novelty-threshold`, `--target-pass-band` options
+     - `--dry-run` to preview without writing
+   - **`candidate calibrate --family X`**: Filter calibration report to specific family
+
+4. **Finalized track**:
+   - Archived `critic_calibration_cli_20260425` to `measure/archive/`
+   - Updated `tech-debt.md`: marked item #29 as Closed
+   - Updated `lessons-learned.md`: added frozen dataclass `replace()` pattern
+   - All memory files within 50-line limits
+
+5. **Committed & pushed**: `4a71381` with model name in commit title

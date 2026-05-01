@@ -95,6 +95,14 @@ This file tracks all major tracks for the project.
   *Status: Complete — Added `recalibrate --family X` CLI command for scripted threshold adjustment; calibrate command now accepts --family filter*
 - [ ] **Track: Review App Static File Serving** *Link: [./tracks/review_app_serving_20260425/](./tracks/review_app_serving_20260425/)*
 
+- [ ] **Track: Directional Character Sheet Renderer**
+  *Multi-frame directional animation sheets (4/8-direction walk/idle/run) for the advantage-games series*
+  *Link: [./tracks/directional_character_sheets_20260502/](./tracks/directional_character_sheets_20260502/)*
+
+- [ ] **Track: Effect Overlay Generation Pipeline**
+  *Standalone effect sheets and entity+effect compositing with blend modes*
+  *Link: [./tracks/effect_overlay_pipeline_20260502/](./tracks/effect_overlay_pipeline_20260502/)*
+
 - [x] **Track: Visual Refresh: Define Unique Identity**
   *Link: [./archive/visual_refresh_20260425/](./archive/visual_refresh_20260425/)*
   *Status: Complete*
