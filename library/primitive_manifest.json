@@ -10,7 +10,7 @@
     "presentation_surface"
   ],
   "library_root": "library/primitives",
-  "primitive_count": 8,
+  "primitive_count": 14,
   "primitives": [
     {
       "anchors": {
@@ -365,6 +365,305 @@
     {
       "anchors": {
         "center": {
+          "x": 128,
+          "y": 256
+        }
+      },
+      "approval_state": "approved",
+      "companion_files": [],
+      "compatible_palettes": [
+        "paper_ink",
+        "library_warmth"
+      ],
+      "compatible_themes": [
+        "library",
+        "knowledge"
+      ],
+      "family": "prop_sheet",
+      "metadata_path": "library/primitives/prop_sheet/bookshelf_01/primitive.json",
+      "motifs": [
+        "bookshelf",
+        "books",
+        "shelf"
+      ],
+      "primitive_dir": "library/primitives/prop_sheet/bookshelf_01",
+      "primitive_id": "bookshelf_01",
+      "promoted_at": "2026-05-02T00:00:00Z",
+      "provenance": {
+        "approved_by": "codex",
+        "critic_summary": null,
+        "lineage": [],
+        "source_asset": "library_background",
+        "source_kind": "demo_asset",
+        "source_path": "demo-assets/library_background.png",
+        "source_region": {
+          "height": 512,
+          "width": 256,
+          "x": 0,
+          "y": 0
+        },
+        "variant_id": null
+      },
+      "source_asset": "library_background",
+      "source_path": "demo-assets/library_background.png",
+      "source_region": {
+        "height": 512,
+        "width": 256,
+        "x": 0,
+        "y": 0
+      },
+      "subtype": "prop_core",
+      "tags": [
+        "prop",
+        "bookshelf",
+        "library",
+        "storage"
+      ]
+    },
+    {
+      "anchors": {
+        "center": {
+          "x": 128,
+          "y": 128
+        }
+      },
+      "approval_state": "approved",
+      "companion_files": [],
+      "compatible_palettes": [
+        "distant_blue",
+        "atmosphere"
+      ],
+      "compatible_themes": [
+        "ruins",
+        "overgrowth"
+      ],
+      "family": "prop_sheet",
+      "metadata_path": "library/primitives/prop_sheet/rubble_01/primitive.json",
+      "motifs": [
+        "rubble",
+        "stone",
+        "debris"
+      ],
+      "primitive_dir": "library/primitives/prop_sheet/rubble_01",
+      "primitive_id": "rubble_01",
+      "promoted_at": "2026-05-02T00:00:00Z",
+      "provenance": {
+        "approved_by": "codex",
+        "critic_summary": null,
+        "lineage": [],
+        "source_asset": "background",
+        "source_kind": "demo_asset",
+        "source_path": "demo-assets/background.png",
+        "source_region": {
+          "height": 256,
+          "width": 256,
+          "x": 512,
+          "y": 0
+        },
+        "variant_id": null
+      },
+      "source_asset": "background",
+      "source_path": "demo-assets/background.png",
+      "source_region": {
+        "height": 256,
+        "width": 256,
+        "x": 512,
+        "y": 0
+      },
+      "subtype": "prop_core",
+      "tags": [
+        "prop",
+        "rubble",
+        "debris",
+        "ruins"
+      ]
+    },
+    {
+      "anchors": {
+        "center": {
+          "x": 128,
+          "y": 256
+        }
+      },
+      "approval_state": "approved",
+      "companion_files": [],
+      "compatible_palettes": [
+        "distant_blue",
+        "atmosphere"
+      ],
+      "compatible_themes": [
+        "ruins",
+        "overgrowth"
+      ],
+      "family": "prop_sheet",
+      "metadata_path": "library/primitives/prop_sheet/ruins_pillar_01/primitive.json",
+      "motifs": [
+        "pillar",
+        "column",
+        "stone",
+        "ruins"
+      ],
+      "primitive_dir": "library/primitives/prop_sheet/ruins_pillar_01",
+      "primitive_id": "ruins_pillar_01",
+      "promoted_at": "2026-05-02T00:00:00Z",
+      "provenance": {
+        "approved_by": "codex",
+        "critic_summary": null,
+        "lineage": [],
+        "source_asset": "background",
+        "source_kind": "demo_asset",
+        "source_path": "demo-assets/background.png",
+        "source_region": {
+          "height": 512,
+          "width": 256,
+          "x": 0,
+          "y": 0
+        },
+        "variant_id": null
+      },
+      "source_asset": "background",
+      "source_path": "demo-assets/background.png",
+      "source_region": {
+        "height": 512,
+        "width": 256,
+        "x": 0,
+        "y": 0
+      },
+      "subtype": "prop_core",
+      "tags": [
+        "prop",
+        "pillar",
+        "ruins",
+        "stone"
+      ]
+    },
+    {
+      "anchors": {
+        "center": {
+          "x": 256,
+          "y": 256
+        },
+        "north_edge": {
+          "x": 256,
+          "y": 0
+        }
+      },
+      "approval_state": "approved",
+      "companion_files": [],
+      "compatible_palettes": [
+        "distant_blue",
+        "atmosphere"
+      ],
+      "compatible_themes": [
+        "ruins",
+        "overgrowth"
+      ],
+      "family": "tileset",
+      "metadata_path": "library/primitives/tileset/cobble_01/primitive.json",
+      "motifs": [
+        "cobble",
+        "stone",
+        "tile"
+      ],
+      "primitive_dir": "library/primitives/tileset/cobble_01",
+      "primitive_id": "cobble_01",
+      "promoted_at": "2026-05-02T00:00:00Z",
+      "provenance": {
+        "approved_by": "codex",
+        "critic_summary": null,
+        "lineage": [],
+        "source_asset": "tile-ruins",
+        "source_kind": "demo_asset",
+        "source_path": "demo-assets/tile-ruins.png",
+        "source_region": {
+          "height": 512,
+          "width": 512,
+          "x": 0,
+          "y": 0
+        },
+        "variant_id": null
+      },
+      "source_asset": "tile-ruins",
+      "source_path": "demo-assets/tile-ruins.png",
+      "source_region": {
+        "height": 512,
+        "width": 512,
+        "x": 0,
+        "y": 0
+      },
+      "subtype": "floor_tile",
+      "tags": [
+        "floor",
+        "cobble",
+        "stone",
+        "ruins"
+      ]
+    },
+    {
+      "anchors": {
+        "center": {
+          "x": 256,
+          "y": 256
+        },
+        "north_edge": {
+          "x": 256,
+          "y": 0
+        }
+      },
+      "approval_state": "approved",
+      "companion_files": [],
+      "compatible_palettes": [
+        "stone_moss",
+        "library_floor"
+      ],
+      "compatible_themes": [
+        "library",
+        "ruins"
+      ],
+      "family": "tileset",
+      "metadata_path": "library/primitives/tileset/floor_stone_01/primitive.json",
+      "motifs": [
+        "tile",
+        "stone",
+        "moss"
+      ],
+      "primitive_dir": "library/primitives/tileset/floor_stone_01",
+      "primitive_id": "floor_stone_01",
+      "promoted_at": "2026-05-02T00:00:00Z",
+      "provenance": {
+        "approved_by": "codex",
+        "critic_summary": null,
+        "lineage": [],
+        "source_asset": "tile-library",
+        "source_kind": "demo_asset",
+        "source_path": "demo-assets/tile-library.png",
+        "source_region": {
+          "height": 512,
+          "width": 512,
+          "x": 0,
+          "y": 0
+        },
+        "variant_id": null
+      },
+      "source_asset": "tile-library",
+      "source_path": "demo-assets/tile-library.png",
+      "source_region": {
+        "height": 512,
+        "width": 512,
+        "x": 0,
+        "y": 0
+      },
+      "subtype": "floor_tile",
+      "tags": [
+        "floor",
+        "stone",
+        "tile",
+        "module"
+      ]
+    },
+    {
+      "anchors": {
+        "center": {
           "x": 512,
           "y": 512
         },
@@ -421,6 +720,68 @@
         "floor",
         "stone",
         "tile"
+      ]
+    },
+    {
+      "anchors": {
+        "center": {
+          "x": 256,
+          "y": 256
+        },
+        "north_edge": {
+          "x": 256,
+          "y": 0
+        }
+      },
+      "approval_state": "approved",
+      "companion_files": [],
+      "compatible_palettes": [
+        "warm_stone",
+        "amber_lamps"
+      ],
+      "compatible_themes": [
+        "library",
+        "sanctum"
+      ],
+      "family": "tileset",
+      "metadata_path": "library/primitives/tileset/wall_library_01/primitive.json",
+      "motifs": [
+        "tile",
+        "stone",
+        "wall"
+      ],
+      "primitive_dir": "library/primitives/tileset/wall_library_01",
+      "primitive_id": "wall_library_01",
+      "promoted_at": "2026-05-02T00:00:00Z",
+      "provenance": {
+        "approved_by": "codex",
+        "critic_summary": null,
+        "lineage": [],
+        "source_asset": "tile-library",
+        "source_kind": "demo_asset",
+        "source_path": "demo-assets/tile-library.png",
+        "source_region": {
+          "height": 512,
+          "width": 512,
+          "x": 512,
+          "y": 0
+        },
+        "variant_id": null
+      },
+      "source_asset": "tile-library",
+      "source_path": "demo-assets/tile-library.png",
+      "source_region": {
+        "height": 512,
+        "width": 512,
+        "x": 512,
+        "y": 0
+      },
+      "subtype": "wall_tile",
+      "tags": [
+        "wall",
+        "stone",
+        "tile",
+        "library"
       ]
     },
     {

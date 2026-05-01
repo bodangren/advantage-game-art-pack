@@ -1,0 +1,60 @@
+{
+  "primitive_id": "wall_library_01",
+  "family": "tileset",
+  "subtype": "wall_tile",
+  "source_asset": "tile-library",
+  "source_path": "demo-assets/tile-library.png",
+  "source_region": {
+    "x": 512,
+    "y": 0,
+    "width": 512,
+    "height": 512
+  },
+  "anchors": {
+    "center": {
+      "x": 256,
+      "y": 256
+    },
+    "north_edge": {
+      "x": 256,
+      "y": 0
+    }
+  },
+  "compatible_palettes": [
+    "warm_stone",
+    "amber_lamps"
+  ],
+  "compatible_themes": [
+    "library",
+    "sanctum"
+  ],
+  "tags": [
+    "wall",
+    "stone",
+    "tile",
+    "library"
+  ],
+  "motifs": [
+    "tile",
+    "stone",
+    "wall"
+  ],
+  "approval_state": "approved",
+  "promoted_at": "2026-05-02T00:00:00Z",
+  "provenance": {
+    "source_kind": "demo_asset",
+    "source_asset": "tile-library",
+    "source_path": "demo-assets/tile-library.png",
+    "source_region": {
+      "x": 512,
+      "y": 0,
+      "width": 512,
+      "height": 512
+    },
+    "approved_by": "codex",
+    "variant_id": null,
+    "critic_summary": null,
+    "lineage": []
+  },
+  "companion_files": []
+}

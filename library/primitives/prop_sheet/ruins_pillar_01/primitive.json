@@ -1,0 +1,57 @@
+{
+  "primitive_id": "ruins_pillar_01",
+  "family": "prop_sheet",
+  "subtype": "prop_core",
+  "source_asset": "background",
+  "source_path": "demo-assets/background.png",
+  "source_region": {
+    "x": 0,
+    "y": 0,
+    "width": 256,
+    "height": 512
+  },
+  "anchors": {
+    "center": {
+      "x": 128,
+      "y": 256
+    }
+  },
+  "compatible_palettes": [
+    "distant_blue",
+    "atmosphere"
+  ],
+  "compatible_themes": [
+    "ruins",
+    "overgrowth"
+  ],
+  "tags": [
+    "prop",
+    "pillar",
+    "ruins",
+    "stone"
+  ],
+  "motifs": [
+    "pillar",
+    "column",
+    "stone",
+    "ruins"
+  ],
+  "approval_state": "approved",
+  "promoted_at": "2026-05-02T00:00:00Z",
+  "provenance": {
+    "source_kind": "demo_asset",
+    "source_asset": "background",
+    "source_path": "demo-assets/background.png",
+    "source_region": {
+      "x": 0,
+      "y": 0,
+      "width": 256,
+      "height": 512
+    },
+    "approved_by": "codex",
+    "variant_id": null,
+    "critic_summary": null,
+    "lineage": []
+  },
+  "companion_files": []
+}

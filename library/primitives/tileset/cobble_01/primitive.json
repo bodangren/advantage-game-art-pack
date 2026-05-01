@@ -1,0 +1,60 @@
+{
+  "primitive_id": "cobble_01",
+  "family": "tileset",
+  "subtype": "floor_tile",
+  "source_asset": "tile-ruins",
+  "source_path": "demo-assets/tile-ruins.png",
+  "source_region": {
+    "x": 0,
+    "y": 0,
+    "width": 512,
+    "height": 512
+  },
+  "anchors": {
+    "center": {
+      "x": 256,
+      "y": 256
+    },
+    "north_edge": {
+      "x": 256,
+      "y": 0
+    }
+  },
+  "compatible_palettes": [
+    "distant_blue",
+    "atmosphere"
+  ],
+  "compatible_themes": [
+    "ruins",
+    "overgrowth"
+  ],
+  "tags": [
+    "floor",
+    "cobble",
+    "stone",
+    "ruins"
+  ],
+  "motifs": [
+    "cobble",
+    "stone",
+    "tile"
+  ],
+  "approval_state": "approved",
+  "promoted_at": "2026-05-02T00:00:00Z",
+  "provenance": {
+    "source_kind": "demo_asset",
+    "source_asset": "tile-ruins",
+    "source_path": "demo-assets/tile-ruins.png",
+    "source_region": {
+      "x": 0,
+      "y": 0,
+      "width": 512,
+      "height": 512
+    },
+    "approved_by": "codex",
+    "variant_id": null,
+    "critic_summary": null,
+    "lineage": []
+  },
+  "companion_files": []
+}

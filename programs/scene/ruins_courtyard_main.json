@@ -44,12 +44,12 @@
     },
     {
       "tile_id": "pillar_tile",
-      "family": "props",
+      "family": "prop_sheet",
       "primitive_id": "ruins_pillar_01"
     },
     {
       "tile_id": "rubble_tile",
-      "family": "props",
+      "family": "prop_sheet",
       "primitive_id": "rubble_01"
     }
   ],

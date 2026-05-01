@@ -1,0 +1,56 @@
+{
+  "primitive_id": "bookshelf_01",
+  "family": "prop_sheet",
+  "subtype": "prop_core",
+  "source_asset": "library_background",
+  "source_path": "demo-assets/library_background.png",
+  "source_region": {
+    "x": 0,
+    "y": 0,
+    "width": 256,
+    "height": 512
+  },
+  "anchors": {
+    "center": {
+      "x": 128,
+      "y": 256
+    }
+  },
+  "compatible_palettes": [
+    "paper_ink",
+    "library_warmth"
+  ],
+  "compatible_themes": [
+    "library",
+    "knowledge"
+  ],
+  "tags": [
+    "prop",
+    "bookshelf",
+    "library",
+    "storage"
+  ],
+  "motifs": [
+    "bookshelf",
+    "books",
+    "shelf"
+  ],
+  "approval_state": "approved",
+  "promoted_at": "2026-05-02T00:00:00Z",
+  "provenance": {
+    "source_kind": "demo_asset",
+    "source_asset": "library_background",
+    "source_path": "demo-assets/library_background.png",
+    "source_region": {
+      "x": 0,
+      "y": 0,
+      "width": 256,
+      "height": 512
+    },
+    "approved_by": "codex",
+    "variant_id": null,
+    "critic_summary": null,
+    "lineage": []
+  },
+  "companion_files": []
+}

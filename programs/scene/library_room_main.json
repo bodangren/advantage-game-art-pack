@@ -49,7 +49,7 @@
     },
     {
       "tile_id": "shelf_tile",
-      "family": "props",
+      "family": "prop_sheet",
       "primitive_id": "bookshelf_01"
     }
   ],
