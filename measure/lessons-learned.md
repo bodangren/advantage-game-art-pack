@@ -45,3 +45,4 @@
 - (2026-05-01, orchestrator_consolidation_20260426) When consolidating duplicate classes, extend the more feature-complete class (BatchOrchestrator) rather than delegating from the simpler one (BatchRunner). Delegation requires reimplementing state machine transitions, which is error-prone and hard to maintain.
 - (2026-05-02, scene_primitive_library_20260425) Scene programs must use family="prop_sheet" (not "props") for prop tile sources. FAMILY_NAMES is the source of truth for valid family values.
 - (2026-05-02, scene_primitive_library_20260425) Scene primitive source.png dimensions must fit within the scene canvas; oversized tiles (512x512 in a 256x192 canvas) cause placement intrusions. Resize source images to match canvas scale before adding to library.
+- (2026-05-02, critic_calibration_cli_20260425) ThresholdPack is a frozen dataclass; use dataclasses.replace() to create modified copies rather than mutating in place.

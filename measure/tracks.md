@@ -89,7 +89,10 @@ This file tracks all major tracks for the project.
   *Wire release bundle export to actual compiled PNGs from candidate loop*
   *Link: [./archive/batch_release_bundle_20260425/](./archive/batch_release_bundle_20260425/)*
 - [ ] **Track: Scene Primitive Library Expansion** *Link: [./tracks/scene_primitive_library_20260425/](./tracks/scene_primitive_library_20260425/)*
-- [ ] **Track: Critic Calibration CLI** *Link: [./tracks/critic_calibration_cli_20260425/](./tracks/critic_calibration_cli_20260425/)*
+- [x] **Track: Critic Calibration CLI**
+  *Add recalibrate subcommand to candidate CLI for scripted threshold adjustment*
+  *Link: [./archive/critic_calibration_cli_20260425/](./archive/critic_calibration_cli_20260425/)*
+  *Status: Complete — Added `recalibrate --family X` CLI command for scripted threshold adjustment; calibrate command now accepts --family filter*
 - [ ] **Track: Review App Static File Serving** *Link: [./tracks/review_app_serving_20260425/](./tracks/review_app_serving_20260425/)*
 
 - [x] **Track: Visual Refresh: Define Unique Identity**

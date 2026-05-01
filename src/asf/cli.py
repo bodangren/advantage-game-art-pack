@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+from dataclasses import replace
 from pathlib import Path
 
 from asf.compilers import compile_program, load_compiler_program
@@ -201,6 +202,47 @@ def main() -> None:
         type=Path,
         help="Optional report path. Defaults to critic_thresholds/calibration_report.md.",
     )
+    candidate_calibrate_parser.add_argument(
+        "--family",
+        type=str,
+        help="Scope calibration to a specific family (e.g., character_sheet).",
+    )
+
+    recalibrate_parser = candidate_subparsers.add_parser(
+        "recalibrate", help="Adjust and save threshold packs after calibration."
+    )
+    recalibrate_parser.add_argument(
+        "--repo-root",
+        default=Path.cwd(),
+        type=Path,
+        help="Repository root containing the threshold packs and canon corpus.",
+    )
+    recalibrate_parser.add_argument(
+        "--family",
+        required=True,
+        type=str,
+        help="Family whose threshold pack to adjust (e.g., character_sheet).",
+    )
+    recalibrate_parser.add_argument(
+        "--target-pass-band",
+        type=str,
+        help="New target pass band as 'lower,upper' (e.g., '0.4,0.9').",
+    )
+    recalibrate_parser.add_argument(
+        "--style-threshold",
+        type=float,
+        help="New style minimum score threshold (0.0-1.0).",
+    )
+    recalibrate_parser.add_argument(
+        "--novelty-threshold",
+        type=float,
+        help="New novelty minimum score threshold (0.0-1.0).",
+    )
+    recalibrate_parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Show what would change without writing anything.",
+    )
 
     planner_parser = subparsers.add_parser(
         "planner", help="Run the planner CLI for brief-to-program conversion."
@@ -285,10 +327,57 @@ def main() -> None:
         return
 
     if args.command == "candidate":
+        from asf.candidate_loop import DEFAULT_THRESHOLD_PACK_DIRNAME, load_threshold_pack
+        from pathlib import Path as P
+
         if args.candidate_command == "run":
             run_candidate_job(load_candidate_job(args.job), repo_root=args.repo_root)
-        else:
-            calibrate_threshold_packs(args.repo_root, output_path=args.output)
+            return
+
+        if args.candidate_command == "recalibrate":
+            threshold_dir = args.repo_root / DEFAULT_THRESHOLD_PACK_DIRNAME
+            pack_path = threshold_dir / f"{args.family}.json"
+            if not pack_path.exists():
+                raise FileNotFoundError(f"Threshold pack not found: {pack_path}")
+            pack = load_threshold_pack(pack_path)
+            changes = []
+            if args.target_pass_band:
+                lower, upper = [float(x) for x in args.target_pass_band.split(",")]
+                changes.append(f"target_pass_band: {pack.target_pass_band} -> [{lower}, {upper}]")
+                pack = replace(pack, target_pass_band=(lower, upper))
+            if args.style_threshold is not None:
+                changes.append(f"style_minimum_score: {pack.style_minimum_score} -> {args.style_threshold}")
+                pack = replace(pack, style_minimum_score=args.style_threshold)
+            if args.novelty_threshold is not None:
+                changes.append(f"novelty_minimum_score: {pack.novelty_minimum_score} -> {args.novelty_threshold}")
+                pack = replace(pack, novelty_minimum_score=args.novelty_threshold)
+            if not changes:
+                print("No changes specified. Use --target-pass-band, --style-threshold, or --novelty-threshold.")
+                return
+            print(f"Changes for {args.family}:")
+            for change in changes:
+                print(f"  {change}")
+            if args.dry_run:
+                print("(dry-run -- no files written)")
+            else:
+                import json
+                pack_path.write_text(json.dumps(pack.to_dict(), indent=2), encoding="utf-8")
+                print(f"Updated {pack_path}")
+            return
+
+        if args.family:
+            report = calibrate_threshold_packs(args.repo_root, output_path=args.output)
+            filtered = [p for p in report["packs"] if p["family"] == args.family]
+            if not filtered:
+                print(f"No threshold pack found for family '{args.family}'")
+            else:
+                pack = filtered[0]
+                print(f"Family: {pack['family']}")
+                print(f"  pass_rate: {pack['pass_rate']:.6f}")
+                print(f"  passed: {pack['passed']}, failed: {pack['failed']}")
+            return
+
+        calibrate_threshold_packs(args.repo_root, output_path=args.output)
         return
 
     if args.command == "planner":
