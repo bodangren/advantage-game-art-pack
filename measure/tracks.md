@@ -96,6 +96,6 @@ This file tracks all major tracks for the project.
   *Link: [./archive/visual_refresh_20260425/](./archive/visual_refresh_20260425/)*
   *Status: Complete*
 
-- [ ] **Track: Orchestrator Consolidation**
-  *Link: [./tracks/orchestrator_consolidation_20260426/](./tracks/orchestrator_consolidation_20260426/)*
-  Merge BatchRunner and BatchOrchestrator into single state machine.
+- [x] **Track: Orchestrator Consolidation**
+  *Link: [./archive/orchestrator_consolidation_20260426/](./archive/orchestrator_consolidation_20260426/)*
+  Merge BatchRunner and BatchOrchestrator into single state machine. Consolidation complete - BatchOrchestrator is now the single source of truth, BatchRunner deprecated with warning.

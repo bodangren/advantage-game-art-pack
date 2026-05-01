@@ -7,12 +7,15 @@ import json
 import logging
 from datetime import datetime, timezone
 from pathlib import Path
+from typing import Any
 
 from asf.batch import (
+    AssetExecutionState,
     AssetState,
     BatchJob,
     JobState,
     ReleaseBundleManifest,
+    RetryPolicy,
     VersionInfo,
     asset_candidates_dir,
     asset_critic_result_path,
@@ -31,6 +34,8 @@ from asf.candidate_loop import (
     build_candidate_job,
     run_candidate_job,
 )
+from asf.planner.planner import PlannerContext
+from asf.planner.schemas import AssetFamily
 
 logger = logging.getLogger(__name__)
 
@@ -46,6 +51,7 @@ class BatchOrchestrator:
         self,
         job_root: Path,
         repo_root: Path | None = None,
+        planner_context: PlannerContext | None = None,
         threshold_pack_dir: Path | None = None,
         max_planner_retries: int = 2,
         max_compile_retries: int = 2,
@@ -53,6 +59,7 @@ class BatchOrchestrator:
     ) -> None:
         self.job_root = Path(job_root)
         self.repo_root = repo_root or Path(".")
+        self.planner_context = planner_context
         self.threshold_pack_dir = threshold_pack_dir
         self.max_planner_retries = max_planner_retries
         self.max_compile_retries = max_compile_retries
@@ -112,6 +119,42 @@ class BatchOrchestrator:
         job = replace(job, state=JobState.COMPILING, updated_at=_utc_now())
         return job
 
+    def _generate_programs(self, job: BatchJob) -> dict[str, list[dict[str, Any]]]:
+        programs: dict[str, list[dict[str, Any]]] = {}
+        for family_str, count in job.counts.items():
+            family = AssetFamily(family_str)
+            family_programs = []
+            for idx in range(count):
+                AssetExecutionState(
+                    family=family_str,
+                    program_index=idx,
+                    state=AssetState.PLANNED,
+                    program_path=asset_program_path(
+                        self.job_root, job.job_id, family_str, idx
+                    ),
+                )
+                family_programs.append({"family": family, "index": idx})
+            programs[family_str] = family_programs
+        return programs
+
+    def _write_programs(
+        self,
+        job: BatchJob,
+        programs: dict[str, list[dict[str, Any]]],
+    ) -> None:
+        for family_str, family_programs in programs.items():
+            for prog_info in family_programs:
+                idx = prog_info["index"]
+                path = asset_program_path(self.job_root, job.job_id, family_str, idx)
+                path.parent.mkdir(parents=True, exist_ok=True)
+                minimal_program: dict[str, Any] = {
+                    "family": family_str,
+                    "program_id": f"{family_str}_{idx:03d}",
+                    "program_version": 1,
+                }
+                serialized = json.dumps(minimal_program, indent=2, sort_keys=True) + "\n"
+                path.write_text(serialized, encoding="utf-8")
+
     def _run_compiling(self, job: BatchJob) -> BatchJob:
         family_fallback_programs = {
             "character_sheet": "knight_guard.json",
@@ -119,7 +162,7 @@ class BatchOrchestrator:
             "tileset": "library_floor.json",
         }
         for idx, asset_state in enumerate(job.asset_states):
-            if asset_state.state != AssetState.PENDING:
+            if asset_state.state not in (AssetState.PENDING, AssetState.PLANNED):
                 continue
             try:
                 program_path = asset_program_path(
@@ -356,4 +399,41 @@ def generate_release_bundle(job_root: Path, job_id: str) -> ReleaseBundleManifes
         compiler_versions=(VersionInfo(name="compiler", version=COMPILER_VERSION),),
         candidate_loop_version=VersionInfo(name="candidate_loop", version=CANDIDATE_LOOP_VERSION),
         provenance=tuple(provenance),
+    )
+
+
+def create_batch_job(
+    job_id: str,
+    brief: dict[str, Any],
+    families: tuple[str, ...],
+    counts: dict[str, int],
+    output_root: Path,
+    style_pack: str | None = None,
+    theme_pack: dict[str, Any] | None = None,
+    retry_policy: RetryPolicy | None = None,
+) -> BatchJob:
+    """Factory to create a new batch job with asset states pre-populated."""
+    asset_states = tuple(
+        AssetExecutionState(family=family, program_index=idx)
+        for family in families
+        for idx in range(counts.get(family, 0))
+    )
+    return BatchJob(
+        job_id=job_id,
+        state=JobState.PENDING,
+        brief=brief,
+        families=families,
+        counts=counts,
+        theme_pack=theme_pack,
+        style_pack=style_pack,
+        output_root=output_root,
+        retry_policy=retry_policy or RetryPolicy(),
+        asset_states=asset_states,
+        created_at=_utc_now(),
+        updated_at=_utc_now(),
+        planner_version=VersionInfo(name="planner", version=1),
+        candidate_loop_version=VersionInfo(
+            name="candidate_loop", version=CANDIDATE_LOOP_VERSION
+        ),
+        compiler_versions=(VersionInfo(name="compiler", version=COMPILER_VERSION),),
     )
