@@ -125,14 +125,6 @@ class BatchOrchestrator:
             family = AssetFamily(family_str)
             family_programs = []
             for idx in range(count):
-                AssetExecutionState(
-                    family=family_str,
-                    program_index=idx,
-                    state=AssetState.PLANNED,
-                    program_path=asset_program_path(
-                        self.job_root, job.job_id, family_str, idx
-                    ),
-                )
                 family_programs.append({"family": family, "index": idx})
             programs[family_str] = family_programs
         return programs
