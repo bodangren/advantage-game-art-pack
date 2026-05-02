@@ -1,0 +1,26 @@
+{
+  "family": "effect_sheet",
+  "program_id": "ice_pulse",
+  "program_version": 1,
+  "style_pack": "cute_chibi_v1",
+  "primitive_ids": [],
+  "variant_controls": {
+    "variant_id": "ice_pulse_v1",
+    "candidate_index": null,
+    "search_budget": null
+  },
+  "layout": {
+    "mode": "effect_strip",
+    "dimensions": [256, 64],
+    "grid": [4, 1],
+    "frame_size": [64, 64]
+  },
+  "effect_spec": {
+    "effect_type": "pulse",
+    "duration_frames": 8,
+    "blend_mode": "screen",
+    "intensity": 0.7,
+    "color_tint": [0, 200, 255]
+  },
+  "frame_size": [64, 64]
+}

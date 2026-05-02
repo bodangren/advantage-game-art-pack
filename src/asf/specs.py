@@ -82,6 +82,42 @@ class FxSpec:
 
 
 @dataclass(frozen=True)
+class EffectSpec:
+    """Defines standalone effect overlay parameters."""
+
+    effect_type: str
+    duration_frames: int
+    blend_mode: str
+    intensity: float
+    color_tint: tuple[int, int, int] | None = None
+
+    def __post_init__(self) -> None:
+        valid_types = ("glow", "pulse", "aura", "burst")
+        if self.effect_type not in valid_types:
+            raise SpecValidationError(
+                f"'effect_type' must be one of {valid_types}, got '{self.effect_type}'"
+            )
+        if self.duration_frames < 1 or self.duration_frames > 64:
+            raise SpecValidationError(
+                f"'duration_frames' must be between 1 and 64, got {self.duration_frames}"
+            )
+        valid_blends = ("additive", "screen", "multiply")
+        if self.blend_mode not in valid_blends:
+            raise SpecValidationError(
+                f"'blend_mode' must be one of {valid_blends}, got '{self.blend_mode}'"
+            )
+        if not (0.0 <= self.intensity <= 1.0):
+            raise SpecValidationError(
+                f"'intensity' must be between 0.0 and 1.0, got {self.intensity}"
+            )
+        if self.color_tint is not None:
+            if not isinstance(self.color_tint, tuple) or len(self.color_tint) != 3:
+                raise SpecValidationError("'color_tint' must be null or a 3-element RGB tuple")
+            if not all(0 <= c <= 255 for c in self.color_tint):
+                raise SpecValidationError("'color_tint' RGB values must be between 0 and 255")
+
+
+@dataclass(frozen=True)
 class SpriteSpec:
     """Full typed sprite specification for deterministic rendering."""
 

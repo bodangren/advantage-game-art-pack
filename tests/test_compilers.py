@@ -16,8 +16,13 @@ from asf.compilers import (
     CompilerValidationError,
     DEFAULT_COMPILER_REGISTRY,
     DIRECTIONAL_LAYOUT_MODE,
+    EFFECT_LAYOUT_MODE,
+    EffectSheetProgram,
+    EffectSpec,
     PropOrFxSheetProgram,
+    ProgramLayout,
     TilesetProgram,
+    VariantControls,
     build_output_manifest,
     compile_program,
     load_compiler_program,
@@ -516,6 +521,170 @@ class DirectionalSheetProgramTest(unittest.TestCase):
             result_img = Image.open(sheet_path)
             used_colors = {px for px in result_img.getdata() if px[3] > 0}
             self.assertLessEqual(len(used_colors), 12)
+
+
+class EffectSheetProgramTest(unittest.TestCase):
+    """Validates EffectSheetProgram schema and effect layout mode."""
+
+    def test_effect_layout_mode_exists(self) -> None:
+        self.assertEqual(EFFECT_LAYOUT_MODE, "effect_strip")
+
+    def test_effect_program_schema_fields(self) -> None:
+        from dataclasses import fields
+
+        field_names = {f.name for f in fields(EffectSheetProgram)}
+        self.assertIn("effect_spec", field_names)
+        self.assertIn("frame_size", field_names)
+
+    def test_load_effect_program_rejects_invalid_effect_type(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            payload_path = Path(tmp_dir) / "effect.json"
+            payload = {
+                "family": "effect_sheet",
+                "program_id": "test_effect",
+                "program_version": 1,
+                "style_pack": "cute_chibi_v1",
+                "primitive_ids": [],
+                "variant_controls": {
+                    "variant_id": None,
+                    "candidate_index": None,
+                    "search_budget": None,
+                },
+                "layout": {
+                    "mode": "effect_strip",
+                    "dimensions": [64, 64],
+                    "grid": [4, 1],
+                    "frame_size": [64, 64],
+                },
+                "effect_spec": {
+                    "effect_type": "invalid_type",
+                    "duration_frames": 8,
+                    "blend_mode": "additive",
+                    "intensity": 0.7,
+                },
+                "frame_size": [64, 64],
+            }
+            payload_path.write_text(json.dumps(payload), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "effect_type"):
+                load_compiler_program(payload_path)
+
+    def test_load_effect_program_accepts_valid_effect(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            payload_path = Path(tmp_dir) / "effect_valid.json"
+            payload = {
+                "family": "effect_sheet",
+                "program_id": "test_effect_valid",
+                "program_version": 1,
+                "style_pack": "cute_chibi_v1",
+                "primitive_ids": [],
+                "variant_controls": {
+                    "variant_id": None,
+                    "candidate_index": None,
+                    "search_budget": None,
+                },
+                "layout": {
+                    "mode": "effect_strip",
+                    "dimensions": [256, 64],
+                    "grid": [4, 1],
+                    "frame_size": [64, 64],
+                },
+                "effect_spec": {
+                    "effect_type": "glow",
+                    "duration_frames": 8,
+                    "blend_mode": "additive",
+                    "intensity": 0.7,
+                    "color_tint": [255, 0, 128],
+                },
+                "frame_size": [64, 64],
+            }
+            payload_path.write_text(json.dumps(payload), encoding="utf-8")
+            program = load_compiler_program(payload_path)
+            self.assertEqual(program.program_id, "test_effect_valid")
+            self.assertEqual(program.effect_spec.effect_type, "glow")
+            self.assertEqual(program.effect_spec.duration_frames, 8)
+            self.assertEqual(program.effect_spec.blend_mode, "additive")
+
+    def test_effect_sheet_compiler_produces_rgba_output(self) -> None:
+        from pathlib import Path
+        import tempfile
+        import shutil
+        from asf.compilers import compile_program
+
+        repo_root = Path(__file__).resolve().parents[1]
+        style_pack_source = repo_root / "style_packs" / "cute_chibi_v1.json"
+
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            test_root = Path(tmp_dir)
+            style_dir = test_root / "style_packs"
+            style_dir.mkdir(parents=True)
+            shutil.copyfile(style_pack_source, style_dir / "cute_chibi_v1.json")
+
+            output_dir = test_root / "output"
+            output_dir.mkdir()
+            program = EffectSheetProgram(
+                family="effect_sheet",
+                program_id="test_effect_compile",
+                program_version=1,
+                style_pack="cute_chibi_v1",
+                primitive_ids=(),
+                variant_controls=VariantControls(variant_id=None, candidate_index=None, search_budget=None),
+                layout=ProgramLayout(mode="effect_strip", dimensions=(256, 64), grid=(4, 1), frame_size=(64, 64)),
+                effect_spec=EffectSpec(effect_type="glow", duration_frames=4, blend_mode="additive", intensity=0.7),
+                frame_size=(64, 64),
+            )
+            manifest = compile_program(
+                program,
+                output_dir,
+                repo_root=test_root,
+            )
+            sheet_path = output_dir / "sheet.png"
+            self.assertTrue(sheet_path.exists())
+            result_img = Image.open(sheet_path)
+            self.assertEqual(result_img.mode, "RGBA")
+            self.assertEqual(result_img.size, (256, 64))
+            timing_path = output_dir / "effect_timing.json"
+            self.assertTrue(timing_path.exists())
+            timing = json.loads(timing_path.read_text(encoding="utf-8"))
+            self.assertEqual(timing["blend_mode"], "additive")
+            self.assertEqual(timing["effect_type"], "glow")
+
+    def test_blend_additive_brightens(self) -> None:
+        from PIL import Image
+        from asf.compilers import _blend_additive
+
+        base = Image.new("RGBA", (4, 4), (50, 50, 50, 255))
+        overlay = Image.new("RGBA", (4, 4), (100, 100, 100, 200))
+        result = _blend_additive(base, overlay)
+        self.assertGreater(result.getpixel((0, 0))[0], 50)
+        self.assertEqual(result.getpixel((0, 0))[3], 255)
+
+    def test_blend_multiply_darkens(self) -> None:
+        from PIL import Image
+        from asf.compilers import _blend_multiply
+
+        base = Image.new("RGBA", (4, 4), (200, 200, 200, 255))
+        overlay = Image.new("RGBA", (4, 4), (128, 128, 128, 255))
+        result = _blend_multiply(base, overlay)
+        self.assertLess(result.getpixel((0, 0))[0], 200)
+
+    def test_composite_effect_on_entity_additive(self) -> None:
+        from PIL import Image
+        from asf.compilers import composite_effect_on_entity
+
+        entity = Image.new("RGBA", (64, 64), (100, 100, 100, 255))
+        effect = Image.new("RGBA", (64, 64), (50, 50, 50, 100))
+        result = composite_effect_on_entity(entity, effect, "additive")
+        self.assertEqual(result.size, (64, 64))
+        self.assertGreater(result.getpixel((32, 32))[0], 100)
+
+    def test_composite_effect_rejects_mismatched_sizes(self) -> None:
+        from PIL import Image
+        from asf.compilers import composite_effect_on_entity
+
+        entity = Image.new("RGBA", (64, 64), (100, 100, 100, 255))
+        effect = Image.new("RGBA", (32, 32), (50, 50, 50, 100))
+        with self.assertRaisesRegex(CompilerValidationError, "must match"):
+            composite_effect_on_entity(entity, effect, "additive")
 
 
 def _copy_style_pack(repo_root: Path) -> None:

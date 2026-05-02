@@ -1,0 +1,26 @@
+{
+  "family": "effect_sheet",
+  "program_id": "poison_aura",
+  "program_version": 1,
+  "style_pack": "cute_chibi_v1",
+  "primitive_ids": [],
+  "variant_controls": {
+    "variant_id": "poison_aura_v1",
+    "candidate_index": null,
+    "search_budget": null
+  },
+  "layout": {
+    "mode": "effect_strip",
+    "dimensions": [256, 64],
+    "grid": [4, 1],
+    "frame_size": [64, 64]
+  },
+  "effect_spec": {
+    "effect_type": "aura",
+    "duration_frames": 8,
+    "blend_mode": "additive",
+    "intensity": 0.6,
+    "color_tint": [128, 0, 255]
+  },
+  "frame_size": [64, 64]
+}

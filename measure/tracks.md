@@ -103,9 +103,12 @@ This file tracks all major tracks for the project.
   *Link: [./tracks/directional_character_sheets_20260502/](./tracks/directional_character_sheets_20260502/)*
   *Status: Complete — DirectionalSheetProgram with directional_variants in style packs, direction-aware frame offsets, palette quantization, example programs, and CLI integration.*
 
-- [ ] **Track: Effect Overlay Generation Pipeline**
+- [x] **Track: Effect Overlay Generation Pipeline**
   *Standalone effect sheets and entity+effect compositing with blend modes*
-  *Link: [./tracks/effect_overlay_pipeline_20260502/](./tracks/effect_overlay_pipeline_20260502/)*
+  *Link: [./archive/effect_overlay_pipeline_20260502/](./archive/effect_overlay_pipeline_20260502/)*
+  *Status: Complete — EffectSpec dataclass, effect_sheet family, _render_effect_frame, blend mode implementations (_blend_additive, _blend_screen, _blend_multiply), composite_effect_on_entity, effect_timing.json metadata, and CLI integration via `asf compile`.*
+  *New files: programs/effect_sheet/poison_aura.json, programs/effect_sheet/ice_pulse.json*
+  *Tests: EffectSheetProgramTest (9 tests) and EffectSpecTest (7 tests)*
 
 - [x] **Track: Visual Refresh: Define Unique Identity**
   *Link: [./archive/visual_refresh_20260425/](./archive/visual_refresh_20260425/)*

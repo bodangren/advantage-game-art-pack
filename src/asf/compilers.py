@@ -8,7 +8,7 @@ import json
 from pathlib import Path
 from typing import Any, Callable
 
-from PIL import Image, ImageChops, ImageEnhance, ImageOps
+from PIL import Image, ImageChops, ImageDraw, ImageEnhance, ImageOps
 
 from asf.primitives import (
     PrimitiveMetadata,
@@ -17,6 +17,7 @@ from asf.primitives import (
     query_primitives,
 )
 from asf.specs import (
+    EffectSpec,
     FxSpec,
     PaletteSpec,
     SpriteSpec,
@@ -34,6 +35,7 @@ SUPPORTED_COMPILER_FAMILIES = (
     "prop_or_fx_sheet",
     "tileset",
     "directional_sheet",
+    "effect_sheet",
 )
 PROGRAM_ROOT_DIRNAME = "programs"
 OUTPUT_ROOT_DIRNAME = "outputs"
@@ -42,6 +44,7 @@ CHARACTER_LAYOUT_MODE = "pose_sheet_3x3"
 PROP_LAYOUT_MODE = "strip_3x1"
 TILESET_LAYOUT_MODE = "tile_atlas"
 DIRECTIONAL_LAYOUT_MODE = "directional_grid"
+EFFECT_LAYOUT_MODE = "effect_strip"
 
 CHARACTER_DIRECTION_NAMES = (
     "facing_up",
@@ -159,6 +162,24 @@ def _require_string_list(
     value = payload.get(key)
     if not isinstance(value, list) or not value:
         raise CompilerValidationError(f"{path}: {context}.{key} must be a non-empty array")
+    items: list[str] = []
+    for index, entry in enumerate(value):
+        if not isinstance(entry, str) or not entry:
+            raise CompilerValidationError(
+                f"{path}: {context}.{key}[{index}] must be a non-empty string"
+            )
+        items.append(entry)
+    return tuple(items)
+
+
+def _require_string_tuple(
+    payload: dict[str, Any], key: str, *, path: Path, context: str
+) -> tuple[str, ...]:
+    value = payload.get(key)
+    if value is None:
+        return ()
+    if not isinstance(value, list):
+        raise CompilerValidationError(f"{path}: {context}.{key} must be an array")
     items: list[str] = []
     for index, entry in enumerate(value):
         if not isinstance(entry, str) or not entry:
@@ -330,6 +351,14 @@ class DirectionalSheetProgram(CompilerProgramBase):
     frames_per_direction: int
     render_spec: SpriteSpec
     palette: PaletteSpec
+
+
+@dataclass(frozen=True)
+class EffectSheetProgram(CompilerProgramBase):
+    """Strict effect sheet compiler program for standalone effect generation."""
+
+    effect_spec: "EffectSpec"
+    frame_size: tuple[int, int]
 
 
 @dataclass(frozen=True)
@@ -797,6 +826,106 @@ def _load_directional_sheet_program(
     )
 
 
+def _load_effect_sheet_program(payload: dict[str, Any], path: Path) -> EffectSheetProgram:
+    from asf.specs import EffectSpec
+    _require_exact_keys(
+        payload,
+        {
+            "family",
+            "program_id",
+            "program_version",
+            "style_pack",
+            "primitive_ids",
+            "variant_controls",
+            "layout",
+            "effect_spec",
+            "frame_size",
+        },
+        "effect_sheet program",
+        path,
+    )
+    family = _require_string(payload, "family", path=path, context="effect_sheet program")
+    if family not in SUPPORTED_COMPILER_FAMILIES:
+        raise CompilerValidationError(f"{path}: unknown compiler family '{family}'")
+    program_id = _require_string(payload, "program_id", path=path, context="effect_sheet program")
+    program_version = _require_int(payload, "program_version", path=path, context="effect_sheet program")
+    style_pack = _require_string(payload, "style_pack", path=path, context="effect_sheet program")
+    primitive_ids = _require_string_tuple(payload, "primitive_ids", path=path, context="effect_sheet program")
+    variant_controls_payload = _require_mapping(
+        payload, "variant_controls", path=path, context="effect_sheet program"
+    )
+    variant_controls = _parse_variant_controls(
+        variant_controls_payload, path=path, context=f"effect_sheet program.variant_controls"
+    )
+    layout_payload = _require_mapping(payload, "layout", path=path, context="effect_sheet program")
+    layout = _parse_layout(
+        layout_payload,
+        path=path,
+        context="effect_sheet program.layout",
+        expected_mode=EFFECT_LAYOUT_MODE,
+        require_frame_size=True,
+    )
+    effect_spec_payload = _require_mapping(
+        payload, "effect_spec", path=path, context="effect_sheet program"
+    )
+    required_keys = {"effect_type", "duration_frames", "blend_mode", "intensity"}
+    allowed_keys = required_keys | {"color_tint"}
+    missing = required_keys - effect_spec_payload.keys()
+    extra = effect_spec_payload.keys() - allowed_keys
+    if missing:
+        joined = ", ".join(sorted(missing))
+        raise CompilerValidationError(
+            f"{path}: effect_sheet program.effect_spec missing required key(s): {joined}"
+        )
+    if extra:
+        joined = ", ".join(sorted(extra))
+        raise CompilerValidationError(
+            f"{path}: effect_sheet program.effect_spec contains unexpected key(s): {joined}"
+        )
+    effect_type = _require_string(
+        effect_spec_payload, "effect_type", path=path, context="effect_sheet program.effect_spec"
+    )
+    duration_frames = _require_int(
+        effect_spec_payload, "duration_frames", path=path, context="effect_sheet program.effect_spec"
+    )
+    blend_mode = _require_string(
+        effect_spec_payload, "blend_mode", path=path, context="effect_sheet program.effect_spec"
+    )
+    intensity_raw = effect_spec_payload.get("intensity")
+    if not isinstance(intensity_raw, (int, float)) or isinstance(intensity_raw, bool):
+        raise CompilerValidationError(
+            f"{path}: effect_sheet program.effect_spec.intensity must be a number"
+        )
+    intensity = float(intensity_raw)
+    color_tint = None
+    if "color_tint" in effect_spec_payload and effect_spec_payload["color_tint"] is not None:
+        color_tint_raw = effect_spec_payload["color_tint"]
+        if not isinstance(color_tint_raw, list) or len(color_tint_raw) != 3:
+            raise CompilerValidationError(
+                f"{path}: effect_sheet program.effect_spec.color_tint must be a 3-element array"
+            )
+        color_tint = tuple(color_tint_raw)
+    effect_spec = EffectSpec(
+        effect_type=effect_type,
+        duration_frames=duration_frames,
+        blend_mode=blend_mode,
+        intensity=intensity,
+        color_tint=color_tint,
+    )
+    frame_size = _require_size(payload, "frame_size", path=path, context="effect_sheet program")
+    return EffectSheetProgram(
+        family=family,
+        program_id=program_id,
+        program_version=program_version,
+        style_pack=style_pack,
+        primitive_ids=primitive_ids,
+        variant_controls=variant_controls,
+        layout=layout,
+        effect_spec=effect_spec,
+        frame_size=frame_size,
+    )
+
+
 def load_compiler_program(path: str | Path) -> CompilerProgramBase:
     """Loads and validates a family-specific compiler program."""
 
@@ -813,6 +942,8 @@ def load_compiler_program(path: str | Path) -> CompilerProgramBase:
         return _load_tileset_program(payload, path)
     if family == "directional_sheet":
         return _load_directional_sheet_program(payload, path)
+    if family == "effect_sheet":
+        return _load_effect_sheet_program(payload, path)
     raise CompilerValidationError(f"{path}: unknown compiler family '{family}'")
 
 
@@ -1264,6 +1395,212 @@ def _composite_directional_sheet(
     return sheet
 
 
+def _render_effect_frame(
+    spec: "EffectSpec",
+    frame_index: int,
+    frame_size: tuple[int, int],
+    style_pack: "StylePack",
+) -> Image.Image:
+    from asf.style_packs import StylePack
+    frame_w, frame_h = frame_size
+    canvas = Image.new("RGBA", (frame_w, frame_h), (0, 0, 0, 0))
+    cx, cy = frame_w // 2, frame_h // 2
+    progress = frame_index / max(1, spec.duration_frames - 1)
+    intensity = spec.intensity * (0.5 + 0.5 * (1.0 - progress)) if spec.effect_type == "pulse" else spec.intensity
+    base_radius = min(frame_w, frame_h) // 4
+    if spec.effect_type == "glow":
+        radius = int(base_radius * (1.0 + progress * 0.5))
+        for r in range(radius, max(1, radius - 8), -1):
+            alpha = int(255 * intensity * (1.0 - r / radius) * 0.3)
+            color = (255, 255, 255, alpha) if spec.color_tint is None else (*spec.color_tint, alpha)
+            for angle in range(0, 360, 30):
+                import math
+                rad = math.radians(angle)
+                x = int(cx + (r - 4) * math.cos(rad))
+                y = int(cy + (r - 4) * math.sin(rad))
+                ImageDraw.Draw(canvas).ellipse(
+                    [x - 3, y - 3, x + 3, y + 3],
+                    fill=color,
+                )
+    elif spec.effect_type == "pulse":
+        radius = int(base_radius * (0.5 + progress * 1.0))
+        for r in range(radius, max(1, radius - 6), -1):
+            alpha = int(255 * intensity * (1.0 - r / radius) * 0.4)
+            color = (200, 150, 255, alpha) if spec.color_tint is None else (*spec.color_tint, alpha)
+            ImageDraw.Draw(canvas).ellipse(
+                [cx - r, cy - r, cx + r, cy + r],
+                fill=color,
+                outline=None,
+            )
+    elif spec.effect_type == "aura":
+        for offset in range(0, base_radius, 4):
+            alpha = int(255 * intensity * (1.0 - offset / base_radius) * 0.25)
+            color = (100, 200, 255, alpha) if spec.color_tint is None else (*spec.color_tint, alpha)
+            ImageDraw.Draw(canvas).ellipse(
+                [cx - base_radius + offset, cy - base_radius + offset,
+                 cx + base_radius - offset, cy + base_radius - offset],
+                fill=None,
+                outline=color,
+                width=2,
+            )
+    elif spec.effect_type == "burst":
+        import math
+        particle_count = 12
+        for i in range(particle_count):
+            angle = (i / particle_count) * 2 * math.pi + progress * math.pi
+            dist = int(base_radius * progress * 0.8)
+            px = int(cx + dist * math.cos(angle))
+            py = int(cy + dist * math.sin(angle))
+            alpha = int(255 * intensity * (1.0 - progress) * 0.7)
+            color = (255, 200, 100, alpha) if spec.color_tint is None else (*spec.color_tint, alpha)
+            ImageDraw.Draw(canvas).ellipse(
+                [px - 4, py - 4, px + 4, py + 4],
+                fill=color,
+            )
+    return canvas
+
+
+def _composite_effect_sheet(
+    frames: list[Image.Image],
+) -> Image.Image:
+    if not frames:
+        raise CompilerValidationError("No frames provided for effect sheet")
+    frame_w, frame_h = frames[0].size
+    sheet_w = frame_w * len(frames)
+    sheet_h = frame_h
+    sheet = Image.new("RGBA", (sheet_w, sheet_h), (0, 0, 0, 0))
+    for i, frame in enumerate(frames):
+        sheet.alpha_composite(frame, (i * frame_w, 0))
+    return sheet
+
+
+def _blend_additive(base: Image.Image, overlay: Image.Image) -> Image.Image:
+    result = Image.new("RGBA", base.size, (0, 0, 0, 0))
+    for y in range(base.height):
+        for x in range(base.width):
+            b = base.getpixel((x, y))
+            o = overlay.getpixel((x, y))
+            r = min(255, b[0] + o[0])
+            g = min(255, b[1] + o[1])
+            b_val = min(255, b[2] + o[2])
+            a = max(b[3], o[3])
+            result.putpixel((x, y), (r, g, b_val, a))
+    return result
+
+
+def _blend_screen(base: Image.Image, overlay: Image.Image) -> Image.Image:
+    result = Image.new("RGBA", base.size, (0, 0, 0, 0))
+    for y in range(base.height):
+        for x in range(base.width):
+            b = base.getpixel((x, y))
+            o = overlay.getpixel((x, y))
+            r = int(255 - (255 - b[0]) * (255 - o[0]) / 255)
+            g = int(255 - (255 - b[1]) * (255 - o[1]) / 255)
+            b_val = int(255 - (255 - b[2]) * (255 - o[2]) / 255)
+            a = max(b[3], o[3])
+            result.putpixel((x, y), (r, g, b_val, a))
+    return result
+
+
+def _blend_multiply(base: Image.Image, overlay: Image.Image) -> Image.Image:
+    result = Image.new("RGBA", base.size, (0, 0, 0, 0))
+    for y in range(base.height):
+        for x in range(base.width):
+            b = base.getpixel((x, y))
+            o = overlay.getpixel((x, y))
+            r = int(b[0] * o[0] / 255)
+            g = int(b[1] * o[1] / 255)
+            b_val = int(b[2] * o[2] / 255)
+            a = max(b[3], o[3])
+            result.putpixel((x, y), (r, g, b_val, a))
+    return result
+
+
+def composite_effect_on_entity(
+    entity_sheet: Image.Image,
+    effect_sheet: Image.Image,
+    blend_mode: str,
+    frame_mapping: tuple[int, ...] | None = None,
+) -> Image.Image:
+    if entity_sheet.size != effect_sheet.size:
+        raise CompilerValidationError(
+            f"entity sheet size {entity_sheet.size} must match effect sheet size {effect_sheet.size}"
+        )
+    frame_w = entity_sheet.width
+    total_frames = effect_sheet.width // frame_w if frame_w > 0 else 0
+    if frame_mapping is None:
+        frame_mapping = tuple(range(total_frames))
+    result = entity_sheet.copy()
+    for frame_idx in frame_mapping:
+        if frame_idx >= total_frames:
+            continue
+        x0 = frame_idx * frame_w
+        effect_frame = effect_sheet.crop((x0, 0, x0 + frame_w, entity_sheet.height))
+        if blend_mode == "additive":
+            result = _blend_additive(result, effect_frame)
+        elif blend_mode == "screen":
+            result = _blend_screen(result, effect_frame)
+        elif blend_mode == "multiply":
+            result = _blend_multiply(result, effect_frame)
+        else:
+            raise CompilerValidationError(f"unknown blend mode '{blend_mode}'")
+    return result
+
+
+def _compile_effect_sheet(
+    program: EffectSheetProgram,
+    output_dir: Path,
+    repo_root: Path,
+    program_path: str | Path | None,
+) -> CompilerOutputManifest:
+    output_dir.mkdir(parents=True, exist_ok=True)
+    sheet_path = output_dir / "sheet.png"
+    metadata_path = output_dir / "metadata.json"
+    timing_path = output_dir / "effect_timing.json"
+    program_copy_path = output_dir / "program.json"
+    manifest_path = output_dir / "manifest.json"
+    dummy_palette = PaletteSpec(primary="iron", secondary="iron", accent="iron")
+    style_pack = load_style_pack(
+        program.style_pack, dummy_palette, repo_root / "style_packs"
+    )
+    frames = []
+    for frame_idx in range(program.effect_spec.duration_frames):
+        frame = _render_effect_frame(
+            program.effect_spec,
+            frame_idx,
+            program.frame_size,
+            style_pack,
+        )
+        frames.append(frame)
+    sheet = _composite_effect_sheet(frames)
+    sheet.save(sheet_path, format="PNG", optimize=False, compress_level=9)
+    timing = {
+        "frame_duration_ms": 100,
+        "loop": True,
+        "total_duration_ms": program.effect_spec.duration_frames * 100,
+        "blend_mode": program.effect_spec.blend_mode,
+        "effect_type": program.effect_spec.effect_type,
+        "frame_count": program.effect_spec.duration_frames,
+    }
+    manifest = build_output_manifest(
+        program,
+        input_program_path=program_path or "<memory>",
+        output_file_paths=(sheet_path, metadata_path, timing_path, program_copy_path, manifest_path),
+        repo_root=repo_root,
+    )
+    _write_json_file(timing_path, timing)
+    metadata = _compiler_metadata(
+        program,
+        manifest=manifest,
+        primitive_assets=[],
+        output_dir=output_dir,
+    )
+    _write_json_file(metadata_path, metadata)
+    _write_json_file(program_copy_path, program.to_dict())
+    _write_json_file(manifest_path, manifest.to_dict())
+    return manifest
+
+
 DEFAULT_COMPILER_REGISTRY = CompilerRegistry(
     definitions={
         "character_sheet": CompilerDefinition(
@@ -1289,6 +1626,12 @@ DEFAULT_COMPILER_REGISTRY = CompilerRegistry(
             version=COMPILER_VERSION,
             program_type=DirectionalSheetProgram,
             compile=_compile_directional_sheet,
+        ),
+        "effect_sheet": CompilerDefinition(
+            family="effect_sheet",
+            version=COMPILER_VERSION,
+            program_type=EffectSheetProgram,
+            compile=_compile_effect_sheet,
         ),
     }
 )

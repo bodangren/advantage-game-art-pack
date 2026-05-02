@@ -7,7 +7,7 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from asf.specs import SpecValidationError, load_spec
+from asf.specs import EffectSpec, SpecValidationError, load_spec
 from asf.style_packs import load_style_pack
 
 
@@ -67,6 +67,80 @@ class SpecLoadingTest(unittest.TestCase):
                 SpecValidationError, "unexpected top-level key"
             ):
                 load_spec(invalid_path)
+
+
+class EffectSpecTest(unittest.TestCase):
+    """Validates the EffectSpec dataclass."""
+
+    def test_valid_glow_effect(self) -> None:
+        effect = EffectSpec(
+            effect_type="glow",
+            duration_frames=8,
+            blend_mode="additive",
+            intensity=0.7,
+        )
+        self.assertEqual(effect.effect_type, "glow")
+        self.assertEqual(effect.duration_frames, 8)
+        self.assertEqual(effect.blend_mode, "additive")
+        self.assertEqual(effect.intensity, 0.7)
+        self.assertIsNone(effect.color_tint)
+
+    def test_valid_pulse_with_tint(self) -> None:
+        effect = EffectSpec(
+            effect_type="pulse",
+            duration_frames=16,
+            blend_mode="screen",
+            intensity=0.5,
+            color_tint=(255, 0, 128),
+        )
+        self.assertEqual(effect.effect_type, "pulse")
+        self.assertEqual(effect.color_tint, (255, 0, 128))
+
+    def test_invalid_effect_type(self) -> None:
+        with self.assertRaisesRegex(SpecValidationError, "effect_type"):
+            EffectSpec(
+                effect_type="invalid",
+                duration_frames=8,
+                blend_mode="additive",
+                intensity=0.5,
+            )
+
+    def test_invalid_duration_frames(self) -> None:
+        with self.assertRaisesRegex(SpecValidationError, "duration_frames"):
+            EffectSpec(
+                effect_type="glow",
+                duration_frames=0,
+                blend_mode="additive",
+                intensity=0.5,
+            )
+
+    def test_invalid_blend_mode(self) -> None:
+        with self.assertRaisesRegex(SpecValidationError, "blend_mode"):
+            EffectSpec(
+                effect_type="glow",
+                duration_frames=8,
+                blend_mode="invalid",
+                intensity=0.5,
+            )
+
+    def test_invalid_intensity_range(self) -> None:
+        with self.assertRaisesRegex(SpecValidationError, "intensity"):
+            EffectSpec(
+                effect_type="glow",
+                duration_frames=8,
+                blend_mode="additive",
+                intensity=1.5,
+            )
+
+    def test_invalid_color_tint_rgb_range(self) -> None:
+        with self.assertRaisesRegex(SpecValidationError, "color_tint"):
+            EffectSpec(
+                effect_type="glow",
+                duration_frames=8,
+                blend_mode="additive",
+                intensity=0.5,
+                color_tint=(300, 0, 128),
+            )
 
 
 if __name__ == "__main__":
