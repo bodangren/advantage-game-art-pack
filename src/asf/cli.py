@@ -302,6 +302,47 @@ def main() -> None:
         help="Optional output path for the eval report JSON.",
     )
 
+    bundle_parser = subparsers.add_parser(
+        "bundle", help="Manage per-game asset bundles."
+    )
+    bundle_subparsers = bundle_parser.add_subparsers(dest="bundle_command", required=True)
+
+    bundle_create_parser = bundle_subparsers.add_parser(
+        "create", help="Scaffold a new bundle directory."
+    )
+    bundle_create_parser.add_argument(
+        "--name", required=True, type=str, help="Bundle name (e.g., library_dungeon)."
+    )
+    bundle_create_parser.add_argument(
+        "--style", required=True, type=str, help="Style pack name."
+    )
+    bundle_create_parser.add_argument(
+        "--repo-root", default=Path.cwd(), type=Path, help="Repository root for bundle storage."
+    )
+
+    bundle_validate_parser = bundle_subparsers.add_parser(
+        "validate", help="Validate bundle completeness."
+    )
+    bundle_validate_parser.add_argument(
+        "--name", required=True, type=str, help="Bundle name to validate."
+    )
+    bundle_validate_parser.add_argument(
+        "--repo-root", default=Path.cwd(), type=Path, help="Repository root for bundle storage."
+    )
+
+    bundle_export_parser = bundle_subparsers.add_parser(
+        "export", help="Export bundle to output directory."
+    )
+    bundle_export_parser.add_argument(
+        "--name", required=True, type=str, help="Bundle name to export."
+    )
+    bundle_export_parser.add_argument(
+        "--output-dir", required=True, type=Path, help="Output directory for exported bundle."
+    )
+    bundle_export_parser.add_argument(
+        "--repo-root", default=Path.cwd(), type=Path, help="Repository root for bundle storage."
+    )
+
     parser.add_argument("--spec", help="Path to a sprite spec.")
     parser.add_argument(
         "--output",
@@ -481,6 +522,41 @@ def main() -> None:
             output_path.write_text(json.dumps(spec, indent=2), encoding="utf-8")
         print(f"Wrote {len(specs)} entity specs to {args.output_dir}")
         return
+
+    if args.command == "bundle":
+        from asf.bundle import (
+            create_bundle_directory,
+            load_bundle_manifest,
+            BundleValidator,
+            export_bundle,
+        )
+
+        if args.bundle_command == "create":
+            manifest = create_bundle_directory(
+                args.repo_root / "bundles",
+                args.name,
+                args.style,
+            )
+            print(f"Created bundle '{args.name}' with style '{args.style}'")
+            print(f"  Location: {args.repo_root / 'bundles' / args.name}")
+            return
+
+        if args.bundle_command == "validate":
+            bundle_root = args.repo_root / "bundles"
+            manifest = load_bundle_manifest(bundle_root, args.name)
+            validator = BundleValidator(bundle_root / args.name)
+            missing = validator.validate(manifest)
+            if missing:
+                print(f"Missing categories: {', '.join(missing)}")
+            else:
+                print("Bundle is complete.")
+            return
+
+        if args.bundle_command == "export":
+            bundle_root = args.repo_root / "bundles"
+            export_path = export_bundle(bundle_root, args.name, args.output_dir)
+            print(f"Exported bundle '{args.name}' to {export_path}")
+            return
 
     if not args.spec or not args.output:
         parser.error("either the canon subcommand or --spec/--output is required")
