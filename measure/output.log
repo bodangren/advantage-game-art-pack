@@ -1746,3 +1746,40 @@ Index: /home/daniel-bo/Desktop/pixel-art-generator/measure/tracks/directional_ch
  
 
 [0m
+[0m$ [0mgit add -A && git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	modified:   canon/corpus_manifest.json
+	modified:   measure/output.log
+	modified:   measure/tracks/directional_character_sheets_20260502/plan.md
+	modified:   src/asf/__init__.py
+	modified:   src/asf/canon.py
+	modified:   src/asf/compilers.py
+	modified:   tests/test_canon.py
+	modified:   tests/test_compilers.py
+[0m
+[0m$ [0mgit commit -m "feat(compilers): add directional_sheet family with renderer and compositor
+
+- Add DirectionalSheetProgram dataclass with directions, frames_per_direction, render_spec, palette
+- Add DIRECTIONAL_LAYOUT_MODE = 'directional_grid' layout mode
+- Add _compile_directional_sheet() renderer that generates frames per direction/frame
+- Add _composite_directional_sheet() compositor to arrange frames in grid
+- Wire into DEFAULT_COMPILER_REGISTRY
+- Add directional_sheet to FAMILY_NAMES in canon.py
+- Update corpus_manifest.json and test_canon.py with new family
+- Add DirectionalSheetProgramTest with tests for schema, layout mode, and pixel placement
+
+Implements Phase 1 (T01-T03) and Phase 2 (T04-T06) of directional_character_sheets track." && git push
+[main 9f814f6] feat(compilers): add directional_sheet family with renderer and compositor
+ 8 files changed, 1501 insertions(+), 13 deletions(-)
+To https://github.com/bodangren/advantage-game-art-pack.git
+   29c4859..9f814f6  main -> main
+[0m
+[0m$ [0mwc -l measure/tech-debt.md measure/lessons-learned.md
+34 measure/tech-debt.md
+   49 measure/lessons-learned.md
+   83 total
+[0m
