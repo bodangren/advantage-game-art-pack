@@ -1,7 +1,8 @@
 {
   "id": "review_app_serving_20260425",
   "name": "Review App Static File Serving",
-  "status": "pending",
+  "status": "completed",
   "created": "2026-04-25",
-  "priority": "medium"
+  "priority": "medium",
+  "completed": "2026-05-02"
 }

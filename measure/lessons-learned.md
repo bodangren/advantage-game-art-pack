@@ -28,6 +28,7 @@
 - (2026-04-24, llm_planner_provider_impl_20260424) Anthropic usage dict uses `input_tokens`/`output_tokens` keys, not `prompt_tokens`/`completion_tokens`; normalize these in the trace building logic.
 - (2026-04-24, review_app_auth_and_images_20260424) FastAPI authentication via Depends(require_auth) applies to all routes including POST actions. Use BaseHTTPMiddleware for path-level exemptions if needed.
 - (2026-04-24, review_app_auth_and_images_20260424) Static file serving via Starlette's StaticFiles must be mounted on the app instance after middleware setup; mount inside on_startup to ensure directory exists.
+- (2026-05-02, review_app_serving_20260425) FastAPI Form data dependencies require python-multipart package; install it separately from fastapi.
 - (2026-04-24, review_app_auth_and_images_20260424) rendered_files stored as JSON strings in SQLite; parse them before passing to templates to avoid string/array confusion in Jinja2.
 - (2026-04-23, lighting_renderer_fixes_20260423) Lighting double-darken: when directional shadow AND ambient darkening are both applied separately as darken steps, pixels get hit twice and become too dark. The fix is a single combined ambient+directional factor applied once.
 - (2026-04-23, lighting_renderer_fixes_20260423) Shadow direction: for directional light, the OPPOSITE quadrant from the light source is shadow.

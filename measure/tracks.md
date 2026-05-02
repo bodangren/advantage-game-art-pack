@@ -93,7 +93,10 @@ This file tracks all major tracks for the project.
   *Add recalibrate subcommand to candidate CLI for scripted threshold adjustment*
   *Link: [./archive/critic_calibration_cli_20260425/](./archive/critic_calibration_cli_20260425/)*
   *Status: Complete — Added `recalibrate --family X` CLI command for scripted threshold adjustment; calibrate command now accepts --family filter*
-- [ ] **Track: Review App Static File Serving** *Link: [./tracks/review_app_serving_20260425/](./tracks/review_app_serving_20260425/)*
+- [x] **Track: Review App Static File Serving**
+  *Add static file serving to review app for actual image previews*
+  *Link: [./tracks/review_app_serving_20260425/](./tracks/review_app_serving_20260425/)*
+  *Status: Complete — StaticFiles mounted at /static for outputs directory; templates render actual images from rendered_files paths.*
 
 - [ ] **Track: Directional Character Sheet Renderer**
   *Multi-frame directional animation sheets (4/8-direction walk/idle/run) for the advantage-games series*
