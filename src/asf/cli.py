@@ -167,6 +167,28 @@ def main() -> None:
         help="Repository root used to normalize manifest paths.",
     )
 
+    batch_parser = subparsers.add_parser(
+        "batch-generate", help="Generate batch entity specs from a natural-language prompt."
+    )
+    batch_parser.add_argument(
+        "--prompt",
+        required=True,
+        type=str,
+        help="Natural-language prompt (e.g., '10 swamp enemies in chibi style').",
+    )
+    batch_parser.add_argument(
+        "--output-dir",
+        required=True,
+        type=Path,
+        help="Directory where entity specs will be written as JSON files.",
+    )
+    batch_parser.add_argument(
+        "--repo-root",
+        default=Path.cwd(),
+        type=Path,
+        help="Repository root for resolving style pack and primitive paths.",
+    )
+
     candidate_parser = subparsers.add_parser(
         "candidate", help="Run candidate generation or calibration."
     )
@@ -360,7 +382,6 @@ def main() -> None:
             if args.dry_run:
                 print("(dry-run -- no files written)")
             else:
-                import json
                 pack_path.write_text(json.dumps(pack.to_dict(), indent=2), encoding="utf-8")
                 print(f"Updated {pack_path}")
             return
@@ -437,6 +458,28 @@ def main() -> None:
             "metadata": manifest.metadata,
         }, indent=2), encoding="utf-8")
         print(f"Planner manifest written to {args.output}")
+        return
+
+    if args.command == "batch-generate":
+        from asf.planner.batch_gen import EntitySpecGenerator, PromptParser
+        from asf.planner.schemas import AssetFamily, BatchBrief, ThemePackReference
+
+        parsed = PromptParser().parse(args.prompt)
+        brief = BatchBrief(
+            request=args.prompt,
+            families=(AssetFamily.CHARACTER_SHEET,),
+            style_pack="cute_chibi_v1",
+            theme_pack=None,
+            shared_constraints={},
+            per_asset_constraints={},
+        )
+        generator = EntitySpecGenerator()
+        specs = generator.generate(brief)
+        args.output_dir.mkdir(parents=True, exist_ok=True)
+        for i, spec in enumerate(specs):
+            output_path = args.output_dir / f"entity_{i:03d}.json"
+            output_path.write_text(json.dumps(spec, indent=2), encoding="utf-8")
+        print(f"Wrote {len(specs)} entity specs to {args.output_dir}")
         return
 
     if not args.spec or not args.output:
