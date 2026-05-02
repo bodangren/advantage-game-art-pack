@@ -43,12 +43,20 @@ class StylePack:
     lighting_levels: int
     shading_type: str
     allowed_parts: tuple[str, ...]
+    directional_variants: dict[str, dict[str, str]]
     ramps: dict[str, tuple[str, str, str]]
 
     def ramp(self, ramp_name: str) -> tuple[str, str, str]:
         """Returns the RGB ramp registered under ``ramp_name``."""
 
         return self.ramps[ramp_name]
+
+    def variant_for_direction(
+        self, direction: str, part_name: str
+    ) -> str | None:
+        """Returns the variant_id override for a given direction and part, or None."""
+        variants = self.directional_variants.get(direction, {})
+        return variants.get(part_name)
 
 
 def _load_json(path: Path) -> dict[str, Any]:
@@ -167,6 +175,7 @@ def load_style_pack(
             "allowed_parts",
             "animation_rules",
             "ramps",
+            "directional_variants",
         },
         "style pack",
     )
@@ -208,6 +217,19 @@ def load_style_pack(
         raise SpecValidationError("'palette_limits' must be positive")
 
     allowed_parts = _require_string_list(payload, "allowed_parts")
+    raw_variants = payload.get("directional_variants", {})
+    directional_variants: dict[str, dict[str, str]] = {}
+    for direction, parts in raw_variants.items():
+        if not isinstance(direction, str) or not direction:
+            raise SpecValidationError("directional_variants keys must be non-empty strings")
+        if not isinstance(parts, dict):
+            raise SpecValidationError(f"directional_variants['{direction}'] must be an object")
+        for part_name, variant_id in parts.items():
+            if not isinstance(part_name, str) or not part_name:
+                raise SpecValidationError("directional_variants part names must be non-empty strings")
+            if not isinstance(variant_id, str) or not variant_id:
+                raise SpecValidationError("directional_variants variant_ids must be non-empty strings")
+        directional_variants[direction] = parts
     ramps = _load_ramps(payload)
 
     for ramp_name in (palette.primary, palette.secondary, palette.accent):
@@ -223,5 +245,6 @@ def load_style_pack(
         lighting_levels=_require_int(lighting_payload, "levels"),
         shading_type=_require_string(shading_payload, "type"),
         allowed_parts=allowed_parts,
+        directional_variants=directional_variants,
         ramps=ramps,
     )

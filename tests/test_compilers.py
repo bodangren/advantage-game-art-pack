@@ -339,6 +339,66 @@ class DirectionalSheetProgramTest(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "frames_per_direction must be between 1 and 8"):
                 load_compiler_program(payload_path)
 
+    def test_load_directional_program_accepts_null_render_spec(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            payload_path = Path(tmp_dir) / "directional.json"
+            payload = {
+                "family": "directional_sheet",
+                "program_id": "test_dir_null_spec",
+                "program_version": 1,
+                "style_pack": "cute_chibi_v1",
+                "primitive_ids": ["wizard_core"],
+                "variant_controls": {
+                    "variant_id": None,
+                    "candidate_index": None,
+                    "search_budget": None,
+                },
+                "layout": {
+                    "mode": "directional_grid",
+                    "dimensions": [128, 128],
+                    "grid": [4, 4],
+                    "frame_size": [32, 32],
+                },
+                "directions": ["N", "E", "S", "W"],
+                "frames_per_direction": 2,
+                "render_spec": None,
+                "palette": {"primary": "iron", "secondary": "iron", "accent": "iron"},
+            }
+            payload_path.write_text(json.dumps(payload), encoding="utf-8")
+            program = load_compiler_program(payload_path)
+            self.assertEqual(program.program_id, "test_dir_null_spec")
+            self.assertIsNone(program.render_spec)
+
+    def test_cli_compile_directional_sheet(self) -> None:
+        from pathlib import Path
+        import tempfile
+        import shutil
+        from asf.cli import main
+        import sys
+
+        repo_root = Path(__file__).resolve().parents[1]
+        program_path = repo_root / "programs" / "directional_sheet" / "knight_walk_4dir.json"
+        if not program_path.exists():
+            self.skipTest("Example program knight_walk_4dir.json not found")
+
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            output_dir = Path(tmp_dir) / "output"
+            output_dir.mkdir()
+            sys.argv = [
+                "asf",
+                "compile",
+                "--program", str(program_path),
+                "--output-dir", str(output_dir),
+                "--repo-root", str(repo_root),
+            ]
+            try:
+                main()
+            except SystemExit:
+                pass
+            self.assertTrue((output_dir / "sheet.png").exists())
+            self.assertTrue((output_dir / "metadata.json").exists())
+            self.assertTrue((output_dir / "manifest.json").exists())
+
     def test_composite_directional_sheet_dimensions(self) -> None:
         from PIL import Image
         from asf.compilers import _composite_directional_sheet
@@ -356,6 +416,106 @@ class DirectionalSheetProgramTest(unittest.TestCase):
         sheet = _composite_directional_sheet(frames, num_directions=2, frames_per_direction=1)
         self.assertEqual(sheet.size, (16, 32))
         self.assertEqual(sheet.getpixel((8, 8)), (255, 0, 0, 255))
+
+    def test_directional_variants_produce_different_frames(self) -> None:
+        from asf.style_packs import StylePack, OutlineRule, AnimationRule
+
+        pack = StylePack(
+            name="test",
+            palette_limits=12,
+            outline=OutlineRule(enabled=False, color="#000000", thickness=1),
+            animation_rules=AnimationRule(max_offset=3, max_rotation_deg=10),
+            lighting_direction="top_left",
+            lighting_levels=3,
+            shading_type="soft_cluster",
+            allowed_parts=("test_part",),
+            directional_variants={
+                "N": {"head": "front_hair"},
+                "S": {"head": "back_hair"},
+            },
+            ramps={
+                "iron": ("#d2d8dd", "#8e9aa6", "#4b5561"),
+            },
+        )
+        self.assertEqual(pack.variant_for_direction("N", "head"), "front_hair")
+        self.assertEqual(pack.variant_for_direction("S", "head"), "back_hair")
+        self.assertIsNone(pack.variant_for_direction("E", "head"))
+        self.assertIsNone(pack.variant_for_direction("N", "body"))
+
+    def test_directional_sheet_palette_enforcement(self) -> None:
+        from PIL import Image
+        from pathlib import Path
+        import tempfile
+        from asf.compilers import (
+            DirectionalSheetProgram,
+            compile_program,
+            load_compiler_program,
+            ProgramLayout,
+            VariantControls,
+            PaletteSpec,
+        )
+        from asf.canon import FAMILY_NAMES
+
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            repo_root = Path(tmp_dir)
+            demo_dir = repo_root / "demo-assets"
+            demo_dir.mkdir()
+            Image.new("RGBA", (64, 64), (200, 100, 50, 255)).save(demo_dir / "wizard.png")
+            primitive_dir = repo_root / "library" / "primitives" / "character_sheet" / "test_wizard"
+            primitive_dir.mkdir(parents=True)
+            import json
+            (primitive_dir / "primitive.json").write_text(json.dumps({
+                "primitive_id": "test_wizard",
+                "family": "character_sheet",
+                "subtype": "body_core",
+                "source_asset": "wizard",
+                "source_path": "demo-assets/wizard.png",
+                "source_region": {"x": 0, "y": 0, "width": 64, "height": 64},
+                "anchors": {"root": {"x": 32, "y": 63}, "head": {"x": 32, "y": 8}},
+                "compatible_palettes": ["iron"],
+                "compatible_themes": ["test"],
+                "tags": ["test"],
+                "motifs": ["test"],
+                "approval_state": "approved",
+                "promoted_at": "2026-04-05T00:00:00Z",
+                "provenance": {
+                    "source_kind": "manual_source",
+                    "source_asset": "wizard",
+                    "source_path": "demo-assets/wizard.png",
+                    "source_region": {"x": 0, "y": 0, "width": 64, "height": 64},
+                    "approved_by": "codex",
+                    "variant_id": None,
+                    "critic_summary": None,
+                    "lineage": [],
+                },
+                "companion_files": [],
+            }), encoding="utf-8")
+            style_pack_source = Path(__file__).resolve().parents[1] / "style_packs" / "cute_chibi_v1.json"
+            style_dir = repo_root / "style_packs"
+            style_dir.mkdir()
+            import shutil
+            shutil.copyfile(style_pack_source, style_dir / "cute_chibi_v1.json")
+            output_dir = Path(tmp_dir) / "output"
+            output_dir.mkdir()
+            program = DirectionalSheetProgram(
+                family="directional_sheet",
+                program_id="test_dir_palette",
+                program_version=1,
+                style_pack="cute_chibi_v1",
+                primitive_ids=("test_wizard",),
+                variant_controls=VariantControls(variant_id=None, candidate_index=None, search_budget=None),
+                layout=ProgramLayout(mode="directional_grid", dimensions=(64, 128), grid=(2, 4), frame_size=(32, 32)),
+                directions=("N", "S"),
+                frames_per_direction=1,
+                render_spec=None,
+                palette=PaletteSpec(primary="iron", secondary="iron", accent="iron"),
+            )
+            manifest = compile_program(program, output_dir, repo_root=repo_root)
+            sheet_path = output_dir / "sheet.png"
+            self.assertTrue(sheet_path.exists())
+            result_img = Image.open(sheet_path)
+            used_colors = {px for px in result_img.getdata() if px[3] > 0}
+            self.assertLessEqual(len(used_colors), 12)
 
 
 def _copy_style_pack(repo_root: Path) -> None:

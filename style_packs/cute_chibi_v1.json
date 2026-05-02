@@ -19,6 +19,12 @@
     "robe_basic",
     "slime_body"
   ],
+  "directional_variants": {
+    "N": {"head": "front_hair", "body": "front_body"},
+    "S": {"head": "back_hair", "body": "back_body"},
+    "E": {"head": "side_hair", "body": "side_body"},
+    "W": {"head": "side_hair", "body": "side_body"}
+  },
   "animation_rules": {
     "max_offset": 3,
     "max_rotation_deg": 10

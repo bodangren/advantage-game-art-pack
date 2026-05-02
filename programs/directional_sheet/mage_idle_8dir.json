@@ -1,0 +1,46 @@
+{
+  "family": "directional_sheet",
+  "program_id": "mage_idle_8dir",
+  "program_version": 1,
+  "style_pack": "cute_chibi_v1",
+  "primitive_ids": [
+    "wizard_core"
+  ],
+  "variant_controls": {
+    "variant_id": "mage_idle_8dir_v1",
+    "candidate_index": 0,
+    "search_budget": 4
+  },
+  "layout": {
+    "mode": "directional_grid",
+    "dimensions": [
+      256,
+      256
+    ],
+    "grid": [
+      8,
+      8
+    ],
+    "frame_size": [
+      32,
+      32
+    ]
+  },
+  "directions": [
+    "N",
+    "NE",
+    "E",
+    "SE",
+    "S",
+    "SW",
+    "W",
+    "NW"
+  ],
+  "frames_per_direction": 1,
+  "render_spec": null,
+  "palette": {
+    "primary": "iron",
+    "secondary": "royal_blue",
+    "accent": "gold_trim"
+  }
+}

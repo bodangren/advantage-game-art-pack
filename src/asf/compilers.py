@@ -765,10 +765,14 @@ def _load_directional_sheet_program(
         raise CompilerValidationError(
             f"{path}: frames_per_direction must be between 1 and 8"
         )
-    render_spec_payload = _require_mapping(
-        payload, "render_spec", path=path, context="directional_sheet program"
-    )
-    render_spec = load_spec_payload(render_spec_payload)
+    render_spec_payload = payload.get("render_spec")
+    render_spec = None
+    if render_spec_payload is not None:
+        if not isinstance(render_spec_payload, dict):
+            raise CompilerValidationError(
+                f"{path}: directional_sheet program.render_spec must be an object or null"
+            )
+        render_spec = load_spec_payload(render_spec_payload)
     palette_payload = _require_mapping(
         payload, "palette", path=path, context="directional_sheet program"
     )
@@ -883,8 +887,12 @@ def _apply_variant_adjustments(
     seed: int,
     palette: PaletteSpec,
     style_pack_name: str,
+    direction: str | None = None,
 ) -> Image.Image:
     shift_x, shift_y, tint_index, alpha = _variant_parameters(seed)
+    if direction is not None:
+        shift_x = (shift_x + _direction_offset(direction, axis="x")) % 16
+        shift_y = (shift_y + _direction_offset(direction, axis="y")) % 16
     if shift_x or shift_y:
         image = ImageChops.offset(image, shift_x, shift_y)
     palette_hint = {
@@ -912,6 +920,21 @@ def _apply_variant_adjustments(
     return blended
 
 
+def _direction_offset(direction: str, axis: str) -> int:
+    offsets = {
+        "N": (0, -2),
+        "S": (0, 2),
+        "E": (2, 0),
+        "W": (-2, 0),
+        "NE": (2, -2),
+        "NW": (-2, -2),
+        "SE": (2, 2),
+        "SW": (-2, 2),
+    }
+    dx, dy = offsets.get(direction, (0, 0))
+    return dx if axis == "x" else dy
+
+
 def _render_resized_primitive(
     asset: PrimitiveAsset,
     target_size: tuple[int, int],
@@ -919,6 +942,7 @@ def _render_resized_primitive(
     seed: int,
     palette: PaletteSpec,
     style_pack_name: str,
+    direction: str | None = None,
 ) -> Image.Image:
     image = _load_primitive_image(asset)
     image = ImageOps.contain(image, target_size, Image.Resampling.LANCZOS)
@@ -929,7 +953,7 @@ def _render_resized_primitive(
     )
     canvas.alpha_composite(image, offset)
     return _apply_variant_adjustments(
-        canvas, seed=seed, palette=palette, style_pack_name=style_pack_name
+        canvas, seed=seed, palette=palette, style_pack_name=style_pack_name, direction=direction
     )
 
 
@@ -1183,7 +1207,7 @@ def _compile_directional_sheet(
         program.style_pack, program.palette, repo_root / "style_packs"
     )
     frames = []
-    for direction_idx in range(len(program.directions)):
+    for direction_idx, direction in enumerate(program.directions):
         for frame_idx in range(program.frames_per_direction):
             frame_seed = _variant_seed(program) + direction_idx * 100 + frame_idx
             frame_image = _render_resized_primitive(
@@ -1192,6 +1216,7 @@ def _compile_directional_sheet(
                 seed=frame_seed,
                 palette=program.palette,
                 style_pack_name=style_pack.name,
+                direction=direction,
             )
             frames.append(frame_image)
     sheet = _composite_directional_sheet(

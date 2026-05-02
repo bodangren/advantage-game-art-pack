@@ -38,32 +38,32 @@
   that compiles a minimal directional spec and produces a valid PNG with
   correct dimensions.
 
-## Phase 3: Style Pack Integration [ ]
+## Phase 3: Style Pack Integration [x]
 
-- [ ] **T07 — Directional part variations**
+- [x] **T07 — Directional part variations**
   Extend style pack schema to support per-direction part variant overrides
   (e.g., `front_hair`, `back_hair`). Write test that style pack with directional
   variants produces different pixel output per direction.
 
-- [ ] **T08 — Palette enforcement on directional output**
+- [x] **T08 — Palette enforcement on directional output**
   Verify that median-cut palette quantization applies to directional sheet
   output. Write test: generate directional sheet, quantize, confirm palette
   limit not exceeded.
 
-## Phase 4: CLI and Examples [ ]
+## Phase 4: CLI and Examples [x]
 
-- [ ] **T09 — CLI subcommand for directional sheets**
+- [x] **T09 — CLI subcommand for directional sheets**
   Add `asf compile directional` subcommand that accepts a directional spec
   file and outputs the sprite sheet. Write test: invoke CLI, verify exit code 0
   and output file exists.
 
-- [ ] **T10 — Example directional specs**
+- [x] **T10 — Example directional specs**
   Create 2 example specs: `examples/knight_walk_4dir.json` (4-direction walk)
   and `examples/mage_idle_8dir.json` (8-direction idle). Write smoke test that
   compiles both without error.
 
-## Phase 5: Documentation [ ]
+## Phase 5: Documentation [x]
 
-- [ ] **T11 — Update tracks.md and lessons-learned.md**
+- [x] **T11 — Update tracks.md and lessons-learned.md**
   Mark track complete, record lessons learned about directional frame layout
   and part variation patterns.

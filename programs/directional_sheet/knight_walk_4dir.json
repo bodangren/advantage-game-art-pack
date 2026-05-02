@@ -1,0 +1,42 @@
+{
+  "family": "directional_sheet",
+  "program_id": "knight_walk_4dir",
+  "program_version": 1,
+  "style_pack": "cute_chibi_v1",
+  "primitive_ids": [
+    "wizard_core"
+  ],
+  "variant_controls": {
+    "variant_id": "knight_walk_4dir_v1",
+    "candidate_index": 0,
+    "search_budget": 4
+  },
+  "layout": {
+    "mode": "directional_grid",
+    "dimensions": [
+      128,
+      128
+    ],
+    "grid": [
+      4,
+      4
+    ],
+    "frame_size": [
+      32,
+      32
+    ]
+  },
+  "directions": [
+    "N",
+    "E",
+    "S",
+    "W"
+  ],
+  "frames_per_direction": 2,
+  "render_spec": null,
+  "palette": {
+    "primary": "iron",
+    "secondary": "royal_blue",
+    "accent": "gold_trim"
+  }
+}

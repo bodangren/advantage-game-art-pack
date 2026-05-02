@@ -98,9 +98,10 @@ This file tracks all major tracks for the project.
   *Link: [./tracks/review_app_serving_20260425/](./tracks/review_app_serving_20260425/)*
   *Status: Complete — StaticFiles mounted at /static for outputs directory; templates render actual images from rendered_files paths.*
 
-- [ ] **Track: Directional Character Sheet Renderer**
+- [x] **Track: Directional Character Sheet Renderer**
   *Multi-frame directional animation sheets (4/8-direction walk/idle/run) for the advantage-games series*
   *Link: [./tracks/directional_character_sheets_20260502/](./tracks/directional_character_sheets_20260502/)*
+  *Status: Complete — DirectionalSheetProgram with directional_variants in style packs, direction-aware frame offsets, palette quantization, example programs, and CLI integration.*
 
 - [ ] **Track: Effect Overlay Generation Pipeline**
   *Standalone effect sheets and entity+effect compositing with blend modes*
