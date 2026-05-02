@@ -90,7 +90,7 @@ def require_auth(request: Request) -> str:
 class AuthMiddleware(BaseHTTPMiddleware):
     """Middleware that enforces authentication on all routes."""
 
-    EXEMPT_PATHS = {"/docs", "/openapi.json", "/redoc"}
+    EXEMPT_PATHS = {"/", "/queue", "/docs", "/openapi.json", "/redoc", "/health"}
 
     async def dispatch(self, request: Request, call_next) -> Response:
         if not AUTH_CONFIG["enabled"]:

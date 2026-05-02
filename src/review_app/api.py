@@ -42,6 +42,12 @@ def on_startup() -> None:
         app.mount("/static", StaticFiles(directory=STATIC_ROOT), name="static")
 
 
+@app.get("/health")
+def health_check() -> dict:
+    """Health check endpoint accessible without auth."""
+    return {"status": "ok", "version": "0.1.0"}
+
+
 @app.get("/", response_class=RedirectResponse)
 def root(request: Request) -> RedirectResponse:
     """Redirect root to queue page."""
@@ -163,6 +169,47 @@ def candidate_action(
 
         db.record_decision(candidate_id, action, reason)
         return RedirectResponse(url=f"/candidate/{candidate_id}", status_code=303)
+    finally:
+        db.close()
+
+
+@app.post("/candidates/batch-approve")
+def batch_approve(
+    user: str = Depends(require_auth),
+    candidate_ids: str = Form(...),
+) -> dict:
+    """Batch approve candidates by ID list (newline or comma separated)."""
+    db = get_db()
+    try:
+        id_list = [id.strip() for id in candidate_ids.replace(",", "\n").split("\n") if id.strip()]
+        count = 0
+        for cid in id_list:
+            candidate = db.get_candidate(cid)
+            if candidate:
+                db.record_decision(cid, "approve", f"batch approve by {user}")
+                count += 1
+        return {"approved": count, "total": len(id_list)}
+    finally:
+        db.close()
+
+
+@app.post("/candidates/batch-reject")
+def batch_reject(
+    user: str = Depends(require_auth),
+    candidate_ids: str = Form(...),
+    reason: Optional[str] = Form(None),
+) -> dict:
+    """Batch reject candidates by ID list (newline or comma separated)."""
+    db = get_db()
+    try:
+        id_list = [id.strip() for id in candidate_ids.replace(",", "\n").split("\n") if id.strip()]
+        count = 0
+        for cid in id_list:
+            candidate = db.get_candidate(cid)
+            if candidate:
+                db.record_decision(cid, "reject", reason or f"batch reject by {user}")
+                count += 1
+        return {"rejected": count, "total": len(id_list)}
     finally:
         db.close()
 
