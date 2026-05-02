@@ -172,6 +172,7 @@ def _write_minimal_canon_project(overrides: dict[str, object]) -> Path:
                         "parallax_layer",
                         "ui_sheet",
                         "presentation_surface",
+                        "directional_sheet",
                     ],
                     "layout_types": [
                         "pose_sheet_3x3",

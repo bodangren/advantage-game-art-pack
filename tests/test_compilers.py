@@ -15,6 +15,7 @@ from asf.compilers import (
     CHARACTER_LAYOUT_MODE,
     CompilerValidationError,
     DEFAULT_COMPILER_REGISTRY,
+    DIRECTIONAL_LAYOUT_MODE,
     PropOrFxSheetProgram,
     TilesetProgram,
     build_output_manifest,
@@ -34,13 +35,18 @@ class CompilerRegistryTest(unittest.TestCase):
     """Validates compiler registry dispatch and program loading."""
 
     def test_registry_exposes_expected_families(self) -> None:
-        self.assertEqual(
-            DEFAULT_COMPILER_REGISTRY.families(),
-            ("character_sheet", "prop_or_fx_sheet", "tileset"),
-        )
+        families = DEFAULT_COMPILER_REGISTRY.families()
+        self.assertIn("character_sheet", families)
+        self.assertIn("directional_sheet", families)
+        self.assertIn("prop_or_fx_sheet", families)
+        self.assertIn("tileset", families)
         self.assertEqual(
             DEFAULT_COMPILER_REGISTRY.get("character_sheet").family,
             "character_sheet",
+        )
+        self.assertEqual(
+            DEFAULT_COMPILER_REGISTRY.get("directional_sheet").family,
+            "directional_sheet",
         )
 
     def test_loads_character_program_and_render_spec(self) -> None:
@@ -286,6 +292,70 @@ class CompilerRegistryTest(unittest.TestCase):
             self.assertTrue((output_dir / "manifest.json").exists())
             self.assertEqual(manifest.compiler_family, "prop_or_fx_sheet")
             self.assertTrue(manifest.output_file_paths[-1].endswith("prop/manifest.json"))
+
+
+class DirectionalSheetProgramTest(unittest.TestCase):
+    """Validates DirectionalSheetProgram schema and directional layout mode."""
+
+    def test_directional_layout_mode_exists(self) -> None:
+        self.assertEqual(DIRECTIONAL_LAYOUT_MODE, "directional_grid")
+
+    def test_directional_program_schema_fields(self) -> None:
+        from dataclasses import fields
+        from asf.compilers import DirectionalSheetProgram
+
+        field_names = {f.name for f in fields(DirectionalSheetProgram)}
+        self.assertIn("directions", field_names)
+        self.assertIn("frames_per_direction", field_names)
+        self.assertIn("render_spec", field_names)
+        self.assertIn("palette", field_names)
+
+    def test_load_directional_program_rejects_invalid_frames(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            payload_path = Path(tmp_dir) / "directional.json"
+            payload = {
+                "family": "directional_sheet",
+                "program_id": "test_dir",
+                "program_version": 1,
+                "style_pack": "cute_chibi_v1",
+                "primitive_ids": ["wizard_core"],
+                "variant_controls": {
+                    "variant_id": None,
+                    "candidate_index": None,
+                    "search_budget": None,
+                },
+                "layout": {
+                    "mode": "directional_grid",
+                    "dimensions": [128, 256],
+                    "grid": [4, 2],
+                    "frame_size": [32, 64],
+                },
+                "directions": ["facing_up", "facing_down", "facing_camera", "facing_up"],
+                "frames_per_direction": 0,
+                "render_spec": json.loads(CHARACTER_SAMPLE.read_text(encoding="utf-8"))["render_spec"],
+                "palette": {"primary": "blue", "secondary": "red", "accent": "yellow"},
+            }
+            payload_path.write_text(json.dumps(payload), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "frames_per_direction must be between 1 and 8"):
+                load_compiler_program(payload_path)
+
+    def test_composite_directional_sheet_dimensions(self) -> None:
+        from PIL import Image
+        from asf.compilers import _composite_directional_sheet
+
+        frames = [Image.new("RGBA", (64, 64), (i * 20, 0, 0, 255)) for i in range(4)]
+        sheet = _composite_directional_sheet(frames, num_directions=2, frames_per_direction=2)
+        self.assertEqual(sheet.size, (128, 128))
+
+    def test_composite_directional_sheet_pixel_placement(self) -> None:
+        from PIL import Image
+        from asf.compilers import _composite_directional_sheet
+
+        frame = Image.new("RGBA", (16, 16), (255, 0, 0, 255))
+        frames = [frame.copy() for _ in range(2)]
+        sheet = _composite_directional_sheet(frames, num_directions=2, frames_per_direction=1)
+        self.assertEqual(sheet.size, (16, 32))
+        self.assertEqual(sheet.getpixel((8, 8)), (255, 0, 0, 255))
 
 
 def _copy_style_pack(repo_root: Path) -> None:

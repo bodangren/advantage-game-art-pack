@@ -204,7 +204,8 @@
       "background_scene",
       "parallax_layer",
       "ui_sheet",
-      "presentation_surface"
+      "presentation_surface",
+      "directional_sheet"
     ],
     "layout_types": [
       "pose_sheet_3x3",

@@ -33,6 +33,7 @@ SUPPORTED_COMPILER_FAMILIES = (
     "character_sheet",
     "prop_or_fx_sheet",
     "tileset",
+    "directional_sheet",
 )
 PROGRAM_ROOT_DIRNAME = "programs"
 OUTPUT_ROOT_DIRNAME = "outputs"
@@ -40,6 +41,7 @@ OUTPUT_ROOT_DIRNAME = "outputs"
 CHARACTER_LAYOUT_MODE = "pose_sheet_3x3"
 PROP_LAYOUT_MODE = "strip_3x1"
 TILESET_LAYOUT_MODE = "tile_atlas"
+DIRECTIONAL_LAYOUT_MODE = "directional_grid"
 
 CHARACTER_DIRECTION_NAMES = (
     "facing_up",
@@ -317,6 +319,16 @@ class TilesetProgram(CompilerProgramBase):
     theme: str
     modules: tuple[str, ...]
     variation_rules: VariationRules
+    palette: PaletteSpec
+
+
+@dataclass(frozen=True)
+class DirectionalSheetProgram(CompilerProgramBase):
+    """Strict directional sheet compiler program for multi-direction animation."""
+
+    directions: tuple[str, ...]
+    frames_per_direction: int
+    render_spec: SpriteSpec
     palette: PaletteSpec
 
 
@@ -705,6 +717,82 @@ def _load_tileset_program(payload: dict[str, Any], path: Path) -> TilesetProgram
     )
 
 
+def _load_directional_sheet_program(
+    payload: dict[str, Any], path: Path
+) -> DirectionalSheetProgram:
+    _require_exact_keys(
+        payload,
+        {
+            "family",
+            "program_id",
+            "program_version",
+            "style_pack",
+            "primitive_ids",
+            "variant_controls",
+            "layout",
+            "directions",
+            "frames_per_direction",
+            "render_spec",
+            "palette",
+        },
+        "directional_sheet program",
+        path,
+    )
+    (
+        family,
+        program_id,
+        program_version,
+        primitive_ids,
+        variant_controls,
+        style_pack,
+        layout_payload,
+    ) = _parse_common_program_fields(payload, path, context="directional_sheet program")
+    layout = _parse_layout(
+        layout_payload,
+        path=path,
+        context="directional_sheet program.layout",
+        expected_mode=DIRECTIONAL_LAYOUT_MODE,
+        require_frame_size=True,
+        require_directions=False,
+    )
+    directions = _require_string_list(
+        payload, "directions", path=path, context="directional_sheet program"
+    )
+    frames_per_direction = _require_int(
+        payload, "frames_per_direction", path=path, context="directional_sheet program"
+    )
+    if frames_per_direction < 1 or frames_per_direction > 8:
+        raise CompilerValidationError(
+            f"{path}: frames_per_direction must be between 1 and 8"
+        )
+    render_spec_payload = _require_mapping(
+        payload, "render_spec", path=path, context="directional_sheet program"
+    )
+    render_spec = load_spec_payload(render_spec_payload)
+    palette_payload = _require_mapping(
+        payload, "palette", path=path, context="directional_sheet program"
+    )
+    _require_exact_keys(palette_payload, {"primary", "secondary", "accent"}, "palette", path)
+    palette = PaletteSpec(
+        primary=_require_string(palette_payload, "primary", path=path, context="palette"),
+        secondary=_require_string(palette_payload, "secondary", path=path, context="palette"),
+        accent=_require_string(palette_payload, "accent", path=path, context="palette"),
+    )
+    return DirectionalSheetProgram(
+        family=family,
+        program_id=program_id,
+        program_version=program_version,
+        style_pack=style_pack,
+        primitive_ids=primitive_ids,
+        variant_controls=variant_controls,
+        layout=layout,
+        directions=tuple(directions),
+        frames_per_direction=frames_per_direction,
+        render_spec=render_spec,
+        palette=palette,
+    )
+
+
 def load_compiler_program(path: str | Path) -> CompilerProgramBase:
     """Loads and validates a family-specific compiler program."""
 
@@ -719,6 +807,8 @@ def load_compiler_program(path: str | Path) -> CompilerProgramBase:
         return _load_prop_or_fx_program(payload, path)
     if family == "tileset":
         return _load_tileset_program(payload, path)
+    if family == "directional_sheet":
+        return _load_directional_sheet_program(payload, path)
     raise CompilerValidationError(f"{path}: unknown compiler family '{family}'")
 
 
@@ -1075,6 +1165,80 @@ def _compile_tileset(
     return manifest
 
 
+def _compile_directional_sheet(
+    program: DirectionalSheetProgram,
+    output_dir: Path,
+    repo_root: Path,
+    program_path: str | Path | None,
+) -> CompilerOutputManifest:
+    output_dir.mkdir(parents=True, exist_ok=True)
+    sheet_path = output_dir / "sheet.png"
+    metadata_path = output_dir / "metadata.json"
+    program_copy_path = output_dir / "program.json"
+    manifest_path = output_dir / "manifest.json"
+    primitive_id = program.primitive_ids[0]
+    asset = _resolve_primitive_asset(repo_root, "character_sheet", primitive_id)
+    _require_primitive_anchors(asset, ("root", "head"), "directional sheet primitive")
+    style_pack = load_style_pack(
+        program.style_pack, program.palette, repo_root / "style_packs"
+    )
+    frames = []
+    for direction_idx in range(len(program.directions)):
+        for frame_idx in range(program.frames_per_direction):
+            frame_seed = _variant_seed(program) + direction_idx * 100 + frame_idx
+            frame_image = _render_resized_primitive(
+                asset,
+                program.layout.frame_size or (64, 64),
+                seed=frame_seed,
+                palette=program.palette,
+                style_pack_name=style_pack.name,
+            )
+            frames.append(frame_image)
+    sheet = _composite_directional_sheet(
+        frames, len(program.directions), program.frames_per_direction
+    )
+    if style_pack.palette_limits > 0:
+        sheet = quantize_image_to_palette(sheet, style_pack.palette_limits)
+    sheet.save(sheet_path, format="PNG", optimize=False, compress_level=9)
+    manifest = build_output_manifest(
+        program,
+        input_program_path=program_path or "<memory>",
+        output_file_paths=(sheet_path, metadata_path, program_copy_path, manifest_path),
+        repo_root=repo_root,
+    )
+    metadata = _compiler_metadata(
+        program,
+        manifest=manifest,
+        primitive_assets=[asset],
+        output_dir=output_dir,
+    )
+    _write_json_file(metadata_path, metadata)
+    _write_json_file(program_copy_path, program.to_dict())
+    _write_json_file(manifest_path, manifest.to_dict())
+    return manifest
+
+
+def _composite_directional_sheet(
+    frames: list[Image.Image],
+    num_directions: int,
+    frames_per_direction: int,
+) -> Image.Image:
+    if not frames:
+        raise CompilerValidationError("No frames provided for directional sheet")
+    frame_w, frame_h = frames[0].size
+    sheet_w = frame_w * frames_per_direction
+    sheet_h = frame_h * num_directions
+    sheet = Image.new("RGBA", (sheet_w, sheet_h), (0, 0, 0, 0))
+    for direction_idx in range(num_directions):
+        for frame_idx in range(frames_per_direction):
+            frame_index = direction_idx * frames_per_direction + frame_idx
+            if frame_index < len(frames):
+                x = frame_idx * frame_w
+                y = direction_idx * frame_h
+                sheet.alpha_composite(frames[frame_index], (x, y))
+    return sheet
+
+
 DEFAULT_COMPILER_REGISTRY = CompilerRegistry(
     definitions={
         "character_sheet": CompilerDefinition(
@@ -1094,6 +1258,12 @@ DEFAULT_COMPILER_REGISTRY = CompilerRegistry(
             version=COMPILER_VERSION,
             program_type=TilesetProgram,
             compile=_compile_tileset,
+        ),
+        "directional_sheet": CompilerDefinition(
+            family="directional_sheet",
+            version=COMPILER_VERSION,
+            program_type=DirectionalSheetProgram,
+            compile=_compile_directional_sheet,
         ),
     }
 )

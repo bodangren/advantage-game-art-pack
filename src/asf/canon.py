@@ -25,6 +25,7 @@ FAMILY_NAMES = (
     "parallax_layer",
     "ui_sheet",
     "presentation_surface",
+    "directional_sheet",
 )
 LAYOUT_TYPES = (
     "pose_sheet_3x3",

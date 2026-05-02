@@ -1,25 +1,25 @@
 # Directional Character Sheet Renderer — Implementation Plan
 
-## Phase 1: Schema and Validation [ ]
+## Phase 1: Schema and Validation [x]
 
-- [ ] **T01 — Add directional fields to EntitySpec**
+- [x] **T01 — Add directional fields to EntitySpec**
   Add `directions` (list of direction strings, default `["S"]`) and
   `frames_per_direction` (int, default `1`) fields to the EntitySpec dataclass.
   Write tests first: verify defaults, valid direction strings, rejection of
   invalid directions.
 
-- [ ] **T02 — Add directional_sheet to FAMILY_NAMES**
+- [x] **T02 — Add directional_sheet to FAMILY_NAMES**
   Register `"directional_sheet"` in the family constant set. Write test that
   verifies the family name is recognized by validation.
 
-- [ ] **T03 — Layout validation for directional sheets**
+- [x] **T03 — Layout validation for directional sheets**
   Implement validation rule: output PNG dimensions must equal
   `(frame_w * frames_per_direction, frame_h * len(directions))`. Write tests
   for correct layout, wrong row count, wrong column count.
 
-## Phase 2: Renderer Core [ ]
+## Phase 2: Renderer Core [x]
 
-- [ ] **T04 — Directional frame generator**
+- [x] **T04 — Directional frame generator**
   Implement `_render_directional_frames(spec, style_pack)` that produces a
   list of frame images (one per direction × frame index). Each frame uses
   existing part primitives composited with directional variations (e.g., limb
@@ -27,13 +27,13 @@
   frame, 4 directions × 3 frames produces 12 frames, frame dimensions match
   spec.
 
-- [ ] **T05 — Directional sheet compositor**
+- [x] **T05 — Directional sheet compositor**
   Implement `_composite_directional_sheet(frames, directions, fpd)` that
   arranges frames into a grid PNG: row 0 = first direction, row 1 = second
   direction, etc. Write test: verify pixel data placement at expected grid
   positions.
 
-- [ ] **T06 — Wire into compile_program**
+- [x] **T06 — Wire into compile_program**
   Add `directional_sheet` case to the compiler dispatch. Write integration test
   that compiles a minimal directional spec and produces a valid PNG with
   correct dimensions.
