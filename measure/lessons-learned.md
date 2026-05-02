@@ -47,3 +47,5 @@
 - (2026-05-02, scene_primitive_library_20260425) Scene programs must use family="prop_sheet" (not "props") for prop tile sources. FAMILY_NAMES is the source of truth for valid family values.
 - (2026-05-02, scene_primitive_library_20260425) Scene primitive source.png dimensions must fit within the scene canvas; oversized tiles (512x512 in a 256x192 canvas) cause placement intrusions. Resize source images to match canvas scale before adding to library.
 - (2026-05-02, critic_calibration_cli_20260425) ThresholdPack is a frozen dataclass; use dataclasses.replace() to create modified copies rather than mutating in place.
+- (2026-05-02, directional_character_sheets_20260502) Adding a new compiler family requires: dataclass program type, layout mode constant, _load_*_program parser, _compile_* function, and wire into CompilerRegistry.definitions.
+- (2026-05-02, directional_character_sheets_20260502) When adding new family to FAMILY_NAMES, update corpus_manifest.json taxonomy.families and any test manifests that hardcode the family list.

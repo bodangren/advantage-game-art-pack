@@ -1783,3 +1783,47 @@ To https://github.com/bodangren/advantage-game-art-pack.git
    49 measure/lessons-learned.md
    83 total
 [0m
+[0m$ [0mgit add measure/ && git commit -m "chore: checkpoint directional sheet Phase 1-2 complete" && git push
+[main 16a0658] chore: checkpoint directional sheet Phase 1-2 complete
+ 1 file changed, 37 insertions(+)
+To https://github.com/bodangren/advantage-game-art-pack.git
+   9f814f6..16a0658  main -> main
+[0m
+[0m# [0mTodos
+[x] Phase 1: Add directional fields and layout validation
+[x] Phase 2: Directional frame generator and compositor
+[ ] Phase 3: Style pack integration
+[ ] Phase 4: CLI subcommand and examples
+[ ] Phase 5: Update tracks.md and lessons-learned.md
+[0m
+[0m✱ [0mGrep "def compile"[90m 2 matches[0m
+[0m→ [0mRead measure/lessons-learned.md
+[0m
+[0m← [0mEdit measure/lessons-learned.md
+Index: /home/daniel-bo/Desktop/pixel-art-generator/measure/lessons-learned.md
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/measure/lessons-learned.md
++++ /home/daniel-bo/Desktop/pixel-art-generator/measure/lessons-learned.md
+@@ -46,4 +46,6 @@
+ - (2026-05-01, orchestrator_consolidation_20260426) When consolidating duplicate classes, extend the more feature-complete class (BatchOrchestrator) rather than delegating from the simpler one (BatchRunner). Delegation requires reimplementing state machine transitions, which is error-prone and hard to maintain.
+ - (2026-05-02, scene_primitive_library_20260425) Scene programs must use family="prop_sheet" (not "props") for prop tile sources. FAMILY_NAMES is the source of truth for valid family values.
+ - (2026-05-02, scene_primitive_library_20260425) Scene primitive source.png dimensions must fit within the scene canvas; oversized tiles (512x512 in a 256x192 canvas) cause placement intrusions. Resize source images to match canvas scale before adding to library.
+ - (2026-05-02, critic_calibration_cli_20260425) ThresholdPack is a frozen dataclass; use dataclasses.replace() to create modified copies rather than mutating in place.
++- (2026-05-02, directional_character_sheets_20260502) Adding a new compiler family requires: dataclass program type, layout mode constant, _load_*_program parser, _compile_* function, and wire into CompilerRegistry.definitions.
++- (2026-05-02, directional_character_sheets_20260502) When adding new family to FAMILY_NAMES, update corpus_manifest.json taxonomy.families and any test manifests that hardcode the family list.
+
+[0m
+[0m← [0mEdit measure/tech-debt.md
+Index: /home/daniel-bo/Desktop/pixel-art-generator/measure/tech-debt.md
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/measure/tech-debt.md
++++ /home/daniel-bo/Desktop/pixel-art-generator/measure/tech-debt.md
+@@ -31,4 +31,6 @@
+ | 2026-04-25 | batch_generation_release_manifests_20260405 | Release bundle exporter stub copies candidate dir contents; actual rendered PNG files need real compiler output. | Medium | Closed | BatchOrchestrator now calls compile_program for each asset in _run_compiling, and candidate loop via build_candidate_job + run_candidate_job in _run_candidate_loop. Assets are properly compiled and candidate loop runs to produce actual PNGs. |
+ | 2026-04-25 | review_app_auth_and_images_20260424 | `_utc_now()` utility is duplicated across batch_orchestrator.py, batch_runner.py, and batch_exporter.py. | Low | Open | Extract to a shared utility module (e.g., asf.utils) to avoid repetition. |
+ | 2026-05-02 | orchestrator_consolidation_20260426 | `_generate_programs` and `_write_programs` methods in BatchOrchestrator are defined but never called. | Low | Open | Either wire these into the planning stage or remove them if planner integration is handled elsewhere. |
+ | 2026-05-02 | review_app_serving_20260425 | FastAPI authentication via Depends(require_auth) applies to all routes including POST actions. | Medium | Open | Use BaseHTTPMiddleware for path-level exemptions if needed. |
++| 2026-05-02 | directional_character_sheets_20260502 | DirectionalSheetProgram has no example program files or CLI subcommand yet. | Low | Open | Add `asf compile directional` CLI command and example programs. |
++| 2026-05-02 | directional_character_sheets_20260502 | Directional frames are identical across directions (no actual directional variation). | Medium | Open | Wire directional variants from style pack into frame rendering. |
+
+[0m
