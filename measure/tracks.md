@@ -89,6 +89,12 @@ This file tracks all major tracks for the project.
   *Wire release bundle export to actual compiled PNGs from candidate loop*
   *Link: [./archive/batch_release_bundle_20260425/](./archive/batch_release_bundle_20260425/)*
 - [ ] **Track: Scene Primitive Library Expansion** *Link: [./tracks/scene_primitive_library_20260425/](./tracks/scene_primitive_library_20260425/)*
+- [ ] **Track: Batch Enemy & NPC Generation Pipeline** *Link: [./tracks/batch_enemy_npc_generation_20260503/](./tracks/batch_enemy_npc_generation_20260503/)*
+  Natural-language prompt-driven batch generation of themed entity families with palette variation
+- [ ] **Track: Per-Game Asset Bundle System** *Link: [./tracks/per_game_asset_bundles_20260503/](./tracks/per_game_asset_bundles_20260503/)*
+  Bundle manifest, validation, and export for game-ready asset packages
+- [ ] **Track: Review App Hardening & UX Improvements** *Link: [./tracks/review_app_hardening_20260503/](./tracks/review_app_hardening_20260503/)*
+  Path-level auth exemptions, batch approve/reject, thumbnail grid, keyboard shortcuts
 - [x] **Track: Critic Calibration CLI**
   *Add recalibrate subcommand to candidate CLI for scripted threshold adjustment*
   *Link: [./archive/critic_calibration_cli_20260425/](./archive/critic_calibration_cli_20260425/)*
