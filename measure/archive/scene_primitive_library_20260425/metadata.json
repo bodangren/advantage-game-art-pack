@@ -1,0 +1,9 @@
+{
+  "id": "scene_primitive_library_20260425",
+  "name": "Scene Primitive Library Expansion",
+  "status": "complete",
+  "created": "2026-04-25",
+  "priority": "medium",
+  "completed": "2026-05-03",
+  "notes": "Scene primitives (floor_stone_01, wall_library_01, cobble_01, bookshelf_01, ruins_pillar_01, rubble_01) added to library and scene assembler. Tests pass."
+}

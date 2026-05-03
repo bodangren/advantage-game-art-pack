@@ -88,7 +88,8 @@ This file tracks all major tracks for the project.
 - [x] **Track: Batch Release Bundle Exporter**
   *Wire release bundle export to actual compiled PNGs from candidate loop*
   *Link: [./archive/batch_release_bundle_20260425/](./archive/batch_release_bundle_20260425/)*
-- [ ] **Track: Scene Primitive Library Expansion** *Link: [./tracks/scene_primitive_library_20260425/](./tracks/scene_primitive_library_20260425/)*
+- [x] **Track: Scene Primitive Library Expansion** *Link: [./archive/scene_primitive_library_20260425/](./archive/scene_primitive_library_20260425/)*
+  *Scene primitives (floor_stone_01, wall_library_01, cobble_01, bookshelf_01, ruins_pillar_01, rubble_01) added to library and scene assembler.*
 - [ ] **Track: Batch Enemy & NPC Generation Pipeline** *Link: [./tracks/batch_enemy_npc_generation_20260503/](./tracks/batch_enemy_npc_generation_20260503/)*
   Natural-language prompt-driven batch generation of themed entity families with palette variation
 - [ ] **Track: Per-Game Asset Bundle System** *Link: [./tracks/per_game_asset_bundles_20260503/](./tracks/per_game_asset_bundles_20260503/)*
