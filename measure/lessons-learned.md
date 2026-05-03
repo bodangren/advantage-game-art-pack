@@ -36,4 +36,4 @@
 - (2026-05-02, directional_character_sheets_20260502) Adding new compiler family requires: dataclass program type, layout mode constant, _load_*_program parser, _compile_* function, and registry wiring. When adding family to FAMILY_NAMES, update corpus_manifest.json and test manifests.
 - (2026-05-03, batch_entity_generation) PromptParser regex _COUNT_RE must use simple `(\d+)` pattern; complex patterns miss counts when noun not in list. PaletteVariator needs multiple ramp variants per base ramp for distinct palettes.
 - (2026-05-03, bundle_system) Bundle export should not require all categories — bundles support incremental building and incomplete bundles are valid for export.
-- (2026-05-03, review_app_hardening) BaseHTTPMiddleware path allowlist must include all public routes (/, /queue, /health) to avoid redirect loops. Batch approve/reject endpoints accept newline or comma-separated candidate IDs.
+- (2026-05-03, extract_shared_utc_now) When refactoring duplicated utilities, prefer importing from a shared module over removing the duplicate definition; tests verify the shared import works correctly before removing the local copies.

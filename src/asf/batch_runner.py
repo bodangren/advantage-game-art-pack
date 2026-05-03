@@ -7,7 +7,6 @@ This module is kept for backward compatibility and will be removed in a future r
 from __future__ import annotations
 
 import warnings
-from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -26,10 +25,7 @@ from asf.batch_orchestrator import (
     BatchOrchestrator as _BatchOrchestrator,
     create_batch_job as _create_batch_job,
 )
-
-
-def _utc_now() -> str:
-    return datetime.now(timezone.utc).isoformat()
+from asf.utils import _utc_now
 
 
 class BatchRunner:

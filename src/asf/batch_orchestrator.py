@@ -5,7 +5,6 @@ from __future__ import annotations
 from dataclasses import replace
 import json
 import logging
-from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -37,11 +36,9 @@ from asf.candidate_loop import (
 from asf.planner.planner import PlannerContext
 from asf.planner.schemas import AssetFamily
 
+from asf.utils import _utc_now
+
 logger = logging.getLogger(__name__)
-
-
-def _utc_now() -> str:
-    return datetime.now(timezone.utc).isoformat()
 
 
 class BatchOrchestrator:

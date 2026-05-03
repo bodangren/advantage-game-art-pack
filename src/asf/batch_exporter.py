@@ -5,7 +5,6 @@ from __future__ import annotations
 import json
 import logging
 import shutil
-from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -20,11 +19,9 @@ from asf.batch import (
 )
 from asf.batch_orchestrator import generate_release_bundle
 
+from asf.utils import _utc_now
+
 logger = logging.getLogger(__name__)
-
-
-def _utc_now() -> str:
-    return datetime.now(timezone.utc).isoformat()
 
 
 class ReleaseBundleExporter:
