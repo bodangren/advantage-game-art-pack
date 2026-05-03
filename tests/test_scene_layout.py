@@ -1184,5 +1184,47 @@ class DebugOverlayTest(unittest.TestCase):
             self.assertTrue(any(p != (0, 0, 0, 0) for p in overlay_pixels))
 
 
+class ResolveTileImageWarningTest(unittest.TestCase):
+    """Tests for _resolve_tile_image warning behavior when source.png is missing."""
+
+    def test_resolve_tile_image_logs_warning_when_source_png_missing(self) -> None:
+        from asf.scene_layout import (
+            assemble_scene,
+            resolve_scene_layout,
+        )
+        manifest = {
+            "family": "background_scene",
+            "program_id": "test_missing_source_warning",
+            "program_version": 1,
+            "template": "library_room",
+            "canvas": {"width": 128, "height": 128},
+            "theme": "library",
+            "subtheme": "ancient",
+            "style_pack": "cute_chibi_v1",
+            "zones": [],
+            "tile_sources": [
+                {"tile_id": "missing_tile", "family": "tileset", "primitive_id": "stone_floor_01"},
+            ],
+            "prop_placement": [
+                {"group_id": "test_group", "tile_id": "missing_tile", "placement_rules": {"weight": 1.0}},
+            ],
+            "lighting": {"global_direction": "northwest", "ambient_strength": 0.8},
+            "output": {"variant_id": None},
+        }
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            primitives_dir = Path(tmp_dir) / "library" / "primitives" / "tileset" / "stone_floor_01"
+            primitives_dir.mkdir(parents=True)
+            (primitives_dir / "primitive.json").write_text("{}", encoding="utf-8")
+
+            path = Path(tmp_dir) / "scene.json"
+            path.write_text(json.dumps(manifest), encoding="utf-8")
+            program = load_scene_program(path)
+
+            with self.assertLogs("asf.scene_layout", level="WARNING") as cm:
+                resolved = resolve_scene_layout(program)
+                result = assemble_scene(program, resolved, repo_root=Path(tmp_dir))
+            self.assertTrue(any("has primitive.json but no source.png" in msg for msg in cm.output))
+
+
 if __name__ == "__main__":
     unittest.main()

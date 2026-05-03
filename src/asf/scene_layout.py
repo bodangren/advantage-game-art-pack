@@ -5,6 +5,7 @@ from __future__ import annotations
 from dataclasses import asdict, dataclass
 import hashlib
 import json
+import logging
 from pathlib import Path
 from typing import Any
 
@@ -12,6 +13,8 @@ from PIL import Image, ImageDraw
 
 from asf.specs import PaletteSpec, SpecValidationError
 from asf.style_packs import load_style_pack
+
+logger = logging.getLogger(__name__)
 
 
 SCENE_LAYOUT_MODE = "background_scene"
@@ -848,6 +851,13 @@ def _resolve_tile_image(
                 return Image.open(primitive_path).convert("RGBA")
             primitive_json_path = repo_root / "library" / "primitives" / ts.family / ts.primitive_id / "primitive.json"
             if primitive_json_path.exists():
+                logger.warning(
+                    "Tile '%s' has primitive.json but no source.png — skipping. "
+                    "Primitive: family='%s' primitive_id='%s'",
+                    tile_id,
+                    ts.family,
+                    ts.primitive_id,
+                )
                 return None
     return None
 

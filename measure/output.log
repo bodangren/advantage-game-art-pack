@@ -23,3 +23,763 @@ Changes not staged for commit:
 
 no changes added to commit (use "git add" and/or "git commit -a")
 [0m
+[0m$ [0mgit add measure/output.log && git commit -m "log: flush output log"
+[main 5c35dff] log: flush output log
+ 1 file changed, 11 insertions(+), 692 deletions(-)
+[0m
+[0m→ [0mRead measure/tracks/extract_shared_utc_now_20260503/plan.md
+[0m→ [0mRead measure/tracks/extract_shared_utc_now_20260503/metadata.json
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && git push
+To https://github.com/bodangren/advantage-game-art-pack.git
+   5b477b4..5c35dff  main -> main
+[0m
+No current_directive. Top tech debt: renderer uses procedural shapes instead of reusable part library (Medium, open since 2026-04-05).
+
+Let me verify the app works before starting new work.
+[0m✗ [0mread failed
+[91m[1mError: [0mFile not found: /home/daniel-bo/Desktop/pixel-art-generator/package.json
+[0m✱ [0mGlob "**/browser-harness*"[90m 0 matches[0m
+[0m→ [0mRead .
+[0m✱ [0mGlob "**/*.py"[90m in . · 66 matches[0m
+This is a Python project (asset factory for game art), not a web app. No browser-harness needed. Let me check the current state and find the top priority work.
+[0m✱ [0mGlob "measure/tracks/*/metadata.json"[90m 2 matches[0m
+[0m→ [0mRead measure/tracks.md[90m [limit=20, offset=100][0m
+[0m→ [0mRead src/review_app/api.py
+[0m✱ [0mGlob "**/pyproject.toml"[90m 1 match[0m
+[0m→ [0mRead src/asf/presentation_surfaces.py
+Let me check for any pending work and look at the open tech-debt items.
+[0m✱ [0mGrep "_resolve_tile_image"[90m in . · 5 matches[0m
+[0m✱ [0mGlob "**/scene_layout.py"[90m 1 match[0m
+[0m→ [0mRead src/asf/scene_layout.py[90m [limit=60, offset=830][0m
+[0m→ [0mRead pyproject.toml
+[0m
+[0m# [0mTodos
+[ ] Verify previous phase works (run tests, check functionality)
+[ ] Fix _resolve_tile_image silent None return - log warning when source.png missing
+[ ] Add test for _resolve_tile_image warning behavior
+[ ] Run tests and verify fix
+[ ] Commit and push changes
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && python -m pytest tests/ -x -q --tb=short 2>&1 | head -80
+/bin/bash: line 1: python: command not found
+[0m
+[0m$ [0mwhich python3 && python3 --version
+/usr/bin/python3
+Python 3.12.3
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && python3 -m pytest tests/ -x -q --tb=short 2>&1 | head -80
+==================================== ERRORS ====================================
+______________ ERROR collecting tests/test_policy_integration.py _______________
+ImportError while importing test module '/home/daniel-bo/Desktop/pixel-art-generator/tests/test_policy_integration.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_policy_integration.py:10: in <module>
+    from review_app.db import init_db
+E   ModuleNotFoundError: No module named 'review_app'
+=========================== short test summary info ============================
+ERROR tests/test_policy_integration.py
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
+1 error in 0.36s
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && PYTHONPATH=src python3 -m pytest tests/ -x -q --tb=short 2>&1 | head -80
+(no output)
+
+<bash_metadata>
+bash tool terminated command after exceeding timeout 120000 ms. If this command is expected to take longer and is not waiting for interactive input, retry with a larger timeout value in milliseconds.
+</bash_metadata>
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && PYTHONPATH=src python3 -m pytest tests/test_scene_layout.py -x -q --tb=short 2>&1 | head -50
+...........................................                              [100%]
+43 passed in 0.33s
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && PYTHONPATH=src python3 -m pytest tests/test_compilers.py tests/test_presentation_surfaces.py tests/test_canon.py -x -q --tb=short 2>&1 | head -50
+(no output)
+
+<bash_metadata>
+bash tool terminated command after exceeding timeout 60000 ms. If this command is expected to take longer and is not waiting for interactive input, retry with a larger timeout value in milliseconds.
+</bash_metadata>
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && PYTHONPATH=src python3 -m pytest tests/test_compilers.py -x -q --tb=short --timeout=30 2>&1 | head -50
+ERROR: usage: __main__.py [options] [file_or_dir] [file_or_dir] [...]
+__main__.py: error: unrecognized arguments: --timeout=30
+  inifile: /home/daniel-bo/Desktop/pixel-art-generator/pyproject.toml
+  rootdir: /home/daniel-bo/Desktop/pixel-art-generator
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && PYTHONPATH=src timeout 20 python3 -m pytest tests/test_scene_layout.py tests/test_primitives.py -x -q --tb=short 2>&1
+......................................................                   [100%]
+54 passed in 0.46s
+[0m
+[0m→ [0mRead src/asf/cli.py
+[0m→ [0mRead tests/test_scene_layout.py[90m [limit=80][0m
+[0m
+[0m# [0mTodos
+[x] Verify previous phase works (run tests, check functionality)
+[ ] Fix _resolve_tile_image silent None return - log warning when source.png missing
+[ ] Add test for _resolve_tile_image warning behavior
+[ ] Run tests and verify fix
+[ ] Commit and push changes
+[0m
+[0m→ [0mRead src/asf/scene_layout.py[90m [limit=25][0m
+[0m✱ [0mGrep "logger|logging"[90m in src/asf/scene_layout.py · 0 matches[0m
+[0m→ [0mRead src/asf/scene_layout.py[90m [limit=20][0m
+[0m✱ [0mGrep "import logging"[90m in src · 4 matches[0m
+[0m
+[0m← [0mEdit src/asf/scene_layout.py
+Index: /home/daniel-bo/Desktop/pixel-art-generator/src/asf/scene_layout.py
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/src/asf/scene_layout.py
++++ /home/daniel-bo/Desktop/pixel-art-generator/src/asf/scene_layout.py
+@@ -4,17 +4,20 @@
+ 
+ from dataclasses import asdict, dataclass
+ import hashlib
+ import json
++import logging
+ from pathlib import Path
+ from typing import Any
+ 
+ from PIL import Image, ImageDraw
+ 
+ from asf.specs import PaletteSpec, SpecValidationError
+ from asf.style_packs import load_style_pack
+ 
++logger = logging.getLogger(__name__)
+ 
++
+ SCENE_LAYOUT_MODE = "background_scene"
+ SUPPORTED_SCENE_TEMPLATES = ("library_room", "ruins_courtyard")
+ SUPPORTED_LIGHTING_DIRECTIONS = (
+     "north",
+
+[0m
+[0m← [0mEdit src/asf/scene_layout.py
+Index: /home/daniel-bo/Desktop/pixel-art-generator/src/asf/scene_layout.py
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/src/asf/scene_layout.py
++++ /home/daniel-bo/Desktop/pixel-art-generator/src/asf/scene_layout.py
+@@ -850,8 +850,15 @@
+         if primitive_path.exists():
+             return Image.open(primitive_path).convert("RGBA")
+         primitive_json_path = repo_root / "library" / "primitives" / ts.family / ts.primitive_id / "primitive.json"
+         if primitive_json_path.exists():
++            logger.warning(
++                "Tile '%s' has primitive.json but no source.png — skipping. "
++                "Primitive: family='%s' primitive_id='%s'",
++                tile_id,
++                ts.family,
++                ts.primitive_id,
++            )
+             return None
+ return None
+ 
+ 
+
+[0m
+[0m# [0mTodos
+[x] Verify previous phase works (run tests, check functionality)
+[x] Fix _resolve_tile_image silent None return - log warning when source.png missing
+[ ] Add test for _resolve_tile_image warning behavior
+[ ] Run tests and verify fix
+[ ] Commit and push changes
+[0m
+[0m✱ [0mGrep "_resolve_tile_image"[90m in tests · 0 matches[0m
+[0m→ [0mRead tests/test_scene_layout.py[90m [limit=50, offset=1140][0m
+[0m→ [0mRead tests/test_scene_layout.py[90m [limit=80, offset=1050][0m
+[0m✱ [0mGrep "class.*Test.*:"[90m in tests/test_scene_layout.py · 9 matches[0m
+[0m→ [0mRead tests/test_scene_layout.py[90m [limit=30, offset=323][0m
+[0m→ [0mRead tests/test_scene_layout.py[90m [limit=30, offset=945][0m
+[0m
+[0m← [0mEdit tests/test_scene_layout.py
+Index: /home/daniel-bo/Desktop/pixel-art-generator/tests/test_scene_layout.py
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/tests/test_scene_layout.py
++++ /home/daniel-bo/Desktop/pixel-art-generator/tests/test_scene_layout.py
+@@ -958,8 +958,9 @@
+         )
+         manifest = {
+             "family": "background_scene",
+             "program_id": "test_zone_manifest",
++            "program_id": "test_zone_manifest",
+             "program_version": 1,
+             "template": "library_room",
+             "canvas": {"width": 128, "height": 128},
+             "theme": "library",
+@@ -977,124 +978,47 @@
+             path.write_text(json.dumps(manifest), encoding="utf-8")
+             program = load_scene_program(path)
+             resolved = resolve_scene_layout(program)
+             result = assemble_scene(program, resolved, repo_root=Path(tmp_dir))
+-            zone_ids = [z.entry_type for z in result.placement_manifest.zones]
+             self.assertEqual(len(result.placement_manifest.zones), 2)
+-            self.assertTrue(any(z.role == "gameplay" for z in result.placement_manifest.zones))
+ 
+-    def test_manifest_contains_all_placement_entries(self) -> None:
++    def test_resolve_tile_image_logs_warning_when_source_png_missing(self) -> None:
++        import logging
+         from asf.scene_layout import (
+             assemble_scene,
+             resolve_scene_layout,
+         )
+         manifest = {
+             "family": "background_scene",
+-            "program_id": "test_placement_manifest",
++            "program_id": "test_missing_source_warning",
+             "program_version": 1,
+             "template": "library_room",
+             "canvas": {"width": 128, "height": 128},
+             "theme": "library",
+             "subtheme": "ancient",
+             "style_pack": "cute_chibi_v1",
+             "zones": [],
+             "tile_sources": [
+-                {"tile_id": "shelf_tile", "family": "props", "primitive_id": "shelf_01"},
++                {"tile_id": "missing_tile", "family": "tileset", "primitive_id": "stone_floor_01"},
+             ],
+-            "prop_placement": [
+-                {"group_id": "main_shelf", "tile_id": "shelf_tile", "placement_rules": {"symmetry": "horizontal"}},
+-                {"group_id": "side_shelf", "tile_id": "shelf_tile", "placement_rules": {"weight": 0.5}},
+-            ],
+             "lighting": {"global_direction": "northwest", "ambient_strength": 0.8},
+             "output": {"variant_id": None},
+         }
+         with tempfile.TemporaryDirectory() as tmp_dir:
+-            path = Path(tmp_dir) / "scene.json"
+-            path.write_text(json.dumps(manifest), encoding="utf-8")
+-            program = load_scene_program(path)
+-            resolved = resolve_scene_layout(program)
+-            result = assemble_scene(program, resolved, repo_root=Path(tmp_dir))
+-            self.assertEqual(len(result.placement_manifest.placements), 2)
++            primitives_dir = Path(tmp_dir) / "library" / "primitives" / "tileset" / "stone_floor_01"
++            primitives_dir.mkdir(parents=True)
++            (primitives_dir / "primitive.json").write_text("{}", encoding="utf-8")
+ 
+-    def test_manifest_program_id_matches_input(self) -> None:
+-        from asf.scene_layout import (
+-            assemble_scene,
+-            resolve_scene_layout,
+-        )
+-        manifest = {
+-            "family": "background_scene",
+-            "program_id": "my_library_scene",
+-            "program_version": 1,
+-            "template": "library_room",
+-            "canvas": {"width": 128, "height": 128},
+-            "theme": "library",
+-            "subtheme": "ancient",
+-            "style_pack": "cute_chibi_v1",
+-            "zones": [],
+-            "lighting": {"global_direction": "northwest", "ambient_strength": 0.8},
+-            "output": {"variant_id": None},
+-        }
+-        with tempfile.TemporaryDirectory() as tmp_dir:
+             path = Path(tmp_dir) / "scene.json"
+             path.write_text(json.dumps(manifest), encoding="utf-8")
+             program = load_scene_program(path)
+-            resolved = resolve_scene_layout(program)
+-            result = assemble_scene(program, resolved, repo_root=Path(tmp_dir))
+-            self.assertEqual(result.placement_manifest.program_id, "my_library_scene")
+ 
+-    def test_manifest_template_matches_input(self) -> None:
+-        from asf.scene_layout import (
+-            assemble_scene,
+-            resolve_scene_layout,
+-        )
+-        manifest = {
+-            "family": "background_scene",
+-            "program_id": "test_template_manifest",
+-            "program_version": 1,
+-            "template": "ruins_courtyard",
+-            "canvas": {"width": 128, "height": 128},
+-            "theme": "ruins",
+-            "subtheme": "ancient",
+-            "style_pack": "cute_chibi_v1",
+-            "zones": [],
+-            "lighting": {"global_direction": "east", "ambient_strength": 0.7},
+-            "output": {"variant_id": None},
+-        }
+-        with tempfile.TemporaryDirectory() as tmp_dir:
+-            path = Path(tmp_dir) / "scene.json"
+-            path.write_text(json.dumps(manifest), encoding="utf-8")
+-            program = load_scene_program(path)
+-            resolved = resolve_scene_layout(program)
+-            result = assemble_scene(program, resolved, repo_root=Path(tmp_dir))
+-            self.assertEqual(result.placement_manifest.template, "ruins_courtyard")
++            with self.assertLogs("asf.scene_layout", level="WARNING") as cm:
++                resolved = resolve_scene_layout(program)
++                result = assemble_scene(program, resolved, repo_root=Path(tmp_dir))
++            self.assertTrue(any("has primitive.json but no source.png" in msg for msg in cm.output))
+ 
+-    def test_manifest_canvas_dimensions_match_input(self) -> None:
+-        from asf.scene_layout import (
+-            assemble_scene,
+-            resolve_scene_layout,
+-        )
+-        manifest = {
+-            "family": "background_scene",
+-            "program_id": "test_canvas_manifest",
+-            "program_version": 1,
+-            "template": "library_room",
+-            "canvas": {"width": 256, "height": 192},
+-            "theme": "library",
+-            "subtheme": "ancient",
+-            "style_pack": "cute_chibi_v1",
+-            "zones": [],
+-            "lighting": {"global_direction": "northwest", "ambient_strength": 0.8},
+-            "output": {"variant_id": None},
+-        }
+-        with tempfile.TemporaryDirectory() as tmp_dir:
+-            path = Path(tmp_dir) / "scene.json"
+-            path.write_text(json.dumps(manifest), encoding="utf-8")
+-            program = load_scene_program(path)
+-            resolved = resolve_scene_layout(program)
+-            result = assemble_scene(program, resolved, repo_root=Path(tmp_dir))
+-            self.assertEqual(result.placement_manifest.canvas, (256, 192))
+ 
+-
+ class DebugOverlayTest(unittest.TestCase):
+     """Tests for debug overlay generation and zone labeling."""
+ 
+     def test_debug_overlay_enabled_produces_overlay(self) -> None:
+
+[0m
+[0m→ [0mRead tests/test_scene_layout.py[90m [limit=35, offset=951][0m
+[0m
+[0m← [0mEdit tests/test_scene_layout.py
+Index: /home/daniel-bo/Desktop/pixel-art-generator/tests/test_scene_layout.py
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/tests/test_scene_layout.py
++++ /home/daniel-bo/Desktop/pixel-art-generator/tests/test_scene_layout.py
+@@ -958,9 +958,8 @@
+ )
+ manifest = {
+     "family": "background_scene",
+     "program_id": "test_zone_manifest",
+-    "program_id": "test_zone_manifest",
+     "program_version": 1,
+     "template": "library_room",
+     "canvas": {"width": 128, "height": 128},
+     "theme": "library",
+
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && PYTHONPATH=src timeout 30 python3 -m pytest tests/test_scene_layout.py::ManifestExportTest -v --tb=short 2>&1
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.0.3, pluggy-1.6.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/daniel-bo/Desktop/pixel-art-generator
+configfile: pyproject.toml
+plugins: anyio-4.13.0, cov-7.1.0
+collecting ... collected 2 items
+
+tests/test_scene_layout.py::ManifestExportTest::test_manifest_contains_all_zone_entries PASSED [ 50%]
+tests/test_scene_layout.py::ManifestExportTest::test_resolve_tile_image_logs_warning_when_source_png_missing FAILED [100%]
+
+=================================== FAILURES ===================================
+_ ManifestExportTest.test_resolve_tile_image_logs_warning_when_source_png_missing _
+tests/test_scene_layout.py:1014: in test_resolve_tile_image_logs_warning_when_source_png_missing
+    with self.assertLogs("asf.scene_layout", level="WARNING") as cm:
+/usr/lib/python3.12/unittest/_log.py:84: in __exit__
+    self._raiseFailure(
+E   AssertionError: no logs of level WARNING or higher triggered on asf.scene_layout
+=========================== short test summary info ============================
+FAILED tests/test_scene_layout.py::ManifestExportTest::test_resolve_tile_image_logs_warning_when_source_png_missing
+========================= 1 failed, 1 passed in 0.27s ==========================
+[0m
+[0m→ [0mRead src/asf/scene_layout.py[90m [limit=80, offset=940][0m
+[0m→ [0mRead tests/test_scene_layout.py[90m [limit=50, offset=984][0m
+[0m
+[0m← [0mEdit tests/test_scene_layout.py
+Index: /home/daniel-bo/Desktop/pixel-art-generator/tests/test_scene_layout.py
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/tests/test_scene_layout.py
++++ /home/daniel-bo/Desktop/pixel-art-generator/tests/test_scene_layout.py
+@@ -998,8 +998,11 @@
+     "zones": [],
+     "tile_sources": [
+         {"tile_id": "missing_tile", "family": "tileset", "primitive_id": "stone_floor_01"},
+     ],
++    "prop_placement": [
++        {"group_id": "test_group", "tile_id": "missing_tile", "placement_rules": {"weight": 1.0}},
++    ],
+     "lighting": {"global_direction": "northwest", "ambient_strength": 0.8},
+     "output": {"variant_id": None},
+ }
+ with tempfile.TemporaryDirectory() as tmp_dir:
+
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && PYTHONPATH=src timeout 30 python3 -m pytest tests/test_scene_layout.py::ManifestExportTest::test_resolve_tile_image_logs_warning_when_source_png_missing -v --tb=short 2>&1
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.0.3, pluggy-1.6.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/daniel-bo/Desktop/pixel-art-generator
+configfile: pyproject.toml
+plugins: anyio-4.13.0, cov-7.1.0
+collecting ... collected 1 item
+
+tests/test_scene_layout.py::ManifestExportTest::test_resolve_tile_image_logs_warning_when_source_png_missing PASSED [100%]
+
+============================== 1 passed in 0.18s ===============================
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && PYTHONPATH=src timeout 30 python3 -m pytest tests/test_scene_layout.py -v --tb=short 2>&1
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.0.3, pluggy-1.6.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/daniel-bo/Desktop/pixel-art-generator
+configfile: pyproject.toml
+plugins: anyio-4.13.0, cov-7.1.0
+collecting ... collected 40 items
+
+tests/test_scene_layout.py::SceneManifestSchemaTest::test_loads_minimal_valid_scene_manifest PASSED [  2%]
+tests/test_scene_layout.py::SceneManifestSchemaTest::test_rejects_extra_toplevel_fields PASSED [  5%]
+tests/test_scene_layout.py::SceneManifestSchemaTest::test_rejects_invalid_ambient_strength PASSED [  7%]
+tests/test_scene_layout.py::SceneManifestSchemaTest::test_rejects_invalid_canvas_dimensions PASSED [ 10%]
+tests/test_scene_layout.py::SceneManifestSchemaTest::test_rejects_invalid_lighting_direction PASSED [ 12%]
+tests/test_scene_layout.py::SceneManifestSchemaTest::test_rejects_missing_required_fields PASSED [ 15%]
+tests/test_scene_layout.py::SceneManifestSchemaTest::test_rejects_unknown_family PASSED [ 17%]
+tests/test_scene_layout.py::SceneManifestSchemaTest::test_rejects_unknown_template PASSED [ 20%]
+tests/test_scene_layout.py::SceneManifestSchemaTest::test_supported_templates_are_library_and_ruins PASSED [ 22%]
+tests/test_scene_layout.py::SceneManifestSchemaTest::test_zones_require_rectangular_bounds PASSED [ 25%]
+tests/test_scene_layout.py::SceneManifestZoneTest::test_decorative_zone_is_not_reserved_by_default PASSED [ 27%]
+tests/test_scene_layout.py::SceneManifestZoneTest::test_gameplay_zone_requires_role PASSED [ 30%]
+tests/test_scene_layout.py::SceneManifestPropPlacementTest::test_prop_placement_requires_tile_reference PASSED [ 32%]
+tests/test_scene_layout.py::LayoutResolverTest::test_deterministic_resolution_same_input PASSED [ 35%]
+tests/test_scene_layout.py::LayoutResolverTest::test_library_room_template_resolves_valid_manifest PASSED [ 37%]
+tests/test_scene_layout.py::LayoutResolverTest::test_missing_tile_reference_uses_default_bounds PASSED [ 40%]
+tests/test_scene_layout.py::LayoutResolverTest::test_multiple_props_get_distinct_bounds PASSED [ 42%]
+tests/test_scene_layout.py::LayoutResolverTest::test_overlapping_reserved_zones_fails PASSED [ 45%]
+tests/test_scene_layout.py::LayoutResolverTest::test_placement_in_gameplay_zone_rejected PASSED [ 47%]
+tests/test_scene_layout.py::LayoutResolverTest::test_prop_placement_respects_gameplay_zones PASSED [ 50%]
+tests/test_scene_layout.py::LayoutResolverTest::test_prop_positions_are_not_all_origin PASSED [ 52%]
+tests/test_scene_layout.py::LayoutResolverTest::test_ruins_courtyard_template_resolves_valid_manifest PASSED [ 55%]
+tests/test_scene_layout.py::LayoutResolverTest::test_stable_placement_order_under_repeated_runs PASSED [ 57%]
+tests/test_scene_layout.py::LayoutResolverTest::test_zone_outside_canvas_fails PASSED [ 60%]
+tests/test_scene_layout.py::LightingMathTest::test_lighting_does_not_double_darken PASSED [ 62%]
+tests/test_scene_layout.py::LightingMathTest::test_lighting_half_ambient_produces_half_brightness PASSED [ 65%]
+tests/test_scene_layout.py::LightingMathTest::test_lighting_no_darken_at_full_ambient PASSED [ 67%]
+tests/test_scene_layout.py::LightingMathTest::test_lighting_pass_applies_single_combined_factor PASSED [ 70%]
+tests/test_scene_layout.py::LightingPassTest::test_emissive_sources_contribute_light PASSED [ 72%]
+tests/test_scene_layout.py::LightingPassTest::test_lighting_pass_affects_image PASSED [ 75%]
+tests/test_scene_layout.py::LightingPassTest::test_lighting_pass_different_directions_produce_different_shadows PASSED [ 77%]
+tests/test_scene_layout.py::LightingPassTest::test_low_ambient_produces_darker_scene PASSED [ 80%]
+tests/test_scene_layout.py::DecalPassTest::test_decal_pass_uses_coverage_to_place_decals PASSED [ 82%]
+tests/test_scene_layout.py::DecalPassTest::test_decal_placement_is_deterministic PASSED [ 85%]
+tests/test_scene_layout.py::DecalPassTest::test_multiple_decal_types_are_recorded_in_manifest PASSED [ 87%]
+tests/test_scene_layout.py::ManifestExportTest::test_manifest_contains_all_zone_entries PASSED [ 90%]
+tests/test_scene_layout.py::ManifestExportTest::test_resolve_tile_image_logs_warning_when_source_png_missing PASSED [ 92%]
+tests/test_scene_layout.py::DebugOverlayTest::test_debug_overlay_disabled_produces_none PASSED [ 95%]
+tests/test_scene_layout.py::DebugOverlayTest::test_debug_overlay_enabled_produces_overlay PASSED [ 97%]
+tests/test_scene_layout.py::DebugOverlayTest::test_debug_overlay_shows_zone_bounds PASSED [100%]
+
+============================== 40 passed in 0.35s ==============================
+[0m
+[0m# [0mTodos
+[x] Verify previous phase works (run tests, check functionality)
+[x] Fix _resolve_tile_image silent None return - log warning when source.png missing
+[x] Add test for _resolve_tile_image warning behavior
+[ ] Run tests and verify fix
+[ ] Commit and push changes
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && PYTHONPATH=src timeout 30 python3 -m pytest tests/test_primitives.py tests/test_style_packs.py tests/test_palette_quantization.py -v --tb=short 2>&1
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.0.3, pluggy-1.6.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/daniel-bo/Desktop/pixel-art-generator
+configfile: pyproject.toml
+plugins: anyio-4.13.0, cov-7.1.0
+collecting ... collected 18 items
+
+tests/test_primitives.py::PrimitiveLibraryTest::test_import_fails_without_anchors PASSED [  5%]
+tests/test_primitives.py::PrimitiveLibraryTest::test_import_fails_without_source_region PASSED [ 11%]
+tests/test_primitives.py::PrimitiveLibraryTest::test_imports_and_crops_candidate PASSED [ 16%]
+tests/test_primitives.py::PrimitiveLibraryTest::test_loads_valid_primitive_metadata PASSED [ 22%]
+tests/test_primitives.py::PrimitiveLibraryTest::test_promotion_is_idempotent PASSED [ 27%]
+tests/test_primitives.py::PrimitiveLibraryTest::test_query_filters_by_family_and_tag PASSED [ 33%]
+tests/test_primitives.py::PrimitiveLibraryTest::test_rebuild_manifest_is_deterministic PASSED [ 38%]
+tests/test_primitives.py::PrimitiveLibraryTest::test_rejects_duplicate_primitive_ids PASSED [ 44%]
+tests/test_primitives.py::PrimitiveLibraryTest::test_rejects_missing_anchors PASSED [ 50%]
+tests/test_primitives.py::PrimitiveLibraryTest::test_rejects_missing_provenance PASSED [ 55%]
+tests/test_primitives.py::PrimitiveLibraryTest::test_validates_on_disk_manifest PASSED [ 61%]
+tests/test_style_packs.py::StylePackLoadingTest::test_rejects_invalid_ramp_colors PASSED [ 66%]
+tests/test_palette_quantization.py::PaletteQuantizationTest::test_quantize_handles_empty_canvas PASSED [ 72%]
+tests/test_palette_quantization.py::PaletteQuantizationTest::test_quantize_is_deterministic PASSED [ 77%]
+tests/test_palette_quantization.py::PaletteQuantizationTest::test_quantize_on_small_image_under_limit PASSED [ 83%]
+tests/test_palette_quantization.py::PaletteQuantizationTest::test_quantize_preserves_transparency PASSED [ 88%]
+tests/test_palette_quantization.py::PaletteQuantizationTest::test_quantize_reduces_color_count_to_limit PASSED [ 94%]
+tests/test_palette_quantization.py::PaletteQuantizationTest::test_quantize_rejects_invalid_limit PASSED [100%]
+
+============================== 18 passed in 0.28s ==============================
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && PYTHONPATH=src python3 -c "from asf.scene_layout import _resolve_tile_image, assemble_scene; print('import ok')" 2>&1
+import ok
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && PYTHONPATH=src python3 -m py_compile src/asf/scene_layout.py && echo "compile ok"
+compile ok
+[0m
+[0m→ [0mRead measure/tech-debt.md[90m [limit=50][0m
+[0m
+[0m← [0mEdit measure/tech-debt.md
+Index: /home/daniel-bo/Desktop/pixel-art-generator/measure/tech-debt.md
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/measure/tech-debt.md
++++ /home/daniel-bo/Desktop/pixel-art-generator/measure/tech-debt.md
+@@ -15,9 +15,9 @@
+ | 2026-04-11 | scene_layout_background_assembler_20260405 | Layout resolver had a boolean guard for prop intrusions but never checked the flag before appending placements, allowing intrusions silently. | High | Closed | Fixed in commit 7eb30a5 — resolver now raises LayoutResolutionError immediately when any prop overlaps a reserved zone. |
+ | 2026-04-13 | scene_layout_background_assembler_20260405 | `resolve_scene_layout` assigns every prop `bounds=(0,0,32,32)`; both branches of the `tile_source` check are identical dead code. All props pile at origin and multi-prop scenes would spuriously intrude. | High | Closed | Fixed in cb8dd1b — resolver now reads tile source.png size and uses seeded hash-based placement for distinct non-overlapping bounds. Reserved zones are checked during placement loop. |
+ | 2026-04-13 | scene_layout_background_assembler_202embler_20260405 | `_apply_lighting_pass` runs pure-Python per-pixel loops over the full canvas twice per render; diagonal directions double-darken the overlapping quadrant. | Medium | Closed | Fixed in a94c307 — replaced double-apply with single combined ambient+directional factor; shadow direction corrected for all 8 cardinal/diagonal directions. |
+ | 2026-04-23 | lighting_renderer_fixes_20260423 | Visual regression fixtures require actual primitive PNGs which don't exist (system uses procedural sprites). Phase 3 (pixel-diff) skipped; unit tests provide correctness verification. | Low | Closed | Fixed 2026-05-02 — Added source.png files for all scene primitives. Smoke tests now compile and assemble scene programs successfully. |
+-| 2026-04-13 | scene_layout_background_assembler_20260405 | `_resolve_tile_image` returns None when only `primitive.json` exists (no source.png), silently dropping the tile from the render. | Low | Open | Log a warning or raise; silent visual omission is hard to debug downstream. |
++| 2026-04-13 | scene_layout_background_assembler_20260405 | `_resolve_tile_image` returns None when only `primitive.json` exists (no source.png), silently dropping the tile from the render. | Low | Closed | Fixed in current session — warning logged when tile has primitive.json but no source.png; test added to verify warning behavior. |
+ | 2026-04-14 | presentation_surfaces_ui_pipeline_20260405 | Cover and loading surface background resolution uses a simplified convention: outputs/{scene_program_name}/base.png. Actual scene rendering may place the output elsewhere. | Medium | Open | Align with the scene assembler output convention; prefer passing an explicit resolved image path rather than deriving it from the manifest name. |
+ | 2026-04-14 | presentation_surfaces_ui_pipeline_20260405 | Parallax tiling uses a pseudo-random offset `(x_offset * 3) % canvas_w` which is deterministic but not analytically reproducible for repeat-safe edge handling. | Low | Open | Use a seeded deterministic grid or tile-flipping instead of pseudo-random offsets for guaranteed edge seamlessness. |
+ | 2026-04-14 | presentation_surfaces_ui_pipeline_20260405 | UI sheet layout is a naive left-to-right row wrap; no bin-packing or atlas efficiency optimization. Acceptable for MVP, but icon-dense sheets will waste canvas space. | Low | Open | Consider a best-fit bin-packing layout if canvas utilization becomes a concern for dense UI packs. |
+ | 2026-04-14 | presentation_surfaces_ui_pipeline_20260405 | Promo capture job loads a pre-rendered image from `source_bundle/promo.png`; actual gameplay capture would require a running game or scene-render replay path that is not yet implemented. | High | Closed | Fixed in promo_capture_scene_renderer_20260425 — assemble_promo_capture_job now checks capture_conditions.scene_program and renders the scene via assemble_scene when specified; falls back to static promo.png when scene_program is empty. |
+
+[0m
+[0m← [0mEdit measure/lessons-learned.md
+Index: /home/daniel-bo/Desktop/pixel-art-generator/measure/lessons-learned.md
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/measure/lessons-learned.md
++++ /home/daniel-bo/Desktop/pixel-art-generator/measure/lessons-learned.md
+@@ -35,5 +35,5 @@
+ - (2026-05-02, critic_calibration_cli_20260425) ThresholdPack is frozen dataclass; use dataclasses.replace() to create modified copies.
+ - (2026-05-02, directional_character_sheets_20260502) Adding new compiler family requires: dataclass program type, layout mode constant, _load_*_program parser, _compile_* function, and registry wiring. When adding family to FAMILY_NAMES, update corpus_manifest.json and test manifests.
+ - (2026-05-03, batch_entity_generation) PromptParser regex _COUNT_RE must use simple `(\d+)` pattern; complex patterns miss counts when noun not in list. PaletteVariator needs multiple ramp variants per base ramp for distinct palettes.
+ - (2026-05-03, bundle_system) Bundle export should not require all categories — bundles support incremental building and incomplete bundles are valid for export.
+-- (2026-05-03, extract_shared_utc_now) When refactoring duplicated utilities, prefer importing from a shared module over removing the duplicate definition; tests verify the shared import works correctly before removing the local copies.
++- (2026-05-03, scene_layout_background_assembler) When a tile has primitive.json but no source.png, log a WARNING with tile_id, family, and primitive_id so the omission is visible in logs rather than silently dropping tiles from renders.
+
+[0m
+[0m# [0mTodos
+[x] Verify previous phase works (run tests, check functionality)
+[x] Fix _resolve_tile_image silent None return - log warning when source.png missing
+[x] Add test for _resolve_tile_image warning behavior
+[x] Run tests and verify fix
+[ ] Commit and push changes
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   measure/lessons-learned.md
+	modified:   measure/output.log
+	modified:   measure/tech-debt.md
+	modified:   src/asf/scene_layout.py
+	modified:   tests/test_scene_layout.py
+
+no changes added to commit (use "git add" and/or "git commit -a")
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && git diff --stat
+measure/lessons-learned.md |   2 +-
+ measure/output.log         | 551 +++++++++++++++++++++++++++++++++++++++++++++
+ measure/tech-debt.md       |   2 +-
+ src/asf/scene_layout.py    |  10 +
+ tests/test_scene_layout.py |  98 +-------
+ 5 files changed, 575 insertions(+), 88 deletions(-)
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && git log --oneline -5
+5c35dff log: flush output log
+5b477b4 chore(measure): archive completed tracks and add extract_shared_utc_now (MiniMax-M2.7)
+b0fb31b refactor(measure): extract shared _utc_now utility to asf/utils.py (MiniMax-M2.7)
+a06881b chore: update measure output log (MiniMax-M2.7)
+b98f11b chore(measure): archive scene_primitive_library_20260425 track (MiniMax-M2.7)
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && git add measure/lessons-learned.md measure/tech-debt.md src/asf/scene_layout.py tests/test_scene_layout.py measure/output.log
+(no output)
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && git diff --cached --stat
+measure/lessons-learned.md |   2 +-
+ measure/output.log         | 566 +++++++++++++++++++++++++++++++++++++++++++++
+ measure/tech-debt.md       |   2 +-
+ src/asf/scene_layout.py    |  10 +
+ tests/test_scene_layout.py |  98 +-------
+ 5 files changed, 590 insertions(+), 88 deletions(-)
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && git diff --cached tests/test_scene_layout.py | head -30
+diff --git a/tests/test_scene_layout.py b/tests/test_scene_layout.py
+index 0ced018..f72f281 100644
+--- a/tests/test_scene_layout.py
++++ b/tests/test_scene_layout.py
+@@ -978,18 +978,17 @@ class ManifestExportTest(unittest.TestCase):
+             program = load_scene_program(path)
+             resolved = resolve_scene_layout(program)
+             result = assemble_scene(program, resolved, repo_root=Path(tmp_dir))
+-            zone_ids = [z.entry_type for z in result.placement_manifest.zones]
+             self.assertEqual(len(result.placement_manifest.zones), 2)
+-            self.assertTrue(any(z.role == "gameplay" for z in result.placement_manifest.zones))
+ 
+-    def test_manifest_contains_all_placement_entries(self) -> None:
++    def test_resolve_tile_image_logs_warning_when_source_png_missing(self) -> None:
++        import logging
+         from asf.scene_layout import (
+             assemble_scene,
+             resolve_scene_layout,
+         )
+         manifest = {
+             "family": "background_scene",
+-            "program_id": "test_placement_manifest",
++            "program_id": "test_missing_source_warning",
+             "program_version": 1,
+             "template": "library_room",
+             "canvas": {"width": 128, "height": 128},
+@@ -998,100 +997,27 @@ class ManifestExportTest(unittest.TestCase):
+             "style_pack": "cute_chibi_v1",
+             "zones": [],
+             "tile_sources": [
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && git show HEAD:tests/test_scene_layout.py | grep -n "test_manifest_contains_all" | head -5
+954:    def test_manifest_contains_all_zone_entries(self) -> None:
+985:    def test_manifest_contains_all_placement_entries(self) -> None:
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && git show HEAD:tests/test_scene_layout.py | sed -n '975,1015p'
+with tempfile.TemporaryDirectory() as tmp_dir:
+            path = Path(tmp_dir) / "scene.json"
+            path.write_text(json.dumps(manifest), encoding="utf-8")
+            program = load_scene_program(path)
+            resolved = resolve_scene_layout(program)
+            result = assemble_scene(program, resolved, repo_root=Path(tmp_dir))
+            zone_ids = [z.entry_type for z in result.placement_manifest.zones]
+            self.assertEqual(len(result.placement_manifest.zones), 2)
+            self.assertTrue(any(z.role == "gameplay" for z in result.placement_manifest.zones))
+
+    def test_manifest_contains_all_placement_entries(self) -> None:
+        from asf.scene_layout import (
+            assemble_scene,
+            resolve_scene_layout,
+        )
+        manifest = {
+            "family": "background_scene",
+            "program_id": "test_placement_manifest",
+            "program_version": 1,
+            "template": "library_room",
+            "canvas": {"width": 128, "height": 128},
+            "theme": "library",
+            "subtheme": "ancient",
+            "style_pack": "cute_chibi_v1",
+            "zones": [],
+            "tile_sources": [
+                {"tile_id": "shelf_tile", "family": "props", "primitive_id": "shelf_01"},
+            ],
+            "prop_placement": [
+                {"group_id": "main_shelf", "tile_id": "shelf_tile", "placement_rules": {"symmetry": "horizontal"}},
+                {"group_id": "side_shelf", "tile_id": "shelf_tile", "placement_rules": {"weight": 0.5}},
+            ],
+            "lighting": {"global_direction": "northwest", "ambient_strength": 0.8},
+            "output": {"variant_id": None},
+        }
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            path = Path(tmp_dir) / "scene.json"
+            path.write_text(json.dumps(manifest), encoding="utf-8")
+            program = load_scene_program(path)
+            resolved = resolve_scene_layout(program)
+            result = assemble_scene(program, resolved, repo_root=Path(tmp_dir))
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && git reset HEAD tests/test_scene_layout.py && git checkout tests/test_scene_layout.py
+Unstaged changes after reset:
+M	measure/output.log
+M	tests/test_scene_layout.py
+Updated 1 path from the index
+[0m
+[0m→ [0mRead tests/test_scene_layout.py[90m [limit=25, offset=1070][0m
+[0m→ [0mRead tests/test_scene_layout.py[90m [limit=20, offset=1175][0m
+[0m
+[0m← [0mEdit tests/test_scene_layout.py
+Index: /home/daniel-bo/Desktop/pixel-art-generator/tests/test_scene_layout.py
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/tests/test_scene_layout.py
++++ /home/daniel-bo/Desktop/pixel-art-generator/tests/test_scene_layout.py
+@@ -1183,6 +1183,48 @@
+             overlay_pixels = list(result.debug_overlay.getdata())
+             self.assertTrue(any(p != (0, 0, 0, 0) for p in overlay_pixels))
+ 
+ 
++class ResolveTileImageWarningTest(unittest.TestCase):
++    """Tests for _resolve_tile_image warning behavior when source.png is missing."""
++
++    def test_resolve_tile_image_logs_warning_when_source_png_missing(self) -> None:
++        from asf.scene_layout import (
++            assemble_scene,
++            resolve_scene_layout,
++        )
++        manifest = {
++            "family": "background_scene",
++            "program_id": "test_missing_source_warning",
++            "program_version": 1,
++            "template": "library_room",
++            "canvas": {"width": 128, "height": 128},
++            "theme": "library",
++            "subtheme": "ancient",
++            "style_pack": "cute_chibi_v1",
++            "zones": [],
++            "tile_sources": [
++                {"tile_id": "missing_tile", "family": "tileset", "primitive_id": "stone_floor_01"},
++            ],
++            "prop_placement": [
++                {"group_id": "test_group", "tile_id": "missing_tile", "placement_rules": {"weight": 1.0}},
++            ],
++            "lighting": {"global_direction": "northwest", "ambient_strength": 0.8},
++            "output": {"variant_id": None},
++        }
++        with tempfile.TemporaryDirectory() as tmp_dir:
++            primitives_dir = Path(tmp_dir) / "library" / "primitives" / "tileset" / "stone_floor_01"
++            primitives_dir.mkdir(parents=True)
++            (primitives_dir / "primitive.json").write_text("{}", encoding="utf-8")
++
++            path = Path(tmp_dir) / "scene.json"
++            path.write_text(json.dumps(manifest), encoding="utf-8")
++            program = load_scene_program(path)
++
++            with self.assertLogs("asf.scene_layout", level="WARNING") as cm:
++                resolved = resolve_scene_layout(program)
++                result = assemble_scene(program, resolved, repo_root=Path(tmp_dir))
++            self.assertTrue(any("has primitive.json but no source.png" in msg for msg in cm.output))
++
++
+ if __name__ == "__main__":
+     unittest.main()
+
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && PYTHONPATH=src timeout 30 python3 -m pytest tests/test_scene_layout.py -v --tb=short 2>&1 | tail -20
+tests/test_scene_layout.py::LightingMathTest::test_lighting_no_darken_at_full_ambient PASSED [ 61%]
+tests/test_scene_layout.py::LightingMathTest::test_lighting_pass_applies_single_combined_factor PASSED [ 63%]
+tests/test_scene_layout.py::LightingPassTest::test_emissive_sources_contribute_light PASSED [ 65%]
+tests/test_scene_layout.py::LightingPassTest::test_lighting_pass_affects_image PASSED [ 68%]
+tests/test_scene_layout.py::LightingPassTest::test_lighting_pass_different_directions_produce_different_shadows PASSED [ 70%]
+tests/test_scene_layout.py::LightingPassTest::test_low_ambient_produces_darker_scene PASSED [ 72%]
+tests/test_scene_layout.py::DecalPassTest::test_decal_pass_uses_coverage_to_place_decals PASSED [ 75%]
+tests/test_scene_layout.py::DecalPassTest::test_decal_placement_is_deterministic PASSED [ 77%]
+tests/test_scene_layout.py::DecalPassTest::test_multiple_decal_types_are_recorded_in_manifest PASSED [ 79%]
+tests/test_scene_layout.py::ManifestExportTest::test_manifest_canvas_dimensions_match_input PASSED [ 81%]
+tests/test_scene_layout.py::ManifestExportTest::test_manifest_contains_all_placement_entries PASSED [ 84%]
+tests/test_scene_layout.py::ManifestExportTest::test_manifest_contains_all_zone_entries PASSED [ 86%]
+tests/test_scene_layout.py::ManifestExportTest::test_manifest_program_id_matches_input PASSED [ 88%]
+tests/test_scene_layout.py::ManifestExportTest::test_manifest_template_matches_input PASSED [ 90%]
+tests/test_scene_layout.py::DebugOverlayTest::test_debug_overlay_disabled_produces_none PASSED [ 93%]
+tests/test_scene_layout.py::DebugOverlayTest::test_debug_overlay_enabled_produces_overlay PASSED [ 95%]
+tests/test_scene_layout.py::DebugOverlayTest::test_debug_overlay_shows_zone_bounds PASSED [ 97%]
+tests/test_scene_layout.py::ResolveTileImageWarningTest::test_resolve_tile_image_logs_warning_when_source_png_missing PASSED [100%]
+
+============================== 44 passed in 0.37s ==============================
+[0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && git add measure/lessons-learned.md measure/tech-debt.md src/asf/scene_layout.py tests/test_scene_layout.py && git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	modified:   measure/lessons-learned.md
+	modified:   measure/output.log
+	modified:   measure/tech-debt.md
+	modified:   src/asf/scene_layout.py
+	modified:   tests/test_scene_layout.py
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   measure/output.log
+[0m
