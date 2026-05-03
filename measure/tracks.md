@@ -90,12 +90,15 @@ This file tracks all major tracks for the project.
   *Link: [./archive/batch_release_bundle_20260425/](./archive/batch_release_bundle_20260425/)*
 - [x] **Track: Scene Primitive Library Expansion** *Link: [./archive/scene_primitive_library_20260425/](./archive/scene_primitive_library_20260425/)*
   *Scene primitives (floor_stone_01, wall_library_01, cobble_01, bookshelf_01, ruins_pillar_01, rubble_01) added to library and scene assembler.*
-- [ ] **Track: Batch Enemy & NPC Generation Pipeline** *Link: [./tracks/batch_enemy_npc_generation_20260503/](./tracks/batch_enemy_npc_generation_20260503/)*
+- [x] **Track: Batch Enemy & NPC Generation Pipeline** *Link: [./archive/batch_enemy_npc_generation_20260503/](./archive/batch_enemy_npc_generation_20260503/)*
   Natural-language prompt-driven batch generation of themed entity families with palette variation
-- [ ] **Track: Per-Game Asset Bundle System** *Link: [./tracks/per_game_asset_bundles_20260503/](./tracks/per_game_asset_bundles_20260503/)*
+- [x] **Track: Per-Game Asset Bundle System** *Link: [./archive/per_game_asset_bundles_20260503/](./archive/per_game_asset_bundles_20260503/)*
   Bundle manifest, validation, and export for game-ready asset packages
-- [ ] **Track: Review App Hardening & UX Improvements** *Link: [./tracks/review_app_hardening_20260503/](./tracks/review_app_hardening_20260503/)*
+- [x] **Track: Review App Hardening & UX Improvements** *Link: [./archive/review_app_hardening_20260503/](./archive/review_app_hardening_20260503/)*
   Path-level auth exemptions, batch approve/reject, thumbnail grid, keyboard shortcuts
+- [x] **Track: Extract Shared _utc_now Utility** *Link: [./tracks/extract_shared_utc_now_20260503/](./tracks/extract_shared_utc_now_20260503/)*
+  Extract duplicated `_utc_now()` to shared `asf/utils.py` module
+- [ ] **Track: Next feature** (none pending — no current_directive.md found)
 - [x] **Track: Critic Calibration CLI**
   *Add recalibrate subcommand to candidate CLI for scripted threshold adjustment*
   *Link: [./archive/critic_calibration_cli_20260425/](./archive/critic_calibration_cli_20260425/)*
