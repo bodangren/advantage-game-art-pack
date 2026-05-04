@@ -149,3 +149,10 @@ This file tracks all major tracks for the project.
   *EffectSheetProgram now accepts palette field; _compile_effect_sheet uses real palette and applies median-cut quantization.*
   *Link: [./tracks/effect_sheet_palette_quantization_20260505/](./tracks/effect_sheet_palette_quantization_20260505/)*
   *Status: Complete — Added palette field to EffectSheetProgram and JSON schema; effect sheet compiler now applies palette quantization.*
+
+---
+
+- [x] **Track: Presentation Surfaces Parallax Fix**
+  *Replace pseudo-random offset with seeded deterministic hash-based offset for guaranteed edge seamlessness.*
+  *Link: [./tracks/presentation_parallax_fix_20260505/](./tracks/presentation_parallax_fix_20260505/)*
+  *Status: Complete — Replaced pseudo-random `(x_offset * 3) % canvas_w` with seeded hash-based offset; all tests passing.*

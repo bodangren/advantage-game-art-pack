@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass
+import hashlib
 import json
 from pathlib import Path
 from typing import Any
@@ -1091,13 +1092,19 @@ def assemble_parallax_layer_set(
                 tiles.append(tile_img.copy())
 
             tw, th = tile_img.size
+            layer_seed = hash(f"{program.program_id}{layer.layer_role}") & 0xFFFF
+            tile_idx = 0
             for tile in tiles:
                 for x_offset in range(0, canvas_w + tw, tw):
                     for y_offset in range(0, canvas_h + th, th):
-                        px = (x_offset * 3) % (canvas_w + tw)
-                        py = (y_offset * 7) % (canvas_h + th)
+                        seed = layer_seed + tile_idx
+                        px = (x_offset + (seed % tw)) % (canvas_w + tw) - tw // 2
+                        py = (y_offset + ((seed // tw) % th)) % (canvas_h + th) - th // 2
+                        px = max(0, min(px, canvas_w - tw))
+                        py = max(0, min(py, canvas_h - th))
                         if px + tw <= canvas_w and py + th <= canvas_h:
                             layer_img.alpha_composite(tile, (px, py))
+                        tile_idx += 1
 
         contrast = layer.contrast
         if contrast < 1.0:
