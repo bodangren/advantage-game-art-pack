@@ -5,6 +5,7 @@ from __future__ import annotations
 from dataclasses import asdict, dataclass
 import hashlib
 import json
+import math
 from pathlib import Path
 from typing import Any, Callable
 
@@ -828,7 +829,6 @@ def _load_directional_sheet_program(
 
 
 def _load_effect_sheet_program(payload: dict[str, Any], path: Path) -> EffectSheetProgram:
-    from asf.specs import EffectSpec
     _require_exact_keys(
         payload,
         {
@@ -1415,7 +1415,6 @@ def _render_effect_frame(
     frame_size: tuple[int, int],
     style_pack: "StylePack",
 ) -> Image.Image:
-    from asf.style_packs import StylePack
     frame_w, frame_h = frame_size
     canvas = Image.new("RGBA", (frame_w, frame_h), (0, 0, 0, 0))
     cx, cy = frame_w // 2, frame_h // 2
@@ -1428,7 +1427,6 @@ def _render_effect_frame(
             alpha = int(255 * intensity * (1.0 - r / radius) * 0.3)
             color = (255, 255, 255, alpha) if spec.color_tint is None else (*spec.color_tint, alpha)
             for angle in range(0, 360, 30):
-                import math
                 rad = math.radians(angle)
                 x = int(cx + (r - 4) * math.cos(rad))
                 y = int(cy + (r - 4) * math.sin(rad))
@@ -1458,7 +1456,6 @@ def _render_effect_frame(
                 width=2,
             )
     elif spec.effect_type == "burst":
-        import math
         particle_count = 12
         for i in range(particle_count):
             angle = (i / particle_count) * 2 * math.pi + progress * math.pi
