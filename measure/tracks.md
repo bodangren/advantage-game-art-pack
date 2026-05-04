@@ -127,3 +127,10 @@ This file tracks all major tracks for the project.
 - [x] **Track: Orchestrator Consolidation**
   *Link: [./archive/orchestrator_consolidation_20260426/](./archive/orchestrator_consolidation_20260426/)*
   Merge BatchRunner and BatchOrchestrator into single state machine. Consolidation complete - BatchOrchestrator is now the single source of truth, BatchRunner deprecated with warning.
+
+---
+
+- [x] **Track: Renderer Part Library Integration**
+  *PartLibrary class stamps approved primitives onto rendered canvas; SpriteSpec gains optional part_library_refs field for primitive overlay. Backward compatible.*
+  *Link: [./tracks/renderer_part_library_integration_20260504/](./tracks/renderer_part_library_integration_20260504/)*
+  *Status: Complete — PartLibrary class, PartLibraryRef dataclass in specs.py, renderer integration with optional part_library parameter, tests passing.*

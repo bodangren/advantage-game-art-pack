@@ -5,7 +5,7 @@
 
 | Date | Track | Item | Severity | Status | Notes |
 |------|-------|------|----------|--------|-------|
-| 2026-04-05 | sprite_compiler_mvp_20260405 | Initial renderer uses procedural shapes instead of a reusable external part library. | Medium | Open | Acceptable for MVP because it proves deterministic sheet export and validation first. |
+| 2026-04-05 | sprite_compiler_mvp_20260405 | Initial renderer uses procedural shapes instead of a reusable external part library. | Medium | Closed | Fixed in renderer_part_library_integration_20260504 — PartLibrary class stamps approved primitives onto rendered canvas; SpriteSpec gains optional part_library_refs field. |
 | 2026-04-24 | renderer_palette_refinement_20260424 | The candidate loop exists, but the current renderer still trips the palette-limit structural check and usually regenerates instead of selecting a survivor. | High | Closed | Fixed in commit 439d77b — median-cut palette quantization wired into all three compiler paths (character_sheet, prop_or_fx_sheet, tileset); renderer output now respects style_pack.palette_limits. |
 | 2026-04-24 | llm_planner_provider_impl_20260424 | Planner provider interface is defined but no concrete implementation exists yet (OpenAI, Anthropic, etc.). | Medium | Closed | Implemented OpenAIProvider and AnthropicProvider with urllib-based HTTP calls, exponential backoff retry, and graceful fallback when no API key is configured. |
 | 2026-04-24 | batch_generation_release_manifests_20260405 | Batch runner schema and orchestrator implemented; actual planner/compiler integration pending provider implementation. | Medium | Closed | State machine, persistence, and retry policies working. Real LLM calls now possible with the provider implementations. |
