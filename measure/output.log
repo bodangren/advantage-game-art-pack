@@ -596,3 +596,211 @@ Summary: FastAPI framework, high performance, easy to learn, fast to code, ready
 [0m
 [0m→ [0mSkill "browser-harness"
 Since there's no web frontend for this Python project, the functional verification is done via tests (85 tests passing). Let me commit the changes.
+[0m
+[0m$ [0mgit add -A && git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	modified:   measure/output.log
+	new file:   measure/tracks/ui_sheet_bin_packing_20260505/plan.md
+	new file:   measure/tracks/ui_sheet_bin_packing_20260505/spec.md
+	modified:   src/asf/presentation_surfaces.py
+	modified:   tests/test_presentation_surfaces.py
+[0m
+[0m$ [0mgit diff --cached src/asf/presentation_surfaces.py | head -100
+diff --git a/src/asf/presentation_surfaces.py b/src/asf/presentation_surfaces.py
+index d44f219..9e5cc42 100644
+--- a/src/asf/presentation_surfaces.py
++++ b/src/asf/presentation_surfaces.py
+@@ -1143,6 +1143,102 @@ def assemble_parallax_layer_set(
+     )
+ 
+ 
++def _bin_pack_layout(
++    tiles: list[TileSourceRef],
++    sizes: list[tuple[int, int]],
++    canvas_w: int,
++    canvas_h: int,
++) -> list[tuple[int, int, int, int]]:
++    """Best-fit decreasing bin packing for UI sheet layout.
++
++    Args:
++        tiles: List of tile source references.
++        sizes: List of (width, height) for each tile, aligned with `tiles`.
++        canvas_w: Canvas width in pixels.
++        canvas_h: Canvas height in pixels.
++
++    Returns:
++        List of (x, y, w, h) placements aligned with `tiles`.
++
++    Raises:
++        SurfaceAssemblyError: If tiles do not fit in the canvas.
++    """
++    if not tiles:
++        return []
++
++    SPACING = 2
++    indexed: list[tuple[int, TileSourceRef, tuple[int, int]]] = [
++        (i, tile, size) for i, (tile, size) in enumerate(zip(tiles, sizes))
++    ]
++    indexed.sort(key=lambda x: x[2][0] * x[2][1], reverse=True)
++
++    class _Row:
++        __slots__ = ("y", "height", "used", "remaining")
++        def __init__(self, y: int, height: int) -> None:
++            self.y = y
++            self.height = height
++            self.used = 0
++            self.remaining = canvas_w
++
++    rows: list[_Row] = [_Row(0, 0)]
++    placements: list[tuple[int, int, int, int] | None] = [None] * len(tiles)
++
++    for idx, tile, (tw, th) in indexed:
++        placed = False
++        best_row: _Row | None = None
++        best_fit_remaining = canvas_w + 1
++
++        for row in rows:
++            if th <= row.height and tw <= row.remaining:
++                fit_remaining = row.remaining - tw
++                if fit_remaining < best_fit_remaining:
++                    best_fit_remaining = fit_remaining
++                    best_row = row
++
++        if best_row is not None:
++            row = best_row
++            x = row.used
++            y = row.y
++            placements[idx] = (x, y, tw, th)
++            row.used += tw + SPACING
++            row.remaining -= tw + SPACING
++            placed = True
++        else:
++            for row in rows:
++                if row.height == 0:
++                    row.y = row.y
++                    row.height = th
++                    x = row.used
++                    y = row.y
++                    placements[idx] = (x, y, tw, th)
++                    row.used += tw + SPACING
++                    row.remaining -= tw + SPACING
++                    placed = True
++                    break
++
++        if not placed:
++            new_y = rows[-1].y + rows[-1].height + SPACING if rows else 0
++            new_row = _Row(new_y, th)
++            placements[idx] = (0, new_y, tw, th)
++            new_row.used = tw + SPACING
++            new_row.remaining = canvas_w - (tw + SPACING)
++            rows.append(new_row)
++            placed = True
++
++    total_h = rows[-1].y + rows[-1].height if rows else 0
++    if total_h > canvas_h:
++        raise SurfaceAssemblyError(
++            f"UI sheet overflow: tiles require {total_h}px height, canvas is {canvas_h}px"
++        )
++
++    result: list[tuple[int, int, int, int]] = []
++    for p in placements:
++        if p is None:
++            raise SurfaceAssemblyError("Bin packing failed to place a tile")
+[0m
+[0m$ [0mgit commit -m "Implement best-fit bin packing for UI sheet layout
+
+Implements _bin_pack_layout using best-fit decreasing (BFD) algorithm:
+- Sorts tiles by area descending
+- Places each tile in the best-fit existing row or starts a new row
+- Maintains 2px spacing between tiles
+- Raises SurfaceAssemblyError on overflow
+
+Adds BinPackLayoutTest with 7 tests covering empty tiles, single tile, side-by-side placement, varying sizes, spacing, overflow error, and known layout.
+
+Updates assemble_ui_sheet to use _bin_pack_layout instead of naive row-wrap."
+[main d843861] Implement best-fit bin packing for UI sheet layout
+ 5 files changed, 821 insertions(+), 15 deletions(-)
+ create mode 100644 measure/tracks/ui_sheet_bin_packing_20260505/plan.md
+ create mode 100644 measure/tracks/ui_sheet_bin_packing_20260505/spec.md
+[0m
+[0m$ [0mgit push
+To https://github.com/bodangren/advantage-game-art-pack.git
+   682b0b6..d843861  main -> main
+[0m
+[0m← [0mEdit measure/tracks.md
+Index: /home/daniel-bo/Desktop/pixel-art-generator/measure/tracks.md
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/measure/tracks.md
++++ /home/daniel-bo/Desktop/pixel-art-generator/measure/tracks.md
+@@ -97,8 +97,13 @@
+ - [x] **Track: Review App Hardening & UX Improvements** *Link: [./archive/review_app_hardening_20260503/](./archive/review_app_hardening_20260503/)*
+   Path-level auth exemptions, batch approve/reject, thumbnail grid, keyboard shortcuts
+ - [x] **Track: Extract Shared _utc_now Utility** *Link: [./tracks/extract_shared_utc_now_20260503/](./tracks/extract_shared_utc_now_20260503/)*
+   Extract duplicated `_utc_now()` to shared `asf/utils.py` module
++- [x] **Track: UI Sheet Bin Packing Optimization**
++  *Implement best-fit decreasing bin packing for UI sheet layout instead of naive row-wrap*
++  *Link: [./tracks/ui_sheet_bin_packing_20260505/](./tracks/ui_sheet_bin_packing_20260505/)*
++  *Status: Complete — _bin_pack_layout function implements BFD algorithm; 7 unit tests pass; all 85 presentation_surfaces tests pass.*
++
+ - [ ] **Track: Next feature** (none pending — no current_directive.md found)
+ - [x] **Track: Critic Calibration CLI**
+   *Add recalibrate subcommand to candidate CLI for scripted threshold adjustment*
+   *Link: [./archive/critic_calibration_cli_20260425/](./archive/critic_calibration_cli_20260425/)*
+
+[0m
+[0m→ [0mRead measure/tracks.md[90m [limit=20, offset=155][0m
+[0m
+[0m← [0mEdit measure/tracks.md
+Index: /home/daniel-bo/Desktop/pixel-art-generator/measure/tracks.md
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/measure/tracks.md
++++ /home/daniel-bo/Desktop/pixel-art-generator/measure/tracks.md
+@@ -160,4 +160,11 @@
+ - [x] **Track: Presentation Surfaces Parallax Fix**
+   *Replace pseudo-random offset with seeded deterministic hash-based offset for guaranteed edge seamlessness.*
+   *Link: [./tracks/presentation_parallax_fix_20260505/](./tracks/presentation_parallax_fix_20260505/)*
+   *Status: Complete — Replaced pseudo-random `(x_offset * 3) % canvas_w` with seeded hash-based offset; all tests passing.*
++
++---
++
++- [x] **Track: UI Sheet Bin Packing Optimization**
++  *Implement best-fit decreasing bin packing for UI sheet layout instead of naive row-wrap*
++  *Link: [./tracks/ui_sheet_bin_packing_20260505/](./tracks/ui_sheet_bin_packing_20260505/)*
++  *Status: Complete — _bin_pack_layout function implements BFD algorithm; 7 unit tests pass; all 85 presentation_surfaces tests pass.*
+
+[0m
+[0m→ [0mRead measure/tech-debt.md[90m [limit=10, offset=20][0m
+[0m✗ [0medit failed
+[91m[1mError: [0mCould not find oldString in the file. It must match exactly, including whitespace, indentation, and line endings.
+[0m→ [0mRead measure/tech-debt.md[90m [limit=5, offset=20][0m
+[0m✗ [0medit failed
+[91m[1mError: [0mCould not find oldString in the file. It must match exactly, including whitespace, indentation, and line endings.
+[0m✗ [0medit failed
+[91m[1mError: [0mCould not find oldString in the file. It must match exactly, including whitespace, indentation, and line endings.
+[0m
+[0m$ [0mcat -A /home/daniel-bo/Desktop/pixel-art-generator/measure/tech-debt.md | sed -n '22p'
+| 2026-04-14 | presentation_surfaces_ui_pipeline_20260405 | UI sheet layout is a naive left-to-right row wrap; no bin-packing or atlas efficiency optimization. Acceptable for MVP, but icon-dense sheets will waste canvas space. | Low | Open | Consider a best-fit bin-packing layout if canvas utilization becomes a concern for dense UI packs. |$
+[0m
+[0m$ [0msed -i '22s/.*/| 2026-04-14 | presentation_surfaces_ui_pipeline_20260505 | UI sheet layout is a naive left-to-right row wrap; no bin-packing or atlas efficiency optimization. Acceptable for MVP, but icon-dense sheets will waste canvas space. | Low | Closed | Fixed in ui_sheet_bin_packing_20260505 — best-fit decreasing (BFD) bin packing replaces row-wrap; _bin_pack_layout function with 7 unit tests; 85 tests pass. |/' /home/daniel-bo/Desktop/pixel-art-generator/measure/tech-debt.md
+(no output)
+[0m
+[0m→ [0mRead measure/tech-debt.md[90m [limit=5, offset=20][0m
+[0m→ [0mRead measure/lessons-learned.md[90m [limit=10, offset=40][0m
+[0m
+[0m← [0mEdit measure/lessons-learned.md
+Index: /home/daniel-bo/Desktop/pixel-art-generator/measure/lessons-learned.md
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/measure/lessons-learned.md
++++ /home/daniel-bo/Desktop/pixel-art-generator/measure/lessons-learned.md
+@@ -40,4 +40,5 @@
+ - (2026-05-04, renderer_part_library_integration) Circular imports between modules (specs↔part_library, canon↔specs) can be resolved by: (1) avoid top-level imports when possible, (2) move imports inside functions for late binding, or (3) define shared dataclasses in a low-level module without imports. PartLibraryRef defined in specs.py to avoid circular dependency.
+ - (2026-05-04, wire_orchestrator_programs_20260504) When wiring unused methods into a state machine, guard calls with relevant context checks — e.g., `if self.planner_context:` prevents breaking backward compatibility when planner integration is not configured.
+ - (2026-05-05, effect_sheet_palette_quantization_20260505) When adding palette to a dataclass that already has a style_pack field, the style pack loads correctly even with a dummy palette; but quantization needs the real palette from the program. Effect sheet required adding palette field to EffectSheetProgram dataclass and the JSON schema.
+ - (2026-05-05, presentation_parallax_fix_20260505) Seeded hash-based offsets (using hash of program_id + layer_role) provide deterministic, analytically reproducible tile placement for parallax tiling instead of pseudo-random offsets.
++- (2026-05-05, ui_sheet_bin_packing_20260505) Best-fit decreasing (BFD) bin packing: sort tiles by area descending, place each in best-fit row or new row. Row class with __slots__ keeps memory low; overflow check after layout pass using sum of final row positions.
+
+[0m

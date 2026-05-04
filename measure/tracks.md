@@ -98,6 +98,11 @@ This file tracks all major tracks for the project.
   Path-level auth exemptions, batch approve/reject, thumbnail grid, keyboard shortcuts
 - [x] **Track: Extract Shared _utc_now Utility** *Link: [./tracks/extract_shared_utc_now_20260503/](./tracks/extract_shared_utc_now_20260503/)*
   Extract duplicated `_utc_now()` to shared `asf/utils.py` module
+- [x] **Track: UI Sheet Bin Packing Optimization**
+  *Implement best-fit decreasing bin packing for UI sheet layout instead of naive row-wrap*
+  *Link: [./tracks/ui_sheet_bin_packing_20260505/](./tracks/ui_sheet_bin_packing_20260505/)*
+  *Status: Complete — _bin_pack_layout function implements BFD algorithm; 7 unit tests pass; all 85 presentation_surfaces tests pass.*
+
 - [ ] **Track: Next feature** (none pending — no current_directive.md found)
 - [x] **Track: Critic Calibration CLI**
   *Add recalibrate subcommand to candidate CLI for scripted threshold adjustment*
@@ -156,3 +161,10 @@ This file tracks all major tracks for the project.
   *Replace pseudo-random offset with seeded deterministic hash-based offset for guaranteed edge seamlessness.*
   *Link: [./tracks/presentation_parallax_fix_20260505/](./tracks/presentation_parallax_fix_20260505/)*
   *Status: Complete — Replaced pseudo-random `(x_offset * 3) % canvas_w` with seeded hash-based offset; all tests passing.*
+
+---
+
+- [x] **Track: UI Sheet Bin Packing Optimization**
+  *Implement best-fit decreasing bin packing for UI sheet layout instead of naive row-wrap*
+  *Link: [./tracks/ui_sheet_bin_packing_20260505/](./tracks/ui_sheet_bin_packing_20260505/)*
+  *Status: Complete — _bin_pack_layout function implements BFD algorithm; 7 unit tests pass; all 85 presentation_surfaces tests pass.*
