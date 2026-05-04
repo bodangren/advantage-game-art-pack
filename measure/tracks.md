@@ -142,3 +142,10 @@ This file tracks all major tracks for the project.
   *Wire `_generate_programs` and `_write_programs` into `_run_planning` stage so programs are written when planner_context is provided.*
   *Link: [./tracks/wire_orchestrator_programs_20260504/](./tracks/wire_orchestrator_programs_20260504/)*
   *Status: Complete — Methods now called in planning stage; guard checks planner_context exists before writing.*
+
+---
+
+- [x] **Track: Effect Sheet Palette Quantization**
+  *EffectSheetProgram now accepts palette field; _compile_effect_sheet uses real palette and applies median-cut quantization.*
+  *Link: [./tracks/effect_sheet_palette_quantization_20260505/](./tracks/effect_sheet_palette_quantization_20260505/)*
+  *Status: Complete — Added palette field to EffectSheetProgram and JSON schema; effect sheet compiler now applies palette quantization.*

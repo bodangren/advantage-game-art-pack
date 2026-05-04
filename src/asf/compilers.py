@@ -359,6 +359,7 @@ class EffectSheetProgram(CompilerProgramBase):
 
     effect_spec: "EffectSpec"
     frame_size: tuple[int, int]
+    palette: PaletteSpec
 
 
 @dataclass(frozen=True)
@@ -840,6 +841,7 @@ def _load_effect_sheet_program(payload: dict[str, Any], path: Path) -> EffectShe
             "layout",
             "effect_spec",
             "frame_size",
+            "palette",
         },
         "effect_sheet program",
         path,
@@ -913,6 +915,17 @@ def _load_effect_sheet_program(payload: dict[str, Any], path: Path) -> EffectShe
         color_tint=color_tint,
     )
     frame_size = _require_size(payload, "frame_size", path=path, context="effect_sheet program")
+    palette_payload = _require_mapping(
+        payload, "palette", path=path, context="effect_sheet program"
+    )
+    _require_exact_keys(palette_payload, {"primary", "secondary", "accent"}, "palette", path)
+    palette = PaletteSpec(
+        primary=_require_string(palette_payload, "primary", path=path, context="palette"),
+        secondary=_require_string(
+            palette_payload, "secondary", path=path, context="palette"
+        ),
+        accent=_require_string(palette_payload, "accent", path=path, context="palette"),
+    )
     return EffectSheetProgram(
         family=family,
         program_id=program_id,
@@ -923,6 +936,7 @@ def _load_effect_sheet_program(payload: dict[str, Any], path: Path) -> EffectShe
         layout=layout,
         effect_spec=effect_spec,
         frame_size=frame_size,
+        palette=palette,
     )
 
 
@@ -1559,9 +1573,8 @@ def _compile_effect_sheet(
     timing_path = output_dir / "effect_timing.json"
     program_copy_path = output_dir / "program.json"
     manifest_path = output_dir / "manifest.json"
-    dummy_palette = PaletteSpec(primary="iron", secondary="iron", accent="iron")
     style_pack = load_style_pack(
-        program.style_pack, dummy_palette, repo_root / "style_packs"
+        program.style_pack, program.palette, repo_root / "style_packs"
     )
     frames = []
     for frame_idx in range(program.effect_spec.duration_frames):
@@ -1573,6 +1586,8 @@ def _compile_effect_sheet(
         )
         frames.append(frame)
     sheet = _composite_effect_sheet(frames)
+    if style_pack.palette_limits > 0:
+        sheet = quantize_image_to_palette(sheet, style_pack.palette_limits)
     sheet.save(sheet_path, format="PNG", optimize=False, compress_level=9)
     timing = {
         "frame_duration_ms": 100,

@@ -22,5 +22,10 @@
     "intensity": 0.6,
     "color_tint": [128, 0, 255]
   },
-  "frame_size": [64, 64]
+  "frame_size": [64, 64],
+  "palette": {
+    "primary": "toxic_violet",
+    "secondary": "iron",
+    "accent": "iron"
+  }
 }

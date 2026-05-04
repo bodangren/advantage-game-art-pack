@@ -19,6 +19,7 @@ from asf.compilers import (
     EFFECT_LAYOUT_MODE,
     EffectSheetProgram,
     EffectSpec,
+    PaletteSpec,
     PropOrFxSheetProgram,
     ProgramLayout,
     TilesetProgram,
@@ -563,6 +564,7 @@ class EffectSheetProgramTest(unittest.TestCase):
                     "intensity": 0.7,
                 },
                 "frame_size": [64, 64],
+                "palette": {"primary": "iron", "secondary": "iron", "accent": "iron"},
             }
             payload_path.write_text(json.dumps(payload), encoding="utf-8")
             with self.assertRaisesRegex(ValueError, "effect_type"):
@@ -596,6 +598,7 @@ class EffectSheetProgramTest(unittest.TestCase):
                     "color_tint": [255, 0, 128],
                 },
                 "frame_size": [64, 64],
+                "palette": {"primary": "iron", "secondary": "iron", "accent": "iron"},
             }
             payload_path.write_text(json.dumps(payload), encoding="utf-8")
             program = load_compiler_program(payload_path)
@@ -631,6 +634,7 @@ class EffectSheetProgramTest(unittest.TestCase):
                 layout=ProgramLayout(mode="effect_strip", dimensions=(256, 64), grid=(4, 1), frame_size=(64, 64)),
                 effect_spec=EffectSpec(effect_type="glow", duration_frames=4, blend_mode="additive", intensity=0.7),
                 frame_size=(64, 64),
+                palette=PaletteSpec(primary="iron", secondary="iron", accent="iron"),
             )
             manifest = compile_program(
                 program,
