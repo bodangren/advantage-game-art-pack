@@ -1143,6 +1143,102 @@ def assemble_parallax_layer_set(
     )
 
 
+def _bin_pack_layout(
+    tiles: list[TileSourceRef],
+    sizes: list[tuple[int, int]],
+    canvas_w: int,
+    canvas_h: int,
+) -> list[tuple[int, int, int, int]]:
+    """Best-fit decreasing bin packing for UI sheet layout.
+
+    Args:
+        tiles: List of tile source references.
+        sizes: List of (width, height) for each tile, aligned with `tiles`.
+        canvas_w: Canvas width in pixels.
+        canvas_h: Canvas height in pixels.
+
+    Returns:
+        List of (x, y, w, h) placements aligned with `tiles`.
+
+    Raises:
+        SurfaceAssemblyError: If tiles do not fit in the canvas.
+    """
+    if not tiles:
+        return []
+
+    SPACING = 2
+    indexed: list[tuple[int, TileSourceRef, tuple[int, int]]] = [
+        (i, tile, size) for i, (tile, size) in enumerate(zip(tiles, sizes))
+    ]
+    indexed.sort(key=lambda x: x[2][0] * x[2][1], reverse=True)
+
+    class _Row:
+        __slots__ = ("y", "height", "used", "remaining")
+        def __init__(self, y: int, height: int) -> None:
+            self.y = y
+            self.height = height
+            self.used = 0
+            self.remaining = canvas_w
+
+    rows: list[_Row] = [_Row(0, 0)]
+    placements: list[tuple[int, int, int, int] | None] = [None] * len(tiles)
+
+    for idx, tile, (tw, th) in indexed:
+        placed = False
+        best_row: _Row | None = None
+        best_fit_remaining = canvas_w + 1
+
+        for row in rows:
+            if th <= row.height and tw <= row.remaining:
+                fit_remaining = row.remaining - tw
+                if fit_remaining < best_fit_remaining:
+                    best_fit_remaining = fit_remaining
+                    best_row = row
+
+        if best_row is not None:
+            row = best_row
+            x = row.used
+            y = row.y
+            placements[idx] = (x, y, tw, th)
+            row.used += tw + SPACING
+            row.remaining -= tw + SPACING
+            placed = True
+        else:
+            for row in rows:
+                if row.height == 0:
+                    row.y = row.y
+                    row.height = th
+                    x = row.used
+                    y = row.y
+                    placements[idx] = (x, y, tw, th)
+                    row.used += tw + SPACING
+                    row.remaining -= tw + SPACING
+                    placed = True
+                    break
+
+        if not placed:
+            new_y = rows[-1].y + rows[-1].height + SPACING if rows else 0
+            new_row = _Row(new_y, th)
+            placements[idx] = (0, new_y, tw, th)
+            new_row.used = tw + SPACING
+            new_row.remaining = canvas_w - (tw + SPACING)
+            rows.append(new_row)
+            placed = True
+
+    total_h = rows[-1].y + rows[-1].height if rows else 0
+    if total_h > canvas_h:
+        raise SurfaceAssemblyError(
+            f"UI sheet overflow: tiles require {total_h}px height, canvas is {canvas_h}px"
+        )
+
+    result: list[tuple[int, int, int, int]] = []
+    for p in placements:
+        if p is None:
+            raise SurfaceAssemblyError("Bin packing failed to place a tile")
+        result.append(p)
+    return result
+
+
 def assemble_ui_sheet(
     program: UISheetProgram,
     *,
@@ -1167,12 +1263,10 @@ def assemble_ui_sheet(
     canvas_w, canvas_h = program.canvas.width, program.canvas.height
     canvas = Image.new("RGBA", (canvas_w, canvas_h), (0, 0, 0, 0))
 
-    source_assets: list[dict[str, Any]] = []
-    tile_x = 0
-    tile_y = 0
-    max_tile_height = 0
+    tile_sources = list(program.tile_sources)
+    sizes: list[tuple[int, int]] = []
 
-    for ts in program.tile_sources:
+    for ts in tile_sources:
         prim_path = (
             repo_root
             / "library" / "primitives"
@@ -1184,24 +1278,27 @@ def assemble_ui_sheet(
                 f"UI primitive not found: tile_id='{ts.tile_id}' "
                 f"family='{ts.family}' primitive_id='{ts.primitive_id}'"
             )
-
         tile_img = Image.open(prim_path).convert("RGBA")
-        tw, th = tile_img.size
+        sizes.append(tile_img.size)
 
-        if tile_x + tw > canvas_w:
-            tile_x = 0
-            tile_y += max_tile_height + 2
-            max_tile_height = 0
+    placements = _bin_pack_layout(tile_sources, sizes, canvas_w, canvas_h)
 
-        canvas.alpha_composite(tile_img, (tile_x, tile_y))
+    source_assets: list[dict[str, Any]] = []
+    for ts, (x, y, tw, th) in zip(tile_sources, placements):
+        prim_path = (
+            repo_root
+            / "library" / "primitives"
+            / ts.family / ts.primitive_id
+            / "source.png"
+        )
+        tile_img = Image.open(prim_path).convert("RGBA")
+        canvas.alpha_composite(tile_img, (x, y))
         source_assets.append({
             "tile_id": ts.tile_id,
             "family": ts.family,
             "primitive_id": ts.primitive_id,
-            "position": (tile_x, tile_y, tw, th),
+            "position": (x, y, tw, th),
         })
-        tile_x += tw + 2
-        max_tile_height = max(max_tile_height, th)
 
     manifest = SurfaceManifest(
         program_id=program.program_id,

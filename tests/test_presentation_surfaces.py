@@ -32,6 +32,7 @@ from asf.presentation_surfaces import (
     assemble_cover_surface,
     assemble_loading_surface,
     assemble_parallax_layer_set,
+    assemble_ui_sheet,
     load_cover_surface,
     load_loading_surface,
     load_parallax_layer_set,
@@ -39,6 +40,7 @@ from asf.presentation_surfaces import (
     load_promo_capture_job,
     load_ui_sheet,
 )
+from asf.presentation_surfaces import _bin_pack_layout, TileSourceRef
 
 
 def _write_json(tmp_dir: str, payload: dict) -> Path:
@@ -947,6 +949,67 @@ class PromoCaptureJobGenerationTest(unittest.TestCase):
             result = assemble_promo_capture_job(program, repo_root=root)
             self.assertIsInstance(result, SurfaceAssemblyResult)
             self.assertEqual(result.image.size, (512, 384))
+
+
+class BinPackLayoutTest(unittest.TestCase):
+
+    def _make_ts(self, tile_id: str) -> TileSourceRef:
+        return TileSourceRef(tile_id=tile_id, family="ui", primitive_id=tile_id)
+
+    def test_bin_pack_empty_tiles(self) -> None:
+        result = _bin_pack_layout([], [], 128, 128)
+        self.assertEqual(result, [])
+
+    def test_bin_pack_single_tile(self) -> None:
+        tiles = [self._make_ts("a")]
+        sizes = [(32, 32)]
+        result = _bin_pack_layout(tiles, sizes, 128, 128)
+        self.assertEqual(result, [(0, 0, 32, 32)])
+
+    def test_bin_pack_two_tiles_side_by_side(self) -> None:
+        tiles = [self._make_ts("a"), self._make_ts("b")]
+        sizes = [(32, 32), (32, 32)]
+        result = _bin_pack_layout(tiles, sizes, 128, 128)
+        self.assertEqual(len(result), 2)
+        x0, y0, w0, h0 = result[0]
+        x1, y1, w1, h1 = result[1]
+        self.assertEqual((w0, h0), (32, 32))
+        self.assertEqual((w1, h1), (32, 32))
+        self.assertEqual(y0, y1)
+
+    def test_bin_pack_varying_sizes(self) -> None:
+        tiles = [self._make_ts("a"), self._make_ts("b"), self._make_ts("c")]
+        sizes = [(64, 64), (32, 32), (32, 32)]
+        result = _bin_pack_layout(tiles, sizes, 128, 128)
+        self.assertEqual(len(result), 3)
+        for x, y, w, h in result:
+            self.assertLessEqual(x + w, 128)
+            self.assertLessEqual(y + h, 128)
+
+    def test_bin_pack_maintains_spacing(self) -> None:
+        tiles = [self._make_ts("a"), self._make_ts("b")]
+        sizes = [(32, 32), (32, 32)]
+        result = _bin_pack_layout(tiles, sizes, 128, 128)
+        x0, y0, w0, h0 = result[0]
+        x1, y1, w1, h1 = result[1]
+        if y0 == y1:
+            self.assertGreaterEqual(x1 - (x0 + w0), 2)
+
+    def test_bin_pack_overflow_error(self) -> None:
+        tiles = [self._make_ts("a"), self._make_ts("b")]
+        sizes = [(128, 64), (128, 64)]
+        with self.assertRaises(SurfaceAssemblyError):
+            _bin_pack_layout(tiles, sizes, 64, 64)
+
+    def test_bin_pack_known_layout(self) -> None:
+        tiles = [self._make_ts("a"), self._make_ts("b"), self._make_ts("c")]
+        sizes = [(48, 48), (32, 32), (32, 32)]
+        result = _bin_pack_layout(tiles, sizes, 128, 128)
+        self.assertEqual(len(result), 3)
+        x0, y0, w0, h0 = result[0]
+        self.assertEqual((w0, h0), (48, 48))
+        self.assertEqual(y0, 0)
+        self.assertEqual(x0, 0)
 
 
 if __name__ == "__main__":
