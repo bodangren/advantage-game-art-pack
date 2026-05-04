@@ -113,6 +113,7 @@ This file tracks all major tracks for the project.
   *Link: [./tracks/directional_character_sheets_20260502/](./tracks/directional_character_sheets_20260502/)*
   *Status: Complete — DirectionalSheetProgram with directional_variants in style packs, direction-aware frame offsets, palette quantization, example programs, and CLI integration.*
 
+
 - [x] **Track: Effect Overlay Generation Pipeline**
   *Standalone effect sheets and entity+effect compositing with blend modes*
   *Link: [./archive/effect_overlay_pipeline_20260502/](./archive/effect_overlay_pipeline_20260502/)*

@@ -1,7 +1,8 @@
 {
   "id": "directional_character_sheets_20260502",
   "title": "Directional Character Sheet Renderer",
+  "status": "complete",
   "created": "2026-05-02",
-  "status": "pending",
-  "priority": "high"
+  "priority": "high",
+  "actual_tasks": 11
 }
