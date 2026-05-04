@@ -8,6 +8,7 @@ from typing import Callable
 
 from PIL import Image, ImageDraw
 
+from asf.part_library import PartLibrary
 from asf.specs import PoseSpec, SpriteSpec
 from asf.style_packs import StylePack
 
@@ -26,14 +27,19 @@ class FramePose:
     swing: int
 
 
-def render_sheet(spec: SpriteSpec, style_pack: StylePack) -> Image.Image:
+def render_sheet(
+    spec: SpriteSpec,
+    style_pack: StylePack,
+    *,
+    part_library: PartLibrary | None = None,
+) -> Image.Image:
     """Renders a deterministic 3x3 sprite sheet for a given spec."""
 
     sheet = Image.new("RGBA", (FRAME_SIZE[0] * 3, FRAME_SIZE[1] * 3), (0, 0, 0, 0))
     frame_index = 0
     for animation in FRAME_ORDER:
         for local_index in range(3):
-            frame = render_frame(spec, style_pack, animation, local_index)
+            frame = render_frame(spec, style_pack, animation, local_index, part_library=part_library)
             x = (frame_index % 3) * FRAME_SIZE[0]
             y = (frame_index // 3) * FRAME_SIZE[1]
             sheet.alpha_composite(frame, (x, y))
@@ -46,6 +52,8 @@ def render_frame(
     style_pack: StylePack,
     animation: str,
     frame_index: int,
+    *,
+    part_library: PartLibrary | None = None,
 ) -> Image.Image:
     """Renders a single 64x64 frame with bounded pose offsets."""
 
@@ -59,13 +67,22 @@ def render_frame(
 
     if spec.fx.type:
         _draw_fx(draw, spec.fx.type, colors["accent_light"], animation, frame_index)
+
+    if part_library is not None and spec.part_library_refs:
+        part_library.stamp_refs(image, list(spec.part_library_refs))
+
     return image
 
 
-def render_png_bytes(spec: SpriteSpec, style_pack: StylePack) -> bytes:
+def render_png_bytes(
+    spec: SpriteSpec,
+    style_pack: StylePack,
+    *,
+    part_library: PartLibrary | None = None,
+) -> bytes:
     """Renders a sheet and returns stable PNG bytes."""
 
-    image = render_sheet(spec, style_pack)
+    image = render_sheet(spec, style_pack, part_library=part_library)
     buffer = io.BytesIO()
     image.save(buffer, format="PNG", optimize=False, compress_level=9)
     return buffer.getvalue()

@@ -8,6 +8,16 @@ from pathlib import Path
 from typing import Any
 
 
+@dataclass(frozen=True)
+class PartLibraryRef:
+    """Reference to a primitive with positioning and scale."""
+
+    primitive_id: str
+    x: int
+    y: int
+    scale: float = 1.0
+
+
 SUPPORTED_ANIMATIONS = ("idle", "walk", "action")
 EXPECTED_FRAME_COUNTS = {"idle": 3, "walk": 3, "action": 3}
 DEFAULT_PIVOT = (32, 56)
@@ -131,6 +141,7 @@ class SpriteSpec:
     palette: PaletteSpec
     pose: PoseSpec
     fx: FxSpec
+    part_library_refs: tuple[PartLibraryRef, ...] = ()
 
 
 def _load_json(path: Path) -> dict[str, Any]:
@@ -298,6 +309,9 @@ def load_spec_payload(payload: dict[str, Any]) -> SpriteSpec:
     _require_exact_keys(fx_payload, {"type"}, "fx")
     fx = FxSpec(type=_optional_string(fx_payload, "type"))
 
+    from asf.part_library import parse_part_library_refs
+    part_library_refs = parse_part_library_refs(payload)
+
     return SpriteSpec(
         style_pack=_require_string(payload, "style_pack"),
         entity_type=_require_string(payload, "entity_type"),
@@ -309,6 +323,7 @@ def load_spec_payload(payload: dict[str, Any]) -> SpriteSpec:
         palette=palette,
         pose=pose,
         fx=fx,
+        part_library_refs=part_library_refs,
     )
 
 
