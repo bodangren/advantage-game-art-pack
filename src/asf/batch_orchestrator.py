@@ -113,6 +113,10 @@ class BatchOrchestrator:
                 job = replace(job, state=JobState.FAILED, updated_at=_utc_now())
                 return job
 
+        if job.asset_states:
+            programs = self._generate_programs(job)
+            self._write_programs(job, programs)
+
         job = replace(job, state=JobState.COMPILING, updated_at=_utc_now())
         return job
 
@@ -131,6 +135,8 @@ class BatchOrchestrator:
         job: BatchJob,
         programs: dict[str, list[dict[str, Any]]],
     ) -> None:
+        if not self.planner_context:
+            return
         for family_str, family_programs in programs.items():
             for prog_info in family_programs:
                 idx = prog_info["index"]
