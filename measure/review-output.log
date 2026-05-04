@@ -1,5 +1,375 @@
 [0m
 > build · k2p6
 [0m
+[0m→ [0mSkill "measure"
+[0m✱ [0mGlob "**/review-prompt.md"[90m in measure · 1 match[0m
 [0m→ [0mRead measure/review-prompt.md
-I see the review prompt. Would you like me to run this code review now, or did you want me to read it for some other reason?
+I'll execute the 24-hour code review process from `measure/review-prompt.md`.
+[0m
+[0m$ [0mgit log --since="24 hours ago" --oneline
+2e4162b fix(parallax): replace pseudo-random offset with seeded deterministic hash
+0d90a0f feat(effect-sheet): wire real palette into effect sheet compiler for quantization
+286a139 chore(measure): Mark track 'Directional Character Sheet Renderer' as complete
+11d124c chore: flush output log
+c74f166 chore: flush output log
+5bc8286 checkpoint: wire orchestrator programs complete (MiniMax-M2.7)
+4b227b2 feat(orchestrator): wire _generate_programs and _write_programs into planning stage
+aa630f6 chore: flush output log
+6f23c5e checkpoint: renderer part library integration complete
+9c9df5f feat(renderer): integrate part library for primitive stamping
+[0m
+[0m$ [0mgit diff --name-only HEAD~20 HEAD
+measure/archive/batch_enemy_npc_generation_20260503/metadata.json
+measure/archive/batch_enemy_npc_generation_20260503/plan.md
+measure/archive/batch_enemy_npc_generation_20260503/spec.md
+measure/archive/per_game_asset_bundles_20260503/metadata.json
+measure/archive/per_game_asset_bundles_20260503/plan.md
+measure/archive/per_game_asset_bundles_20260503/spec.md
+measure/archive/review_app_hardening_20260503/metadata.json
+measure/archive/review_app_hardening_20260503/plan.md
+measure/archive/review_app_hardening_20260503/spec.md
+measure/archive/scene_primitive_library_20260425/metadata.json
+measure/archive/scene_primitive_library_20260425/plan.md
+measure/archive/scene_primitive_library_20260425/spec.md
+measure/lessons-learned.md
+measure/output.log
+measure/tech-debt.md
+measure/tracks.md
+measure/tracks/directional_character_sheets_20260502/metadata.json
+measure/tracks/effect_sheet_palette_quantization_20260505/metadata.json
+measure/tracks/effect_sheet_palette_quantization_20260505/plan.md
+measure/tracks/effect_sheet_palette_quantization_20260505/spec.md
+measure/tracks/extract_shared_utc_now_20260503/metadata.json
+measure/tracks/extract_shared_utc_now_20260503/plan.md
+measure/tracks/extract_shared_utc_now_20260503/spec.md
+measure/tracks/per_game_asset_bundles_20260503/plan.md
+measure/tracks/presentation_parallax_fix_20260505/metadata.json
+measure/tracks/presentation_parallax_fix_20260505/plan.md
+measure/tracks/presentation_parallax_fix_20260505/spec.md
+measure/tracks/renderer_part_library_integration_20260504/metadata.json
+measure/tracks/renderer_part_library_integration_20260504/plan.md
+measure/tracks/renderer_part_library_integration_20260504/spec.md
+measure/tracks/review_app_hardening_20260503/plan.md
+measure/tracks/scene_primitive_library_20260425/metadata.json
+measure/tracks/scene_primitive_library_20260425/plan.md
+measure/tracks/wire_orchestrator_programs_20260504/metadata.json
+measure/tracks/wire_orchestrator_programs_20260504/plan.md
+measure/tracks/wire_orchestrator_programs_20260504/spec.md
+programs/effect_sheet/ice_pulse.json
+programs/effect_sheet/poison_aura.json
+src/asf/batch_exporter.py
+src/asf/batch_orchestrator.py
+src/asf/batch_runner.py
+src/asf/bundle.py
+src/asf/cli.py
+src/asf/compilers.py
+src/asf/part_library.py
+src/asf/presentation_surfaces.py
+src/asf/renderer.py
+src/asf/scene_layout.py
+src/asf/specs.py
+src/asf/utils.py
+src/review_app/api.py
+src/review_app/auth.py
+tests/test_bundle.py
+tests/test_compilers.py
+tests/test_part_library.py
+tests/test_scene_layout.py
+tests/test_utils.py
+[0m
+[0m→ [0mRead measure/tracks.md
+[0m→ [0mRead measure/tech-debt.md
+[0m→ [0mRead src/asf/presentation_surfaces.py
+[0m→ [0mRead src/asf/compilers.py
+[0m→ [0mRead src/asf/part_library.py
+[0m→ [0mRead src/asf/batch_orchestrator.py
+[0m→ [0mRead tests/test_compilers.py
+[0m→ [0mRead src/asf/utils.py
+[0m→ [0mRead src/asf/compilers.py[90m [offset=1463][0m
+[0m
+[0m$ [0mCI=true python -m pytest tests/ -q --tb=short 2>&1 | head -100
+/bin/bash: line 1: python: command not found
+[0m
+[0m$ [0mwhich python3 || which python || ls /usr/bin/python* 2>/dev/null || echo "No python found"
+/usr/bin/python3
+[0m
+[0m$ [0mCI=true python3 -m pytest tests/ -q --tb=short 2>&1 | tail -50
+==================================== ERRORS ====================================
+______________ ERROR collecting tests/test_policy_integration.py _______________
+ImportError while importing test module '/home/daniel-bo/Desktop/pixel-art-generator/tests/test_policy_integration.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_policy_integration.py:10: in <module>
+    from review_app.db import init_db
+E   ModuleNotFoundError: No module named 'review_app'
+__________________ ERROR collecting tests/test_review_api.py ___________________
+ImportError while importing test module '/home/daniel-bo/Desktop/pixel-art-generator/tests/test_review_api.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_review_api.py:10: in <module>
+    from review_app.db import Database, init_db
+E   ModuleNotFoundError: No module named 'review_app'
+__________________ ERROR collecting tests/test_review_app.py ___________________
+ImportError while importing test module '/home/daniel-bo/Desktop/pixel-art-generator/tests/test_review_app.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_review_app.py:12: in <module>
+    from review_app.db import Database, init_db
+E   ModuleNotFoundError: No module named 'review_app'
+__________________ ERROR collecting tests/test_review_auth.py __________________
+ImportError while importing test module '/home/daniel-bo/Desktop/pixel-art-generator/tests/test_review_auth.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_review_auth.py:8: in <module>
+    from review_app.auth import (
+E   ModuleNotFoundError: No module named 'review_app'
+=========================== short test summary info ============================
+ERROR tests/test_policy_integration.py
+ERROR tests/test_review_api.py
+ERROR tests/test_review_app.py
+ERROR tests/test_review_auth.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 4 errors during collection !!!!!!!!!!!!!!!!!!!!
+4 errors in 0.69s
+[0m
+[0m$ [0mPYTHONPATH="src:$PYTHONPATH" CI=true python3 -m pytest tests/ -q --tb=short 2>&1 | tail -80
+........................................................................ [ 17%]
+........................................................................ [ 34%]
+........................................................................ [ 51%]
+........................................................................ [ 68%]
+........................................................................ [ 85%]
+.............................................................            [100%]
+=============================== warnings summary ===============================
+tests/test_batch_runner.py::BatchRunnerTest::test_asset_states_transition
+tests/test_batch_runner.py::BatchRunnerTest::test_bounded_retry_for_planner_failure
+tests/test_batch_runner.py::BatchRunnerTest::test_first_run_new_job
+tests/test_batch_runner.py::BatchRunnerTest::test_resume_from_compiling
+  /home/daniel-bo/Desktop/pixel-art-generator/tests/test_batch_runner.py:77: DeprecationWarning: BatchRunner is deprecated. Use BatchOrchestrator from asf.batch_orchestrator instead.
+    return BatchRunner(job_root=self.job_root, repo_root=self.repo_root)
+
+tests/test_batch_runner.py::BatchRunnerTest::test_resume_skips_completed_assets
+  /home/daniel-bo/Desktop/pixel-art-generator/tests/test_batch_runner.py:130: DeprecationWarning: BatchRunner is deprecated. Use BatchOrchestrator from asf.batch_orchestrator instead.
+    runner = BatchRunner(job_root=job_root, repo_root=ROOT)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+421 passed, 5 warnings in 162.65s (0:02:42)
+[0m
+[0m$ [0mls package.json 2>/dev/null && cat package.json | grep -E '"(lint|typecheck|test)"' || echo "No package.json"
+No package.json
+[0m
+[0m$ [0mls pyproject.toml setup.cfg tox.ini 2>/dev/null || echo "No Python config files found"
+pyproject.toml
+No Python config files found
+[0m
+[0m→ [0mRead pyproject.toml
+[0m
+[0m$ [0mgrep -n "import math" src/asf/compilers.py
+1431:                import math
+1461:        import math
+[0m
+[0m← [0mEdit src/asf/compilers.py
+Index: /home/daniel-bo/Desktop/pixel-art-generator/src/asf/compilers.py
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/src/asf/compilers.py
++++ /home/daniel-bo/Desktop/pixel-art-generator/src/asf/compilers.py
+@@ -4,8 +4,9 @@
+ 
+ from dataclasses import asdict, dataclass
+ import hashlib
+ import json
++import math
+ from pathlib import Path
+ from typing import Any, Callable
+ 
+ from PIL import Image, ImageChops, ImageDraw, ImageEnhance, ImageOps
+
+[0m
+[0m← [0mEdit src/asf/compilers.py
+Index: /home/daniel-bo/Desktop/pixel-art-generator/src/asf/compilers.py
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/src/asf/compilers.py
++++ /home/daniel-bo/Desktop/pixel-art-generator/src/asf/compilers.py
+@@ -828,9 +828,8 @@
+     )
+ 
+ 
+ def _load_effect_sheet_program(payload: dict[str, Any], path: Path) -> EffectSheetProgram:
+-    from asf.specs import EffectSpec
+     _require_exact_keys(
+         payload,
+         {
+             "family",
+
+[0m
+[0m← [0mEdit src/asf/compilers.py
+Index: /home/daniel-bo/Desktop/pixel-art-generator/src/asf/compilers.py
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/src/asf/compilers.py
++++ /home/daniel-bo/Desktop/pixel-art-generator/src/asf/compilers.py
+@@ -1414,9 +1414,8 @@
+     frame_index: int,
+     frame_size: tuple[int, int],
+     style_pack: "StylePack",
+ ) -> Image.Image:
+-    from asf.style_packs import StylePack
+     frame_w, frame_h = frame_size
+     canvas = Image.new("RGBA", (frame_w, frame_h), (0, 0, 0, 0))
+     cx, cy = frame_w // 2, frame_h // 2
+     progress = frame_index / max(1, spec.duration_frames - 1)
+
+[0m
+[0m← [0mEdit src/asf/compilers.py
+Index: /home/daniel-bo/Desktop/pixel-art-generator/src/asf/compilers.py
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/src/asf/compilers.py
++++ /home/daniel-bo/Desktop/pixel-art-generator/src/asf/compilers.py
+@@ -1426,9 +1426,8 @@
+ for r in range(radius, max(1, radius - 8), -1):
+     alpha = int(255 * intensity * (1.0 - r / radius) * 0.3)
+     color = (255, 255, 255, alpha) if spec.color_tint is None else (*spec.color_tint, alpha)
+     for angle in range(0, 360, 30):
+-        import math
+         rad = math.radians(angle)
+         x = int(cx + (r - 4) * math.cos(rad))
+         y = int(cy + (r - 4) * math.sin(rad))
+         ImageDraw.Draw(canvas).ellipse(
+
+[0m
+[0m← [0mEdit src/asf/compilers.py
+Index: /home/daniel-bo/Desktop/pixel-art-generator/src/asf/compilers.py
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/src/asf/compilers.py
++++ /home/daniel-bo/Desktop/pixel-art-generator/src/asf/compilers.py
+@@ -1455,9 +1455,8 @@
+             outline=color,
+             width=2,
+         )
+ elif spec.effect_type == "burst":
+-    import math
+     particle_count = 12
+     for i in range(particle_count):
+         angle = (i / particle_count) * 2 * math.pi + progress * math.pi
+         dist = int(base_radius * progress * 0.8)
+
+[0m
+[0m$ [0mPYTHONPATH="src:$PYTHONPATH" CI=true python3 -m pytest tests/ -q --tb=short 2>&1 | tail -20
+........................................................................ [ 17%]
+........................................................................ [ 34%]
+........................................................................ [ 51%]
+........................................................................ [ 68%]
+........................................................................ [ 85%]
+.............................................................            [100%]
+=============================== warnings summary ===============================
+tests/test_batch_runner.py::BatchRunnerTest::test_asset_states_transition
+tests/test_batch_runner.py::BatchRunnerTest::test_bounded_retry_for_planner_failure
+tests/test_batch_runner.py::BatchRunnerTest::test_first_run_new_job
+tests/test_batch_runner.py::BatchRunnerTest::test_resume_from_compiling
+  /home/daniel-bo/Desktop/pixel-art-generator/tests/test_batch_runner.py:77: DeprecationWarning: BatchRunner is deprecated. Use BatchOrchestrator from asf.batch_orchestrator instead.
+    return BatchRunner(job_root=self.job_root, repo_root=self.repo_root)
+
+tests/test_batch_runner.py::BatchRunnerTest::test_resume_skips_completed_assets
+  /home/daniel-bo/Desktop/pixel-art-generator/tests/test_batch_runner.py:130: DeprecationWarning: BatchRunner is deprecated. Use BatchOrchestrator from asf.batch_orchestrator instead.
+    runner = BatchRunner(job_root=job_root, repo_root=ROOT)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+421 passed, 5 warnings in 177.04s (0:02:57)
+[0m
+[0m→ [0mRead tests/test_utils.py
+[0m→ [0mRead tests/test_part_library.py
+[0m
+[0m$ [0mgit diff --stat
+measure/output.log        | 1242 +++++++++++++++++++++++++++++++++++++++++++++
+ measure/review-output.log |  286 ++++++++++-
+ src/asf/compilers.py      |    5 +-
+ 3 files changed, 1528 insertions(+), 5 deletions(-)
+[0m
+[0m$ [0mgit diff src/asf/compilers.py
+diff --git a/src/asf/compilers.py b/src/asf/compilers.py
+index f9eb8f5..126497e 100644
+--- a/src/asf/compilers.py
++++ b/src/asf/compilers.py
+@@ -5,6 +5,7 @@ from __future__ import annotations
+ from dataclasses import asdict, dataclass
+ import hashlib
+ import json
++import math
+ from pathlib import Path
+ from typing import Any, Callable
+ 
+@@ -828,7 +829,6 @@ def _load_directional_sheet_program(
+ 
+ 
+ def _load_effect_sheet_program(payload: dict[str, Any], path: Path) -> EffectSheetProgram:
+-    from asf.specs import EffectSpec
+     _require_exact_keys(
+         payload,
+         {
+@@ -1415,7 +1415,6 @@ def _render_effect_frame(
+     frame_size: tuple[int, int],
+     style_pack: "StylePack",
+ ) -> Image.Image:
+-    from asf.style_packs import StylePack
+     frame_w, frame_h = frame_size
+     canvas = Image.new("RGBA", (frame_w, frame_h), (0, 0, 0, 0))
+     cx, cy = frame_w // 2, frame_h // 2
+@@ -1428,7 +1427,6 @@ def _render_effect_frame(
+             alpha = int(255 * intensity * (1.0 - r / radius) * 0.3)
+             color = (255, 255, 255, alpha) if spec.color_tint is None else (*spec.color_tint, alpha)
+             for angle in range(0, 360, 30):
+-                import math
+                 rad = math.radians(angle)
+                 x = int(cx + (r - 4) * math.cos(rad))
+                 y = int(cy + (r - 4) * math.sin(rad))
+@@ -1458,7 +1456,6 @@ def _render_effect_frame(
+                 width=2,
+             )
+     elif spec.effect_type == "burst":
+-        import math
+         particle_count = 12
+         for i in range(particle_count):
+             angle = (i / particle_count) * 2 * math.pi + progress * math.pi
+[0m
+[0m$ [0mgit add src/asf/compilers.py && git commit -m "chore(review): fix 3 lint/style issues"
+[main e7862b5] chore(review): fix 3 lint/style issues
+ 1 file changed, 1 insertion(+), 4 deletions(-)
+[0m
+[0m✱ [0mGlob "**/current-priority.md"[90m 0 matches[0m
+[0m→ [0mRead measure/lessons-learned.md
+## CODE REVIEW — PAST 24 HOURS
+
+**Commits reviewed:** 9 commits (2e4162b..HEAD)
+
+**Files reviewed:** 8 source files
+- `src/asf/presentation_surfaces.py` — parallax deterministic hash fix
+- `src/asf/compilers.py` — effect sheet palette quantization, directional sheet compiler
+- `src/asf/part_library.py` — PartLibrary integration
+- `src/asf/batch_orchestrator.py` — wire `_generate_programs`/`_write_programs` into planning stage
+- `src/asf/utils.py` — shared `_utc_now()` extraction
+- `tests/test_compilers.py`, `test_part_library.py`, `test_utils.py`
+
+**Issues found:** 3 style issues
+1. `import math` inside loops in `_render_effect_frame` (compilers.py:1431, 1461)
+2. Redundant local import `from asf.specs import EffectSpec` (compilers.py:831) — already imported at module level
+3. Unnecessary local import `from asf.style_packs import StylePack` (compilers.py:1418) — only used for type annotation, not runtime
+
+**Issues fixed:** 3 (committed as `e7862b5 chore(review): fix 3 lint/style issues`)
+
+**Tests:** 421 passed, 5 deprecation warnings (expected — BatchRunner deprecation)
+
+**Architectural concerns:** None new. Existing open items in tech-debt.md remain valid:
+- UI sheet layout could use bin-packing (Low)
+- Critic calibration needs real demo assets (Medium)
+- PromptParser keyword matching is MVP-level (Low)
+
+**No current-priority.md to adjust.**
