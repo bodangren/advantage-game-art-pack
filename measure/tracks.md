@@ -169,11 +169,12 @@ This file tracks all major tracks for the project.
   *Link: [./tracks/ui_sheet_bin_packing_20260505/](./tracks/ui_sheet_bin_packing_20260505/)*
   *Status: Complete — _bin_pack_layout function implements BFD algorithm; 7 unit tests pass; all 85 presentation_surfaces tests pass.*
 
-## Upcoming Tracks
-
-- [ ] **Track: Multi-Layout Pose Sheet Expansion (3×2, 3×4, Custom Grids)**
+- [x] **Track: Multi-Layout Pose Sheet Expansion (3×2, 3×4, Custom Grids)**
   *Link: [./tracks/multi_layout_pose_sheet_expansion_20260506/](./tracks/multi_layout_pose_sheet_expansion_20260506/)*
   Expand compiler to support arbitrary row/column layouts for downstream game assets.
+  *Status: Complete — Added pose_sheet_3x2 and pose_sheet_3x4 to LAYOUT_TYPES; updated _frame_drift in canon.py and candidate_loop.py to handle new grid dimensions; canon manifest updated; test suite passes.*
+
+## Upcoming Tracks
 
 - [ ] **Track: Projectile, Pickup, and Interactable Compiler Family**
   *Link: [./tracks/projectile_pickup_interactable_compiler_20260506/](./tracks/projectile_pickup_interactable_compiler_20260506/)*
