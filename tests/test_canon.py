@@ -176,6 +176,8 @@ def _write_minimal_canon_project(overrides: dict[str, object]) -> Path:
                     ],
                     "layout_types": [
                         "pose_sheet_3x3",
+                        "pose_sheet_3x2",
+                        "pose_sheet_3x4",
                         "strip_3x1",
                         "scene_full_frame",
                         "atlas_square",

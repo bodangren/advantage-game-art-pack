@@ -390,9 +390,16 @@ def _split_evenly(start: int, end: int, parts: int) -> list[int]:
 
 
 def _frame_drift(image: Image.Image, layout_type: str) -> float | None:
-    if layout_type not in {"pose_sheet_3x3", "strip_3x1"}:
+    if layout_type not in {"pose_sheet_3x3", "pose_sheet_3x2", "pose_sheet_3x4", "strip_3x1"}:
         return None
-    rows, columns = (3, 3) if layout_type == "pose_sheet_3x3" else (1, 3)
+    if layout_type == "pose_sheet_3x3":
+        rows, columns = 3, 3
+    elif layout_type == "pose_sheet_3x2":
+        rows, columns = 2, 3
+    elif layout_type == "pose_sheet_3x4":
+        rows, columns = 4, 3
+    else:
+        rows, columns = 1, 3
     bbox = image.getchannel("A").getbbox()
     if bbox is None:
         return None

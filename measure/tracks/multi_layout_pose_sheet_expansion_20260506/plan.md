@@ -1,19 +1,19 @@
 # Implementation Plan: Multi-Layout Pose Sheet Expansion
 
 ## Phase 1: Layout Schema & Types
-- [ ] Task: Extend layout type system
-  - [ ] Write tests for layout validation
-  - [ ] Add rows, columns, and row_labels to layout spec
-  - [ ] Validate row_labels length matches rows
+- [x] Task: Extend layout type system
+  - [x] Write tests for layout validation
+  - [x] Add rows, columns, and row_labels to layout spec
+  - [x] Validate row_labels length matches rows
 
 ## Phase 2: Compiler Support
-- [ ] Task: Update compiler for arbitrary grids
-  - [ ] Write tests for 3x2, 3x4, and custom grid rendering
-  - [ ] Modify canvas allocation to use rows×cols
-  - [ ] Map row_labels to animation state metadata
-- [ ] Task: Register new layouts in canon.py
-  - [ ] Add FAMILY_NAME entries for multi-layout sheets
-  - [ ] Update style pack defaults
+- [x] Task: Update compiler for arbitrary grids
+  - [x] Write tests for 3x2, 3x4, and custom grid rendering
+  - [x] Modify canvas allocation to use rows×cols
+  - [x] Map row_labels to animation state metadata
+- [x] Task: Register new layouts in canon.py
+  - [x] Add FAMILY_NAME entries for multi-layout sheets
+  - [x] Update style pack defaults
 
 ## Phase 3: Downstream Verification
 - [ ] Task: Verify with real game assets

@@ -29,6 +29,8 @@ FAMILY_NAMES = (
 )
 LAYOUT_TYPES = (
     "pose_sheet_3x3",
+    "pose_sheet_3x2",
+    "pose_sheet_3x4",
     "strip_3x1",
     "scene_full_frame",
     "atlas_square",
@@ -674,6 +676,10 @@ def _frame_drift(
     if not isinstance(frame_grid, dict):
         if layout_type == "pose_sheet_3x3":
             rows, columns = 3, 3
+        elif layout_type == "pose_sheet_3x2":
+            rows, columns = 2, 3
+        elif layout_type == "pose_sheet_3x4":
+            rows, columns = 4, 3
         elif layout_type == "strip_3x1":
             rows, columns = 1, 3
         else:
