@@ -96,7 +96,7 @@ This file tracks all major tracks for the project.
   Bundle manifest, validation, and export for game-ready asset packages
 - [x] **Track: Review App Hardening & UX Improvements** *Link: [./archive/review_app_hardening_20260503/](./archive/review_app_hardening_20260503/)*
   Path-level auth exemptions, batch approve/reject, thumbnail grid, keyboard shortcuts
-- [x] **Track: Extract Shared _utc_now Utility** *Link: [./tracks/extract_shared_utc_now_20260503/](./tracks/extract_shared_utc_now_20260503/)*
+- [x] **Track: Extract Shared _utc_now Utility** *Link: [./archive/extract_shared_utc_now_20260503/](./archive/extract_shared_utc_now_20260503/)*
   Extract duplicated `_utc_now()` to shared `asf/utils.py` module
 - [x] **Track: UI Sheet Bin Packing Optimization**
   *Implement best-fit decreasing bin packing for UI sheet layout instead of naive row-wrap*
@@ -168,3 +168,17 @@ This file tracks all major tracks for the project.
   *Implement best-fit decreasing bin packing for UI sheet layout instead of naive row-wrap*
   *Link: [./tracks/ui_sheet_bin_packing_20260505/](./tracks/ui_sheet_bin_packing_20260505/)*
   *Status: Complete — _bin_pack_layout function implements BFD algorithm; 7 unit tests pass; all 85 presentation_surfaces tests pass.*
+
+## Upcoming Tracks
+
+- [ ] **Track: Multi-Layout Pose Sheet Expansion (3×2, 3×4, Custom Grids)**
+  *Link: [./tracks/multi_layout_pose_sheet_expansion_20260506/](./tracks/multi_layout_pose_sheet_expansion_20260506/)*
+  Expand compiler to support arbitrary row/column layouts for downstream game assets.
+
+- [ ] **Track: Projectile, Pickup, and Interactable Compiler Family**
+  *Link: [./tracks/projectile_pickup_interactable_compiler_20260506/](./tracks/projectile_pickup_interactable_compiler_20260506/)*
+  Dedicated compiler family for directional projectiles and single-image pickups/interactables.
+
+- [ ] **Track: Presentation Surface-to-Scene Assembler Integration**
+  *Link: [./tracks/presentation_surface_scene_integration_20260506/](./tracks/presentation_surface_scene_integration_20260506/)*
+  Align cover/loading backgrounds with real scene assembler output instead of hardcoded paths.
