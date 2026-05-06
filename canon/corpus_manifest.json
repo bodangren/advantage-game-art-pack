@@ -205,7 +205,12 @@
       "parallax_layer",
       "ui_sheet",
       "presentation_surface",
-      "directional_sheet"
+      "directional_sheet",
+      "effect_sheet",
+      "projectile",
+      "pickup",
+      "interactable",
+      "book"
     ],
     "layout_types": [
       "pose_sheet_3x3",
@@ -213,7 +218,12 @@
       "pose_sheet_3x4",
       "strip_3x1",
       "scene_full_frame",
-      "atlas_square"
+      "atlas_square",
+      "projectile_directional_4",
+      "projectile_directional_8",
+      "pickup_single",
+      "interactable_single",
+      "book_multistate"
     ]
   },
   "version": 1

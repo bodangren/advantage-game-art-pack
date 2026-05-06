@@ -173,6 +173,11 @@ def _write_minimal_canon_project(overrides: dict[str, object]) -> Path:
                         "ui_sheet",
                         "presentation_surface",
                         "directional_sheet",
+                        "effect_sheet",
+                        "projectile",
+                        "pickup",
+                        "interactable",
+                        "book",
                     ],
                     "layout_types": [
                         "pose_sheet_3x3",
@@ -181,6 +186,11 @@ def _write_minimal_canon_project(overrides: dict[str, object]) -> Path:
                         "strip_3x1",
                         "scene_full_frame",
                         "atlas_square",
+                        "projectile_directional_4",
+                        "projectile_directional_8",
+                        "pickup_single",
+                        "interactable_single",
+                        "book_multistate",
                     ],
                 },
                 "assets": [

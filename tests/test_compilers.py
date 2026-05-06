@@ -20,6 +20,8 @@ from asf.compilers import (
     EffectSheetProgram,
     EffectSpec,
     PaletteSpec,
+    PROJECTILE_LAYOUT_MODE,
+    ProjectileSheetProgram,
     PropOrFxSheetProgram,
     ProgramLayout,
     TilesetProgram,
@@ -689,6 +691,101 @@ class EffectSheetProgramTest(unittest.TestCase):
         effect = Image.new("RGBA", (32, 32), (50, 50, 50, 100))
         with self.assertRaisesRegex(CompilerValidationError, "must match"):
             composite_effect_on_entity(entity, effect, "additive")
+
+
+class ProjectileSheetProgramTest(unittest.TestCase):
+    """Validates ProjectileSheetProgram schema and projectile layout mode."""
+
+    def test_projectile_layout_mode_exists(self) -> None:
+        self.assertEqual(PROJECTILE_LAYOUT_MODE, "projectile_directional")
+
+    def test_projectile_program_schema_fields(self) -> None:
+        from dataclasses import fields
+
+        field_names = {f.name for f in fields(ProjectileSheetProgram)}
+        self.assertIn("directions", field_names)
+        self.assertIn("render_spec", field_names)
+        self.assertIn("palette", field_names)
+
+    def test_load_projectile_program_rejects_invalid_direction(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            payload_path = Path(tmp_dir) / "projectile.json"
+            payload = {
+                "family": "projectile",
+                "program_id": "test_proj",
+                "program_version": 1,
+                "style_pack": "cute_chibi_v1",
+                "primitive_ids": ["fireball_core"],
+                "variant_controls": {
+                    "variant_id": None,
+                    "candidate_index": None,
+                    "search_budget": None,
+                },
+                "layout": {
+                    "mode": "projectile_directional",
+                    "dimensions": [256, 64],
+                    "grid": [4, 1],
+                    "frame_size": [64, 64],
+                    "directions": ["E", "INVALID_DIR", "S", "W"],
+                },
+                "directions": ["E", "INVALID_DIR", "S", "W"],
+                "render_spec": None,
+                "palette": {"primary": "iron", "secondary": "iron", "accent": "iron"},
+            }
+            payload_path.write_text(json.dumps(payload), encoding="utf-8")
+            with self.assertRaisesRegex(
+                CompilerValidationError, "must be one of"
+            ):
+                load_compiler_program(payload_path)
+
+    def test_load_projectile_program_accepts_valid_directions(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            payload_path = Path(tmp_dir) / "projectile.json"
+            payload = {
+                "family": "projectile",
+                "program_id": "test_proj_valid",
+                "program_version": 1,
+                "style_pack": "cute_chibi_v1",
+                "primitive_ids": ["fireball_core"],
+                "variant_controls": {
+                    "variant_id": None,
+                    "candidate_index": None,
+                    "search_budget": None,
+                },
+                "layout": {
+                    "mode": "projectile_directional",
+                    "dimensions": [256, 64],
+                    "grid": [4, 1],
+                    "frame_size": [64, 64],
+                    "directions": ["E", "SE", "S", "SW"],
+                },
+                "directions": ["E", "SE", "S", "SW"],
+                "render_spec": None,
+                "palette": {"primary": "iron", "secondary": "iron", "accent": "iron"},
+            }
+            payload_path.write_text(json.dumps(payload), encoding="utf-8")
+            program = load_compiler_program(payload_path)
+            self.assertEqual(program.program_id, "test_proj_valid")
+            self.assertEqual(program.directions, ("E", "SE", "S", "SW"))
+
+    def test_composite_projectile_sheet_dimensions(self) -> None:
+        from asf.compilers import _composite_projectile_sheet
+        from PIL import Image
+
+        frames = [Image.new("RGBA", (32, 32), (255, 0, 0, 255)) for _ in range(4)]
+        sheet = _composite_projectile_sheet(frames)
+        self.assertEqual(sheet.size, (128, 32))
+
+    def test_composite_projectile_sheet_pixel_placement(self) -> None:
+        from asf.compilers import _composite_projectile_sheet
+        from PIL import Image
+
+        frame0 = Image.new("RGBA", (32, 32), (255, 0, 0, 255))
+        frame1 = Image.new("RGBA", (32, 32), (0, 255, 0, 255))
+        frames = [frame0, frame1]
+        sheet = _composite_projectile_sheet(frames)
+        self.assertEqual(sheet.getpixel((8, 16)), (255, 0, 0, 255))
+        self.assertEqual(sheet.getpixel((40, 16)), (0, 255, 0, 255))
 
 
 def _copy_style_pack(repo_root: Path) -> None:

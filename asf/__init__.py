@@ -25,6 +25,7 @@ from asf.compilers import (  # noqa: E402
     MotionPlan,
     PaletteSpec,
     ProgramLayout,
+    ProjectileSheetProgram,
     PropOrFxSheetProgram,
     TilesetProgram,
     VariantControls,

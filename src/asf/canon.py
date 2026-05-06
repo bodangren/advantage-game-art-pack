@@ -26,6 +26,11 @@ FAMILY_NAMES = (
     "ui_sheet",
     "presentation_surface",
     "directional_sheet",
+    "effect_sheet",
+    "projectile",
+    "pickup",
+    "interactable",
+    "book",
 )
 LAYOUT_TYPES = (
     "pose_sheet_3x3",
@@ -34,6 +39,11 @@ LAYOUT_TYPES = (
     "strip_3x1",
     "scene_full_frame",
     "atlas_square",
+    "projectile_directional_4",
+    "projectile_directional_8",
+    "pickup_single",
+    "interactable_single",
+    "book_multistate",
 )
 TRANSPARENCY_MODES = (
     "opaque",
@@ -1010,6 +1020,16 @@ def _family_palette_note(family: str) -> str:
         return "Flat neutral panels, trim golds, and high-contrast label colors."
     if family == "presentation_surface":
         return "Cinematic hero colors with a single strong accent to pull the eye to the focal subject."
+    if family == "effect_sheet":
+        return "Saturated glow colors, additive blend ready, transparent edges for overlay compositing."
+    if family == "projectile":
+        return "Hot core colors (orange/red), bright white highlight, soft alpha edge for motion feel."
+    if family == "pickup":
+        return "Gem-like saturated colors, high contrast against dark backgrounds, subtle glow."
+    if family == "interactable":
+        return "Warm highlight colors, distinct from environment, readable at small sizes."
+    if family == "book":
+        return "Parchment neutrals, rich jewel-tone accents, gold trim highlights."
     return "No palette note available."
 
 

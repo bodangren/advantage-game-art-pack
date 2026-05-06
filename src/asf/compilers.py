@@ -37,6 +37,7 @@ SUPPORTED_COMPILER_FAMILIES = (
     "tileset",
     "directional_sheet",
     "effect_sheet",
+    "projectile",
 )
 PROGRAM_ROOT_DIRNAME = "programs"
 OUTPUT_ROOT_DIRNAME = "outputs"
@@ -46,6 +47,7 @@ PROP_LAYOUT_MODE = "strip_3x1"
 TILESET_LAYOUT_MODE = "tile_atlas"
 DIRECTIONAL_LAYOUT_MODE = "directional_grid"
 EFFECT_LAYOUT_MODE = "effect_strip"
+PROJECTILE_LAYOUT_MODE = "projectile_directional"
 
 CHARACTER_DIRECTION_NAMES = (
     "facing_up",
@@ -360,6 +362,19 @@ class EffectSheetProgram(CompilerProgramBase):
 
     effect_spec: "EffectSpec"
     frame_size: tuple[int, int]
+    palette: PaletteSpec
+
+
+PROJECTILE_DIRECTIONS_4 = ("E", "S", "W", "N")
+PROJECTILE_DIRECTIONS_8 = ("E", "SE", "S", "SW", "W", "NW", "N", "NE")
+
+
+@dataclass(frozen=True)
+class ProjectileSheetProgram(CompilerProgramBase):
+    """Strict projectile sheet compiler program for rotation-based directional projectiles."""
+
+    directions: tuple[str, ...]
+    render_spec: SpriteSpec | None
     palette: PaletteSpec
 
 
@@ -940,6 +955,85 @@ def _load_effect_sheet_program(payload: dict[str, Any], path: Path) -> EffectShe
     )
 
 
+def _load_projectile_sheet_program(
+    payload: dict[str, Any], path: Path
+) -> ProjectileSheetProgram:
+    _require_exact_keys(
+        payload,
+        {
+            "family",
+            "program_id",
+            "program_version",
+            "style_pack",
+            "primitive_ids",
+            "variant_controls",
+            "layout",
+            "directions",
+            "render_spec",
+            "palette",
+        },
+        "projectile program",
+        path,
+    )
+    (
+        family,
+        program_id,
+        program_version,
+        primitive_ids,
+        variant_controls,
+        style_pack,
+        layout_payload,
+    ) = _parse_common_program_fields(payload, path, context="projectile program")
+    layout = _parse_layout(
+        layout_payload,
+        path=path,
+        context="projectile program.layout",
+        expected_mode=PROJECTILE_LAYOUT_MODE,
+        require_frame_size=True,
+        require_directions=True,
+    )
+    directions = _require_string_list(
+        payload, "directions", path=path, context="projectile program"
+    )
+    valid_directions = ("E", "SE", "S", "SW", "W", "NW", "N", "NE")
+    for direction in directions:
+        if direction not in valid_directions:
+            raise CompilerValidationError(
+                f"{path}: projectile program.directions must be one of {valid_directions}"
+            )
+    render_spec = None
+    render_spec_payload = payload.get("render_spec")
+    if render_spec_payload is not None:
+        if not isinstance(render_spec_payload, dict):
+            raise CompilerValidationError(
+                f"{path}: projectile program.render_spec must be an object or null"
+            )
+        render_spec = load_spec_payload(render_spec_payload)
+    palette_payload = _require_mapping(
+        payload, "palette", path=path, context="projectile program"
+    )
+    _require_exact_keys(palette_payload, {"primary", "secondary", "accent"}, "palette", path)
+    palette = PaletteSpec(
+        primary=_require_string(palette_payload, "primary", path=path, context="palette"),
+        secondary=_require_string(
+            palette_payload, "secondary", path=path, context="palette"
+        ),
+        accent=_require_string(palette_payload, "accent", path=path, context="palette"),
+    )
+    return ProjectileSheetProgram(
+        family=family,
+        program_id=program_id,
+        program_version=program_version,
+        style_pack=style_pack,
+        primitive_ids=primitive_ids,
+        variant_controls=variant_controls,
+        layout=layout,
+        directions=tuple(directions),
+        render_spec=render_spec,
+        palette=palette,
+    )
+
+
 def load_compiler_program(path: str | Path) -> CompilerProgramBase:
     """Loads and validates a family-specific compiler program."""
 
@@ -958,6 +1052,8 @@ def load_compiler_program(path: str | Path) -> CompilerProgramBase:
         return _load_directional_sheet_program(payload, path)
     if family == "effect_sheet":
         return _load_effect_sheet_program(payload, path)
+    if family == "projectile":
+        return _load_projectile_sheet_program(payload, path)
     raise CompilerValidationError(f"{path}: unknown compiler family '{family}'")
 
 
@@ -1613,6 +1709,86 @@ def _compile_effect_sheet(
     return manifest
 
 
+DIRECTION_ANGLES = {
+    "E": 0,
+    "SE": 45,
+    "S": 90,
+    "SW": 135,
+    "W": 180,
+    "NW": 225,
+    "N": 270,
+    "NE": 315,
+}
+
+
+def _composite_projectile_sheet(
+    frames: list[Image.Image],
+) -> Image.Image:
+    if not frames:
+        raise CompilerValidationError("No frames provided for projectile sheet")
+    frame_w, frame_h = frames[0].size
+    sheet_w = frame_w * len(frames)
+    sheet = Image.new("RGBA", (sheet_w, frame_h), (0, 0, 0, 0))
+    for idx, frame in enumerate(frames):
+        sheet.alpha_composite(frame, (idx * frame_w, 0))
+    return sheet
+
+
+def _compile_projectile_sheet(
+    program: ProjectileSheetProgram,
+    output_dir: Path,
+    repo_root: Path,
+    program_path: str | Path | None,
+) -> CompilerOutputManifest:
+    output_dir.mkdir(parents=True, exist_ok=True)
+    sheet_path = output_dir / "sheet.png"
+    metadata_path = output_dir / "metadata.json"
+    program_copy_path = output_dir / "program.json"
+    manifest_path = output_dir / "manifest.json"
+    primitive_id = program.primitive_ids[0]
+    asset = _resolve_primitive_asset(repo_root, "projectile", primitive_id)
+    style_pack = load_style_pack(
+        program.style_pack, program.palette, repo_root / "style_packs"
+    )
+    base_seed = _variant_seed(program)
+    base_frame = _render_resized_primitive(
+        asset,
+        program.layout.frame_size or (32, 32),
+        seed=base_seed,
+        palette=program.palette,
+        style_pack_name=style_pack.name,
+        direction=None,
+    )
+    frames = []
+    for direction_idx, direction in enumerate(program.directions):
+        angle = DIRECTION_ANGLES.get(direction, 0)
+        if angle == 0:
+            rotated = base_frame.copy()
+        else:
+            rotated = base_frame.rotate(angle, resample=Image.Resampling.BICUBIC, expand=False)
+        frames.append(rotated)
+    sheet = _composite_projectile_sheet(frames)
+    if style_pack.palette_limits > 0:
+        sheet = quantize_image_to_palette(sheet, style_pack.palette_limits)
+    sheet.save(sheet_path, format="PNG", optimize=False, compress_level=9)
+    manifest = build_output_manifest(
+        program,
+        input_program_path=program_path or "<memory>",
+        output_file_paths=(sheet_path, metadata_path, program_copy_path, manifest_path),
+        repo_root=repo_root,
+    )
+    metadata = _compiler_metadata(
+        program,
+        manifest=manifest,
+        primitive_assets=[asset],
+        output_dir=output_dir,
+    )
+    _write_json_file(metadata_path, metadata)
+    _write_json_file(program_copy_path, program.to_dict())
+    _write_json_file(manifest_path, manifest.to_dict())
+    return manifest
+
+
 DEFAULT_COMPILER_REGISTRY = CompilerRegistry(
     definitions={
         "character_sheet": CompilerDefinition(
@@ -1644,6 +1820,12 @@ DEFAULT_COMPILER_REGISTRY = CompilerRegistry(
             version=COMPILER_VERSION,
             program_type=EffectSheetProgram,
             compile=_compile_effect_sheet,
+        ),
+        "projectile": CompilerDefinition(
+            family="projectile",
+            version=COMPILER_VERSION,
+            program_type=ProjectileSheetProgram,
+            compile=_compile_projectile_sheet,
         ),
     }
 )
