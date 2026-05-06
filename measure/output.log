@@ -986,3 +986,30 @@ Changes not staged for commit:
 
 no changes added to commit (use "git add" and/or "git commit -a")
 [0m
+[0m$ [0mgit add measure/output.log && git commit -m "[MiniMax-M2.7] measure: checkpoint" && git push
+[main ed7fed8] [MiniMax-M2.7] measure: checkpoint
+ 1 file changed, 17 insertions(+)
+To https://github.com/bodangren/advantage-game-art-pack.git
+   4cc5330..ed7fed8  main -> main
+[0m
+[0m$ [0mgit status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   measure/output.log
+
+no changes added to commit (use "git add" and/or "git commit -a")
+[0m
+**Session Complete**
+
+Phase 3 of `projectile_pickup_interactable_compiler` track is complete:
+
+- Implemented `PickupSheetProgram` dataclass with `pickup_type` and `has_glow` fields
+- Added `_compile_pickup_sheet()` with optional glow rendering (`_render_pickup_glow()`)
+- Wired pickup into `SUPPORTED_COMPILER_FAMILIES`, `load_compiler_program()`, and `DEFAULT_COMPILER_REGISTRY`
+- Added 6 tests for pickup validation (all pass)
+- Created example program at `programs/pickup/herb_green.json`
+- **399 tests pass**, pushed 4 commits to main
