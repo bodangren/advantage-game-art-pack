@@ -85,3 +85,844 @@ bbe2d04 [MiniMax-M2.7] measure(lessons): add projectile compiler lesson
 29a0113 chore: clear output log
 a3edef6 measure(lessons): add multi_layout_pose_sheet_expansion lesson about layout_types sync
 [0m
+[0m$ [0mgit add measure/output.log && git commit -m "[MiniMax-M2.7] measure: checkpoint output log"
+[main 9b3aeea] [MiniMax-M2.7] measure: checkpoint output log
+ 1 file changed, 60 insertions(+), 1526 deletions(-)
+[0m
+Now verify Phase 1-2 tests pass:
+[0m$ [0mpython3 -m pytest tests/ -v -k "projectile" --tb=short 2>&1 | head -60
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.0.3, pluggy-1.6.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/daniel-bo/Desktop/pixel-art-generator
+configfile: pyproject.toml
+plugins: anyio-4.12.1, cov-7.1.0
+collecting ... collected 393 items / 4 errors / 387 deselected / 6 selected
+
+==================================== ERRORS ====================================
+______________ ERROR collecting tests/test_policy_integration.py _______________
+ImportError while importing test module '/home/daniel-bo/Desktop/pixel-art-generator/tests/test_policy_integration.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_policy_integration.py:10: in <module>
+    from review_app.db import init_db
+E   ModuleNotFoundError: No module named 'review_app'
+__________________ ERROR collecting tests/test_review_api.py ___________________
+ImportError while importing test module '/home/daniel-bo/Desktop/pixel-art-generator/tests/test_review_api.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_review_api.py:10: in <module>
+    from review_app.db import Database, init_db
+E   ModuleNotFoundError: No module named 'review_app'
+__________________ ERROR collecting tests/test_review_app.py ___________________
+ImportError while importing test module '/home/daniel-bo/Desktop/pixel-art-generator/tests/test_review_app.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_review_app.py:12: in <module>
+    from review_app.db import Database, init_db
+E   ModuleNotFoundError: No module named 'review_app'
+__________________ ERROR collecting tests/test_review_auth.py __________________
+ImportError while importing test module '/home/daniel-bo/Desktop/pixel-art-generator/tests/test_review_auth.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_review_auth.py:8: in <module>
+    from review_app.auth import (
+E   ModuleNotFoundError: No module named 'review_app'
+=========================== short test summary info ============================
+ERROR tests/test_policy_integration.py
+ERROR tests/test_review_api.py
+ERROR tests/test_review_app.py
+ERROR tests/test_review_auth.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 4 errors during collection !!!!!!!!!!!!!!!!!!!!
+====================== 387 deselected, 4 errors in 0.64s =======================
+[0m
+[0m$ [0mpython3 -m pytest tests/ -v -k "projectile" --ignore=tests/test_policy_integration.py --ignore=tests/test_review_api.py --ignore=tests/test_review_app.py --ignore=tests/test_review_auth.py --tb=short 2>&1 | head -80
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.0.3, pluggy-1.6.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/daniel-bo/Desktop/pixel-art-generator
+configfile: pyproject.toml
+plugins: anyio-4.12.1, cov-7.1.0
+collecting ... collected 393 items / 387 deselected / 6 selected
+
+tests/test_compilers.py::ProjectileSheetProgramTest::test_composite_projectile_sheet_dimensions PASSED [ 16%]
+tests/test_compilers.py::ProjectileSheetProgramTest::test_composite_projectile_sheet_pixel_placement PASSED [ 33%]
+tests/test_compilers.py::ProjectileSheetProgramTest::test_load_projectile_program_accepts_valid_directions PASSED [ 50%]
+tests/test_compilers.py::ProjectileSheetProgramTest::test_load_projectile_program_rejects_invalid_direction PASSED [ 66%]
+tests/test_compilers.py::ProjectileSheetProgramTest::test_projectile_layout_mode_exists PASSED [ 83%]
+tests/test_compilers.py::ProjectileSheetProgramTest::test_projectile_program_schema_fields PASSED [100%]
+
+====================== 6 passed, 387 deselected in 0.40s =======================
+[0m
+Phase 1-2 verified. Run full test suite:
+[0m$ [0mpython3 -m pytest tests/ -v --ignore=tests/test_policy_integration.py --ignore=tests/test_review_api.py --ignore=tests/test_review_app.py --ignore=tests/test_review_auth.py --tb=short 2>&1 | tail -30
+(no output)
+
+<shell_metadata>
+shell tool terminated command after exceeding timeout 120000 ms. If this command is expected to take longer and is not waiting for interactive input, retry with a larger timeout value in milliseconds.
+</shell_metadata>
+[0m
+[0m$ [0mpython3 -m pytest tests/ --ignore=tests/test_policy_integration.py --ignore=tests/test_review_api.py --ignore=tests/test_review_app.py --ignore=tests/test_review_auth.py -q 2>&1 | tail -20
+high_pixels = list(result_high.getdata())
+
+tests/test_scene_layout.py::LightingPassTest::test_low_ambient_produces_darker_scene
+  /home/daniel-bo/Desktop/pixel-art-generator/tests/test_scene_layout.py:850: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    low_pixels = list(result_low.getdata())
+
+tests/test_scene_layout.py::DecalPassTest::test_decal_placement_is_deterministic
+  /home/daniel-bo/Desktop/pixel-art-generator/tests/test_scene_layout.py:915: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    pixels1 = list(result1.image.getdata())
+
+tests/test_scene_layout.py::DecalPassTest::test_decal_placement_is_deterministic
+  /home/daniel-bo/Desktop/pixel-art-generator/tests/test_scene_layout.py:916: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    pixels2 = list(result2.image.getdata())
+
+tests/test_scene_layout.py::DebugOverlayTest::test_debug_overlay_shows_zone_bounds
+  /home/daniel-bo/Desktop/pixel-art-generator/tests/test_scene_layout.py:1183: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    overlay_pixels = list(result.debug_overlay.getdata())
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+393 passed, 1599 warnings in 138.43s (0:02:18)
+[0m
+All 393 tests pass. Proceeding with Phase 3: Pickup & Interactable Compiler.
+
+Let me examine existing compiler structure to implement pickup renderer:
+[0m✗ [0mread failed
+[91m[1mError: [0mFile not found: /home/daniel-bo/Desktop/pixel-art-generator/asf/compilers.py
+[0m✗ [0mread failed
+[91m[1mError: [0mFile not found: /home/daniel-bo/Desktop/pixel-art-generator/asf/canon.py
+[0m✱ [0mGlob "**/canon.py"[90m 1 match[0m
+[0m✱ [0mGlob "**/compilers.py"[90m 1 match[0m
+[0m→ [0mRead src/asf/canon.py[90m [limit=150][0m
+[0m→ [0mRead src/asf/compilers.py[90m [limit=150][0m
+[0m✱ [0mGrep "PROJECTILE_LAYOUT_MODE"[90m in src · 2 matches[0m
+[0m✱ [0mGrep "_compile_projectile"[90m in src · 2 matches[0m
+[0m→ [0mRead src/asf/compilers.py[90m [offset=1730, limit=100][0m
+[0m→ [0mRead src/asf/compilers.py[90m [offset=980, limit=50][0m
+[0m✱ [0mGrep "class ProjectileSheetProgram"[90m in src/asf/compilers.py · 1 match[0m
+[0m✱ [0mGrep "PickupSheetProgram"[90m in src/asf · 0 matches[0m
+[0m→ [0mRead src/asf/compilers.py[90m [offset=370, limit=60][0m
+[0m→ [0mRead src/asf/compilers.py[90m [offset=1030, limit=80][0m
+[0m✱ [0mGrep "def _load_projectile_program"[90m in src/asf/compilers.py · 0 matches[0m
+[0m✱ [0mGrep "def _load_projectile"[90m in src/asf/compilers.py · 1 match[0m
+[0m✱ [0mGrep "def _parse_layout"[90m in src/asf/compilers.py · 1 match[0m
+[0m→ [0mRead src/asf/compilers.py[90m [offset=460, limit=80][0m
+[0m✱ [0mGrep "_compile_effect_sheet"[90m in src/asf/compilers.py · 2 matches[0m
+[0m→ [0mRead src/asf/compilers.py[90m [offset=1657, limit=80][0m
+[0m✱ [0mGrep "class EffectSheetProgram"[90m in src/asf/compilers.py · 1 match[0m
+[0m→ [0mRead src/asf/compilers.py[90m [offset=355, limit=30][0m
+[0m✱ [0mGrep "_render_effect_frame"[90m in src/asf/compilers.py · 2 matches[0m
+[0m→ [0mRead src/asf/compilers.py[90m [offset=1500, limit=60][0m
+[0m✱ [0mGrep "class ProjectileSheetProgramTest"[90m in tests · 1 match[0m
+[0m→ [0mRead tests/test_compilers.py[90m [offset=690, limit=80][0m
+[0m→ [0mRead tests/test_compilers.py[90m [offset=768, limit=50][0m
+[0m→ [0mRead src/asf/compilers.py[90m [offset=30, limit=30][0m
+[0m✱ [0mGrep "def _render_resized_primitive"[90m in src/asf/compilers.py · 1 match[0m
+[0m→ [0mRead src/asf/compilers.py[90m [offset=1179, limit=60][0m
+[0m
+[0m← [0mEdit src/asf/compilers.py
+Index: /home/daniel-bo/Desktop/pixel-art-generator/src/asf/compilers.py
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/src/asf/compilers.py
++++ /home/daniel-bo/Desktop/pixel-art-generator/src/asf/compilers.py
+@@ -37,8 +37,9 @@
+     "tileset",
+     "directional_sheet",
+     "effect_sheet",
+     "projectile",
++    "pickup",
+ )
+ PROGRAM_ROOT_DIRNAME = "programs"
+ OUTPUT_ROOT_DIRNAME = "outputs"
+ 
+
+[0m
+[0m← [0mEdit src/asf/compilers.py
+Index: /home/daniel-bo/Desktop/pixel-art-generator/src/asf/compilers.py
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/src/asf/compilers.py
++++ /home/daniel-bo/Desktop/pixel-art-generator/src/asf/compilers.py
+@@ -48,8 +48,9 @@
+ TILESET_LAYOUT_MODE = "tile_atlas"
+ DIRECTIONAL_LAYOUT_MODE = "directional_grid"
+ EFFECT_LAYOUT_MODE = "effect_strip"
+ PROJECTILE_LAYOUT_MODE = "projectile_directional"
++PICKUP_LAYOUT_MODE = "pickup_single"
+ 
+ CHARACTER_DIRECTION_NAMES = (
+     "facing_up",
+     "facing_down",
+
+[0m
+[0m→ [0mRead src/asf/compilers.py[90m [offset=370, limit=20][0m
+[0m
+[0m← [0mEdit src/asf/compilers.py
+Index: /home/daniel-bo/Desktop/pixel-art-generator/src/asf/compilers.py
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/src/asf/compilers.py
++++ /home/daniel-bo/Desktop/pixel-art-generator/src/asf/compilers.py
+@@ -380,8 +380,18 @@
+     palette: PaletteSpec
+ 
+ 
+ @dataclass(frozen=True)
++class PickupSheetProgram(CompilerProgramBase):
++    """Strict pickup sheet compiler program for single-image collectibles with optional glow."""
++
++    render_spec: SpriteSpec | None
++    palette: PaletteSpec
++    pickup_type: str
++    has_glow: bool
++
++
++@dataclass(frozen=True)
+ class CompilerOutputManifest:
+     """Auditable output envelope shared by all compiler families."""
+ 
+     input_program_path: str
+
+[0m
+[0m✱ [0mGrep "def _load_projectile_sheet_program"[90m in src/asf/compilers.py · 1 match[0m
+[0m→ [0mRead src/asf/compilers.py[90m [offset=970, limit=70][0m
+[0m→ [0mRead src/asf/compilers.py[90m [offset=1038, limit=30][0m
+[0m
+[0m← [0mEdit src/asf/compilers.py
+Index: /home/daniel-bo/Desktop/pixel-art-generator/src/asf/compilers.py
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/src/asf/compilers.py
++++ /home/daniel-bo/Desktop/pixel-art-generator/src/asf/compilers.py
+@@ -1045,8 +1045,87 @@
+         palette=palette,
+     )
+ 
+ 
++def _load_pickup_sheet_program(
++    payload: dict[str, Any], path: Path
++) -> PickupSheetProgram:
++    _require_exact_keys(
++        payload,
++        {
++            "family",
++            "program_id",
++            "program_version",
++            "style_pack",
++            "primitive_ids",
++            "variant_controls",
++            "layout",
++            "render_spec",
++            "palette",
++            "pickup_type",
++            "has_glow",
++        },
++        "pickup program",
++        path,
++    )
++    (
++        family,
++        program_id,
++        program_version,
++        primitive_ids,
++        variant_controls,
++        style_pack,
++        layout_payload,
++    ) = _parse_common_program_fields(payload, path, context="pickup program")
++    layout = _parse_layout(
++        layout_payload,
++        path=path,
++        context="pickup program.layout",
++        expected_mode=PICKUP_LAYOUT_MODE,
++        require_frame_size=True,
++        require_directions=False,
++    )
++    render_spec = None
++    render_spec_payload = payload.get("render_spec")
++    if render_spec_payload is not None:
++        if not isinstance(render_spec_payload, dict):
++            raise CompilerValidationError(
++                f"{path}: pickup program.render_spec must be an object or null"
++            )
++        render_spec = load_spec_payload(render_spec_payload)
++    palette_payload = _require_mapping(
++        payload, "palette", path=path, context="pickup program"
++    )
++    _require_exact_keys(palette_payload, {"primary", "secondary", "accent"}, "palette", path)
++    palette = PaletteSpec(
++        primary=_require_string(palette_payload, "primary", path=path, context="palette"),
++        secondary=_require_string(
++            palette_payload, "secondary", path=path, context="palette"
++        ),
++        accent=_require_string(palette_payload, "accent", path=path, context="palette"),
++    )
++    pickup_type = _require_string(payload, "pickup_type", path=path, context="pickup program")
++    valid_pickup_types = ("herb", "mineral", "potion", "key", "coin", "gem")
++    if pickup_type not in valid_pickup_types:
++        raise CompilerValidationError(
++            f"{path}: pickup program.pickup_type must be one of {valid_pickup_types}"
++        )
++    has_glow = _require_bool(payload, "has_glow", path=path, context="pickup program")
++    return PickupSheetProgram(
++        family=family,
++        program_id=program_id,
++        program_version=program_version,
++        style_pack=style_pack,
++        primitive_ids=primitive_ids,
++        variant_controls=variant_controls,
++        layout=layout,
++        render_spec=render_spec,
++        palette=palette,
++        pickup_type=pickup_type,
++        has_glow=has_glow,
++    )
++
++
+ def load_compiler_program(path: str | Path) -> CompilerProgramBase:
+     """Loads and validates a family-specific compiler program."""
+ 
+     path = Path(path)
+
+[0m
+[0m→ [0mRead src/asf/compilers.py[90m [offset=1115, limit=20][0m
+[0m→ [0mRead src/asf/compilers.py[90m [offset=1135, limit=30][0m
+[0m
+[0m← [0mEdit src/asf/compilers.py
+Index: /home/daniel-bo/Desktop/pixel-art-generator/src/asf/compilers.py
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/src/asf/compilers.py
++++ /home/daniel-bo/Desktop/pixel-art-generator/src/asf/compilers.py
+@@ -1144,8 +1144,10 @@
+     if family == "effect_sheet":
+         return _load_effect_sheet_program(payload, path)
+     if family == "projectile":
+         return _load_projectile_sheet_program(payload, path)
++    if family == "pickup":
++        return _load_pickup_sheet_program(payload, path)
+     raise CompilerValidationError(f"{path}: unknown compiler family '{family}'")
+ 
+ 
+ def _approved_primitive_assets(repo_root: Path, family: str) -> list[dict[str, Any]]:
+
+[0m
+[0m✱ [0mGrep "def _compile_projectile_sheet"[90m in src/asf/compilers.py · 1 match[0m
+[0m→ [0mRead src/asf/compilers.py[90m [offset=1828, limit=80][0m
+[0m→ [0mRead src/asf/compilers.py[90m [offset=1905, limit=50][0m
+[0m
+[0m← [0mEdit src/asf/compilers.py
+Index: /home/daniel-bo/Desktop/pixel-art-generator/src/asf/compilers.py
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/src/asf/compilers.py
++++ /home/daniel-bo/Desktop/pixel-art-generator/src/asf/compilers.py
+@@ -1881,8 +1881,87 @@
+     _write_json_file(manifest_path, manifest.to_dict())
+     return manifest
+ 
+ 
++def _render_pickup_glow(
++    base_image: Image.Image,
++    pickup_type: str,
++    intensity: float = 0.6,
++) -> Image.Image:
++    frame_w, frame_h = base_image.size
++    canvas = Image.new("RGBA", (frame_w, frame_h), (0, 0, 0, 0))
++    cx, cy = frame_w // 2, frame_h // 2
++    base_radius = min(frame_w, frame_h) // 4
++    glow_colors = {
++        "herb": (50, 200, 100, 80),
++        "mineral": (150, 100, 255, 80),
++        "potion": (255, 80, 80, 80),
++        "key": (255, 215, 0, 80),
++        "coin": (255, 200, 50, 80),
++        "gem": (100, 200, 255, 80),
++    }
++    color = glow_colors.get(pickup_type, (200, 200, 200, 80))
++    for r in range(base_radius, max(1, base_radius - 6), -1):
++        alpha = int(255 * intensity * (1.0 - r / base_radius) * 0.4)
++        glow_color = (*color[:3], alpha)
++        ImageDraw.Draw(canvas).ellipse(
++            [cx - r, cy - r, cx + r, cy + r],
++            fill=glow_color,
++            outline=None,
++        )
++    composite = base_image.copy()
++    composite.alpha_composite(canvas)
++    return composite
++
++
++def _compile_pickup_sheet(
++    program: PickupSheetProgram,
++    output_dir: Path,
++    repo_root: Path,
++    program_path: str | Path | None,
++) -> CompilerOutputManifest:
++    output_dir.mkdir(parents=True, exist_ok=True)
++    sheet_path = output_dir / "sheet.png"
++    metadata_path = output_dir / "metadata.json"
++    program_copy_path = output_dir / "program.json"
++    manifest_path = output_dir / "manifest.json"
++    primitive_id = program.primitive_ids[0]
++    asset = _resolve_primitive_asset(repo_root, "pickup", primitive_id)
++    style_pack = load_style_pack(
++        program.style_pack, program.palette, repo_root / "style_packs"
++    )
++    base_seed = _variant_seed(program)
++    frame = _render_resized_primitive(
++        asset,
++        program.layout.frame_size or (32, 32),
++        seed=base_seed,
++        palette=program.palette,
++        style_pack_name=style_pack.name,
++        direction=None,
++    )
++    if program.has_glow:
++        frame = _render_pickup_glow(frame, program.pickup_type)
++    if style_pack.palette_limits > 0:
++        frame = quantize_image_to_palette(frame, style_pack.palette_limits)
++    frame.save(sheet_path, format="PNG", optimize=False, compress_level=9)
++    manifest = build_output_manifest(
++        program,
++        input_program_path=program_path or "<memory>",
++        output_file_paths=(sheet_path, metadata_path, program_copy_path, manifest_path),
++        repo_root=repo_root,
++    )
++    metadata = _compiler_metadata(
++        program,
++        manifest=manifest,
++        primitive_assets=[asset],
++        output_dir=output_dir,
++    )
++    _write_json_file(metadata_path, metadata)
++    _write_json_file(program_copy_path, program.to_dict())
++    _write_json_file(manifest_path, manifest.to_dict())
++    return manifest
++
++
+ DEFAULT_COMPILER_REGISTRY = CompilerRegistry(
+     definitions={
+         "character_sheet": CompilerDefinition(
+             family="character_sheet",
+
+[0m
+[0m→ [0mRead src/asf/compilers.py[90m [offset=1995, limit=30][0m
+[0m
+[0m← [0mEdit src/asf/compilers.py
+Index: /home/daniel-bo/Desktop/pixel-art-generator/src/asf/compilers.py
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/src/asf/compilers.py
++++ /home/daniel-bo/Desktop/pixel-art-generator/src/asf/compilers.py
+@@ -1998,8 +1998,14 @@
+             version=COMPILER_VERSION,
+             program_type=ProjectileSheetProgram,
+             compile=_compile_projectile_sheet,
+         ),
++        "pickup": CompilerDefinition(
++            family="pickup",
++            version=COMPILER_VERSION,
++            program_type=PickupSheetProgram,
++            compile=_compile_pickup_sheet,
++        ),
+     }
+ )
+ 
+ 
+
+[0m
+[0m→ [0mRead src/asf/canon.py[90m [offset=33, limit=50][0m
+[0m
+[0m$ [0mpython3 -c "from asf.compilers import PickupSheetProgram, PICKUP_LAYOUT_MODE, _compile_pickup_sheet, _load_pickup_sheet_program; print('Import OK')"
+Import OK
+[0m
+[0m$ [0mpython3 -m pytest tests/test_compilers.py -v -k "projectile" --tb=short 2>&1 | head -30
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.0.3, pluggy-1.6.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/daniel-bo/Desktop/pixel-art-generator
+configfile: pyproject.toml
+plugins: anyio-4.12.1, cov-7.1.0
+collecting ... collected 39 items / 33 deselected / 6 selected
+
+tests/test_compilers.py::ProjectileSheetProgramTest::test_composite_projectile_sheet_dimensions PASSED [ 16%]
+tests/test_compilers.py::ProjectileSheetProgramTest::test_composite_projectile_sheet_pixel_placement PASSED [ 33%]
+tests/test_compilers.py::ProjectileSheetProgramTest::test_load_projectile_program_accepts_valid_directions PASSED [ 50%]
+tests/test_compilers.py::ProjectileSheetProgramTest::test_load_projectile_program_rejects_invalid_direction PASSED [ 66%]
+tests/test_compilers.py::ProjectileSheetProgramTest::test_projectile_layout_mode_exists PASSED [ 83%]
+tests/test_compilers.py::ProjectileSheetProgramTest::test_projectile_program_schema_fields PASSED [100%]
+
+======================= 6 passed, 33 deselected in 0.13s =======================
+[0m
+[0m→ [0mRead tests/test_compilers.py[90m [offset=785, limit=50][0m
+[0m
+[0m← [0mEdit tests/test_compilers.py
+Index: /home/daniel-bo/Desktop/pixel-art-generator/tests/test_compilers.py
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/tests/test_compilers.py
++++ /home/daniel-bo/Desktop/pixel-art-generator/tests/test_compilers.py
+@@ -787,8 +787,128 @@
+         self.assertEqual(sheet.getpixel((8, 16)), (255, 0, 0, 255))
+         self.assertEqual(sheet.getpixel((40, 16)), (0, 255, 0, 255))
+ 
+ 
++class PickupSheetProgramTest(unittest.TestCase):
++    """Validates PickupSheetProgram schema and pickup layout mode."""
++
++    def test_pickup_layout_mode_exists(self) -> None:
++        from asf.compilers import PICKUP_LAYOUT_MODE
++        self.assertEqual(PICKUP_LAYOUT_MODE, "pickup_single")
++
++    def test_pickup_program_schema_fields(self) -> None:
++        from dataclasses import fields
++
++        field_names = {f.name for f in fields(PickupSheetProgram)}
++        self.assertIn("render_spec", field_names)
++        self.assertIn("palette", field_names)
++        self.assertIn("pickup_type", field_names)
++        self.assertIn("has_glow", field_names)
++
++    def test_load_pickup_program_rejects_invalid_pickup_type(self) -> None:
++        with tempfile.TemporaryDirectory() as tmp_dir:
++            payload_path = Path(tmp_dir) / "pickup.json"
++            payload = {
++                "family": "pickup",
++                "program_id": "test_pickup",
++                "program_version": 1,
++                "style_pack": "cute_chibi_v1",
++                "primitive_ids": ["herb_green"],
++                "variant_controls": {
++                    "variant_id": None,
++                    "candidate_index": None,
++                    "search_budget": None,
++                },
++                "layout": {
++                    "mode": "pickup_single",
++                    "dimensions": [32, 32],
++                    "grid": [1, 1],
++                    "frame_size": [32, 32],
++                },
++                "render_spec": None,
++                "palette": {"primary": "iron", "secondary": "iron", "accent": "iron"},
++                "pickup_type": "INVALID_TYPE",
++                "has_glow": False,
++            }
++            payload_path.write_text(json.dumps(payload), encoding="utf-8")
++            with self.assertRaisesRegex(
++                CompilerValidationError, "must be one of"
++            ):
++                load_compiler_program(payload_path)
++
++    def test_load_pickup_program_accepts_valid_pickup_types(self) -> None:
++        valid_types = ("herb", "mineral", "potion", "key", "coin", "gem")
++        for pickup_type in valid_types:
++            with tempfile.TemporaryDirectory() as tmp_dir:
++                payload_path = Path(tmp_dir) / f"pickup_{pickup_type}.json"
++                payload = {
++                    "family": "pickup",
++                    "program_id": f"test_pickup_{pickup_type}",
++                    "program_version": 1,
++                    "style_pack": "cute_chibi_v1",
++                    "primitive_ids": ["herb_green"],
++                    "variant_controls": {
++                        "variant_id": None,
++                        "candidate_index": None,
++                        "search_budget": None,
++                    },
++                    "layout": {
++                        "mode": "pickup_single",
++                        "dimensions": [32, 32],
++                        "grid": [1, 1],
++                        "frame_size": [32, 32],
++                    },
++                    "render_spec": None,
++                    "palette": {"primary": "iron", "secondary": "iron", "accent": "iron"},
++                    "pickup_type": pickup_type,
++                    "has_glow": False,
++                }
++                payload_path.write_text(json.dumps(payload), encoding="utf-8")
++                program = load_compiler_program(payload_path)
++                self.assertEqual(program.program_id, f"test_pickup_{pickup_type}")
++                self.assertEqual(program.pickup_type, pickup_type)
++
++    def test_load_pickup_program_rejects_has_glow_not_bool(self) -> None:
++        with tempfile.TemporaryDirectory() as tmp_dir:
++            payload_path = Path(tmp_dir) / "pickup.json"
++            payload = {
++                "family": "pickup",
++                "program_id": "test_pickup",
++                "program_version": 1,
++                "style_pack": "cute_chibi_v1",
++                "primitive_ids": ["herb_green"],
++                "variant_controls": {
++                    "variant_id": None,
++                    "candidate_index": None,
++                    "search_budget": None,
++                },
++                "layout": {
++                    "mode": "pickup_single",
++                    "dimensions": [32, 32],
++                    "grid": [1, 1],
++                    "frame_size": [32, 32],
++                },
++                "render_spec": None,
++                "palette": {"primary": "iron", "secondary": "iron", "accent": "iron"},
++                "pickup_type": "herb",
++                "has_glow": "true",
++            }
++            payload_path.write_text(json.dumps(payload), encoding="utf-8")
++            with self.assertRaisesRegex(
++                CompilerValidationError, "must be a boolean"
++            ):
++                load_compiler_program(payload_path)
++
++    def test_render_pickup_glow_returns_rgba_image(self) -> None:
++        from asf.compilers import _render_pickup_glow
++        from PIL import Image
++
++        base = Image.new("RGBA", (32, 32), (255, 0, 0, 255))
++        glowed = _render_pickup_glow(base, "herb")
++        self.assertEqual(glowed.mode, "RGBA")
++        self.assertEqual(glowed.size, (32, 32))
++
++
+ def _copy_style_pack(repo_root: Path) -> None:
+     target_dir = repo_root / "style_packs"
+     target_dir.mkdir(parents=True, exist_ok=True)
+     shutil.copyfile(STYLE_PACK, target_dir / STYLE_PACK.name)
+
+[0m
+[0m$ [0mpython3 -m pytest tests/test_compilers.py -v -k "pickup" --tb=short 2>&1 | head -40
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.0.3, pluggy-1.6.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/daniel-bo/Desktop/pixel-art-generator
+configfile: pyproject.toml
+plugins: anyio-4.12.1, cov-7.1.0
+collecting ... collected 45 items / 39 deselected / 6 selected
+
+tests/test_compilers.py::PickupSheetProgramTest::test_load_pickup_program_accepts_valid_pickup_types PASSED [ 16%]
+tests/test_compilers.py::PickupSheetProgramTest::test_load_pickup_program_rejects_has_glow_not_bool PASSED [ 33%]
+tests/test_compilers.py::PickupSheetProgramTest::test_load_pickup_program_rejects_invalid_pickup_type PASSED [ 50%]
+tests/test_compilers.py::PickupSheetProgramTest::test_pickup_layout_mode_exists PASSED [ 66%]
+tests/test_compilers.py::PickupSheetProgramTest::test_pickup_program_schema_fields FAILED [ 83%]
+tests/test_compilers.py::PickupSheetProgramTest::test_render_pickup_glow_returns_rgba_image PASSED [100%]
+
+=================================== FAILURES ===================================
+___________ PickupSheetProgramTest.test_pickup_program_schema_fields ___________
+tests/test_compilers.py:801: in test_pickup_program_schema_fields
+    field_names = {f.name for f in fields(PickupSheetProgram)}
+                                          ^^^^^^^^^^^^^^^^^^
+E   NameError: name 'PickupSheetProgram' is not defined
+=========================== short test summary info ============================
+FAILED tests/test_compilers.py::PickupSheetProgramTest::test_pickup_program_schema_fields
+================== 1 failed, 5 passed, 39 deselected in 0.23s ==================
+[0m
+[0m→ [0mRead tests/test_compilers.py[90m [limit=30][0m
+[0m→ [0mRead tests/test_compilers.py[90m [offset=25, limit=15][0m
+[0m
+[0m← [0mEdit tests/test_compilers.py
+Index: /home/daniel-bo/Desktop/pixel-art-generator/tests/test_compilers.py
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/tests/test_compilers.py
++++ /home/daniel-bo/Desktop/pixel-art-generator/tests/test_compilers.py
+@@ -25,8 +25,9 @@
+     PropOrFxSheetProgram,
+     ProgramLayout,
+     TilesetProgram,
+     VariantControls,
++    PickupSheetProgram,
+     build_output_manifest,
+     compile_program,
+     load_compiler_program,
+ )
+
+[0m
+[0m$ [0mpython3 -m pytest tests/test_compilers.py -v -k "pickup" --tb=short 2>&1 | head -30
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-9.0.3, pluggy-1.6.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/daniel-bo/Desktop/pixel-art-generator
+configfile: pyproject.toml
+plugins: anyio-4.12.1, cov-7.1.0
+collecting ... collected 45 items / 39 deselected / 6 selected
+
+tests/test_compilers.py::PickupSheetProgramTest::test_load_pickup_program_accepts_valid_pickup_types PASSED [ 16%]
+tests/test_compilers.py::PickupSheetProgramTest::test_load_pickup_program_rejects_has_glow_not_bool PASSED [ 33%]
+tests/test_compilers.py::PickupSheetProgramTest::test_load_pickup_program_rejects_invalid_pickup_type PASSED [ 50%]
+tests/test_compilers.py::PickupSheetProgramTest::test_pickup_layout_mode_exists PASSED [ 66%]
+tests/test_compilers.py::PickupSheetProgramTest::test_pickup_program_schema_fields PASSED [ 83%]
+tests/test_compilers.py::PickupSheetProgramTest::test_render_pickup_glow_returns_rgba_image PASSED [100%]
+
+======================= 6 passed, 39 deselected in 0.17s =======================
+[0m
+[0m$ [0mpython3 -m pytest tests/test_compilers.py -v --tb=short 2>&1 | tail -50
+tests/test_compilers.py::CompilerRegistryTest::test_manifest_only_compilers_write_manifest_and_program_copy PASSED [ 17%]
+tests/test_compilers.py::CompilerRegistryTest::test_missing_required_primitive_anchor_fails PASSED [ 20%]
+tests/test_compilers.py::CompilerRegistryTest::test_missing_required_primitive_fails PASSED [ 22%]
+tests/test_compilers.py::CompilerRegistryTest::test_prop_and_tileset_outputs_have_expected_size PASSED [ 24%]
+tests/test_compilers.py::CompilerRegistryTest::test_registry_exposes_expected_families PASSED [ 26%]
+tests/test_compilers.py::CompilerRegistryTest::test_rejects_unexpected_top_level_field PASSED [ 28%]
+tests/test_compilers.py::CompilerRegistryTest::test_rejects_unknown_family PASSED [ 31%]
+tests/test_compilers.py::CompilerRegistryTest::test_variant_id_changes_sheet_bytes_with_bounded_difference PASSED [ 33%]
+tests/test_compilers.py::DirectionalSheetProgramTest::test_cli_compile_directional_sheet PASSED [ 35%]
+tests/test_compilers.py::DirectionalSheetProgramTest::test_composite_directional_sheet_dimensions PASSED [ 37%]
+tests/test_compilers.py::DirectionalSheetProgramTest::test_composite_directional_sheet_pixel_placement PASSED [ 40%]
+tests/test_compilers.py::DirectionalSheetProgramTest::test_directional_layout_mode_exists PASSED [ 42%]
+tests/test_compilers.py::DirectionalSheetProgramTest::test_directional_program_schema_fields PASSED [ 44%]
+tests/test_compilers.py::DirectionalSheetProgramTest::test_directional_sheet_palette_enforcement PASSED [ 46%]
+tests/test_compilers.py::DirectionalSheetProgramTest::test_directional_variants_produce_different_frames PASSED [ 48%]
+tests/test_compilers.py::DirectionalSheetProgramTest::test_load_directional_program_accepts_null_render_spec PASSED [ 51%]
+tests/test_compilers.py::DirectionalSheetProgramTest::test_load_directional_program_rejects_invalid_frames PASSED [ 53%]
+tests/test_compilers.py::EffectSheetProgramTest::test_blend_additive_brightens PASSED [ 55%]
+tests/test_compilers.py::EffectSheetProgramTest::test_blend_multiply_darkens PASSED [ 57%]
+tests/test_compilers.py::EffectSheetProgramTest::test_composite_effect_on_entity_additive PASSED [ 60%]
+tests/test_compilers.py::EffectSheetProgramTest::test_composite_effect_rejects_mismatched_sizes PASSED [ 62%]
+tests/test_compilers.py::EffectSheetProgramTest::test_effect_layout_mode_exists PASSED [ 64%]
+tests/test_compilers.py::EffectSheetProgramTest::test_effect_program_schema_fields PASSED [ 66%]
+tests/test_compilers.py::EffectSheetProgramTest::test_effect_sheet_compiler_produces_rgba_output PASSED [ 68%]
+tests/test_compilers.py::EffectSheetProgramTest::test_load_effect_program_accepts_valid_effect PASSED [ 71%]
+tests/test_compilers.py::EffectSheetProgramTest::test_load_effect_program_rejects_invalid_effect_type PASSED [ 73%]
+tests/test_compilers.py::ProjectileSheetProgramTest::test_composite_projectile_sheet_dimensions PASSED [ 75%]
+tests/test_compilers.py::ProjectileSheetProgramTest::test_composite_projectile_sheet_pixel_placement PASSED [ 77%]
+tests/test_compilers.py::ProjectileSheetProgramTest::test_load_projectile_program_accepts_valid_directions PASSED [ 80%]
+tests/test_compilers.py::ProjectileSheetProgramTest::test_load_projectile_program_rejects_invalid_direction PASSED [ 82%]
+tests/test_compilers.py::ProjectileSheetProgramTest::test_projectile_layout_mode_exists PASSED [ 84%]
+tests/test_compilers.py::ProjectileSheetProgramTest::test_projectile_program_schema_fields PASSED [ 86%]
+tests/test_compilers.py::PickupSheetProgramTest::test_load_pickup_program_accepts_valid_pickup_types PASSED [ 88%]
+tests/test_compilers.py::PickupSheetProgramTest::test_load_pickup_program_rejects_has_glow_not_bool PASSED [ 91%]
+tests/test_compilers.py::PickupSheetProgramTest::test_load_pickup_program_rejects_invalid_pickup_type PASSED [ 93%]
+tests/test_compilers.py::PickupSheetProgramTest::test_pickup_layout_mode_exists PASSED [ 95%]
+tests/test_compilers.py::PickupSheetProgramTest::test_pickup_program_schema_fields PASSED [ 97%]
+tests/test_compilers.py::PickupSheetProgramTest::test_render_pickup_glow_returns_rgba_image PASSED [100%]
+
+=============================== warnings summary ===============================
+tests/test_compilers.py: 14 warnings
+  /home/daniel-bo/Desktop/pixel-art-generator/src/asf/palette.py:45: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    for px in image.getdata():
+
+tests/test_compilers.py::DirectionalSheetProgramTest::test_directional_sheet_palette_enforcement
+  /home/daniel-bo/Desktop/pixel-art-generator/tests/test_compilers.py:526: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    used_colors = {px for px in result_img.getdata() if px[3] > 0}
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================= 45 passed, 15 warnings in 5.49s ========================
+[0m
+All 45 compiler tests pass. Let me run the full test suite:
+[0m$ [0mpython3 -m pytest tests/ --ignore=tests/test_policy_integration.py --ignore=tests/test_review_api.py --ignore=tests/test_review_app.py --ignore=tests/test_review_auth.py -q 2>&1 | tail -20
+high_pixels = list(result_high.getdata())
+
+tests/test_scene_layout.py::LightingPassTest::test_low_ambient_produces_darker_scene
+  /home/daniel-bo/Desktop/pixel-art-generator/tests/test_scene_layout.py:850: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    low_pixels = list(result_low.getdata())
+
+tests/test_scene_layout.py::DecalPassTest::test_decal_placement_is_deterministic
+  /home/daniel-bo/Desktop/pixel-art-generator/tests/test_scene_layout.py:915: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    pixels1 = list(result1.image.getdata())
+
+tests/test_scene_layout.py::DecalPassTest::test_decal_placement_is_deterministic
+  /home/daniel-bo/Desktop/pixel-art-generator/tests/test_scene_layout.py:916: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    pixels2 = list(result2.image.getdata())
+
+tests/test_scene_layout.py::DebugOverlayTest::test_debug_overlay_shows_zone_bounds
+  /home/daniel-bo/Desktop/pixel-art-generator/tests/test_scene_layout.py:1183: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    overlay_pixels = list(result.debug_overlay.getdata())
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+399 passed, 1599 warnings in 135.79s (0:02:15)
+[0m
+399 tests pass. Now let me add an example pickup program and update the plan:
+[0m$ [0mls /home/daniel-bo/Desktop/pixel-art-generator/programs/
+batch
+character_sheet
+directional_sheet
+effect_sheet
+presentation
+prop_or_fx_sheet
+scene
+tileset
+[0m
+[0m$ [0mmkdir -p /home/daniel-bo/Desktop/pixel-art-generator/programs/pickup
+(no output)
+[0m
+[0m✗ [0mread failed
+[91m[1mError: [0mFile not found: /home/daniel-bo/Desktop/pixel-art-generator/programs/projectile/fireball.json
+[0m✱ [0mGlob "programs/projectile/*.json"[90m 0 matches[0m
+[0m✱ [0mGlob "**/fireball*.json"[90m 0 matches[0m
+[0m✱ [0mGlob "programs/**/*.json"[90m 16 matches[0m
+[0m→ [0mRead programs/effect_sheet/ice_pulse.json
+[0m
+[0m← [0mWrite programs/pickup/herb_green.json
+Wrote file successfully.
+[0m
+[0m← [0mEdit measure/tracks/projectile_pickup_interactable_compiler_20260506/plan.md
+Index: /home/daniel-bo/Desktop/pixel-art-generator/measure/tracks/projectile_pickup_interactable_compiler_20260506/plan.md
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/measure/tracks/projectile_pickup_interactable_compiler_20260506/plan.md
++++ /home/daniel-bo/Desktop/pixel-art-generator/measure/tracks/projectile_pickup_interactable_compiler_20260506/plan.md
+@@ -12,12 +12,12 @@
+   - [x] Render base projectile at 0°, rotate for other directions
+   - [x] Output strip or grid based on spec
+ 
+ ## Phase 3: Pickup & Interactable Compiler
+-- [ ] Task: Build pickup renderer
+-  - [ ] Write tests for pickup rendering
+-  - [ ] Single image with optional glow pass
+-  - [ ] Support herb, mineral, potion variants
++- [x] Task: Build pickup renderer
++  - [x] Write tests for pickup rendering
++  - [x] Single image with optional glow pass
++  - [x] Support herb, mineral, potion variants
+ - [x] Task: Fix effect_sheet registration
+   - [x] Verify effect_sheet is in canon.py FAMILY_NAMES
+   - [x] Add missing tests if needed
+ 
+
+[0m
+[0m→ [0mRead measure/tracks.md[90m [offset=175, limit=20][0m
+[0m
+[0m← [0mEdit measure/tracks.md
+Index: /home/daniel-bo/Desktop/pixel-art-generator/measure/tracks.md
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/measure/tracks.md
++++ /home/daniel-bo/Desktop/pixel-art-generator/measure/tracks.md
+@@ -178,9 +178,9 @@
+ 
+ - [~] **Track: Projectile, Pickup, and Interactable Compiler Family**
+   *Link: [./tracks/projectile_pickup_interactable_compiler_20260506/](./tracks/projectile_pickup_interactable_compiler_20260506/)*
+   Dedicated compiler family for directional projectiles and single-image pickups/interactables.
+-  *Status: Phase 1-2 complete — Families registered, ProjectileSheetProgram implemented, 6 tests added.*
++  *Status: Phase 1-3 complete — Families registered, ProjectileSheetProgram and PickupSheetProgram implemented, 12 tests added.*
+ 
+ - [ ] **Track: Presentation Surface-to-Scene Assembler Integration**
+   *Link: [./tracks/presentation_surface_scene_integration_20260506/](./tracks/presentation_surface_scene_integration_20260506/)*
+   Align cover/loading backgrounds with real scene assembler output instead of hardcoded paths.
+
+[0m
+Now let me commit and run final verification:
+[0m$ [0mgit status
+On branch main
+Your branch is ahead of 'origin/main' by 1 commit.
+  (use "git push" to publish your local commits)
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   measure/output.log
+	modified:   measure/tracks.md
+	modified:   measure/tracks/projectile_pickup_interactable_compiler_20260506/plan.md
+	modified:   src/asf/compilers.py
+	modified:   tests/test_compilers.py
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	programs/pickup/
+
+no changes added to commit (use "git add" and/or "git commit -a")
+[0m

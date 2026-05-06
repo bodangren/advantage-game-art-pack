@@ -26,6 +26,7 @@ from asf.compilers import (
     ProgramLayout,
     TilesetProgram,
     VariantControls,
+    PickupSheetProgram,
     build_output_manifest,
     compile_program,
     load_compiler_program,
@@ -786,6 +787,126 @@ class ProjectileSheetProgramTest(unittest.TestCase):
         sheet = _composite_projectile_sheet(frames)
         self.assertEqual(sheet.getpixel((8, 16)), (255, 0, 0, 255))
         self.assertEqual(sheet.getpixel((40, 16)), (0, 255, 0, 255))
+
+
+class PickupSheetProgramTest(unittest.TestCase):
+    """Validates PickupSheetProgram schema and pickup layout mode."""
+
+    def test_pickup_layout_mode_exists(self) -> None:
+        from asf.compilers import PICKUP_LAYOUT_MODE
+        self.assertEqual(PICKUP_LAYOUT_MODE, "pickup_single")
+
+    def test_pickup_program_schema_fields(self) -> None:
+        from dataclasses import fields
+
+        field_names = {f.name for f in fields(PickupSheetProgram)}
+        self.assertIn("render_spec", field_names)
+        self.assertIn("palette", field_names)
+        self.assertIn("pickup_type", field_names)
+        self.assertIn("has_glow", field_names)
+
+    def test_load_pickup_program_rejects_invalid_pickup_type(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            payload_path = Path(tmp_dir) / "pickup.json"
+            payload = {
+                "family": "pickup",
+                "program_id": "test_pickup",
+                "program_version": 1,
+                "style_pack": "cute_chibi_v1",
+                "primitive_ids": ["herb_green"],
+                "variant_controls": {
+                    "variant_id": None,
+                    "candidate_index": None,
+                    "search_budget": None,
+                },
+                "layout": {
+                    "mode": "pickup_single",
+                    "dimensions": [32, 32],
+                    "grid": [1, 1],
+                    "frame_size": [32, 32],
+                },
+                "render_spec": None,
+                "palette": {"primary": "iron", "secondary": "iron", "accent": "iron"},
+                "pickup_type": "INVALID_TYPE",
+                "has_glow": False,
+            }
+            payload_path.write_text(json.dumps(payload), encoding="utf-8")
+            with self.assertRaisesRegex(
+                CompilerValidationError, "must be one of"
+            ):
+                load_compiler_program(payload_path)
+
+    def test_load_pickup_program_accepts_valid_pickup_types(self) -> None:
+        valid_types = ("herb", "mineral", "potion", "key", "coin", "gem")
+        for pickup_type in valid_types:
+            with tempfile.TemporaryDirectory() as tmp_dir:
+                payload_path = Path(tmp_dir) / f"pickup_{pickup_type}.json"
+                payload = {
+                    "family": "pickup",
+                    "program_id": f"test_pickup_{pickup_type}",
+                    "program_version": 1,
+                    "style_pack": "cute_chibi_v1",
+                    "primitive_ids": ["herb_green"],
+                    "variant_controls": {
+                        "variant_id": None,
+                        "candidate_index": None,
+                        "search_budget": None,
+                    },
+                    "layout": {
+                        "mode": "pickup_single",
+                        "dimensions": [32, 32],
+                        "grid": [1, 1],
+                        "frame_size": [32, 32],
+                    },
+                    "render_spec": None,
+                    "palette": {"primary": "iron", "secondary": "iron", "accent": "iron"},
+                    "pickup_type": pickup_type,
+                    "has_glow": False,
+                }
+                payload_path.write_text(json.dumps(payload), encoding="utf-8")
+                program = load_compiler_program(payload_path)
+                self.assertEqual(program.program_id, f"test_pickup_{pickup_type}")
+                self.assertEqual(program.pickup_type, pickup_type)
+
+    def test_load_pickup_program_rejects_has_glow_not_bool(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            payload_path = Path(tmp_dir) / "pickup.json"
+            payload = {
+                "family": "pickup",
+                "program_id": "test_pickup",
+                "program_version": 1,
+                "style_pack": "cute_chibi_v1",
+                "primitive_ids": ["herb_green"],
+                "variant_controls": {
+                    "variant_id": None,
+                    "candidate_index": None,
+                    "search_budget": None,
+                },
+                "layout": {
+                    "mode": "pickup_single",
+                    "dimensions": [32, 32],
+                    "grid": [1, 1],
+                    "frame_size": [32, 32],
+                },
+                "render_spec": None,
+                "palette": {"primary": "iron", "secondary": "iron", "accent": "iron"},
+                "pickup_type": "herb",
+                "has_glow": "true",
+            }
+            payload_path.write_text(json.dumps(payload), encoding="utf-8")
+            with self.assertRaisesRegex(
+                CompilerValidationError, "must be a boolean"
+            ):
+                load_compiler_program(payload_path)
+
+    def test_render_pickup_glow_returns_rgba_image(self) -> None:
+        from asf.compilers import _render_pickup_glow
+        from PIL import Image
+
+        base = Image.new("RGBA", (32, 32), (255, 0, 0, 255))
+        glowed = _render_pickup_glow(base, "herb")
+        self.assertEqual(glowed.mode, "RGBA")
+        self.assertEqual(glowed.size, (32, 32))
 
 
 def _copy_style_pack(repo_root: Path) -> None:

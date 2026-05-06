@@ -179,7 +179,7 @@ This file tracks all major tracks for the project.
 - [~] **Track: Projectile, Pickup, and Interactable Compiler Family**
   *Link: [./tracks/projectile_pickup_interactable_compiler_20260506/](./tracks/projectile_pickup_interactable_compiler_20260506/)*
   Dedicated compiler family for directional projectiles and single-image pickups/interactables.
-  *Status: Phase 1-2 complete — Families registered, ProjectileSheetProgram implemented, 6 tests added.*
+  *Status: Phase 1-3 complete — Families registered, ProjectileSheetProgram and PickupSheetProgram implemented, 12 tests added.*
 
 - [ ] **Track: Presentation Surface-to-Scene Assembler Integration**
   *Link: [./tracks/presentation_surface_scene_integration_20260506/](./tracks/presentation_surface_scene_integration_20260506/)*

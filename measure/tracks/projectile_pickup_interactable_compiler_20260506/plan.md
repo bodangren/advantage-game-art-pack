@@ -13,10 +13,10 @@
   - [x] Output strip or grid based on spec
 
 ## Phase 3: Pickup & Interactable Compiler
-- [ ] Task: Build pickup renderer
-  - [ ] Write tests for pickup rendering
-  - [ ] Single image with optional glow pass
-  - [ ] Support herb, mineral, potion variants
+- [x] Task: Build pickup renderer
+  - [x] Write tests for pickup rendering
+  - [x] Single image with optional glow pass
+  - [x] Support herb, mineral, potion variants
 - [x] Task: Fix effect_sheet registration
   - [x] Verify effect_sheet is in canon.py FAMILY_NAMES
   - [x] Add missing tests if needed
