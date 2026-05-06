@@ -926,3 +926,28 @@ Untracked files:
 
 no changes added to commit (use "git add" and/or "git commit -a")
 [0m
+[0m$ [0mgit add -A && git commit -m "[MiniMax-M2.7] Track projectile_pickup: Phase 3 complete — PickupSheetProgram with glow support, 12 tests pass"
+[main 7d31bdb] [MiniMax-M2.7] Track projectile_pickup: Phase 3 complete — PickupSheetProgram with glow support, 12 tests pass
+ 6 files changed, 1171 insertions(+), 5 deletions(-)
+ create mode 100644 programs/pickup/herb_green.json
+[0m
+[0m$ [0mgit push
+To https://github.com/bodangren/advantage-game-art-pack.git
+   5b67c82..7d31bdb  main -> main
+[0m
+[0m$ [0mpython3 -m pytest tests/ --ignore=tests/test_policy_integration.py --ignore=tests/test_review_api.py --ignore=tests/test_review_app.py --ignore=tests/test_review_auth.py -q 2>&1 | tail -10
+tests/test_scene_layout.py::DecalPassTest::test_decal_placement_is_deterministic
+  /home/daniel-bo/Desktop/pixel-art-generator/tests/test_scene_layout.py:916: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    pixels2 = list(result2.image.getdata())
+
+tests/test_scene_layout.py::DebugOverlayTest::test_debug_overlay_shows_zone_bounds
+  /home/daniel-bo/Desktop/pixel-art-generator/tests/test_scene_layout.py:1183: DeprecationWarning: Image.Image.getdata is deprecated and will be removed in Pillow 14 (2027-10-15). Use get_flattened_data instead.
+    overlay_pixels = list(result.debug_overlay.getdata())
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+399 passed, 1599 warnings in 134.97s (0:02:14)
+[0m
+Now update lessons-learned with findings:
+[0m→ [0mRead measure/lessons-learned.md
+[0m→ [0mRead measure/tech-debt.md
+Phase 3 complete. Commit checkpoint:
