@@ -17,12 +17,9 @@ from PIL import Image, ImageChops, ImageFilter, ImageOps
 
 from asf.canon import (
     CANON_VERSION,
-    MANIFEST_FILENAME as CANON_MANIFEST_FILENAME,
     build_style_canon,
 )
 from asf.compilers import (
-    COMPILER_VERSION,
-    CompilerValidationError,
     CompilerProgramBase,
     VariantControls,
     compile_program,
@@ -1190,7 +1187,6 @@ def run_candidate_job(
 
     output_root = repo_root / Path(job.output_root) if not Path(job.output_root).is_absolute() else Path(job.output_root)
     output_root.mkdir(parents=True, exist_ok=True)
-    style_pack_root = repo_root / "style_packs"
     references = load_reference_assets(
         repo_root,
         layout_types=threshold_pack.reference_layout_types,

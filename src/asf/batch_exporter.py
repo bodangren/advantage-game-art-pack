@@ -19,8 +19,6 @@ from asf.batch import (
 )
 from asf.batch_orchestrator import generate_release_bundle
 
-from asf.utils import _utc_now
-
 logger = logging.getLogger(__name__)
 
 

@@ -13,9 +13,7 @@ from typing import Any
 from asf.batch import (
     AssetExecutionState,
     AssetState,
-    BatchJob,
     JobState,
-    RetryPolicy,
     asset_candidates_dir,
     asset_critic_result_path,
     write_job_state,
