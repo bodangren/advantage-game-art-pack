@@ -22,7 +22,7 @@
   - [x] Add missing tests if needed
 
 ## Phase 4: Verification
-- [ ] Task: Compile sample assets
-  - [ ] Generate projectile-fireball.png
-  - [ ] Generate herb.png and potion.png
-  - [ ] Manual visual inspection
+- [x] Task: Compile sample assets
+  - [x] Generate projectile-fireball.png
+  - [x] Generate herb.png and potion.png
+  - [x] Manual visual inspection
