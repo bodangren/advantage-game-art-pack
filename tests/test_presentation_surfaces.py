@@ -11,11 +11,6 @@ from PIL import Image
 
 from asf.presentation_surfaces import (
     ALL_SURFACE_FAMILIES,
-    SURFACE_FAMILY_COVER,
-    SURFACE_FAMILY_LOADING,
-    SURFACE_FAMILY_PARALLAX,
-    SURFACE_FAMILY_PROMO,
-    SURFACE_FAMILY_UI_SHEET,
     SUPPORTED_PARALLAX_LAYER_ROLES,
     SUPPORTED_UI_SHEET_TYPES,
     CoverSurfaceProgram,
@@ -32,7 +27,6 @@ from asf.presentation_surfaces import (
     assemble_cover_surface,
     assemble_loading_surface,
     assemble_parallax_layer_set,
-    assemble_ui_sheet,
     load_cover_surface,
     load_loading_surface,
     load_parallax_layer_set,
@@ -315,7 +309,7 @@ class ParallaxLayerSetValidationTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp_dir:
             path = _write_json(tmp_dir, _minimal_parallax())
             program = load_parallax_layer_set(path)
-            top = next(l for l in program.layers if l.layer_role == "top")
+            top = next(layer for layer in program.layers if layer.layer_role == "top")
             self.assertAlmostEqual(top.density, 0.3)
             self.assertAlmostEqual(top.contrast, 0.5)
 
@@ -363,7 +357,7 @@ class ParallaxLayerSetValidationTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp_dir:
             path = _write_json(tmp_dir, _minimal_parallax())
             program = load_parallax_layer_set(path)
-            top = next(l for l in program.layers if l.layer_role == "top")
+            top = next(layer for layer in program.layers if layer.layer_role == "top")
             self.assertEqual(len(top.tile_sources), 1)
             self.assertEqual(top.tile_sources[0].tile_id, "cloud_far")
 
@@ -662,7 +656,7 @@ class CoverSurfaceGenerationTest(unittest.TestCase):
 
             self.assertIsInstance(result.image, Image.Image)
             self.assertEqual(result.image.size, (512, 384))
-            pixels = list(result.image.getdata())
+            pixels = list(result.image.get_flattened_data())
             self.assertTrue(any(p[1] == 255 and p[0] == 0 and p[2] == 0 for p in pixels[:100]))
 
     def test_loading_surface_uses_rendered_scene_image_when_provided(self) -> None:
@@ -675,7 +669,7 @@ class CoverSurfaceGenerationTest(unittest.TestCase):
 
             self.assertIsInstance(result.image, Image.Image)
             self.assertEqual(result.image.size, (512, 384))
-            pixels = list(result.image.getdata())
+            pixels = list(result.image.get_flattened_data())
             self.assertTrue(any(p[2] == 255 and p[1] == 128 for p in pixels[:100]))
 
     def test_cover_surface_uses_background_scene_when_available(self) -> None:
@@ -816,8 +810,8 @@ class ParallaxLayerSetGenerationTest(unittest.TestCase):
             program = load_parallax_layer_set(_write_json(tmp_dir, _minimal_parallax()))
             result = assemble_parallax_layer_set(program, repo_root=root)
 
-            bottom = next(l for l in result.layers if l.layer_role == "bottom")
-            top = next(l for l in result.layers if l.layer_role == "top")
+            bottom = next(layer for layer in result.layers if layer.layer_role == "bottom")
+            top = next(layer for layer in result.layers if layer.layer_role == "top")
             self.assertIsNotNone(bottom)
             self.assertIsNotNone(top)
 
