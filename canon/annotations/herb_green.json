@@ -1,0 +1,23 @@
+{
+  "asset_id": "herb_green",
+  "family": "pickup",
+  "layout_type": "pickup_single",
+  "source_path": "demo-assets/herb_green.png",
+  "palette": {
+    "dominant_colors": ["#40a020", "#308018", "#206010"],
+    "ramps": [
+      {"name": "leaf", "role": "dominant", "colors": ["#50c030", "#40a020", "#308018"]}
+    ]
+  },
+  "motif_tags": ["herb", "plant", "health"],
+  "animation_tags": ["idle"],
+  "material_tags": ["organic"],
+  "theme_tags": ["nature", "potionIngredient"],
+  "lighting": {"direction": "top_left", "highlight_style": "simple", "shadow_style": "contact_shadow"},
+  "outline": {"presence": "soft", "thickness_px": 1, "continuity": "continuous"},
+  "silhouette": {"occupancy_band": "compact", "bbox_usage": "tight"},
+  "reserved_gameplay_space": [],
+  "gold_reference": true,
+  "notes": "Small green herb pickup item.",
+  "version": 1
+}

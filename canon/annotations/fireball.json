@@ -1,0 +1,23 @@
+{
+  "asset_id": "fireball",
+  "family": "projectile",
+  "layout_type": "projectile_directional_4",
+  "source_path": "demo-assets/fireball.png",
+  "palette": {
+    "dominant_colors": ["#ff6020", "#ff4010", "#ff8010"],
+    "ramps": [
+      {"name": "fire", "role": "dominant", "colors": ["#ff9040", "#ff6020", "#ff4010"]}
+    ]
+  },
+  "motif_tags": ["fire", "fireball", "fire_magic"],
+  "animation_tags": ["travel"],
+  "material_tags": ["fire", "magic"],
+  "theme_tags": ["combat", "magic"],
+  "lighting": {"direction": "top_left", "highlight_style": "fresnel", "shadow_style": "glow"},
+  "outline": {"presence": "none", "thickness_px": 0, "continuity": "continuous"},
+  "silhouette": {"occupancy_band": "compact", "bbox_usage": "tight"},
+  "reserved_gameplay_space": [],
+  "gold_reference": true,
+  "notes": "Fireball projectile.",
+  "version": 1
+}

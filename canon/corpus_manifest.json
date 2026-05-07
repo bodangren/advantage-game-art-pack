@@ -192,6 +192,54 @@
         "state progression left to right"
       ],
       "transparency": "soft_alpha"
+    },
+    {
+      "annotation_path": "canon/annotations/herb_green.json",
+      "asset_id": "herb_green",
+      "dimensions": {
+        "height": 32,
+        "width": 32
+      },
+      "family": "pickup",
+      "layout_type": "pickup_single",
+      "source_path": "demo-assets/herb_green.png",
+      "structure_notes": [
+        "single pickup frame",
+        "herb plant icon"
+      ],
+      "transparency": "soft_alpha"
+    },
+    {
+      "annotation_path": "canon/annotations/fireball.json",
+      "asset_id": "fireball",
+      "dimensions": {
+        "height": 32,
+        "width": 32
+      },
+      "family": "projectile",
+      "layout_type": "projectile_directional_4",
+      "source_path": "demo-assets/fireball.png",
+      "structure_notes": [
+        "single projectile frame",
+        "fireball effect"
+      ],
+      "transparency": "soft_alpha"
+    },
+    {
+      "annotation_path": "canon/annotations/potion_red.json",
+      "asset_id": "potion_red",
+      "dimensions": {
+        "height": 32,
+        "width": 32
+      },
+      "family": "pickup",
+      "layout_type": "pickup_single",
+      "source_path": "demo-assets/potion_red.png",
+      "structure_notes": [
+        "single pickup frame",
+        "potion bottle icon"
+      ],
+      "transparency": "soft_alpha"
     }
   ],
   "source_root": "demo-assets",
