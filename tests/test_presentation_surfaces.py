@@ -651,6 +651,33 @@ class CoverSurfaceGenerationTest(unittest.TestCase):
             self.assertIsInstance(result.image, Image.Image)
             self.assertEqual(result.image.size, (512, 384))
 
+    def test_cover_surface_uses_rendered_scene_image_when_provided(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            _make_primitive_png(root, "characters", "dragon_001", (255, 0, 0, 255), 32)
+            rendered_scene = Image.new("RGBA", (512, 384), (0, 255, 0, 255))
+
+            program = load_cover_surface(_write_json(tmp_dir, _minimal_cover()))
+            result = assemble_cover_surface(program, repo_root=root, rendered_scene_image=rendered_scene)
+
+            self.assertIsInstance(result.image, Image.Image)
+            self.assertEqual(result.image.size, (512, 384))
+            pixels = list(result.image.getdata())
+            self.assertTrue(any(p[1] == 255 and p[0] == 0 and p[2] == 0 for p in pixels[:100]))
+
+    def test_loading_surface_uses_rendered_scene_image_when_provided(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            root = Path(tmp_dir)
+            rendered_scene = Image.new("RGBA", (512, 384), (0, 128, 255, 255))
+
+            program = load_loading_surface(_write_json(tmp_dir, _minimal_loading()))
+            result = assemble_loading_surface(program, repo_root=root, rendered_scene_image=rendered_scene)
+
+            self.assertIsInstance(result.image, Image.Image)
+            self.assertEqual(result.image.size, (512, 384))
+            pixels = list(result.image.getdata())
+            self.assertTrue(any(p[2] == 255 and p[1] == 128 for p in pixels[:100]))
+
     def test_cover_surface_uses_background_scene_when_available(self) -> None:
         with tempfile.TemporaryDirectory() as tmp_dir:
             root = Path(tmp_dir)

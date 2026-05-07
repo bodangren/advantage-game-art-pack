@@ -9,10 +9,10 @@ Align cover and loading surface backgrounds with real scene assembler output ins
 - End-to-end cover/loading generation for every game bundle
 
 ## Acceptance Criteria
-- [ ] Presentation surfaces accept explicit resolved scene image path
-- [ ] Scene assembler output correctly feeds into cover/loading generation
+- [x] Presentation surfaces accept explicit resolved scene image path
+- [x] Scene assembler output correctly feeds into cover/loading generation
 - [ ] Gameplay still capture derived from actual rendered frames
-- [ ] All presentation surface tests pass with new path resolution
+- [x] All presentation surface tests pass with new path resolution
 - [ ] Manual verification of generated covers
 
 ## Non-Goals

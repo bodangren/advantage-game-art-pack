@@ -911,6 +911,7 @@ def assemble_cover_surface(
     program: CoverSurfaceProgram,
     *,
     repo_root: Path | None = None,
+    rendered_scene_image: Image | None = None,
 ) -> SurfaceAssemblyResult:
     """Assembles a cover surface from a validated program.
 
@@ -918,6 +919,10 @@ def assemble_cover_surface(
         program: Validated cover surface program.
         repo_root: Root directory for resolving primitive and scene paths.
             Defaults to cwd.
+        rendered_scene_image: Pre-rendered scene image to use as background.
+            When provided, this is used directly instead of loading from
+            background_scene_manifest. Useful when the scene has already been
+            rendered by the caller (e.g., in batch orchestration).
 
     Returns:
         SurfaceAssemblyResult with the rendered RGBA image and a manifest.
@@ -932,19 +937,24 @@ def assemble_cover_surface(
     canvas_w, canvas_h = program.canvas.width, program.canvas.height
     canvas = Image.new("RGBA", (canvas_w, canvas_h), (0, 0, 0, 0))
 
-    bg_rel = program.background_scene_manifest
-    bg_path = (
-        repo_root / "outputs"
-        / Path(bg_rel).with_suffix("").name
-        / "base.png"
-    )
-    if bg_path.exists():
-        try:
-            bg = Image.open(bg_path).convert("RGBA")
-            bg = bg.resize((canvas_w, canvas_h), Image.Resampling.LANCZOS)
-            canvas.alpha_composite(bg)
-        except Exception:
-            pass
+    if rendered_scene_image is not None:
+        bg = rendered_scene_image.convert("RGBA")
+        bg = bg.resize((canvas_w, canvas_h), Image.Resampling.LANCZOS)
+        canvas.alpha_composite(bg)
+    else:
+        bg_rel = program.background_scene_manifest
+        bg_path = (
+            repo_root / "outputs"
+            / Path(bg_rel).with_suffix("").name
+            / "base.png"
+        )
+        if bg_path.exists():
+            try:
+                bg = Image.open(bg_path).convert("RGBA")
+                bg = bg.resize((canvas_w, canvas_h), Image.Resampling.LANCZOS)
+                canvas.alpha_composite(bg)
+            except Exception:
+                pass
 
     focal_img = _load_primitive_image(
         program.focal_subject.tile_id,
@@ -1002,6 +1012,7 @@ def assemble_loading_surface(
     program: LoadingSurfaceProgram,
     *,
     repo_root: Path | None = None,
+    rendered_scene_image: Image | None = None,
 ) -> SurfaceAssemblyResult:
     """Assembles a loading/start background surface.
 
@@ -1009,6 +1020,10 @@ def assemble_loading_surface(
         program: Validated loading surface program.
         repo_root: Root directory for resolving scene paths.
             Defaults to cwd.
+        rendered_scene_image: Pre-rendered scene image to use as background.
+            When provided, this is used directly instead of loading from
+            background_scene_manifest. Useful when the scene has already been
+            rendered by the caller (e.g., in batch orchestration).
 
     Returns:
         SurfaceAssemblyResult with the rendered RGBA image and a manifest.
@@ -1019,19 +1034,24 @@ def assemble_loading_surface(
     canvas_w, canvas_h = program.canvas.width, program.canvas.height
     canvas = Image.new("RGBA", (canvas_w, canvas_h), (0, 0, 0, 0))
 
-    bg_rel = program.background_scene_manifest
-    bg_path = (
-        repo_root / "outputs"
-        / Path(bg_rel).with_suffix("").name
-        / "base.png"
-    )
-    if bg_path.exists():
-        try:
-            bg = Image.open(bg_path).convert("RGBA")
-            bg = bg.resize((canvas_w, canvas_h), Image.Resampling.LANCZOS)
-            canvas.alpha_composite(bg)
-        except Exception:
-            pass
+    if rendered_scene_image is not None:
+        bg = rendered_scene_image.convert("RGBA")
+        bg = bg.resize((canvas_w, canvas_h), Image.Resampling.LANCZOS)
+        canvas.alpha_composite(bg)
+    else:
+        bg_rel = program.background_scene_manifest
+        bg_path = (
+            repo_root / "outputs"
+            / Path(bg_rel).with_suffix("").name
+            / "base.png"
+        )
+        if bg_path.exists():
+            try:
+                bg = Image.open(bg_path).convert("RGBA")
+                bg = bg.resize((canvas_w, canvas_h), Image.Resampling.LANCZOS)
+                canvas.alpha_composite(bg)
+            except Exception:
+                pass
 
     manifest = SurfaceManifest(
         program_id=program.program_id,
