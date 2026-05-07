@@ -181,6 +181,7 @@ This file tracks all major tracks for the project.
   Dedicated compiler family for directional projectiles and single-image pickups/interactables.
   *Status: Complete — Families registered, ProjectileSheetProgram and PickupSheetProgram implemented, primitives added, programs created, all tests pass.*
 
-- [ ] **Track: Presentation Surface-to-Scene Assembler Integration**
+- [x] **Track: Presentation Surface-to-Scene Assembler Integration**
   *Link: [./tracks/presentation_surface_scene_integration_20260506/](./tracks/presentation_surface_scene_integration_20260506/)*
   Align cover/loading backgrounds with real scene assembler output instead of hardcoded paths.
+  *Status: Complete — rendered_scene_image parameter added to assemble_cover_surface and assemble_loading_surface; backward compatible fallback to base.png convention; tests pass.*
