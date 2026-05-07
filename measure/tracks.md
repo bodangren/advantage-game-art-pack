@@ -98,24 +98,26 @@ This file tracks all major tracks for the project.
   Path-level auth exemptions, batch approve/reject, thumbnail grid, keyboard shortcuts
 - [x] **Track: Extract Shared _utc_now Utility** *Link: [./archive/extract_shared_utc_now_20260503/](./archive/extract_shared_utc_now_20260503/)*
   Extract duplicated `_utc_now()` to shared `asf/utils.py` module
-- [x] **Track: UI Sheet Bin Packing Optimization**
-  *Implement best-fit decreasing bin packing for UI sheet layout instead of naive row-wrap*
-  *Link: [./tracks/ui_sheet_bin_packing_20260505/](./tracks/ui_sheet_bin_packing_20260505/)*
-  *Status: Complete — _bin_pack_layout function implements BFD algorithm; 7 unit tests pass; all 85 presentation_surfaces tests pass.*
-
-- [ ] **Track: Next feature** (none pending — no current_directive.md found)
+- [ ] **Track: End-to-End LLM-to-Asset Pipeline**
+  *Single-command `asf generate` that runs planner → compiler → critic → review → export with real LLM credentials.*
+  *Link: [./measure/tracks/e2e_llm_asset_pipeline_20260508/](./measure/tracks/e2e_llm_asset_pipeline_20260508/)*
+- [ ] **Track: Critic Reference Calibration with Real Demo Assets**
+  *Replace mocked baselines with real reference PNGs for all 10 families and recalibrate auto-approval thresholds.*
+  *Link: [./measure/tracks/critic_reference_calibration_20260508/](./measure/tracks/critic_reference_calibration_20260508/)*
+- [ ] **Track: Release Bundle PNG Export** *Link: [./tracks/release_bundle_png_export_20260508/](./tracks/release_bundle_png_export_20260508/)* — Wire bundle exporter to copy actual compiled PNGs from candidate loop output
+- [ ] **Track: Review App Batch Approve/Reject Workflow** *Link: [./tracks/review_app_batch_workflow_20260508/](./tracks/review_app_batch_workflow_20260508/)* — Bulk select and approve/reject candidates in the review queue
 - [x] **Track: Critic Calibration CLI**
   *Add recalibrate subcommand to candidate CLI for scripted threshold adjustment*
   *Link: [./archive/critic_calibration_cli_20260425/](./archive/critic_calibration_cli_20260425/)*
   *Status: Complete — Added `recalibrate --family X` CLI command for scripted threshold adjustment; calibrate command now accepts --family filter*
 - [x] **Track: Review App Static File Serving**
   *Add static file serving to review app for actual image previews*
-  *Link: [./tracks/review_app_serving_20260425/](./tracks/review_app_serving_20260425/)*
+  *Link: [./archive/review_app_serving_20260425/](./archive/review_app_serving_20260425/)*
   *Status: Complete — StaticFiles mounted at /static for outputs directory; templates render actual images from rendered_files paths.*
 
 - [x] **Track: Directional Character Sheet Renderer**
   *Multi-frame directional animation sheets (4/8-direction walk/idle/run) for the advantage-games series*
-  *Link: [./tracks/directional_character_sheets_20260502/](./tracks/directional_character_sheets_20260502/)*
+  *Link: [./archive/directional_character_sheets_20260502/](./archive/directional_character_sheets_20260502/)*
   *Status: Complete — DirectionalSheetProgram with directional_variants in style packs, direction-aware frame offsets, palette quantization, example programs, and CLI integration.*
 
 
@@ -138,39 +140,39 @@ This file tracks all major tracks for the project.
 
 - [x] **Track: Renderer Part Library Integration**
   *PartLibrary class stamps approved primitives onto rendered canvas; SpriteSpec gains optional part_library_refs field for primitive overlay. Backward compatible.*
-  *Link: [./tracks/renderer_part_library_integration_20260504/](./tracks/renderer_part_library_integration_20260504/)*
+  *Link: [./archive/renderer_part_library_integration_20260504/](./archive/renderer_part_library_integration_20260504/)*
   *Status: Complete — PartLibrary class, PartLibraryRef dataclass in specs.py, renderer integration with optional part_library parameter, tests passing.*
 
 ---
 
 - [x] **Track: Wire Orchestrator Programs**
   *Wire `_generate_programs` and `_write_programs` into `_run_planning` stage so programs are written when planner_context is provided.*
-  *Link: [./tracks/wire_orchestrator_programs_20260504/](./tracks/wire_orchestrator_programs_20260504/)*
+  *Link: [./archive/wire_orchestrator_programs_20260504/](./archive/wire_orchestrator_programs_20260504/)*
   *Status: Complete — Methods now called in planning stage; guard checks planner_context exists before writing.*
 
 ---
 
 - [x] **Track: Effect Sheet Palette Quantization**
   *EffectSheetProgram now accepts palette field; _compile_effect_sheet uses real palette and applies median-cut quantization.*
-  *Link: [./tracks/effect_sheet_palette_quantization_20260505/](./tracks/effect_sheet_palette_quantization_20260505/)*
+  *Link: [./archive/effect_sheet_palette_quantization_20260505/](./archive/effect_sheet_palette_quantization_20260505/)*
   *Status: Complete — Added palette field to EffectSheetProgram and JSON schema; effect sheet compiler now applies palette quantization.*
 
 ---
 
 - [x] **Track: Presentation Surfaces Parallax Fix**
   *Replace pseudo-random offset with seeded deterministic hash-based offset for guaranteed edge seamlessness.*
-  *Link: [./tracks/presentation_parallax_fix_20260505/](./tracks/presentation_parallax_fix_20260505/)*
+  *Link: [./archive/presentation_parallax_fix_20260505/](./archive/presentation_parallax_fix_20260505/)*
   *Status: Complete — Replaced pseudo-random `(x_offset * 3) % canvas_w` with seeded hash-based offset; all tests passing.*
 
 ---
 
 - [x] **Track: UI Sheet Bin Packing Optimization**
   *Implement best-fit decreasing bin packing for UI sheet layout instead of naive row-wrap*
-  *Link: [./tracks/ui_sheet_bin_packing_20260505/](./tracks/ui_sheet_bin_packing_20260505/)*
+  *Link: [./archive/ui_sheet_bin_packing_20260505/](./archive/ui_sheet_bin_packing_20260505/)*
   *Status: Complete — _bin_pack_layout function implements BFD algorithm; 7 unit tests pass; all 85 presentation_surfaces tests pass.*
 
 - [x] **Track: Multi-Layout Pose Sheet Expansion (3×2, 3×4, Custom Grids)**
-  *Link: [./tracks/multi_layout_pose_sheet_expansion_20260506/](./tracks/multi_layout_pose_sheet_expansion_20260506/)*
+  *Link: [./archive/multi_layout_pose_sheet_expansion_20260506/](./archive/multi_layout_pose_sheet_expansion_20260506/)*
   Expand compiler to support arbitrary row/column layouts for downstream game assets.
   *Status: Complete — Added pose_sheet_3x2 and pose_sheet_3x4 to LAYOUT_TYPES; updated _frame_drift in canon.py and candidate_loop.py to handle new grid dimensions; canon manifest updated; test suite passes.*
 
@@ -182,6 +184,6 @@ This file tracks all major tracks for the project.
   *Status: Complete — Families registered, ProjectileSheetProgram and PickupSheetProgram implemented, primitives added, programs created, all tests pass.*
 
 - [x] **Track: Presentation Surface-to-Scene Assembler Integration**
-  *Link: [./tracks/presentation_surface_scene_integration_20260506/](./tracks/presentation_surface_scene_integration_20260506/)*
+  *Link: [./archive/presentation_surface_scene_integration_20260506/](./archive/presentation_surface_scene_integration_20260506/)*
   Align cover/loading backgrounds with real scene assembler output instead of hardcoded paths.
   *Status: Complete — rendered_scene_image parameter added to assemble_cover_surface and assemble_loading_surface; backward compatible fallback to base.png convention; tests pass.*
