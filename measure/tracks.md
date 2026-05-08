@@ -100,13 +100,14 @@ This file tracks all major tracks for the project.
   Extract duplicated `_utc_now()` to shared `asf/utils.py` module
 - [x] **Track: End-to-End LLM-to-Asset Pipeline**
   *Single-command `asf generate` that runs planner → compiler → critic → review → export with real LLM credentials.*
-  *Link: [./measure/tracks/e2e_llm_asset_pipeline_20260508/](./measure/tracks/e2e_llm_asset_pipeline_20260508/)*
+  *Link: [./measure/archive/e2e_llm_asset_pipeline_20260508/](./measure/archive/e2e_llm_asset_pipeline_20260508/)*
   *Status: Complete — `asf generate` CLI with --brief, --theme, --count, --provider, --dry-run; credentials module with env var/config file resolution; BatchOrchestrator.run_from_plan() for in-memory plan-to-orchestrator bridge; full pipeline wired.*
 - [ ] **Track: Critic Reference Calibration with Real Demo Assets**
   *Replace mocked baselines with real reference PNGs for all 10 families and recalibrate auto-approval thresholds.*
   *Link: [./measure/tracks/critic_reference_calibration_20260508/](./measure/tracks/critic_reference_calibration_20260508/)*
 - [ ] **Track: Release Bundle PNG Export** *Link: [./tracks/release_bundle_png_export_20260508/](./tracks/release_bundle_png_export_20260508/)* — Wire bundle exporter to copy actual compiled PNGs from candidate loop output
 - [ ] **Track: Review App Batch Approve/Reject Workflow** *Link: [./tracks/review_app_batch_workflow_20260508/](./tracks/review_app_batch_workflow_20260508/)* — Bulk select and approve/reject candidates in the review queue
+- [ ] **Track: CLI Resume Flag and LIVE_LLM Smoke Test** *Link: [./tracks/cli_resume_smoke_test_20260509/](./tracks/cli_resume_smoke_test_20260509/)* — Implement `--resume` for `asf generate` and add automated live LLM smoke test
 - [x] **Track: Critic Calibration CLI**
   *Add recalibrate subcommand to candidate CLI for scripted threshold adjustment*
   *Link: [./archive/critic_calibration_cli_20260425/](./archive/critic_calibration_cli_20260425/)*

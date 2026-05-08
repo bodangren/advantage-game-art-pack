@@ -1562,3 +1562,31 @@ OK
 </think>
 <think>All tests pass. Let me commit the final checkpoint.
 </think>
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && git add -A && git commit -m "Finalize: e2e_llm_asset_pipeline track complete
+
+Model: minimax-cn-coding-plan/MiniMax-M2.7"
+[main 880a14c] Finalize: e2e_llm_asset_pipeline track complete
+ 5 files changed, 205 insertions(+), 25 deletions(-)
+[0m
+<think>The track is complete. Let me push and summarize.
+</think>
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && git push 2>&1
+To https://github.com/bodangren/advantage-game-art-pack.git
+   3e3d904..880a14c  main -> main
+[0m
+<think>All done! Let me summarize what was accomplished.
+</think>
+
+**Track `e2e_llm_asset_pipeline` complete.** Implemented all 5 phases:
+
+1. **CLI scaffold** — `asf generate` with `--brief`, `--theme`, `--count`, `--provider`, `--dry-run`
+2. **Credential wiring** — `asf/credentials.py` with env var → config file resolution and tests
+3. **Orchestrator bridge** — `BatchOrchestrator.run_from_plan()` for in-memory plan injection
+4. **Pipeline integration** — Family detection from brief keywords, LLM call → parse → orchestrator flow
+5. **Error handling** — CredentialError handling, structured error surfacing
+
+Key new files:
+- `src/asf/credentials.py` — credential resolution module
+- `src/asf/cli.py` — `generate` subcommand (lines ~601-718)
+- `tests/test_credentials.py` — 11 tests
+- `tests/test_run_from_plan.py` — 3 tests

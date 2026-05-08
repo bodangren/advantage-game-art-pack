@@ -604,7 +604,7 @@ def main() -> None:
         from asf.planner.schemas import AssetFamily, BatchBrief, UserBrief
         from asf.planner.provider import create_provider, ProviderResponse
         from asf.batch_orchestrator import BatchOrchestrator
-        from asf.batch import BatchJob, AssetExecutionState, VersionInfo, RetryPolicy
+        from asf.batch import BatchJob, AssetExecutionState, AssetState, VersionInfo, RetryPolicy
         from asf.credentials import resolve_credentials, CredentialError
         from asf.utils import _utc_now
 
