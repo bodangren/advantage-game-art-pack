@@ -49,3 +49,5 @@
 - (2026-05-09, e2e_llm_asset_pipeline) BatchOrchestrator.run_from_plan() creates job_root at `.asf/batch/{job_id}` - must mkdir parents before writing programs.
 - (2026-05-09, e2e_llm_asset_pipeline) resolve_credentials() raises CredentialError (not CredentialLoadError) when no credentials found - callers must catch the right exception type.
 - (2026-05-09, e2e_llm_asset_pipeline) When iterating over asset_states to write programs in run_from_plan, use enumerate correctly - the loop variable shadows the outer asset_state.
+- (2026-05-09, cli_resume_smoke_test) When adding optional --resume to a CLI subcommand that requires --brief, make --brief optional at parser level and validate at runtime; return early when resuming so brief is not needed.
+- (2026-05-09, cli_resume_smoke_test) When wiring resume() into CLI, create orchestrator with job_root pointing to the same location used by run_from_plan (`.asf/generate`), not a different path.

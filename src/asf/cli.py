@@ -348,8 +348,9 @@ def main() -> None:
     )
     generate_parser.add_argument(
         "--brief",
-        required=True,
+        required=False,
         type=str,
+        default=None,
         help="Natural-language brief for the asset to generate (e.g., 'library room with bookshelves').",
     )
     generate_parser.add_argument(
@@ -375,6 +376,12 @@ def main() -> None:
         "--dry-run",
         action="store_true",
         help="Validate the full pipeline without making any LLM API calls.",
+    )
+    generate_parser.add_argument(
+        "--resume",
+        type=str,
+        default=None,
+        help="Resume a partial batch job by job_id (e.g., 'job_abc123').",
     )
     generate_parser.add_argument(
         "--repo-root",
@@ -615,7 +622,33 @@ def main() -> None:
         print(f"Count: {args.count}")
         print(f"Provider: {args.provider or 'auto-detect'}")
         print(f"Dry-run: {args.dry_run}")
+        print(f"Resume: {args.resume or '(new job)'}")
         print()
+
+        if args.resume:
+            from asf.batch import load_job_state
+            job_root = args.repo_root / ".asf" / "generate"
+            job_root.mkdir(parents=True, exist_ok=True)
+            orchestrator = BatchOrchestrator(
+                job_root=job_root,
+                repo_root=args.repo_root,
+            )
+            print(f"Resuming job {args.resume}...")
+            try:
+                job = orchestrator.resume(args.resume)
+            except Exception as e:
+                print(f"ERROR resuming job: {e}")
+                return
+            completed = sum(1 for a in job.asset_states if a.state not in (AssetState.FAILED, AssetState.PENDING))
+            failed = sum(1 for a in job.asset_states if a.state == AssetState.FAILED)
+            print()
+            print("Resume Results")
+            print("=" * 40)
+            print(f"  Job ID: {job.job_id}")
+            print(f"  State: {job.state.value}")
+            print(f"  Completed: {completed}/{len(job.asset_states)}")
+            print(f"  Failed: {failed}")
+            return
 
         if args.dry_run:
             print("Pipeline stages (dry-run mode):")
@@ -629,6 +662,10 @@ def main() -> None:
             print("  8. Release bundle export")
             print()
             print("No API calls made (dry-run mode).")
+            return
+
+        if not args.brief:
+            parser.error("either --resume <job_id> or --brief <description> is required")
             return
 
         try:
