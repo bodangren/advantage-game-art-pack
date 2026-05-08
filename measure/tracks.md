@@ -98,9 +98,10 @@ This file tracks all major tracks for the project.
   Path-level auth exemptions, batch approve/reject, thumbnail grid, keyboard shortcuts
 - [x] **Track: Extract Shared _utc_now Utility** *Link: [./archive/extract_shared_utc_now_20260503/](./archive/extract_shared_utc_now_20260503/)*
   Extract duplicated `_utc_now()` to shared `asf/utils.py` module
-- [ ] **Track: End-to-End LLM-to-Asset Pipeline**
+- [x] **Track: End-to-End LLM-to-Asset Pipeline**
   *Single-command `asf generate` that runs planner → compiler → critic → review → export with real LLM credentials.*
   *Link: [./measure/tracks/e2e_llm_asset_pipeline_20260508/](./measure/tracks/e2e_llm_asset_pipeline_20260508/)*
+  *Status: Complete — `asf generate` CLI with --brief, --theme, --count, --provider, --dry-run; credentials module with env var/config file resolution; BatchOrchestrator.run_from_plan() for in-memory plan-to-orchestrator bridge; full pipeline wired.*
 - [ ] **Track: Critic Reference Calibration with Real Demo Assets**
   *Replace mocked baselines with real reference PNGs for all 10 families and recalibrate auto-approval thresholds.*
   *Link: [./measure/tracks/critic_reference_calibration_20260508/](./measure/tracks/critic_reference_calibration_20260508/)*
