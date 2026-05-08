@@ -1,7 +1,7 @@
 {
   "id": "cli_resume_smoke_test_20260509",
   "title": "CLI Resume Flag and LIVE_LLM Smoke Test",
-  "status": "planned",
+  "status": "completed",
   "priority": "medium",
   "type": "feature",
   "created": "2026-05-09"
