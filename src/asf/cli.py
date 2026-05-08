@@ -641,16 +641,150 @@ def main() -> None:
         print(f"Using provider: {provider_type}")
         print(f"API key: {'*' * 20}{creds.api_key[-4:]}")
 
+        from asf.planner.provider import OpenAIProvider, AnthropicProvider
+
+        if provider_type == "openai":
+            provider = OpenAIProvider(api_key=creds.api_key)
+        else:
+            provider = AnthropicProvider(api_key=creds.api_key)
+
+        repo_root = args.repo_root
+
+        from asf.canon import load_corpus_manifest
+        from asf.style_packs import load_style_pack as load_sp
+        from asf.primitives import validate_primitive_library
+
         print()
-        print("Pipeline wired but requires full LLM provider setup.")
-        print("Real execution would:")
-        print("  1. Load planner context")
-        print("  2. Build prompt from brief")
-        print("  3. Call LLM via provider")
-        print("  4. Parse response into programs")
-        print("  5. Call orchestrator.run_from_plan()")
+        print("Loading planner context...")
+
+        try:
+            canon_manifest = load_corpus_manifest(repo_root / "canon" / "corpus_manifest.json")
+            canon_data = canon_manifest if isinstance(canon_manifest, dict) else {"family_baselines": {}}
+        except Exception:
+            canon_data = {"family_baselines": {}}
+
+        style_packs = {}
+        try:
+            for sp_path in (repo_root / "style_packs").iterdir():
+                if sp_path.suffix == ".json":
+                    style_packs[sp_path.stem] = load_sp(sp_path.stem, None)
+        except Exception:
+            pass
+
+        try:
+            validate_primitive_library(repo_root)
+            from asf.primitives import query_primitives
+            primitives = query_primitives(repo_root)
+            primitive_manifest = {"primitives": [p.to_dict() if hasattr(p, 'to_dict') else p for p in primitives]}
+        except Exception:
+            primitive_manifest = {"primitives": []}
+
+        context = PlannerContext(
+            canon=canon_data,
+            style_packs=style_packs,
+            primitive_manifest=primitive_manifest,
+            repo_root=repo_root,
+        )
+
+        print(f"  - Canon: {len(canon_data.get('family_baselines', {}))} families")
+        print(f"  - Style packs: {len(style_packs)}")
+        print(f"  - Primitives: {len(primitive_manifest.get('primitives', []))}")
+
+        default_families = [AssetFamily.CHARACTER_SHEET.value]
+        families = tuple(default_families)
+        counts = {f: args.count for f in families}
+
         print()
-        print("Full integration in Phase 5.")
+        print("Generating programs via LLM...")
+
+        programs = []
+        brief_lower = args.brief.lower()
+        if "scene" in brief_lower or "background" in brief_lower:
+            families = (AssetFamily.BACKGROUND_SCENE.value,)
+            counts = {AssetFamily.BACKGROUND_SCENE.value: args.count}
+        elif "prop" in brief_lower or "item" in brief_lower or "pickup" in brief_lower:
+            families = (AssetFamily.PROP_OR_FX_SHEET.value,)
+            counts = {AssetFamily.PROP_OR_FX_SHEET.value: args.count}
+        elif "tile" in brief_lower:
+            families = (AssetFamily.TILESET.value,)
+            counts = {AssetFamily.TILESET.value: args.count}
+
+        print(f"  - Families: {families}")
+        print(f"  - Counts: {counts}")
+
+        for family_str in families:
+            family = AssetFamily(family_str)
+            user_brief = UserBrief(
+                request=args.brief,
+                family=family,
+                style_pack=args.theme,
+            )
+            prompt_builder = PromptBuilder(context=context)
+            prompt, schema = prompt_builder.build_user_brief_prompt(user_brief)
+
+            print(f"  - Calling {provider_type} for {family_str}...")
+            response = provider.submit_prompt(prompt, schema)
+
+            if response.trace.get("error"):
+                print(f"    ERROR: {response.trace['error']}")
+                continue
+
+            if response.parsed:
+                parser = StructuredOutputParser(context=context)
+                try:
+                    program = parser.parse_program(response.parsed, expected_family=family)
+                    from asf.planner.schemas import serialize_program
+                    prog_dict = serialize_program(program)
+                    programs.append(prog_dict)
+                    print(f"    OK: generated {family_str} program")
+                except Exception as e:
+                    print(f"    PARSE ERROR: {e}")
+            else:
+                print(f"    No parseable response from provider")
+
+        if not programs:
+            print()
+            print("ERROR: No programs generated. Check API key and try again.")
+            return
+
+        print()
+        print("Running orchestrator pipeline...")
+
+        job_root = repo_root / ".asf" / "generate"
+        job_root.mkdir(parents=True, exist_ok=True)
+
+        orchestrator = BatchOrchestrator(
+            job_root=job_root,
+            repo_root=repo_root,
+            planner_context=context,
+        )
+
+        try:
+            job = orchestrator.run_from_plan(
+                brief=args.brief,
+                families=families,
+                counts=counts,
+                programs=programs,
+                style_pack=args.theme,
+            )
+        except Exception as e:
+            print(f"ORCHESTRATOR ERROR: {e}")
+            import traceback
+            traceback.print_exc()
+            return
+
+        completed = sum(1 for a in job.asset_states if a.state not in (AssetState.FAILED, AssetState.PENDING))
+        failed = sum(1 for a in job.asset_states if a.state == AssetState.FAILED)
+
+        print()
+        print("Pipeline Results")
+        print("=" * 40)
+        print(f"  Job ID: {job.job_id}")
+        print(f"  State: {job.state.value}")
+        print(f"  Completed: {completed}/{len(job.asset_states)}")
+        print(f"  Failed: {failed}")
+        print()
+        print(f"  Output: {job.output_root}")
         return
 
     if not args.spec or not args.output:
