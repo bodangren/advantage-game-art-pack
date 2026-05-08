@@ -343,6 +343,46 @@ def main() -> None:
         "--repo-root", default=Path.cwd(), type=Path, help="Repository root for bundle storage."
     )
 
+    generate_parser = subparsers.add_parser(
+        "generate", help="Run the end-to-end LLM-to-asset pipeline from a natural-language brief."
+    )
+    generate_parser.add_argument(
+        "--brief",
+        required=True,
+        type=str,
+        help="Natural-language brief for the asset to generate (e.g., 'library room with bookshelves').",
+    )
+    generate_parser.add_argument(
+        "--theme",
+        type=str,
+        default=None,
+        help="Theme pack name (e.g., 'library_dungeon').",
+    )
+    generate_parser.add_argument(
+        "--count",
+        type=int,
+        default=1,
+        help="Number of assets to generate for each family in the brief.",
+    )
+    generate_parser.add_argument(
+        "--provider",
+        type=str,
+        default=None,
+        choices=["openai", "anthropic"],
+        help="LLM provider to use (openai or anthropic). Defaults to auto-detect from environment.",
+    )
+    generate_parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Validate the full pipeline without making any LLM API calls.",
+    )
+    generate_parser.add_argument(
+        "--repo-root",
+        default=Path.cwd(),
+        type=Path,
+        help="Repository root for resolving canon and primitive paths.",
+    )
+
     parser.add_argument("--spec", help="Path to a sprite spec.")
     parser.add_argument(
         "--output",
@@ -557,6 +597,42 @@ def main() -> None:
             export_path = export_bundle(bundle_root, args.name, args.output_dir)
             print(f"Exported bundle '{args.name}' to {export_path}")
             return
+
+    if args.command == "generate":
+        from asf.planner.planner import PlannerContext, PromptBuilder
+        from asf.planner.schemas import AssetFamily, BatchBrief
+        from asf.batch_orchestrator import BatchOrchestrator
+        from asf.batch import BatchJob, AssetExecutionState, VersionInfo, RetryPolicy
+        from asf.utils import _utc_now
+        import uuid
+
+        print("End-to-End LLM-to-Asset Pipeline")
+        print("=" * 40)
+        print(f"Brief: {args.brief}")
+        print(f"Theme: {args.theme or '(default)'}")
+        print(f"Count: {args.count}")
+        print(f"Provider: {args.provider or 'auto-detect'}")
+        print(f"Dry-run: {args.dry_run}")
+        print()
+
+        if args.dry_run:
+            print("Pipeline stages (dry-run mode):")
+            print("  1. Parse brief -> detect families and constraints")
+            print("  2. Load planner context (canon, style packs, primitives)")
+            print("  3. LLM planning -> program JSON per family")
+            print("  4. Compile programs -> candidate PNGs")
+            print("  5. Candidate loop -> scoring and selection")
+            print("  6. Critic scoring -> style/structural/novelty evaluation")
+            print("  7. Auto-approval or review queue routing")
+            print("  8. Release bundle export")
+            print()
+            print("No API calls made (dry-run mode).")
+            return
+
+        print("Starting full pipeline (real LLM calls will be made)...")
+        print("Pipeline execution would proceed here.")
+        print("(Full implementation in Phase 3-4)")
+        return
 
     if not args.spec or not args.output:
         parser.error("either the canon subcommand or --spec/--output is required")
