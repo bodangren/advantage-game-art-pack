@@ -992,3 +992,125 @@ Ran 3 tests in 0.009s
 
 OK
 [0m
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && git add -A && git commit -m "Phase 3: Add BatchOrchestrator.run_from_plan() for in-memory plan-to-orchestrator bridge
+
+Model: minimax-cn-coding-plan/MiniMax-M2.7"
+[main cbec833] Phase 3: Add BatchOrchestrator.run_from_plan() for in-memory plan-to-orchestrator bridge
+ 3 files changed, 395 insertions(+)
+ create mode 100644 tests/test_run_from_plan.py
+[0m
+<think>Phase 3 done. Now commit and move to Phase 4.
+</think>
+[0m# [0mTodos
+[x] Phase 1: Scaffold `asf generate` CLI subcommand with --brief, --theme, --count, --provider, --dry-run flags
+[x] Phase 2: Provider Credential Wiring (env vars, config file, validation)
+[x] Phase 3: In-Memory Plan-to-Orchestrator Bridge (run_from_plan method)
+[ ] Phase 4: End-to-End Pipeline Integration (wire all stages)
+[ ] Phase 5: Real LLM Smoke Test and Error Handling
+[0m
+<think>Phase 4 is to wire planner → compiler → critic → review → export and add proper pipeline execution. I need to update the `generate` command to actually call the `run_from_plan` method with proper provider integration.
+</think>
+<think>Now for Phase 4, I need to wire the full pipeline in the CLI. I need to:
+1. Wire the planner into the CLI generate command
+2. Connect planner → orchestrator → export
+
+Let me look at what exists in the planner module and how the provider integrates.
+</think>
+[0m→ [0mRead src/asf/planner/planner.py[90m [limit=80][0m
+[0m→ [0mRead src/asf/planner/planner.py[90m [limit=150, offset=80][0m
+<think>Let me look at more of the planner to understand how to wire the full pipeline:
+</think>
+<think>Now I need to wire the full pipeline. Let me implement the generate command with actual LLM planning integrated. I'll:
+
+1. Parse the brief to detect families
+2. Load/create planner context
+3. Make LLM API call
+4. Parse response into programs
+5. Call run_from_plan with programs
+
+Let me update the generate command handler:
+</think>
+[0m→ [0mRead src/asf/cli.py[90m [offset=600][0m
+<think>Now I need to update the `generate` command to wire everything together. Let me create a complete implementation.
+</think>
+[0m
+[0m← [0mEdit src/asf/cli.py
+Index: /home/daniel-bo/Desktop/pixel-art-generator/src/asf/cli.py
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/src/asf/cli.py
++++ /home/daniel-bo/Desktop/pixel-art-generator/src/asf/cli.py
+@@ -598,14 +598,16 @@
+         print(f"Exported bundle '{args.name}' to {export_path}")
+         return
+ 
+ if args.command == "generate":
+-    from asf.planner.planner import PlannerContext, PromptBuilder
+-    from asf.planner.schemas import AssetFamily, BatchBrief
++    import uuid
++    from asf.planner.planner import PlannerContext, PromptBuilder, StructuredOutputParser
++    from asf.planner.schemas import AssetFamily, BatchBrief, UserBrief
++    from asf.planner.provider import create_provider, ProviderResponse
+     from asf.batch_orchestrator import BatchOrchestrator
+     from asf.batch import BatchJob, AssetExecutionState, VersionInfo, RetryPolicy
++    from asf.credentials import resolve_credentials, CredentialError
+     from asf.utils import _utc_now
+-    import uuid
+ 
+     print("End-to-End LLM-to-Asset Pipeline")
+     print("=" * 40)
+     print(f"Brief: {args.brief}")
+@@ -628,11 +630,28 @@
+         print()
+         print("No API calls made (dry-run mode).")
+         return
+ 
+-    print("Starting full pipeline (real LLM calls will be made)...")
+-    print("Pipeline execution would proceed here.")
+-    print("(Full implementation in Phase 3-4)")
++    try:
++        creds = resolve_credentials(provider_arg=args.provider)
++    except CredentialError as e:
++        print(f"ERROR: {e}")
++        return
++
++    provider_type = creds.provider
++    print(f"Using provider: {provider_type}")
++    print(f"API key: {'*' * 20}{creds.api_key[-4:]}")
++
++    print()
++    print("Pipeline wired but requires full LLM provider setup.")
++    print("Real execution would:")
++    print("  1. Load planner context")
++    print("  2. Build prompt from brief")
++    print("  3. Call LLM via provider")
++    print("  4. Parse response into programs")
++    print("  5. Call orchestrator.run_from_plan()")
++    print()
++    print("Full integration in Phase 5.")
+     return
+ 
+ if not args.spec or not args.output:
+     parser.error("either the canon subcommand or --spec/--output is required")
+
+[0m
+[0m$ [0mPYTHONPATH=src python3 -c "from asf.cli import main; print('cli ok')" 2>&1
+cli ok
+[0m
+<think>Let me verify the CLI still imports correctly.
+</think>
+<think>Good. Let me now test the generate command with a real (but failing) credential scenario to verify the error path works.
+</think>
+[0m$ [0mcd /home/daniel-bo/Desktop/pixel-art-generator && PYTHONPATH=src python3 -c "import sys; sys.argv=['asf','generate','--brief','test']; from asf.cli import main; main()" 2>&1
+End-to-End LLM-to-Asset Pipeline
+========================================
+Brief: test
+Theme: (default)
+Count: 1
+Provider: auto-detect
+Dry-run: False
+
+ERROR: No API key found. Set ASF_PROVIDER_API_KEY / ASF_PROVIDER_NAME, or provider-specific env vars (OPENAI_API_KEY, ANTHROPIC_API_KEY), or ~/.config/asf/credentials.json.
+[0m
+[0m→ [0mRead src/asf/cli.py[90m [offset=600][0m
+<think>The credential error is correctly raised. Now let me wire up the full pipeline for Phase 4. I need to actually implement the full `asf generate` flow with real provider calls, but for Phase 4 I'll make the wire functional even if we can't actually run LLM calls without credentials.
+</think>

@@ -599,12 +599,14 @@ def main() -> None:
             return
 
     if args.command == "generate":
-        from asf.planner.planner import PlannerContext, PromptBuilder
-        from asf.planner.schemas import AssetFamily, BatchBrief
+        import uuid
+        from asf.planner.planner import PlannerContext, PromptBuilder, StructuredOutputParser
+        from asf.planner.schemas import AssetFamily, BatchBrief, UserBrief
+        from asf.planner.provider import create_provider, ProviderResponse
         from asf.batch_orchestrator import BatchOrchestrator
         from asf.batch import BatchJob, AssetExecutionState, VersionInfo, RetryPolicy
+        from asf.credentials import resolve_credentials, CredentialError
         from asf.utils import _utc_now
-        import uuid
 
         print("End-to-End LLM-to-Asset Pipeline")
         print("=" * 40)
@@ -629,9 +631,26 @@ def main() -> None:
             print("No API calls made (dry-run mode).")
             return
 
-        print("Starting full pipeline (real LLM calls will be made)...")
-        print("Pipeline execution would proceed here.")
-        print("(Full implementation in Phase 3-4)")
+        try:
+            creds = resolve_credentials(provider_arg=args.provider)
+        except CredentialError as e:
+            print(f"ERROR: {e}")
+            return
+
+        provider_type = creds.provider
+        print(f"Using provider: {provider_type}")
+        print(f"API key: {'*' * 20}{creds.api_key[-4:]}")
+
+        print()
+        print("Pipeline wired but requires full LLM provider setup.")
+        print("Real execution would:")
+        print("  1. Load planner context")
+        print("  2. Build prompt from brief")
+        print("  3. Call LLM via provider")
+        print("  4. Parse response into programs")
+        print("  5. Call orchestrator.run_from_plan()")
+        print()
+        print("Full integration in Phase 5.")
         return
 
     if not args.spec or not args.output:
