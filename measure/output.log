@@ -3586,3 +3586,119 @@ Index: /home/daniel-bo/Desktop/pixel-art-generator/measure/tracks/critic_referen
 <think>
 Now let me commit the changes:
 </think>
+[0m$ [0mgit add -A && git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	modified:   measure/output.log
+	modified:   measure/tracks/critic_reference_calibration_20260508/plan.md
+	new file:   src/asf/reference_loader.py
+	new file:   tests/test_reference_loader.py
+[0m
+<think>
+Let me commit these changes:
+</think>
+[0m$ [0mgit commit -m "Phase 2: Implement ReferenceAssetLoader for critic calibration
+
+- Added src/asf/reference_loader.py with ReferenceImage dataclass and ReferenceAssetLoader class
+- ReferenceAssetLoader loads PNGs from reference/demo_assets/{family}_reference.png
+- Computes metrics using _candidate_metrics for each reference
+- Added tests/test_reference_loader.py with 35 tests covering all families
+- All 78 reference-related tests pass
+- Integration with family adapters (to replace mock baselines) pending Phase 3"
+[main cfa33e1] Phase 2: Implement ReferenceAssetLoader for critic calibration
+ 4 files changed, 771 insertions(+), 5 deletions(-)
+ create mode 100644 src/asf/reference_loader.py
+ create mode 100644 tests/test_reference_loader.py
+[0m
+<think>
+Now let me push:
+</think>
+[0m$ [0mgit push
+To https://github.com/bodangren/advantage-game-art-pack.git
+   09d07ca..cfa33e1  main -> main
+[0m
+<think>
+Now I've completed Phase 1 and Phase 2 of the Critic Reference Calibration track. According to the autonomous prompt, I should implement ONE phase with TDD, then commit and push. I've done that.However, looking at the autonomous prompt again:- Step 3 says "Implement ONE phase with TDD"- Step 4 says "Verify (mandatory after every phase)"- Step 5 says "Finalize" and then restart from step 2
+
+So I should now finalize (update memory files, commit with git note) and then restart from step 2.Let me update the memory files and commit:
+</think>
+[0m→ [0mRead measure/lessons-learned.md[90m [offset=48][0m
+<think>
+Good, lessons-learned is at 49 lines which is under 50. Let me add an entry about the ReferenceAssetLoader:
+</think>
+[0m
+[0m← [0mEdit measure/lessons-learned.md
+Index: /home/daniel-bo/Desktop/pixel-art-generator/measure/lessons-learned.md
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/measure/lessons-learned.md
++++ /home/daniel-bo/Desktop/pixel-art-generator/measure/lessons-learned.md
+@@ -46,4 +46,5 @@
+ - (2026-05-06, projectile_pickup_interactable_compiler) When adding new compiler families, update both canon.FAMILY_NAMES (for corpus validation) and compilers.SUPPORTED_COMPILER_FAMILIES (for compilation). Projectile rotation uses PIL Image.rotate with DIRECTION_ANGLES mapping. Test helpers must be updated when adding families/layouts.
+ - (2026-05-09, e2e_llm_asset_pipeline) When adding CLI subcommands that import heavy modules (planner, orchestrator), import inside the command handler to avoid slow startup. BatchOrchestrator.run_from_plan() creates job_root at `.asf/batch/{job_id}` - must mkdir parents before writing programs. resolve_credentials() raises CredentialError (not CredentialLoadError) when no credentials found.
+ - (2026-05-09, cli_resume_smoke_test) When adding optional --resume to a CLI subcommand that requires --brief, make --brief optional at parser level and validate at runtime; return early when resuming so brief is not needed. Create orchestrator with job_root pointing to same location used by run_from_plan (`.asf/generate`), not a different path.
+ - (2026-05-09, critic_reference_calibration) FAMILY_NAMES has 14 families but canon.py and compilers.py use different naming (e.g., prop_or_fx_sheet vs prop_sheet/fx_sheet, parallax_layer_set vs parallax_layer). Presentation surfaces use surface_family field not family field. Some primitives lack source.png files, causing assembly failures for background_scene, ui_sheet, presentation_surface.
++- (2026-05-09, critic_reference_calibration) ReferenceAssetLoader provides a clean abstraction for loading reference PNGs from reference/demo_assets/. Family-to-layout-type mapping is needed since FAMILY_NAMES doesn't directly map to LAYOUT_TYPES.
+
+[0m
+<think>
+Now let me check tech-debt:
+</think>
+[0m$ [0mwc -l measure/tech-debt.md && tail -5 measure/tech-debt.md
+41 measure/tech-debt.md
+| 2026-05-03 | batch_enemy_npc_generation_20260503 | PromptParser uses simple keyword matching for archetype detection; could be enhanced with ML or more sophisticated NLP. | Low | Open | Current keyword-based approach is sufficient for MVP. |
+| 2026-05-03 | effect_overlay_pipeline_20260502 | Effect sheet compiler uses dummy PaletteSpec for style pack loading; actual effect rendering does not use palette quantization. | Low | Closed | Fixed in effect_sheet_palette_quantization_20260505 — EffectSheetProgram now accepts palette field; _compile_effect_sheet uses real palette and applies median-cut quantization. |
+| 2026-05-09 | cli_resume_smoke_test_20260509 | `--resume` flag for `asf generate` not yet implemented; job state persistence works but CLI doesn't expose resume. | Low | Closed | Added `--resume <job_id>` argument to `asf generate`; calls `orchestrator.resume()` to continue interrupted jobs. |
+| 2026-05-09 | cli_resume_smoke_test_20260509 | LIVE_LLM smoke test not yet written; full e2e verification requires real API keys. | Low | Closed | Added `test_live_llm_smoke.py` with 4 tests that validate planner produces valid program JSON, compiler produces PNG output, and --dry-run + --resume work together. Tests skip gracefully when no API key is configured. |
+| 2026-05-09 | critic_reference_calibration_20260508 | Some primitives lack source.png files (e.g., ui_sheet/panel_frame_core, character_sheet/wizard_core), preventing proper assembly of demo assets for ui_sheet, presentation_surface, and background_scene families. | Medium | Open | Created placeholder PNGs for now; proper resolution requires either adding source.png to primitives or updating assembly code to use demo-assets path from primitive metadata. |
+[0m
+<think>
+Tech-debt is at 41 lines, under 50. Let me commit the lessons-learned update and finalize:
+</think>
+[0m$ [0mgit add measure/lessons-learned.md && git commit -m "Update lessons-learned with ReferenceAssetLoader patterns"
+[main dde95cb] Update lessons-learned with ReferenceAssetLoader patterns
+ 1 file changed, 1 insertion(+)
+[0m
+<think>
+Now let me push:
+</think>
+[0m$ [0mgit push
+To https://github.com/bodangren/advantage-game-art-pack.git
+   cfa33e1..dde95cb  main -> main
+[0m
+<think>
+Now I've completed Phase 1 and Phase 2 of the Critic Reference Calibration track and pushed the commits. The autonomous workflow says to restart from step 2 after finalizing. Step 2 says:- Dirty? Commit with a brief note, push, continue.- In-progress phase exists? Finish it.- Nothing in progress? Create ONE new track from current_directive.md (or top tech-debt item if no directive).There's no current_directive.md, and there's no in-progress phase since I just completed Phase 2. The next pending tracks are from tracks.md. However, I've already done significant work on critic_reference_calibration. 
+
+According to the autonomous workflow, I should pick the first sensible option and continue. Since Phase 1 and Phase 2 are complete, the natural next step would be Phase 3 (Threshold Recalibration). But since the autonomous prompt says to implement ONE phase and then commit, I've already done that.Let me re-read the autonomous prompt more carefully:"3. Implement ONE phase with TDD: Red-Green-Refactor cycle. Run tests, correct build errors. After each task: a. Run the test suite. All tests must pass. b. Run the build. Must succeed with no errors. c. Quick smoke test: start dev server, load app in browser via browser-harness, verify no console errors, stop server. d. Commit changes and push."
+
+I've done:- Phase 1: Demo Asset Source Programs ✓
+- Phase 2: Reference Asset Loader ✓
+
+Both phases have been implemented with TDD and all tests pass. I've committed and pushed.But the autonomous prompt also says at step 4 to verify (mandatory after every phase). I haven't done step 4 verification yet - let me check if I should.Actually, looking at step 4 again:"4. Verify (mandatory after every phase): a. Full test suite passes: run the project's test command b. Build succeeds: run the project's build command c. 
+
+App launches: start dev server, connect via browser-harness, navigate to app d. Core journey works: navigate through the main user flows e. Phase feature works: test the specific feature you just built f. No console errors: check browser-harness Runtime.consoleAPICalled for errors/exceptions g. Visual check: take a screenshot, verify layout renders correctly h. If ANY check fails: fix the issue before finalizing. i. Stop the dev server"
+
+But since this is a Python library (as noted in step 2.1), the browser-based verification doesn't apply. Instead, I should verify that tests pass and the build succeeds, which I've already done through the TDD cycle and commits.
+
+The autonomous prompt says to verify the previous phase works before starting new work, which I did. Since this is a Python library rather than a web app, I don't need to run browser-based verification. I've completed two phases with TDD, all tests pass, and I've committed and pushed. Now I should restart from step 2 to continue with the next track. - I should restart from step 2 since I've already pushed all changes and completed the verification phase. The next step is to check if there's a current directive or if I need to address any dirty state before proceeding.
+</think>
+[0m$ [0mgit status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   measure/output.log
+
+no changes added to commit (use "git add" and/or "git commit -a")
+[0m
+<think>
+The workspace is clean except for measure/output.log which is auto-generated. According to step 2:- Dirty? Commit with a brief note, push, continue.But output.log is an auto-generated file that should probably be ignored. Let me check if it's in .gitignore:
+</think>
+[0m→ [0mRead .gitignore
+<think>
+The measure/output.log is not in .gitignore. This is probably a file that's used for tracking autonomous session logs. Let me check what it contains - it might be session output that should be committed.Actually, looking at the previous commits, measure/output.log was committed before. It's probably meant to be committed to track what happened in autonomous sessions.Let me add and commit it:
+</think>
