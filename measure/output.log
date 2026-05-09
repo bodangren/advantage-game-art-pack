@@ -4326,3 +4326,100 @@ Now let me check the tech-debt line count:
 <think>
 Still under 50. Now let me commit the changes:
 </think>
+[0m$ [0mgit add -A && git status
+On branch main
+Your branch is up to date with 'origin/main'.
+
+Changes to be committed:
+  (use "git restore --staged <file>..." to unstage)
+	modified:   measure/output.log
+	modified:   measure/tech-debt.md
+	modified:   measure/tracks/critic_reference_calibration_20260508/plan.md
+	new file:   tests/test_threshold_recalibration.py
+[0m
+<think>
+Let me commit these changes:
+</think>
+[0m$ [0mgit commit -m "Phase 3 start: Threshold recalibration test infrastructure
+
+- Added test_threshold_recalibration.py with tests for threshold pack structure
+- Discovered that _candidate_metrics is very slow (22+ seconds per family)
+- Added tech-debt entry for slow metrics computation
+- Full critic evaluation pending metrics optimization"
+[main b2f8338] Phase 3 start: Threshold recalibration test infrastructure
+ 4 files changed, 684 insertions(+), 2 deletions(-)
+ create mode 100644 tests/test_threshold_recalibration.py
+[0m
+<think>
+Now let me push:
+</think>
+[0m$ [0mgit push
+To https://github.com/bodangren/advantage-game-art-pack.git
+   c0a69a7..b2f8338  main -> main
+[0m
+<think>
+Now I've done Phase 1, Phase 2, and started Phase 3 (test infrastructure). According to the autonomous workflow:- I've implemented Phase 1 and Phase 2 with TDD- Phase 3 test infrastructure is in place but the full critic evaluation is blocked by slow metrics computation- I've committed and pushed
+
+The workflow says at step 5 to finalize (update memory files, commit checkpoint with git note) and then restart from step 2.Let me finalize by updating the lessons-learned and committing the output.log:
+</think>
+[0m→ [0mRead measure/lessons-learned.md[90m [offset=48][0m
+<think>
+Lessons-learned is at exactly 50 lines. Let me add a new lesson about the slow metrics computation:
+</think>
+[0m
+[0m← [0mEdit measure/lessons-learned.md
+Index: /home/daniel-bo/Desktop/pixel-art-generator/measure/lessons-learned.md
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/measure/lessons-learned.md
++++ /home/daniel-bo/Desktop/pixel-art-generator/measure/lessons-learned.md
+@@ -47,4 +47,5 @@
+ - (2026-05-09, e2e_llm_asset_pipeline) When adding CLI subcommands that import heavy modules (planner, orchestrator), import inside the command handler to avoid slow startup. BatchOrchestrator.run_from_plan() creates job_root at `.asf/batch/{job_id}` - must mkdir parents before writing programs. resolve_credentials() raises CredentialError (not CredentialLoadError) when no credentials found.
+ - (2026-05-09, cli_resume_smoke_test) When adding optional --resume to a CLI subcommand that requires --brief, make --brief optional at parser level and validate at runtime; return early when resuming so brief is not needed. Create orchestrator with job_root pointing to same location used by run_from_plan (`.asf/generate`), not a different path.
+ - (2026-05-09, critic_reference_calibration) FAMILY_NAMES has 14 families but canon.py and compilers.py use different naming (e.g., prop_or_fx_sheet vs prop_sheet/fx_sheet, parallax_layer_set vs parallax_layer). Presentation surfaces use surface_family field not family field. Some primitives lack source.png files, causing assembly failures for background_scene, ui_sheet, presentation_surface.
+ - (2026-05-09, critic_reference_calibration) ReferenceAssetLoader provides a clean abstraction for loading reference PNGs from reference/demo_assets/. Family-to-layout-type mapping is needed since FAMILY_NAMES doesn't directly map to LAYOUT_TYPES.
++- (2026-05-09, critic_reference_calibration) _candidate_metrics is slow (1-4s per large image). Full critic evaluation on 7 demo refs takes 22+ seconds. This blocks threshold recalibration testing and requires metrics caching or downsampling optimization.
+
+[0m
+<think>
+Now let me check the line count:
+</think>
+[0m$ [0mwc -l measure/lessons-learned.md
+51 measure/lessons-learned.md
+[0m
+<think>
+It's now 51 lines, need to trim 1 line. Let me look for entries I can merge or shorten:
+</think>
+[0m→ [0mRead measure/lessons-learned.md[90m [limit=15][0m
+<think>
+Let me look at the end of the file and find a line to trim or merge:
+</think>
+[0m→ [0mRead measure/lessons-learned.md[90m [offset=38][0m
+<think>
+Let me merge lines 49 and 50 since they're both critic_reference_calibration entries:
+</think>
+[0m
+[0m← [0mEdit measure/lessons-learned.md
+Index: /home/daniel-bo/Desktop/pixel-art-generator/measure/lessons-learned.md
+===================================================================
+--- /home/daniel-bo/Desktop/pixel-art-generator/measure/lessons-learned.md
++++ /home/daniel-bo/Desktop/pixel-art-generator/measure/lessons-learned.md
+@@ -45,7 +45,6 @@
+ - (2026-05-05, autonomous_review) No current_directive means nothing to do. Verify previous track tests pass, check memory files, commit clean state. This is a Python library (asf/), not a web app — unit tests (`python3 -m pytest`) replace browser-based smoke testing.
+ - (2026-05-06, projectile_pickup_interactable_compiler) When adding new compiler families, update both canon.FAMILY_NAMES (for corpus validation) and compilers.SUPPORTED_COMPILER_FAMILIES (for compilation). Projectile rotation uses PIL Image.rotate with DIRECTION_ANGLES mapping. Test helpers must be updated when adding families/layouts.
+ - (2026-05-09, e2e_llm_asset_pipeline) When adding CLI subcommands that import heavy modules (planner, orchestrator), import inside the command handler to avoid slow startup. BatchOrchestrator.run_from_plan() creates job_root at `.asf/batch/{job_id}` - must mkdir parents before writing programs. resolve_credentials() raises CredentialError (not CredentialLoadError) when no credentials found.
+ - (2026-05-09, cli_resume_smoke_test) When adding optional --resume to a CLI subcommand that requires --brief, make --brief optional at parser level and validate at runtime; return early when resuming so brief is not needed. Create orchestrator with job_root pointing to same location used by run_from_plan (`.asf/generate`), not a different path.
+-- (2026-05-09, critic_reference_calibration) FAMILY_NAMES has 14 families but canon.py and compilers.py use different naming (e.g., prop_or_fx_sheet vs prop_sheet/fx_sheet, parallax_layer_set vs parallax_layer). Presentation surfaces use surface_family field not family field. Some primitives lack source.png files, causing assembly failures for background_scene, ui_sheet, presentation_surface.
+-- (2026-05-09, critic_reference_calibration) ReferenceAssetLoader provides a clean abstraction for loading reference PNGs from reference/demo_assets/. Family-to-layout-type mapping is needed since FAMILY_NAMES doesn't directly map to LAYOUT_TYPES.
++- (2026-05-09, critic_reference_calibration) FAMILY_NAMES naming differs from compilers.py (prop_or_fx_sheet vs prop_sheet/fx_sheet, parallax_layer_set vs parallax_layer). Presentation surfaces use surface_family field. ReferenceAssetLoader provides clean abstraction for loading reference PNGs with family-to-layout-type mapping.
+ - (2026-05-09, critic_reference_calibration) _candidate_metrics is slow (1-4s per large image). Full critic evaluation on 7 demo refs takes 22+ seconds. This blocks threshold recalibration testing and requires metrics caching or downsampling optimization.
+
+[0m
+<think>
+Now let me check the line count:
+</think>
+[0m$ [0mwc -l measure/lessons-learned.md
+50 measure/lessons-learned.md
+[0m
+<think>
+Good, now it's 50 lines. Let me commit and push:
+</think>
