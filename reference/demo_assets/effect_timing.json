@@ -1,0 +1,8 @@
+{
+  "blend_mode": "screen",
+  "effect_type": "pulse",
+  "frame_count": 8,
+  "frame_duration_ms": 100,
+  "loop": true,
+  "total_duration_ms": 800
+}

@@ -1,0 +1,47 @@
+{
+  "family": "projectile",
+  "program_id": "demo_projectile",
+  "program_version": 1,
+  "style_pack": "cute_chibi_v1",
+  "primitive_ids": [
+    "fireball"
+  ],
+  "variant_controls": {
+    "variant_id": "demo_proj_v1",
+    "candidate_index": null,
+    "search_budget": null
+  },
+  "layout": {
+    "mode": "projectile_directional",
+    "dimensions": [
+      128,
+      32
+    ],
+    "grid": [
+      4,
+      1
+    ],
+    "frame_size": [
+      32,
+      32
+    ],
+    "directions": [
+      "E",
+      "SE",
+      "S",
+      "SW"
+    ]
+  },
+  "directions": [
+    "E",
+    "SE",
+    "S",
+    "SW"
+  ],
+  "render_spec": null,
+  "palette": {
+    "primary": "iron",
+    "secondary": "iron",
+    "accent": "iron"
+  }
+}
