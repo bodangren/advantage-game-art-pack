@@ -12,11 +12,11 @@
 **Note:** 10 of 14 families produce real compiled PNGs (character_sheet, prop_sheet, fx_sheet, tileset, directional_sheet, effect_sheet, projectile, pickup, book, parallax_layer). 4 families use placeholders due to missing source.png files in primitives: background_scene (scene assembly requires complex layout resolution), ui_sheet (panel_frame_core has no source.png), presentation_surface (requires background_scene_manifest), interactable (derived from pickup).
 
 ## Phase 2: Reference Asset Loader
-- [ ] Task: Replace mock baselines with real reference loader
-  - [ ] Write tests for `ReferenceAssetLoader` class resolving paths per family
-  - [ ] Implement `ReferenceAssetLoader` that reads `reference/demo_assets/{family}_reference.png`
-  - [ ] Update family adapters to accept injected reference image instead of procedural mock
-  - [ ] Graceful fallback to procedural mock when reference asset is missing (backward compatible)
+- [x] Task: Replace mock baselines with real reference loader
+  - [x] Write tests for `ReferenceAssetLoader` class resolving paths per family
+  - [x] Implement `ReferenceAssetLoader` that reads `reference/demo_assets/{family}_reference.png`
+  - [ ] Update family adapters to accept injected reference image instead of procedural mock (pending - requires Phase 3 integration)
+  - [ ] Graceful fallback to procedural mock when reference asset is missing (backward compatible) (pending - requires Phase 3 integration)
 
 ## Phase 3: Threshold Recalibration
 - [ ] Task: Recalibrate auto-approval thresholds against real demo assets
