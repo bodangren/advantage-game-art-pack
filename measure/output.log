@@ -4423,3 +4423,82 @@ Now let me check the line count:
 <think>
 Good, now it's 50 lines. Let me commit and push:
 </think>
+[0m$ [0mgit add measure/lessons-learned.md measure/output.log && git commit -m "Finalize session: critic_reference_calibration Phases 1-3 started
+
+- Phase 1: Demo asset source programs (14 families)
+- Phase 2: ReferenceAssetLoader implemented
+- Phase 3: Test infrastructure created, blocked by slow metrics computation
+- Updated lessons-learned and tech-debt"
+[main 0a1a474] Finalize session: critic_reference_calibration Phases 1-3 started
+ 2 files changed, 99 insertions(+), 2 deletions(-)
+[0m
+<think>
+Now push:
+</think>
+[0m$ [0mgit push
+To https://github.com/bodangren/advantage-game-art-pack.git
+   b2f8338..0a1a474  main -> main
+[0m
+<think>
+Now I've completed the autonomous session. Let me provide a summary of what was accomplished:## Summary
+
+I've completed an autonomous Measure session following the autonomous_prompt.md workflow:
+
+### Phase 1: Demo Asset Source Programs (COMPLETE)
+- Created `reference/demo_assets/` directory with 14 source programs (JSON) for all families in FAMILY_NAMES
+- Compiled 10 real reference PNGs via sprite compiler for: character_sheet, prop_sheet, fx_sheet, tileset, directional_sheet, effect_sheet, projectile, pickup, book, parallax_layer
+- Created placeholder PNGs for 4 families (background_scene, ui_sheet, presentation_surface, interactable) due to missing source.png files in primitives
+- Added `tests/test_reference_assets.py` with 43 tests covering all 14 families
+
+### Phase 2: Reference Asset Loader (COMPLETE)
+- Implemented `ReferenceAssetLoader` class in `src/asf/reference_loader.py`
+- Provides clean abstraction for loading reference PNGs from `reference/demo_assets/`
+- Maps FAMILY_NAMES to LAYOUT_TYPES for metric computation
+- Added `tests/test_reference_loader.py` with 35 tests covering all families
+
+### Phase 3: Threshold Recalibration (STARTED)
+- Created test infrastructure in `tests/test_threshold_recalibration.py`
+- Discovered that `_candidate_metrics` is very slow (22+ seconds per family)
+- Full critic evaluation is blocked pending metrics optimization
+- Added tech-debt entry for slow metrics computation
+
+### Files Changed
+- `measure/tracks/critic_reference_calibration_20260508/plan.md` - Updated plan
+- `measure/tracks/critic_reference_calibration_20260508/spec.md` - Updated spec
+
+
+- `measure/tracks/critic_reference_calibration_20260508/metadata.json` - Updated metadata
+- `src/asf/reference_loader.py` - New ReferenceAssetLoader class
+- `tests/test_reference_assets.py` - New test file
+- `tests/test_reference_loader.py` - New test file
+- `tests/test_threshold_recalibration.py` - New test file
+- `reference/demo_assets/` - 14 source programs and 14 reference PNGs
+- Updated memory files (lessons-learned.md, tech-debt.md)
+
+All tests pass (78+ tests) and code compiles without errors.
+</think>
+
+## Summary
+
+Completed autonomous Measure session with the following accomplishments:
+
+### Phase 1: Demo Asset Source Programs ✅
+- Created `reference/demo_assets/` with 14 source programs for all FAMILY_NAMES
+- Compiled 10 real PNGs via sprite compiler; 4 use placeholders (missing source.png)
+- 43 tests added in `tests/test_reference_assets.py`
+
+### Phase 2: Reference Asset Loader ✅
+- Implemented `ReferenceAssetLoader` in `src/asf/reference_loader.py`
+- 35 tests added in `tests/test_reference_loader.py`
+- All 78 reference-related tests passing
+
+### Phase 3: Threshold Recalibration (Started)
+- Created test infrastructure; discovered `_candidate_metrics` is too slow (22+ sec/family)
+- Added tech-debt for metrics optimization needed before full recalibration
+
+### Commits
+1. Phase 1 complete: Demo asset source programs
+2. Phase 2: ReferenceAssetLoader implementation  
+3. Phase 3 start: Test infrastructure
+4. Memory file updates
+5. Final checkpoint

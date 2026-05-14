@@ -85,6 +85,10 @@ This file tracks all major tracks for the project.
 
 ## Upcoming Tracks
 
+- [ ] **Track: Critic Metrics Performance Optimization**
+  *Link: [./tracks/critic_metrics_performance_20260514/](./tracks/critic_metrics_performance_20260514/)*
+  Reduce _candidate_metrics time by 75% via downsampling and caching to unblock reference calibration.
+
 - [x] **Track: Batch Release Bundle Exporter**
   *Wire release bundle export to actual compiled PNGs from candidate loop*
   *Link: [./archive/batch_release_bundle_20260425/](./archive/batch_release_bundle_20260425/)*
@@ -107,7 +111,7 @@ This file tracks all major tracks for the project.
   *Link: [./measure/tracks/critic_reference_calibration_20260508/](./measure/tracks/critic_reference_calibration_20260508/)*
 - [ ] **Track: Release Bundle PNG Export** *Link: [./tracks/release_bundle_png_export_20260508/](./tracks/release_bundle_png_export_20260508/)* — Wire bundle exporter to copy actual compiled PNGs from candidate loop output
 - [ ] **Track: Review App Batch Approve/Reject Workflow** *Link: [./tracks/review_app_batch_workflow_20260508/](./tracks/review_app_batch_workflow_20260508/)* — Bulk select and approve/reject candidates in the review queue
-- [x] **Track: CLI Resume Flag and LIVE_LLM Smoke Test** *Link: [./tracks/cli_resume_smoke_test_20260509/](./tracks/cli_resume_smoke_test_20260509/)* — Implement `--resume` for `asf generate` and add automated live LLM smoke test
+- [x] **Track: CLI Resume Flag and LIVE_LLM Smoke Test** *Link: [./archive/cli_resume_smoke_test_20260509/](./archive/cli_resume_smoke_test_20260509/)* — Implement `--resume` for `asf generate` and add automated live LLM smoke test
   *Status: Complete — `--resume <job_id>` flag added to `asf generate`; orchestator.resume() wired to CLI; test_live_llm_smoke.py with 4 tests (skips gracefully without API key).*
 - [x] **Track: Critic Calibration CLI**
   *Add recalibrate subcommand to candidate CLI for scripted threshold adjustment*
