@@ -86,7 +86,7 @@ This file tracks all major tracks for the project.
 ## Upcoming Tracks
 
 - [ ] **Track: Critic Metrics Performance Optimization**
-  *Link: [./tracks/critic_metrics_performance_20260514/](./tracks/critic_metrics_performance_20260514/)*
+  *Link: [./archive/critic_metrics_performance_20260514/](./archive/critic_metrics_performance_20260514/)*
   Reduce _candidate_metrics time by 75% via downsampling and caching to unblock reference calibration.
 
 - [x] **Track: Batch Release Bundle Exporter**
@@ -108,7 +108,7 @@ This file tracks all major tracks for the project.
   *Status: Complete — `asf generate` CLI with --brief, --theme, --count, --provider, --dry-run; credentials module with env var/config file resolution; BatchOrchestrator.run_from_plan() for in-memory plan-to-orchestrator bridge; full pipeline wired.*
 - [ ] **Track: Critic Reference Calibration with Real Demo Assets**
   *Replace mocked baselines with real reference PNGs for all 10 families and recalibrate auto-approval thresholds.*
-  *Link: [./measure/tracks/critic_reference_calibration_20260508/](./measure/tracks/critic_reference_calibration_20260508/)*
+  *Link: [./measure/archive/critic_reference_calibration_20260508/](./measure/archive/critic_reference_calibration_20260508/)*
 - [ ] **Track: Release Bundle PNG Export** *Link: [./tracks/release_bundle_png_export_20260508/](./tracks/release_bundle_png_export_20260508/)* — Wire bundle exporter to copy actual compiled PNGs from candidate loop output
 - [ ] **Track: Review App Batch Approve/Reject Workflow** *Link: [./tracks/review_app_batch_workflow_20260508/](./tracks/review_app_batch_workflow_20260508/)* — Bulk select and approve/reject candidates in the review queue
 - [x] **Track: CLI Resume Flag and LIVE_LLM Smoke Test** *Link: [./archive/cli_resume_smoke_test_20260509/](./archive/cli_resume_smoke_test_20260509/)* — Implement `--resume` for `asf generate` and add automated live LLM smoke test
