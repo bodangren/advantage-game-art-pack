@@ -85,7 +85,7 @@ This file tracks all major tracks for the project.
 
 ## Upcoming Tracks
 
-- [ ] **Track: Critic Metrics Performance Optimization**
+- [x] **Track: Critic Metrics Performance Optimization**
   *Link: [./archive/critic_metrics_performance_20260514/](./archive/critic_metrics_performance_20260514/)*
   Reduce _candidate_metrics time by 75% via downsampling and caching to unblock reference calibration.
 
@@ -106,7 +106,8 @@ This file tracks all major tracks for the project.
   *Single-command `asf generate` that runs planner → compiler → critic → review → export with real LLM credentials.*
   *Link: [./measure/archive/e2e_llm_asset_pipeline_20260508/](./measure/archive/e2e_llm_asset_pipeline_20260508/)*
   *Status: Complete — `asf generate` CLI with --brief, --theme, --count, --provider, --dry-run; credentials module with env var/config file resolution; BatchOrchestrator.run_from_plan() for in-memory plan-to-orchestrator bridge; full pipeline wired.*
-- [ ] **Track: Critic Reference Calibration with Real Demo Assets**
+- [x] **Track: Critic Reference Calibration with Real Demo Assets**
+  *Link: [./archive/critic_reference_calibration_20260508/](./archive/critic_reference_calibration_20260508/)*
   *Replace mocked baselines with real reference PNGs for all 10 families and recalibrate auto-approval thresholds.*
   *Link: [./measure/archive/critic_reference_calibration_20260508/](./measure/archive/critic_reference_calibration_20260508/)*
 - [ ] **Track: Release Bundle PNG Export** *Link: [./tracks/release_bundle_png_export_20260508/](./tracks/release_bundle_png_export_20260508/)* — Wire bundle exporter to copy actual compiled PNGs from candidate loop output
@@ -184,6 +185,9 @@ This file tracks all major tracks for the project.
   *Status: Complete — Added pose_sheet_3x2 and pose_sheet_3x4 to LAYOUT_TYPES; updated _frame_drift in canon.py and candidate_loop.py to handle new grid dimensions; canon manifest updated; test suite passes.*
 
 ## Upcoming Tracks
+
+- [ ] **Track: Critic Metrics Performance Optimization** *Link: [./tracks/critic_metrics_performance_optimization_20260524/](./tracks/critic_metrics_performance_optimization_20260524/)* — Reduce `_candidate_metrics` time by 75% via single-pass pixel aggregation, downsampling, and caching to unblock reference calibration.
+- [ ] **Track: Interactable and Book Compiler Families** *Link: [./tracks/interactable_and_book_compiler_20260524/](./tracks/interactable_and_book_compiler_20260524/)* — Add compiler support for `interactable` and `book` asset families with dataclasses, loaders, renderers, example programs, and tests.
 
 - [x] **Track: Projectile, Pickup, and Interactable Compiler Family**
   *Link: [./archive/projectile_pickup_interactable_compiler_20260506/](./archive/projectile_pickup_interactable_compiler_20260506/)*
