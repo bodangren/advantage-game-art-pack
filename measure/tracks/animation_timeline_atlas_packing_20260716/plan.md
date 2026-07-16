@@ -26,10 +26,10 @@
 
 ## Phase 4: Desk Preview and Example
 
-- [ ] Add a checked-in example timeline (minimum 4 frames) with expected
+- [x] Add a checked-in example timeline (minimum 4 frames) with expected
   digests.
-- [ ] Add desk preview of the frame sequence and its atlas.
-- [ ] Document the timeline and atlas JSON contracts in README or DESIGN docs.
+- [x] Add desk preview of the frame sequence and its atlas.
+- [x] Document the timeline and atlas JSON contracts in README or DESIGN docs.
 
 ## Phase 5: Verification
 

@@ -1,0 +1,43 @@
+{
+  "durations_ms": [
+    120,
+    120,
+    120,
+    120
+  ],
+  "frame_count": 4,
+  "frame_rects": [
+    {
+      "height": 32,
+      "id": "walk-1",
+      "width": 32,
+      "x": 0,
+      "y": 0
+    },
+    {
+      "height": 32,
+      "id": "walk-2",
+      "width": 32,
+      "x": 32,
+      "y": 0
+    },
+    {
+      "height": 32,
+      "id": "walk-3",
+      "width": 32,
+      "x": 64,
+      "y": 0
+    },
+    {
+      "height": 32,
+      "id": "walk-4",
+      "width": 32,
+      "x": 96,
+      "y": 0
+    }
+  ],
+  "sheet_digest": "0b738fc8764658c49a5346e8c5253f78584da59df2f9d2c69d401d22b738a5a7",
+  "sheet_height": 32,
+  "sheet_width": 128,
+  "version": 1
+}

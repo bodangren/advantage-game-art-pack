@@ -119,9 +119,28 @@ select:focus { border-color: var(--acid); }
 .site-footer { padding: 19px 0 0; color: rgba(232, 229, 220, 0.38); font-size: 8px; letter-spacing: 0.13em; }
 .site-footer span:last-child { color: var(--coral); }
 
+.animation-dock { margin-top: 26px; border: 1px solid var(--line); background: rgba(27, 34, 39, 0.7); padding: 24px 30px 26px; }
+.animation-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 26px; margin-top: 18px; }
+.frame-strip { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.frame-cell { display: grid; gap: 8px; margin: 0; }
+.frame-stage { aspect-ratio: 1; border: 1px solid var(--line); background-color: #222a2c; background-image: linear-gradient(45deg, rgba(232, 229, 220, 0.035) 25%, transparent 25%), linear-gradient(-45deg, rgba(232, 229, 220, 0.035) 25%, transparent 25%), linear-gradient(45deg, transparent 75%, rgba(232, 229, 220, 0.035) 75%), linear-gradient(-45deg, transparent 75%, rgba(232, 229, 220, 0.035) 75%); background-position: 0 0, 0 8px, 8px -8px, -8px 0; background-size: 16px 16px; }
+.frame-stage > div, .frame-stage svg { display: block; width: 100%; height: 100%; image-rendering: pixelated; }
+.frame-cell figcaption { display: grid; gap: 3px; }
+.frame-cell strong { color: var(--paper); font-size: 9px; font-weight: 500; }
+.frame-cell small { color: var(--paper-dim); font-size: 8px; }
+.atlas-panel { display: grid; gap: 12px; align-content: start; }
+.atlas-sheet { border: 1px solid var(--line); background-color: #222a2c; padding: 10px; }
+.atlas-sheet > div, .atlas-sheet svg { display: block; width: 100%; height: auto; image-rendering: pixelated; }
+.atlas-meta { display: grid; gap: 7px; margin: 0; }
+.atlas-meta > div { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; border-bottom: 1px solid var(--line); padding-bottom: 6px; }
+.atlas-meta dt { flex: none; color: var(--paper-dim); font-size: 8px; letter-spacing: 0.13em; }
+.atlas-meta dd { margin: 0; overflow: hidden; color: var(--paper); font-size: 8px; text-align: right; text-overflow: ellipsis; white-space: nowrap; }
+.animation-loading { color: var(--paper-dim); font-size: 10px; }
+
 @media (max-width: 1120px) {
   .workspace { grid-template-columns: 200px minmax(0, 1fr); }
   .inspector-rail { display: none; }
+  .animation-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 760px) {
@@ -148,4 +167,6 @@ select:focus { border-color: var(--acid); }
   .preview-actions { display: grid; grid-template-columns: 1fr 1fr; }
   .button { padding-inline: 7px; font-size: 8px; }
   .preview-stage { min-height: 350px; }
+  .animation-dock { padding: 18px 15px 20px; }
+  .frame-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }

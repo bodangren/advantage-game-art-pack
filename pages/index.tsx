@@ -1,7 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
+import walkCycleExample from "../examples/animation/walk-cycle.json";
+import { packAtlas, type AtlasMetadata } from "../src/lib/atlas";
 import { DEFAULT_SPEC } from "../src/lib/default-spec";
 import { SVG_PARTS, partsForSlot, type SvgSlot } from "../src/lib/catalog";
 import {
@@ -9,6 +11,19 @@ import {
   composeSvg,
   type SvgCompositionSpec,
 } from "../src/lib/svg-assets";
+import {
+  compileTimeline,
+  type TimelineCompiledFrame,
+} from "../src/lib/timeline";
+
+const WALK_CYCLE_ATLAS_OPTIONS = { cols: 4, frame_w: 32, frame_h: 32 } as const;
+
+interface WalkCyclePreview {
+  readonly frames: ReadonlyArray<TimelineCompiledFrame>;
+  readonly sheetSvg: string;
+  readonly atlas: AtlasMetadata;
+  readonly phaserKey: string;
+}
 
 const SLOT_ORDER: readonly SvgSlot[] = ["body", "shirt", "hair", "weapon"];
 const PALETTE_ORDER = ["skin", "hair", "cloth", "leather", "metal", "shoe"] as const;
@@ -53,8 +68,28 @@ export default function Home() {
   const [palette, setPalette] = useState({ ...DEFAULT_SPEC.palette });
   const [copied, setCopied] = useState(false);
   const [copyError, setCopyError] = useState<string | null>(null);
+  const [walkCycle, setWalkCycle] = useState<WalkCyclePreview | null>(null);
   const spec = replaceSelection(DEFAULT_SPEC, selection, palette);
   const svg = composeSvg(spec, SVG_PARTS);
+
+  useEffect(() => {
+    let cancelled = false;
+    void (async () => {
+      const compiled = await compileTimeline(walkCycleExample, SVG_PARTS);
+      const packed = await packAtlas(compiled, WALK_CYCLE_ATLAS_OPTIONS);
+      if (!cancelled) {
+        setWalkCycle({
+          frames: compiled.frames,
+          sheetSvg: packed.sheet_svg,
+          atlas: packed.atlas_json,
+          phaserKey: packed.phaser_load.key,
+        });
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const updateSelection = (slot: SelectableSlot, partId: string) => {
     setSelection((current) => ({ ...current, [slot]: partId }));
@@ -232,6 +267,52 @@ export default function Home() {
             <div className="anchor-line"><span>body.hand</span><b>→</b><span>sword.root</span></div>
           </div>
         </aside>
+      </section>
+
+      <section className="animation-dock" aria-label="Walk-cycle animation and atlas preview">
+        <div className="panel-heading">
+          <span className="panel-index">04</span>
+          <div>
+            <p className="eyebrow">ANIMATION / {(walkCycle?.phaserKey ?? "walk-cycle").toUpperCase()}</p>
+            <h2>Frame sequence + atlas</h2>
+          </div>
+        </div>
+
+        {walkCycle ? (
+          <div className="animation-grid">
+            <div className="frame-strip">
+              {walkCycle.frames.map((frame) => (
+                <figure className="frame-cell" key={frame.id}>
+                  <div className="frame-stage">
+                    {/* Frame SVGs are emitted by the deterministic timeline compiler. */}
+                    <div dangerouslySetInnerHTML={{ __html: frame.svg }} />
+                  </div>
+                  <figcaption>
+                    <strong>{frame.id}</strong>
+                    <small>{frame.duration_ms}ms / {frame.digest.slice(0, 8)}</small>
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+
+            <div className="atlas-panel">
+              <div className="atlas-sheet">
+                {/* The packed sheet passes the atlas safety guard before packing completes. */}
+                <div dangerouslySetInnerHTML={{ __html: walkCycle.sheetSvg }} />
+              </div>
+              <dl className="atlas-meta">
+                <div><dt>FRAMES</dt><dd>{String(walkCycle.atlas.frame_count).padStart(2, "0")}</dd></div>
+                <div><dt>SHEET</dt><dd>{walkCycle.atlas.sheet_width} × {walkCycle.atlas.sheet_height}</dd></div>
+                <div><dt>DURATIONS</dt><dd>{walkCycle.atlas.durations_ms.join(" / ")}</dd></div>
+                <div><dt>RECTS</dt><dd>{walkCycle.atlas.frame_rects.map((rect) => `${rect.id}@${rect.x},${rect.y}`).join("  ")}</dd></div>
+                <div><dt>DIGEST</dt><dd>{walkCycle.atlas.sheet_digest.slice(0, 16)}…</dd></div>
+                <div><dt>PHASER</dt><dd>{walkCycle.phaserKey} / asset.svg</dd></div>
+              </dl>
+            </div>
+          </div>
+        ) : (
+          <p className="animation-loading">Compiling walk-cycle…</p>
+        )}
       </section>
 
       <footer className="site-footer">
