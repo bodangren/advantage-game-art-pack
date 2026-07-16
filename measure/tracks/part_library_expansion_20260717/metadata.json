@@ -1,0 +1,10 @@
+{
+  "id": "part_library_expansion_20260717",
+  "title": "SVG Part Library Expansion",
+  "type": "feature",
+  "status": "pending",
+  "created": "2026-07-17",
+  "priority": "high",
+  "estimated_tasks": 15,
+  "depends_on": ["composable_svg_assets_20260716"]
+}

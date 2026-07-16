@@ -86,7 +86,7 @@ vinext SVG desk.
   *Wire promo capture job to scene renderer so capture_conditions are honored instead of loading a static promo.png*
   *Link: [./archive/promo_capture_scene_renderer_20260425/](./archive/promo_capture_scene_renderer_20260425/)*
 
-## Upcoming Tracks
+## Completed Tracks
 
 - [x] **Track: Critic Metrics Performance Optimization**
   *Link: [./archive/critic_metrics_performance_20260514/](./archive/critic_metrics_performance_20260514/)*
@@ -185,9 +185,6 @@ vinext SVG desk.
   Expand compiler to support arbitrary row/column layouts for downstream game assets.
   *Status: Complete — Added pose_sheet_3x2 and pose_sheet_3x4 to LAYOUT_TYPES; updated _frame_drift in canon.py and candidate_loop.py to handle new grid dimensions; canon manifest updated; test suite passes.*
 
-## Upcoming Tracks
-
-
 - [x] **Track: Projectile, Pickup, and Interactable Compiler Family**
   *Link: [./archive/projectile_pickup_interactable_compiler_20260506/](./archive/projectile_pickup_interactable_compiler_20260506/)*
   Dedicated compiler family for directional projectiles and single-image pickups/interactables.
@@ -199,8 +196,9 @@ vinext SVG desk.
    *Status: Complete — rendered_scene_image parameter added to assemble_cover_surface and assemble_loading_surface; backward compatible fallback to base.png convention; tests pass.*
 
 - [x] **Track: Composable SVG Asset Factory Pivot**
-  *Link: [./tracks/composable_svg_assets_20260716/](./tracks/composable_svg_assets_20260716/)*
+  *Link: [./archive/composable_svg_assets_20260716/](./archive/composable_svg_assets_20260716/)*
   TypeScript 7/vinext SVG-first reusable parts, named-anchor composition, deterministic metadata, and Phaser load-time texture exports. The previous Python/raster project was retired; the browser desk and compiler contract are complete.
+  *Status: Complete — engine, catalog, and desk shipped; 79/79 tests, typecheck, and build re-verified green in the 2026-07-17 review.*
 
 - [x] **Track: Animation Timelines and Atlas Packing**
   *Link: [./archive/animation_timeline_atlas_packing_20260716/](./archive/animation_timeline_atlas_packing_20260716/)*
@@ -223,4 +221,18 @@ vinext SVG desk.
 
 ## Active Tracks (TypeScript SVG desk)
 
-All planned tracks are complete.
+- [ ] **Track: SVG Part Library Expansion**
+  *Link: [./tracks/part_library_expansion_20260717/](./tracks/part_library_expansion_20260717/)*
+  Expand the checked-in part library beyond the knight set: enemy, boss, and NPC/rescue archetype part sets plus prop and FX parts, tag-based catalog selection, seeded example compositions registered in the bundle spec registry.
+
+- [ ] **Track: Tile and Scene Composition Engine**
+  *Link: [./tracks/tile_scene_composition_20260717/](./tracks/tile_scene_composition_20260717/)*
+  Scene spec with seam-safe tile grids, ordered layers, and prop placement compiled through the existing engine; deterministic scene SVG + manifest, parallax layer-set export, checked-in examples. Depends on part_library_expansion_20260717.
+
+- [ ] **Track: Phaser Integration Harness**
+  *Link: [./tracks/phaser_integration_harness_20260717/](./tracks/phaser_integration_harness_20260717/)*
+  Minimal Phaser 4 consumer proving the export contract: versioned loader-config module, harness scene loading a bundle export (composition textures + walk-cycle atlas), deterministic export fixture and Node smoke test. Depends on per_game_asset_bundles_20260716.
+
+- [ ] **Track: LLM Part and Spec Authoring Loop**
+  *Link: [./tracks/llm_part_authoring_20260717/](./tracks/llm_part_authoring_20260717/)*
+  Provider-abstracted, catalog-grounded authoring loop with bounded validate-and-repair retries; authored parts/specs land in a staging area, mock provider and eval fixtures keep tests deterministic. Depends on part_library_expansion_20260717.

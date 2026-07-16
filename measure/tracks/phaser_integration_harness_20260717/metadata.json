@@ -1,0 +1,10 @@
+{
+  "id": "phaser_integration_harness_20260717",
+  "title": "Phaser Integration Harness",
+  "type": "feature",
+  "status": "pending",
+  "created": "2026-07-17",
+  "priority": "high",
+  "estimated_tasks": 11,
+  "depends_on": ["per_game_asset_bundles_20260716"]
+}

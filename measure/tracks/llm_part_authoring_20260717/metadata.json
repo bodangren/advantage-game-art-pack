@@ -1,0 +1,10 @@
+{
+  "id": "llm_part_authoring_20260717",
+  "title": "LLM Part and Spec Authoring Loop",
+  "type": "feature",
+  "status": "pending",
+  "created": "2026-07-17",
+  "priority": "high",
+  "estimated_tasks": 11,
+  "depends_on": ["part_library_expansion_20260717"]
+}

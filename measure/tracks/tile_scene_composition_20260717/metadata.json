@@ -1,0 +1,10 @@
+{
+  "id": "tile_scene_composition_20260717",
+  "title": "Tile and Scene Composition Engine",
+  "type": "feature",
+  "status": "pending",
+  "created": "2026-07-17",
+  "priority": "high",
+  "estimated_tasks": 16,
+  "depends_on": ["part_library_expansion_20260717"]
+}
