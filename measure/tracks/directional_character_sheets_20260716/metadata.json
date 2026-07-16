@@ -2,10 +2,11 @@
   "id": "directional_character_sheets_20260716",
   "title": "Directional Character Sheets",
   "type": "feature",
-  "status": "pending",
+  "status": "completed",
   "created": "2026-07-16",
   "priority": "high",
   "estimated_tasks": 14,
-  "actual_tasks": null,
-  "depends_on": ["animation_timeline_atlas_packing_20260716"]
+  "actual_tasks": 14,
+  "depends_on": ["animation_timeline_atlas_packing_20260716"],
+  "deviation_notes": "Declared flips are implemented at the compiled-frame SVG level (mirror group wrapper + re-digest) rather than at the composition-spec level, so mirrored sheets reuse the full timeline/atlas pipeline unchanged and part art mirrors visually without needing left/right part variants. Mirrors expand in a second pass so mirror_of resolves independent of declaration order."
 }

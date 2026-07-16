@@ -206,6 +206,10 @@ vinext SVG desk.
   *Link: [./archive/animation_timeline_atlas_packing_20260716/](./archive/animation_timeline_atlas_packing_20260716/)*
   *Status: Complete — deterministic timeline specs with per-frame overrides and SHA-256 digests (`src/lib/timeline.ts`), row-major atlas packer with inlined palettes and sheet safety guard (`src/lib/atlas.ts`), checked-in walk-cycle example with frozen fixtures, desk animation dock, and post-Green sentinel. 48/48 tests, typecheck, and build green.*
 
+- [x] **Track: Directional Character Sheets**
+  *Link: [./archive/directional_character_sheets_20260716/](./archive/directional_character_sheets_20260716/)*
+  *Status: Complete — 4/8-way directional spec with declared flips (`src/lib/directional.ts`), per-direction timelines compiled and packed via the timeline/atlas pipeline, digest-pinned sheet manifest, checked-in knight walk+idle example with frozen manifest, and desk direction dock with selector + playback. 68/68 tests, typecheck, and build green.*
+
 ## Retired (never started — Python/raster era)
 
 - [-] **Track: Release Bundle PNG Export** *Link: [./measure/archive/release_bundle_png_export_20260508/](./measure/archive/release_bundle_png_export_20260508/)*
@@ -215,5 +219,4 @@ vinext SVG desk.
 
 ## Active Tracks (TypeScript SVG desk)
 
-- [~] **Track: Directional Character Sheets** *Link: [./measure/tracks/directional_character_sheets_20260716/](./measure/tracks/directional_character_sheets_20260716/)* — 4/8-direction walk/idle sheets from SVG parts via the timeline/atlas pipeline.
 - [ ] **Track: Per-Game Asset Bundles** *Link: [./measure/tracks/per_game_asset_bundles_20260716/](./measure/tracks/per_game_asset_bundles_20260716/)* — Bundle manifest, validation, and deterministic export for advantage-games asset packs.

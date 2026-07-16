@@ -69,6 +69,9 @@ preview, or a larger display size without changing the part files.
 - Machine-readable catalogs for LLM context and tooling.
 - Named anchors, transforms, layer priorities, and palette variables.
 - SVG + JSON export contracts for downstream integration.
+- Deterministic animation timelines and sprite-sheet atlas packing.
+- 4/8-way directional character sheets with declared flips and a digest-pinned
+  sheet manifest.
 - A fast browser desk for inspecting and changing a composition without a
   separate authoring tool.
 
@@ -78,4 +81,3 @@ preview, or a larger display size without changing the part files.
 - Raster PNG generation as the source-of-truth workflow.
 - Freeform text-to-image diffusion workflows.
 - Unrestricted SVG features such as scripts, external images, or remote URLs.
-- Animation timelines and sprite-sheet packing in the first SVG phase.

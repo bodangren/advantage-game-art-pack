@@ -31,5 +31,5 @@
 
 ## Phase 5: Verification
 
-- [~] Run `npm run typecheck`, `npm test`, and `npm run build`.
-- [ ] Update product docs to note directional sheet capability.
+- [x] Run `npm run typecheck`, `npm test`, and `npm run build`.
+- [x] Update product docs to note directional sheet capability.
