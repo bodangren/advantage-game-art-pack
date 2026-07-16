@@ -2,11 +2,11 @@
 
 ## Phase 1: Contract-First Tests
 
-- [ ] Add failing tests for timeline spec parsing and validation (frame list,
+- [~] Add failing tests for timeline spec parsing and validation (frame list,
   durations, part/anchor references, frame ids).
-- [ ] Add failing tests for atlas metadata schema (frame rects, durations,
+- [~] Add failing tests for atlas metadata schema (frame rects, durations,
   sheet digest).
-- [ ] Add failing determinism tests: identical timeline input yields identical
+- [~] Add failing determinism tests: identical timeline input yields identical
   frame SVGs and digests.
 
 ## Phase 2: Timeline Compiler
