@@ -56,6 +56,234 @@ referenced by the gate names above (`TYPECHECK_GATE`,
 `PRE_FLIGHT_FILTER`, `PRE_FLIGHT_MIN_EXECUTABLE_FAILURES`,
 `PRE_FLIGHT_SHA256_GREP`, `PRE_FLIGHT_RED_FILES_ALLOWED`).
 
+## 1.1 Phase 1 command overrides (intentional-Red aware)
+
+The mechanical jr-green gate (per
+`measure/automation-supervisor.py` `gate_jr`) reads
+`GREEN_TEST_COMMAND` from the orchestrator environment, and the
+adversarial-testing gate (`gate_adversarial`) reads `PROJECT_TESTS`;
+both default to `npm test`. Phase 1 **intentionally** keeps the new
+`timeline` and `atlas` contracts Red — the entire phase exists to
+encode the contract as failing tests before any production module
+ships. So the orchestrator MUST override the two globals for the
+Phase 1 role subprocesses only, and MUST restore the standard
+aggregates for Phase 2 onward and for the final `acceptance` /
+`closeout` gates. The override values are:
+
+```bash
+P1_GREEN_TEST_COMMAND='
+npm run typecheck \
+  && npm test -- src/lib/svg-assets.test.ts \
+  && grep -qE "sha256\(" src/lib/__tests__/atlas.test.ts src/lib/__tests__/phase1.test.ts src/lib/atlas.test.ts 2>/dev/null \
+  && ( node_modules/.bin/vitest run --reporter=json -t "timeline|atlas" 2>/dev/null || true ) \
+     | node -e "
+process.stdin.setEncoding(\"utf8\");
+let buf = \"\";
+process.stdin.on(\"data\", c => buf += c);
+process.stdin.on(\"end\", () => {
+  let data;
+  try {
+    const start = buf.indexOf(\"{\");
+    const end = buf.lastIndexOf(\"}\");
+    if (start < 0 || end < 0 || end < start) throw new Error(\"no JSON object\");
+    data = JSON.parse(buf.slice(start, end + 1));
+  } catch (e) {
+    console.error(\"P1_GREEN: vitest --reporter=json parse failed:\", e.message);
+    process.exit(1);
+  }
+  const moduleNotFound = (data.testResults || []).filter(f =>
+    f.status === \"failed\" &&
+    typeof f.message === \"string\" &&
+    f.message.includes(\"Cannot find module\")
+  );
+  if (moduleNotFound.length) {
+    console.error(\"P1_GREEN: module-not-found failure(s) leaked into Red set:\",
+      moduleNotFound.map(f => f.name));
+    process.exit(1);
+  }
+  const failedNames = [];
+  for (const f of data.testResults || []) {
+    for (const t of f.assertionResults || []) {
+      if (t.status === \"failed\") failedNames.push(t.fullName || t.title || t.name || \"\");
+    }
+  }
+  const execFails = failedNames.filter(n => /timeline|atlas/i.test(n));
+  if (execFails.length < 3) {
+    console.error(\"P1_GREEN: expected >=3 executable timeline/atlas failures, got \" +
+      execFails.length + \": \" + execFails.join(\", \"));
+    process.exit(1);
+  }
+  console.log(\"P1_GREEN: \" + execFails.length +
+    \" executable Red tests; typecheck clean; regression green\");
+});
+"'
+P1_PROJECT_TESTS="$P1_GREEN_TEST_COMMAND"
+```
+
+The orchestrator MUST extract the literal command VALUE (the
+multi-line bash pipeline between the `P1_GREEN_TEST_COMMAND='`
+opener and the closing `"'` line) and pass it to its Phase 1
+subprocesses via env vars `GREEN_TEST_COMMAND` and
+`PROJECT_TESTS`. Two forms are equivalent:
+
+- Bash form (above): assign the quoted string to
+  `P1_GREEN_TEST_COMMAND` / `P1_PROJECT_TESTS`. Bash
+  line-continuations (`\\\n`) are consumed when bash reads the
+  source; the stored value contains literal newlines.
+- Extracted-value form (below): the exact command string with no
+  assignment prefix; orchestrator passes this directly as
+  `GREEN_TEST_COMMAND` / `PROJECT_TESTS` env-var values.
+
+```bash
+# >>>>>> P1_GREEN_TEST_COMMAND_VALUE_BEGIN >>>>>>
+npm run typecheck && npm test -- src/lib/svg-assets.test.ts && grep -qE "sha256\(" src/lib/__tests__/atlas.test.ts src/lib/__tests__/phase1.test.ts src/lib/atlas.test.ts 2>/dev/null && ( node_modules/.bin/vitest run --reporter=json -t "timeline|atlas" 2>/dev/null || true ) | node -e "
+process.stdin.setEncoding('utf8');
+let buf = '';
+process.stdin.on('data', c => buf += c);
+process.stdin.on('end', () => {
+  let data;
+  try {
+    const start = buf.indexOf('{');
+    const end = buf.lastIndexOf('}');
+    if (start < 0 || end < 0 || end < start) throw new Error('no JSON object');
+    data = JSON.parse(buf.slice(start, end + 1));
+  } catch (e) {
+    console.error('P1_GREEN: vitest --reporter=json parse failed:', e.message);
+    process.exit(1);
+  }
+  const moduleNotFound = (data.testResults || []).filter(f =>
+    f.status === 'failed' &&
+    typeof f.message === 'string' &&
+    f.message.includes('Cannot find module')
+  );
+  if (moduleNotFound.length) {
+    console.error('P1_GREEN: module-not-found failure(s) leaked into Red set:',
+      moduleNotFound.map(f => f.name));
+    process.exit(1);
+  }
+  const failedNames = [];
+  for (const f of data.testResults || []) {
+    for (const t of f.assertionResults || []) {
+      if (t.status === 'failed') failedNames.push(t.fullName || t.title || t.name || '');
+    }
+  }
+  const execFails = failedNames.filter(n => /timeline|atlas/i.test(n));
+  if (execFails.length < 3) {
+    console.error('P1_GREEN: expected >=3 executable timeline/atlas failures, got ' +
+      execFails.length + ': ' + execFails.join(', '));
+    process.exit(1);
+  }
+  console.log('P1_GREEN: ' + execFails.length +
+    ' executable Red tests; typecheck clean; regression green');
+});
+"
+# <<<<<< P1_GREEN_TEST_COMMAND_VALUE_END <<<<<<
+# P1_PROJECT_TESTS uses the same VALUE as P1_GREEN_TEST_COMMAND.
+```
+
+The orchestrator extracts the value via this canonical awk
+pipeline (also documented for downstream operators):
+
+```bash
+awk '
+  />>>>>> P1_GREEN_TEST_COMMAND_VALUE_BEGIN >>>>>>/ { capture = 1; next }
+  /<<<<<< P1_GREEN_TEST_COMMAND_VALUE_END <<<<<</ { capture = 0 }
+  capture { print }
+' measure/tracks/animation_timeline_atlas_packing_20260716/test-strategy.md
+```
+
+**Pass criteria (the command exits 0 only when ALL hold):**
+
+1. `npm run typecheck` exits 0 — typecheck-clean (pre-flight #1,
+   `TYPECHECK_GATE`; no TS2307 / `Cannot find module` at the
+   typecheck layer).
+2. `npm test -- src/lib/svg-assets.test.ts` exits 0 — the 5
+   pre-existing `composable_svg_assets_20260716` regression tests
+   still pass; any drop is a regression, not a Phase 1 contract.
+3. `grep -qE "sha256\(" src/lib/__tests__/atlas.test.ts src/lib/__tests__/phase1.test.ts src/lib/atlas.test.ts`
+   finds at least one hit — pre-flight #5
+   (`PRE_FLIGHT_SHA256_GREP`). Rejects hand-rolled digests,
+   hardcoded hex literals, and direct `node:crypto.createHash`
+   bypass. This is what makes the command non-vacuous for the
+   atlas digest test specifically.
+4. `node_modules/.bin/vitest run --reporter=json -t "timeline|atlas"`
+   parses as JSON, has zero suite-level `Cannot find module`
+   failures (pre-flight #2 + A11 anti-pattern coverage — a
+   module-not-found failure inflates the failing count without
+   contributing any assertion and is rejected), and reports
+   `≥ PRE_FLIGHT_MIN_EXECUTABLE_FAILURES (= 3)` test-level
+   failures whose names match `/timeline|atlas/i` (pre-flight #4,
+   `PRE_FLIGHT_FILTER`).
+5. The vitest subshell is wrapped in `( ... || true )` so the
+   shell-level exit code is dominated by the inner `node -e`
+   script, not by vitest's expected non-zero exit on test
+   failures. This is what lets the command return 0 in Phase 1
+   Red state while still requiring the targeted run to actually
+   *produce* the EXECUTABLE failures enumerated in §4.3.
+
+**Fail criteria (the command exits non-zero on any of):**
+
+- Typecheck reports any TS error (vacuous typecheck claim → A5).
+- Existing regression tests regress (e.g., one of the 5
+  `svg-assets.test.ts` cases fails).
+- `sha256(` import is missing from the new test files
+  (pre-flight #5 violation).
+- The targeted run produces fewer than 3 EXECUTABLE timeline/atlas
+  failures — catches vacuous Red, deleted-contract Red, and
+  test-moved-out-of-`__tests__/` regressions.
+- A `Cannot find module` failure appears in the JSON output —
+  catches module-not-found masquerading as Red (A11).
+- The vitest `--reporter=json` output cannot be parsed (catches a
+  broken vitest invocation; the orchestrator cannot accidentally
+  short-circuit `node -e` into a vacuous "0 failures" reading).
+
+**Why this differs from §1's `GREEN_TEST_COMMAND="npm test"`.**
+
+§1 declares the default aggregate. Phase 1 is the only phase where
+the default aggregate is allowed to be Red, and the standard
+`GREEN_TEST_COMMAND="npm test"` would force a Phase 1 jr-green
+rollout to either (a) pretend the new contract isn't Red by
+deleting tests, or (b) fail the gate even though the contract is
+structurally intact. The P1 override is the falsifiable middle
+ground: it requires the *contract* to still be present and
+executable while accepting that the targeted tests fail.
+Phase 2 onward, the orchestrator restores `GREEN_TEST_COMMAND="npm
+test"` and `PROJECT_TESTS="npm test"` because by then the new
+tests are supposed to be Green — the aggregate command IS the
+gate.
+
+**Scope of the override (orchestrator responsibility).**
+
+| Subprocess invoking role gate                              | `GREEN_TEST_COMMAND`  | `PROJECT_TESTS`        |
+| ---------------------------------------------------------- | --------------------- | ---------------------- |
+| Phase 1 jr-green  (after Red validated)                    | `P1_GREEN_TEST_COMMAND` | `P1_PROJECT_TESTS`   |
+| Phase 1 adversarial-testing                                | `P1_GREEN_TEST_COMMAND` | `P1_PROJECT_TESTS`   |
+| Phase 2 / 3 / 4 / 5 jr-green and adversarial-testing       | `npm test`            | `npm test`             |
+| Track-level `acceptance` and `closeout`                    | `npm test`            | `npm test`             |
+
+The Phase 1 commands are NOT general-purpose. They MUST NOT be used
+to claim the aggregate suite is green — §4.8 closeout still
+records `aggregate_status: intentionally_red` (see §11). The
+Phase 1 commands only verify:
+
+- Typecheck-clean (Phase 1 invariant #1).
+- Existing regression tests pass (Phase 1 invariant #2).
+- The previously-validated executable-Red contract is still
+  present and structurally intact (Phase 1 invariant #3, the
+  primary reason these commands exist).
+- The `sha256` helper import is still wired through
+  `./svg-assets` / `../svg-assets` (pre-flight #5,
+  preventing contract-substitution regressions).
+
+The targeted expected-failure evidence is collected SEPARATELY
+in the Phase 1 mid-red log
+(`/home/daniel-bo/Desktop/pixel-art-generator/.measure-orchestrator/animation_timeline_atlas_packing_20260716/phase-1/mid-red.log`)
+and in the §4.4 non-vacuity sentinel's JSON output, NOT from
+`P1_GREEN_TEST_COMMAND` or `P1_PROJECT_TESTS`. The override
+exit codes and the enumerated failure names are independent
+records; the strategy deliberately does not let one substitute for
+the other.
+
 ## 2. Risk classification & test architecture
 
 | Risk                                              | Severity   | Phase(s) covered             |
@@ -452,13 +680,28 @@ pre-flight check #4 (≥3 EXECUTABLE failures) and pre-flight check #2
 ### 4.7 Green gate (P1 → P2)
 
 - All pre-flight checks (§4.1, #1–#5) pass.
-- `npm run typecheck` exits 0 (pre-flight #1).
-- `npm test` exits non-zero (Red is the point) with the targeted `-t`
-  filter surfacing exactly the failing tests in §4.3.
-- `npm test -- -t "non-vacuity sentinel"` exits non-zero (sentinel is
-  itself failing — that is the point).
+- `P1_GREEN_TEST_COMMAND` (§1.1) exits 0 — i.e., typecheck-clean,
+  regression green, `sha256` import wired, and the targeted run
+  parses to JSON with `≥ 3` EXECUTABLE timeline/atlas failures.
+- Targeted `node_modules/.bin/vitest run --reporter=json -t
+  "timeline|atlas"` exits non-zero with the EXACT failing test
+  names enumerated in §4.3 (the executable Red).
+- `node_modules/.bin/vitest run -t "non-vacuity sentinel"` exits
+  non-zero (the §4.7 tripwire makes the sentinel itself fail in
+  Red state — that is the point; the tripwire is removed when
+  Phase 2 turns the sentinel into a post-Green regression guard).
 - All non-targeted tests (existing `svg-assets.test.ts`) still pass
-  (regression sentinel).
+  (regression sentinel, asserted by step 2 of `P1_GREEN_TEST_COMMAND`).
+- The Phase 1 mid-red log retains the independently-collected
+  expected-failure evidence per §11; that evidence is NOT replaced
+  by `P1_GREEN_TEST_COMMAND`'s exit code.
+
+Note: Phase 1 does NOT use the §1 default `GREEN_TEST_COMMAND="npm
+test"` for jr-green. The orchestrator sets
+`GREEN_TEST_COMMAND="$P1_GREEN_TEST_COMMAND"` for Phase 1 role
+subprocesses only and restores the standard
+`GREEN_TEST_COMMAND="npm test"` from Phase 2 onward (see §1.1
+"Scope of the override" table).
 
 ### 4.8 Closeout gate (P1)
 
@@ -466,6 +709,15 @@ pre-flight check #4 (≥3 EXECUTABLE failures) and pre-flight check #2
   failing count. The aggregate is intentionally red; this is the only
   phase where the full suite is allowed to be red.
 - Pre-flight check #4 (≥3 EXECUTABLE failures) holds on the aggregate.
+- `P1_GREEN_TEST_COMMAND` (§1.1) STILL exits 0 in Phase 1 closeout
+  state — the override is not a green claim for the aggregate; it
+  is a structural check that the contract is intact. The strategy
+  explicitly does NOT claim the aggregate `npm test` is green
+  during Phase 1; the §11 `aggregate_status: intentionally_red`
+  invariant holds.
+- `P1_PROJECT_TESTS` (§1.1) is the value the orchestrator sets for
+  the Phase 1 adversarial-testing gate at closeout — same scope
+  and same non-green-claim posture as `P1_GREEN_TEST_COMMAND`.
 
 ### 4.9 Artifact vs live-behavior
 
@@ -759,18 +1011,40 @@ TDD). The orchestrator must:
    non-vacuity sentinel (§4.4) JSON output, not from string-grep on
    vitest's human-readable summary.
 2. Not declare P1 Green until pre-flight checks #1–#5 (§4.1) all pass
-   on the current Red commit AND `npm test -- -t "timeline|atlas"`
-   shows the expected Red failures AND `npm test` (untargeted) preserves
+   on the current Red commit AND `P1_GREEN_TEST_COMMAND` (§1.1) exits 0
+   (which itself re-runs typecheck + regression + sha256-grep + JSON
+   parse + targeted-EXECUTABLE-count) AND `P1_PROJECT_TESTS` (§1.1)
+   exits 0 (same composite) AND the targeted `npm test -t
+   "timeline|atlas"` substring of `npm test` (untargeted) preserves
    the pre-existing green tests in `svg-assets.test.ts`.
 3. Promote aggregate to `green_only_when_targeted` for P2, P3, P4: the
    targeted `-t` filter is Green, the aggregate still shows P3/P4 Red
-   tests until those phases complete.
-4. Reach `aggregate_green` only at the end of P5.
+   tests until those phases complete. From Phase 2 onward the
+   orchestrator sets `GREEN_TEST_COMMAND="npm test"` and
+   `PROJECT_TESTS="npm test"` — the §1.1 overrides are NOT used
+   past Phase 1.
+4. Reach `aggregate_green` only at the end of P5, where the standard
+   `GREEN_TEST_COMMAND="npm test"` / `PROJECT_TESTS="npm test"`
+   aggregates are the gate.
+
+The `P1_GREEN_TEST_COMMAND` and `P1_PROJECT_TESTS` overrides
+defined in §1.1 exist to reconcile the contradiction between the
+generic `gate_jr` (which demands `GREEN_TEST_COMMAND` exit 0) and
+`gate_adversarial` (which demands `PROJECT_TESTS` exit 0) versus
+the Phase 1 contract that the new timeline/atlas tests fail on
+purpose. The overrides accept the targeted Red as long as the
+structural pre-flight invariants still hold — they are explicitly
+NOT a green claim for the aggregate suite, which §4.8 closeout and
+this section both record as `intentionally_red`.
 
 A vacuous "everything green at P1" reading is rejected under A4. A
 "tests broken at import time" reading is rejected under pre-flight
-check #2. A "tests passing but no real assertions ran" reading is
-rejected by pre-flight check #4 (test-level failure count).
+check #2 AND by step 4 of `P1_GREEN_TEST_COMMAND` (A11). A "tests
+passing but no real assertions ran" reading is rejected by
+pre-flight check #4 AND by the `execFails.length < 3` guard in
+`P1_GREEN_TEST_COMMAND`. A "sha256 helper bypassed" reading is
+rejected by pre-flight check #5 AND by the `grep -qE "sha256\("`
+step in `P1_GREEN_TEST_COMMAND`.
 
 ## 12. Artifact vs live-behavior distinction
 
