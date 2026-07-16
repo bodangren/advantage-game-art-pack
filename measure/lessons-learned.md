@@ -15,6 +15,7 @@
 - (2026-07-16, animation_timeline_atlas_packing_20260716) validateSvgSource bans `<style>` and `data-*` attributes, so packed sheets cannot reuse it directly: the atlas inlines palette refs (no `<style>`/`var()` in the sheet) and validates against an engine-mirroring allowlist with a documented `data-part-id`/`data-slot` delta.
 - (2026-07-16, animation_timeline_atlas_packing_20260716) Frozen contract fixtures must carry every input the frozen output needs: the P1 atlas fixture froze Phaser key "walk-cycle" without a timeline id field and was unachievable until the schema gained `id`. Author fixture inputs from the outputs they must produce.
 - (2026-07-16, animation_timeline_atlas_packing_20260716) Tests that spawn a child `vitest run` need an explicit `testTimeout`; the child reloads every test file and outgrows the 5s default as the suite grows.
+- (2026-07-16, directional_character_sheets_20260716 + per_game_asset_bundles_20260716) Extend the pipeline at its boundaries, not its internals: declared flips wrap the compiled frame SVG (mirror group + re-digest) and bundle refs resolve through a code-side registry, so timeline/atlas/compiler modules shipped unchanged.
 
 ## Patterns That Worked Well
 
