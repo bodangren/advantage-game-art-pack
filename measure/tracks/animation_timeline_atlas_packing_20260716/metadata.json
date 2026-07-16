@@ -1,0 +1,11 @@
+{
+  "id": "animation_timeline_atlas_packing_20260716",
+  "title": "Animation Timelines and Atlas Packing",
+  "type": "feature",
+  "status": "pending",
+  "created": "2026-07-16",
+  "priority": "high",
+  "estimated_tasks": 14,
+  "actual_tasks": null,
+  "depends_on": ["composable_svg_assets_20260716"]
+}

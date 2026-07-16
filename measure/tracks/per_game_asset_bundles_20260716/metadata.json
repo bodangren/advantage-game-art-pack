@@ -1,0 +1,11 @@
+{
+  "id": "per_game_asset_bundles_20260716",
+  "title": "Per-Game Asset Bundles",
+  "type": "feature",
+  "status": "pending",
+  "created": "2026-07-16",
+  "priority": "high",
+  "estimated_tasks": 12,
+  "actual_tasks": null,
+  "depends_on": ["directional_character_sheets_20260716"]
+}

@@ -1,0 +1,11 @@
+{
+  "id": "directional_character_sheets_20260716",
+  "title": "Directional Character Sheets",
+  "type": "feature",
+  "status": "pending",
+  "created": "2026-07-16",
+  "priority": "high",
+  "estimated_tasks": 14,
+  "actual_tasks": null,
+  "depends_on": ["animation_timeline_atlas_packing_20260716"]
+}

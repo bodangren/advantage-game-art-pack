@@ -113,8 +113,6 @@ vinext SVG desk.
   *Link: [./archive/critic_reference_calibration_20260508/](./archive/critic_reference_calibration_20260508/)*
   *Replace mocked baselines with real reference PNGs for all 10 families and recalibrate auto-approval thresholds.*
   *Link: [./measure/archive/critic_reference_calibration_20260508/](./measure/archive/critic_reference_calibration_20260508/)*
-- [ ] **Track: Release Bundle PNG Export** *Link: [./tracks/release_bundle_png_export_20260508/](./tracks/release_bundle_png_export_20260508/)* — Wire bundle exporter to copy actual compiled PNGs from candidate loop output
-- [ ] **Track: Review App Batch Approve/Reject Workflow** *Link: [./tracks/review_app_batch_workflow_20260508/](./tracks/review_app_batch_workflow_20260508/)* — Bulk select and approve/reject candidates in the review queue
 - [x] **Track: CLI Resume Flag and LIVE_LLM Smoke Test** *Link: [./archive/cli_resume_smoke_test_20260509/](./archive/cli_resume_smoke_test_20260509/)* — Implement `--resume` for `asf generate` and add automated live LLM smoke test
   *Status: Complete — `--resume <job_id>` flag added to `asf generate`; orchestator.resume() wired to CLI; test_live_llm_smoke.py with 4 tests (skips gracefully without API key).*
 - [x] **Track: Critic Calibration CLI**
@@ -189,8 +187,6 @@ vinext SVG desk.
 
 ## Upcoming Tracks
 
-- [ ] **Track: Critic Metrics Performance Optimization** *Link: [./tracks/critic_metrics_performance_optimization_20260524/](./tracks/critic_metrics_performance_optimization_20260524/)* — Reduce `_candidate_metrics` time by 75% via single-pass pixel aggregation, downsampling, and caching to unblock reference calibration.
-- [ ] **Track: Interactable and Book Compiler Families** *Link: [./tracks/interactable_and_book_compiler_20260524/](./tracks/interactable_and_book_compiler_20260524/)* — Add compiler support for `interactable` and `book` asset families with dataclasses, loaders, renderers, example programs, and tests.
 
 - [x] **Track: Projectile, Pickup, and Interactable Compiler Family**
   *Link: [./archive/projectile_pickup_interactable_compiler_20260506/](./archive/projectile_pickup_interactable_compiler_20260506/)*
@@ -205,3 +201,16 @@ vinext SVG desk.
 - [x] **Track: Composable SVG Asset Factory Pivot**
   *Link: [./tracks/composable_svg_assets_20260716/](./tracks/composable_svg_assets_20260716/)*
   TypeScript 7/vinext SVG-first reusable parts, named-anchor composition, deterministic metadata, and Phaser load-time texture exports. The previous Python/raster project was retired; the browser desk and compiler contract are complete.
+
+## Retired (never started — Python/raster era)
+
+- [-] **Track: Release Bundle PNG Export** *Link: [./measure/archive/release_bundle_png_export_20260508/](./measure/archive/release_bundle_png_export_20260508/)*
+- [-] **Track: Review App Batch Approve/Reject Workflow** *Link: [./measure/archive/review_app_batch_workflow_20260508/](./measure/archive/review_app_batch_workflow_20260508/)*
+- [-] **Track: Critic Metrics Performance Optimization** *Link: [./measure/archive/critic_metrics_performance_optimization_20260524/](./measure/archive/critic_metrics_performance_optimization_20260524/)*
+- [-] **Track: Interactable and Book Compiler Families** *Link: [./measure/archive/interactable_and_book_compiler_20260524/](./measure/archive/interactable_and_book_compiler_20260524/)*
+
+## Active Tracks (TypeScript SVG desk)
+
+- [ ] **Track: Animation Timelines and Atlas Packing** *Link: [./measure/tracks/animation_timeline_atlas_packing_20260716/](./measure/tracks/animation_timeline_atlas_packing_20260716/)* — Deterministic animation timelines and SVG sprite-sheet atlas packing; clears deferred tech-debt item.
+- [ ] **Track: Directional Character Sheets** *Link: [./measure/tracks/directional_character_sheets_20260716/](./measure/tracks/directional_character_sheets_20260716/)* — 4/8-direction walk/idle sheets from SVG parts via the timeline/atlas pipeline.
+- [ ] **Track: Per-Game Asset Bundles** *Link: [./measure/tracks/per_game_asset_bundles_20260716/](./measure/tracks/per_game_asset_bundles_20260716/)* — Bundle manifest, validation, and deterministic export for advantage-games asset packs.

@@ -1,0 +1,35 @@
+# Plan: Directional Character Sheets
+
+## Phase 1: Contract-First Tests
+
+- [ ] Add failing tests for directional spec parsing and validation (direction
+  enum, frame-count consistency, declared flips).
+- [ ] Add failing tests for sheet manifest schema (directions, frames, rects,
+  digests).
+- [ ] Add failing determinism tests for expansion and sheet output.
+
+## Phase 2: Direction Expansion
+
+- [ ] Implement direction enum and per-direction anchor/flip override mapping.
+- [ ] Implement expansion of a directional spec into per-direction timeline
+  specs.
+- [ ] Implement validation that expanded timelines reference only known parts
+  and anchors.
+
+## Phase 3: Sheet Assembly and Manifest
+
+- [ ] Implement per-direction atlas generation via the atlas packer.
+- [ ] Implement sheet manifest emission (directions, frames, rects, digests).
+- [ ] Add fixture tests pinning the sheet manifest contract for downstream
+  Phaser loading.
+
+## Phase 4: Example and Desk Preview
+
+- [ ] Author the checked-in knight-style 4-direction walk+idle example.
+- [ ] Add desk preview with direction selector and frame playback.
+- [ ] Document the directional spec and sheet manifest contracts.
+
+## Phase 5: Verification
+
+- [ ] Run `npm run typecheck`, `npm test`, and `npm run build`.
+- [ ] Update product docs to note directional sheet capability.
