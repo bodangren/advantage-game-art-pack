@@ -2,34 +2,38 @@ import { describe, expect, it } from "vitest";
 
 import { SVG_PARTS, SVG_PARTS_BY_ID } from "./catalog";
 import { DEFAULT_SPEC } from "./default-spec";
+// Phase 1 Red imports resolve through the `__tests__/` stub. The
+// stub satisfies `tsc --noEmit` and throws a deterministic Error at
+// runtime, so each test below fails at the assertion level (not at
+// suite/import level). Phase 2 (Timeline Compiler) Green replaces
+// this import with `./timeline` once the production module lands
+// and the stub is deleted.
 import {
   TimelineValidationError,
   compileTimeline,
   validateTimelineSpec,
-} from "./timeline";
+} from "./__tests__/timeline";
 
 const BASE_COMPOSITION = {
   ...DEFAULT_SPEC,
   parts: DEFAULT_SPEC.parts.map((part) => ({ ...part })),
 };
 
-const VALID_FRAME = {
-  id: "walk-1",
-  duration_ms: 120,
-  composition: BASE_COMPOSITION,
-};
-
 const TWO_FRAME_SPEC = {
   version: 1 as const,
   frames: [
-    VALID_FRAME,
+    {
+      id: "walk-1",
+      duration_ms: 120,
+      composition: BASE_COMPOSITION,
+    },
     {
       id: "walk-2",
       duration_ms: 120,
       composition: BASE_COMPOSITION,
     },
   ],
-};
+} as const;
 
 describe("timeline: contract-first validation", () => {
   it("timeline: rejects empty frame list", () => {
@@ -123,12 +127,10 @@ describe("timeline: contract-first validation", () => {
   it("timeline: accepts valid two-frame spec", () => {
     const validated = validateTimelineSpec(TWO_FRAME_SPEC);
     expect(validated.frames).toHaveLength(2);
-    expect(validated.frames[0].id).toBe("walk-1");
-    expect(validated.frames[1].id).toBe("walk-2");
-    expect(validated.frames.map((f: { id: string }) => f.id)).toEqual([
-      "walk-1",
-      "walk-2",
-    ]);
+    const [first, second] = validated.frames;
+    expect(first?.id).toBe("walk-1");
+    expect(second?.id).toBe("walk-2");
+    expect(validated.frames.map((f) => f.id)).toEqual(["walk-1", "walk-2"]);
   });
 });
 
@@ -139,20 +141,24 @@ describe("timeline: determinism", () => {
 
     expect(first.frames).toHaveLength(2);
     expect(second.frames).toHaveLength(2);
-    expect(first.frames[0].svg).toBe(second.frames[0].svg);
-    expect(first.frames[1].svg).toBe(second.frames[1].svg);
-    expect(first.frames[0].svg).toContain('viewBox="0 0 64 64"');
-    expect(first.frames[0].svg).toContain("matrix(1 0 0 1");
-    expect(first.frames[0].svg).toContain("--hair: #6b3e26;");
+    const [firstFrame0, firstFrame1] = first.frames;
+    const [secondFrame0, secondFrame1] = second.frames;
+    expect(firstFrame0?.svg).toBe(secondFrame0?.svg);
+    expect(firstFrame1?.svg).toBe(secondFrame1?.svg);
+    expect(firstFrame0?.svg).toContain('viewBox="0 0 64 64"');
+    expect(firstFrame0?.svg).toContain("matrix(1 0 0 1");
+    expect(firstFrame0?.svg).toContain("--hair: #6b3e26;");
   });
 
   it("timeline: identical input yields identical per-frame digests", async () => {
     const first = await compileTimeline(TWO_FRAME_SPEC, SVG_PARTS);
     const second = await compileTimeline(TWO_FRAME_SPEC, SVG_PARTS);
 
-    expect(first.frames[0].digest).toMatch(/^[a-f0-9]{64}$/);
-    expect(first.frames[0].digest).toBe(second.frames[0].digest);
-    expect(first.frames[1].digest).toBe(second.frames[1].digest);
+    const [firstFrame0, firstFrame1] = first.frames;
+    const [secondFrame0, secondFrame1] = second.frames;
+    expect(firstFrame0?.digest).toMatch(/^[a-f0-9]{64}$/);
+    expect(firstFrame0?.digest).toBe(secondFrame0?.digest);
+    expect(firstFrame1?.digest).toBe(secondFrame1?.digest);
   });
 
   it("timeline: per-frame palette override changes the digest", async () => {
@@ -174,8 +180,10 @@ describe("timeline: determinism", () => {
       SVG_PARTS,
     );
 
-    expect(overridden.frames[0].digest).not.toBe(base.frames[0].digest);
-    expect(overridden.frames[0].svg).toContain("--hair: #abcdef;");
+    const [baseFrame0] = base.frames;
+    const [overriddenFrame0] = overridden.frames;
+    expect(overriddenFrame0?.digest).not.toBe(baseFrame0?.digest);
+    expect(overriddenFrame0?.svg).toContain("--hair: #abcdef;");
   });
 });
 

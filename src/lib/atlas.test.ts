@@ -1,13 +1,21 @@
 import { describe, expect, it } from "vitest";
 
+import { sha256 } from "./svg-assets";
 import { SVG_PARTS } from "./catalog";
 import { DEFAULT_SPEC } from "./default-spec";
+// Phase 1 Red imports resolve through the `__tests__/` stubs. The
+// stubs satisfy `tsc --noEmit` and throw a deterministic Error at
+// runtime, so each test below fails at the assertion level (not at
+// suite/import level). Phase 2 (Timeline Compiler) Green and Phase 3
+// (Atlas Packer) Green replace these imports with `./timeline` and
+// `./atlas` once the production modules land and the stubs are
+// deleted.
 import {
   AtlasValidationError,
   packAtlas,
   validateAtlasMetadata,
-} from "./atlas";
-import { compileTimeline } from "./timeline";
+} from "./__tests__/atlas";
+import { compileTimeline } from "./__tests__/timeline";
 
 const BASE_COMPOSITION = {
   ...DEFAULT_SPEC,
@@ -143,7 +151,14 @@ describe("atlas: packer contract", () => {
     const first = await packAtlas(timeline, { cols: 2, frame_w: 32, frame_h: 32 });
     const second = await packAtlas(timeline, { cols: 2, frame_w: 32, frame_h: 32 });
 
+    // Use the real sha256 helper from src/lib/svg-assets (per §4.5
+    // of the Phase 1 test strategy). The helper is the canonical
+    // digest algorithm; no hand-rolled hex literals or third-party
+    // crypto.
+    const expectedDigest = await sha256(first.sheet_svg);
+
     expect(first.atlas_json.sheet_digest).toMatch(/^[a-f0-9]{64}$/);
+    expect(first.atlas_json.sheet_digest).toBe(expectedDigest);
     expect(first.atlas_json.sheet_digest).toBe(second.atlas_json.sheet_digest);
   });
 
