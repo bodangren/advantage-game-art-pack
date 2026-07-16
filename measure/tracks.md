@@ -211,6 +211,6 @@ vinext SVG desk.
 
 ## Active Tracks (TypeScript SVG desk)
 
-- [ ] **Track: Animation Timelines and Atlas Packing** *Link: [./measure/tracks/animation_timeline_atlas_packing_20260716/](./measure/tracks/animation_timeline_atlas_packing_20260716/)* — Deterministic animation timelines and SVG sprite-sheet atlas packing; clears deferred tech-debt item.
+- [~] **Track: Animation Timelines and Atlas Packing** *Link: [./measure/tracks/animation_timeline_atlas_packing_20260716/](./measure/tracks/animation_timeline_atlas_packing_20260716/)* — Deterministic animation timelines and SVG sprite-sheet atlas packing; clears deferred tech-debt item.
 - [ ] **Track: Directional Character Sheets** *Link: [./measure/tracks/directional_character_sheets_20260716/](./measure/tracks/directional_character_sheets_20260716/)* — 4/8-direction walk/idle sheets from SVG parts via the timeline/atlas pipeline.
 - [ ] **Track: Per-Game Asset Bundles** *Link: [./measure/tracks/per_game_asset_bundles_20260716/](./measure/tracks/per_game_asset_bundles_20260716/)* — Bundle manifest, validation, and deterministic export for advantage-games asset packs.

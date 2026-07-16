@@ -11,10 +11,10 @@
 
 ## Phase 2: Timeline Compiler
 
-- [ ] Implement timeline spec types and strict validation under `src/lib/`.
-- [ ] Implement frame expansion with per-frame overrides (part swaps, placement
+- [x] Implement timeline spec types and strict validation under `src/lib/`.
+- [x] Implement frame expansion with per-frame overrides (part swaps, placement
   offsets, palette values) reusing the composition engine.
-- [ ] Implement per-frame deterministic serialization and SHA-256 digest
+- [x] Implement per-frame deterministic serialization and SHA-256 digest
   recording.
 
 ## Phase 3: Atlas Packer

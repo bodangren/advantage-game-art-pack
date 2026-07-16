@@ -3,19 +3,18 @@ import { describe, expect, it } from "vitest";
 import { sha256 } from "./svg-assets";
 import { SVG_PARTS } from "./catalog";
 import { DEFAULT_SPEC } from "./default-spec";
-// Phase 1 Red imports resolve through the `__tests__/` stubs. The
-// stubs satisfy `tsc --noEmit` and throw a deterministic Error at
-// runtime, so each test below fails at the assertion level (not at
-// suite/import level). Phase 2 (Timeline Compiler) Green and Phase 3
-// (Atlas Packer) Green replace these imports with `./timeline` and
-// `./atlas` once the production modules land and the stubs are
-// deleted.
+// Phase 2 Green moved the timeline import to the production module
+// and deleted its stub. The atlas import still resolves through the
+// `__tests__/atlas` stub, which throws a deterministic Error at
+// runtime so each atlas test below fails at the assertion level.
+// Phase 3 (Atlas Packer) Green replaces it with `./atlas` once the
+// production module lands and the stub is deleted.
 import {
   AtlasValidationError,
   packAtlas,
   validateAtlasMetadata,
 } from "./__tests__/atlas";
-import { compileTimeline } from "./__tests__/timeline";
+import { compileTimeline } from "./timeline";
 
 const BASE_COMPOSITION = {
   ...DEFAULT_SPEC,

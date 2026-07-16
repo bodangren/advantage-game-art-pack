@@ -1,4 +1,5 @@
-// Phase 1 non-vacuity sentinel (§4.4 of the test strategy).
+// Phase 1 non-vacuity sentinel (§4.4 of the test strategy), now a
+// post-Green regression guard.
 //
 // This sentinel guards against three vacuity patterns that would
 // otherwise let a "Red" commit pass without exercising the new
@@ -18,6 +19,12 @@
 // new modules. The sentinel itself is excluded by that filter
 // (its name is `phase1: non-vacuity sentinel`), so the inner
 // vitest does not recurse into the sentinel.
+//
+// Phase 2 removed the §4.7 `expect.fail` tripwire: while the atlas
+// packer remains Red (Phase 3 stub), the invariants above still
+// hold and the sentinel now passes as a regression guard over the
+// remaining Red surface. Phase 3 flips the invariants to assert a
+// fully Green targeted run once `packAtlas` ships.
 
 import { execFileSync } from "node:child_process";
 import { existsSync } from "node:fs";
@@ -146,15 +153,5 @@ describe("phase1: non-vacuity sentinel", () => {
         `failing test "${name}" must match /${TARGETED_FILTER}/ (Phase 1 Red scope)`,
       ).toMatch(/timeline|atlas/i);
     }
-
-    // Tripwire (§4.7): the sentinel itself must fail in Red state so
-    // `npm test -- -t "non-vacuity sentinel"` exits non-zero. The
-    // §4.4 invariants above verify non-vacuity on the targeted run;
-    // this tripwire marks the sentinel as a Red phase test (it is
-    // removed in Phase 2 once the sentinel's purpose shifts from
-    // "Red marker" to "post-Green regression guard").
-    expect.fail(
-      "phase1 non-vacuity sentinel is a deliberate Red marker (§4.7)",
-    );
   });
 });
