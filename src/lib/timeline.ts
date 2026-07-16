@@ -48,16 +48,19 @@ export interface TimelineFrame {
 
 export interface TimelineSpec {
   readonly version: typeof TIMELINE_VERSION;
+  readonly id: string | null;
   readonly frames: readonly TimelineFrame[];
 }
 
 export interface TimelineCompiledFrame {
   readonly id: string;
+  readonly duration_ms: number;
   readonly svg: string;
   readonly digest: string;
 }
 
 export interface TimelineCompilation {
+  readonly id: string | null;
   readonly frames: ReadonlyArray<TimelineCompiledFrame>;
 }
 
@@ -224,9 +227,18 @@ export function validateTimelineSpec(spec: unknown): TimelineSpec {
   if (!isRecord(spec)) {
     throw new TimelineValidationError("timeline must be an object");
   }
-  assertKeys(spec, ["version", "frames"], ["version", "frames"], "timeline");
+  assertKeys(spec, ["version", "frames"], ["version", "id", "frames"], "timeline");
   if (spec.version !== TIMELINE_VERSION) {
     throw new TimelineValidationError("timeline.version must be 1");
+  }
+  // The timeline id is optional at validation time; the atlas packer
+  // requires it (it becomes the Phaser load key).
+  let id: string | null = null;
+  if (spec.id !== undefined && spec.id !== null) {
+    if (typeof spec.id !== "string" || !FRAME_ID_RE.test(spec.id)) {
+      throw new TimelineValidationError("timeline.id must be a lowercase slug");
+    }
+    id = spec.id;
   }
   if (!Array.isArray(spec.frames) || spec.frames.length === 0) {
     throw new TimelineValidationError("timeline.frames must be a non-empty array");
@@ -277,7 +289,7 @@ export function validateTimelineSpec(spec: unknown): TimelineSpec {
     }
     return { id: raw.id, duration_ms: raw.duration_ms, composition, overrides };
   });
-  return { version: TIMELINE_VERSION, frames };
+  return { version: TIMELINE_VERSION, id, frames };
 }
 
 export async function compileTimeline(
@@ -296,7 +308,12 @@ export async function compileTimeline(
       }
       throw err;
     }
-    frames.push({ id: frame.id, svg, digest: await sha256(svg) });
+    frames.push({
+      id: frame.id,
+      duration_ms: frame.duration_ms,
+      svg,
+      digest: await sha256(svg),
+    });
   }
-  return { frames };
+  return { id: timeline.id, frames };
 }

@@ -19,9 +19,9 @@
 
 ## Phase 3: Atlas Packer
 
-- [ ] Implement stable row-major grid layout math ordered by frame id.
-- [ ] Implement deterministic SVG sprite-sheet serialization.
-- [ ] Implement atlas JSON metadata emission and a Phaser load-time contract
+- [x] Implement stable row-major grid layout math ordered by frame id.
+- [x] Implement deterministic SVG sprite-sheet serialization.
+- [x] Implement atlas JSON metadata emission and a Phaser load-time contract
   fixture test.
 
 ## Phase 4: Desk Preview and Example

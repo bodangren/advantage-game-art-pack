@@ -1,30 +1,26 @@
 // Phase 1 non-vacuity sentinel (§4.4 of the test strategy), now a
-// post-Green regression guard.
+// post-Green regression guard (final form, Phase 3).
 //
-// This sentinel guards against three vacuity patterns that would
-// otherwise let a "Red" commit pass without exercising the new
-// timeline/atlas contract:
+// Phase history: in Phase 1 the sentinel asserted the targeted
+// `-t "timeline|atlas"` run was non-vacuously Red (≥3 failing tests,
+// every failure named timeline|atlas, no module-not-found) and ended
+// in an §4.7 `expect.fail` tripwire. Phase 2 removed the tripwire
+// once the timeline compiler shipped (the atlas stub kept the run
+// Red). Phase 3 shipped the atlas packer, so the targeted run is now
+// fully Green and the invariants flipped:
 //
-//   1. Aggregate "all green at P1" reading — rejected by
-//      asserting `exitCode !== 0`.
-//   2. Module-not-found masquerading as Red (A11) — rejected by
-//      asserting no suite-level "Cannot find module" failures.
-//   3. Vacuous "≥3 failures" claim that comes from unrelated
-//      breakage — rejected by asserting every failing test name
-//      matches /timeline|atlas/ AND the count is at least
-//      PRE_FLIGHT_MIN_EXECUTABLE_FAILURES (= 3).
+//   1. The targeted run exits 0 — both production modules satisfy
+//      their contracts.
+//   2. No suite-level "Cannot find module" failures (A11).
+//   3. Non-vacuity: a meaningful number of timeline|atlas tests
+//      actually executed and passed — a "green because the filter
+//      matched nothing" reading is rejected.
 //
 // The sentinel spawns a child `vitest run` process with
-// `-t "timeline|atlas"` so it only inspects failures from the
-// new modules. The sentinel itself is excluded by that filter
-// (its name is `phase1: non-vacuity sentinel`), so the inner
-// vitest does not recurse into the sentinel.
-//
-// Phase 2 removed the §4.7 `expect.fail` tripwire: while the atlas
-// packer remains Red (Phase 3 stub), the invariants above still
-// hold and the sentinel now passes as a regression guard over the
-// remaining Red surface. Phase 3 flips the invariants to assert a
-// fully Green targeted run once `packAtlas` ships.
+// `-t "timeline|atlas"` so it only inspects the timeline/atlas
+// modules. The sentinel itself is excluded by that filter (its name
+// is `phase1: non-vacuity sentinel`), so the inner vitest does not
+// recurse into the sentinel.
 
 import { execFileSync } from "node:child_process";
 import { existsSync } from "node:fs";
@@ -33,10 +29,11 @@ import { fileURLToPath } from "node:url";
 
 import { describe, expect, it } from "vitest";
 
-// PRE_FLIGHT_MIN_EXECUTABLE_FAILURES — mirrors §4.1 #4 of the
-// test strategy. Must stay >= 3 to keep the A4 (vacuous pass)
-// and A11 (module-not-found masquerading as Red) defenses live.
-const PRE_FLIGHT_MIN_EXECUTABLE_FAILURES = 3;
+// MIN_TARGETED_PASSING_TESTS — post-Green non-vacuity floor. The
+// targeted timeline|atlas run must execute and pass at least this
+// many tests, so a "green because nothing ran" reading is rejected
+// (A4). The current suite has 20 timeline + 14 atlas tests.
+const MIN_TARGETED_PASSING_TESTS = 20;
 const TARGETED_FILTER = "timeline|atlas";
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -102,17 +99,17 @@ describe("phase1: non-vacuity sentinel", () => {
     const { stdout, exitCode } = runTargetedVitest();
     const report = parseVitestJson(stdout);
 
-    // Invariant 1: vitest exits non-zero when targeted tests fail.
-    // A vacuous green-on-P1 commit would exit 0; reject that here.
+    // Invariant 1 (post-Green): the targeted timeline|atlas run is
+    // fully green now that both production modules have shipped.
     expect(
       exitCode,
-      `expected vitest to exit non-zero when timeline/atlas tests fail (got exit=${exitCode}). ` +
-        "An exit-0 means the Phase 1 Red is vacuous and must be revised.",
-    ).not.toBe(0);
+      `expected vitest to exit 0 for the targeted timeline|atlas run (got exit=${exitCode}). ` +
+        "A non-zero exit means the timeline or atlas contract regressed.",
+    ).toBe(0);
 
     // Invariant 2: no suite-level "Cannot find module" failures
-    // (pre-flight check #2 / A11). Suite-level failures inflate
-    // the failing-count without contributing real assertions.
+    // (A11). Suite-level failures mean tests fail at import time,
+    // not at the assertion level.
     const moduleNotFoundSuites = (report.testResults ?? []).filter(
       (file) =>
         file.status === "failed" &&
@@ -121,37 +118,33 @@ describe("phase1: non-vacuity sentinel", () => {
     );
     expect(
       moduleNotFoundSuites.length,
-      `expected 0 suite-level "Cannot find module" failures. Got ${moduleNotFoundSuites.length}. ` +
-        "This means tests are failing at import time, not at the assertion level. " +
-        "Remediate by resolving imports through the __tests__/ stubs.",
+      `expected 0 suite-level "Cannot find module" failures. Got ${moduleNotFoundSuites.length}.`,
     ).toBe(0);
 
-    // Invariant 3: collect every test-level failure.
+    // Invariant 3: collect every passing timeline|atlas test — the
+    // non-vacuity floor proves the targeted run actually exercised
+    // the contracts instead of matching nothing.
+    const passingTargetedNames: string[] = [];
     const failedTestNames: string[] = [];
     for (const file of report.testResults ?? []) {
       for (const test of file.assertionResults ?? []) {
+        const name = test.fullName ?? test.title ?? test.name ?? "<unnamed>";
+        if (test.status === "passed" && /timeline|atlas/i.test(name)) {
+          passingTargetedNames.push(name);
+        }
         if (test.status === "failed") {
-          failedTestNames.push(
-            test.fullName ?? test.title ?? test.name ?? "<unnamed>",
-          );
+          failedTestNames.push(name);
         }
       }
     }
-
-    // Invariant 4: ≥ PRE_FLIGHT_MIN_EXECUTABLE_FAILURES failures.
     expect(
-      failedTestNames.length,
-      `expected ≥${PRE_FLIGHT_MIN_EXECUTABLE_FAILURES} failing timeline/atlas tests. ` +
-        `Got ${failedTestNames.length}: ${failedTestNames.join(", ")}`,
-    ).toBeGreaterThanOrEqual(PRE_FLIGHT_MIN_EXECUTABLE_FAILURES);
-
-    // Invariant 5: every failing name is from the new modules, not
-    // unrelated breakage (e.g. svg-assets.test.ts).
-    for (const name of failedTestNames) {
-      expect(
-        name,
-        `failing test "${name}" must match /${TARGETED_FILTER}/ (Phase 1 Red scope)`,
-      ).toMatch(/timeline|atlas/i);
-    }
+      failedTestNames,
+      `expected 0 failing targeted tests. Got: ${failedTestNames.join(", ")}`,
+    ).toEqual([]);
+    expect(
+      passingTargetedNames.length,
+      `expected ≥${MIN_TARGETED_PASSING_TESTS} passing timeline|atlas tests (non-vacuity). ` +
+        `Got ${passingTargetedNames.length}: ${passingTargetedNames.join(", ")}`,
+    ).toBeGreaterThanOrEqual(MIN_TARGETED_PASSING_TESTS);
   });
 });

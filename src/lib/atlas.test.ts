@@ -3,17 +3,15 @@ import { describe, expect, it } from "vitest";
 import { sha256 } from "./svg-assets";
 import { SVG_PARTS } from "./catalog";
 import { DEFAULT_SPEC } from "./default-spec";
-// Phase 2 Green moved the timeline import to the production module
-// and deleted its stub. The atlas import still resolves through the
-// `__tests__/atlas` stub, which throws a deterministic Error at
-// runtime so each atlas test below fails at the assertion level.
-// Phase 3 (Atlas Packer) Green replaces it with `./atlas` once the
-// production module lands and the stub is deleted.
+// Phase 3 Green: both contracts now resolve against production
+// modules; the Phase 1 `__tests__/` stubs were deleted when
+// `src/lib/timeline.ts` (Phase 2) and `src/lib/atlas.ts` (Phase 3)
+// landed.
 import {
   AtlasValidationError,
   packAtlas,
   validateAtlasMetadata,
-} from "./__tests__/atlas";
+} from "./atlas";
 import { compileTimeline } from "./timeline";
 
 const BASE_COMPOSITION = {
@@ -23,6 +21,11 @@ const BASE_COMPOSITION = {
 
 const TWO_FRAME_TIMELINE = {
   version: 1 as const,
+  // Named timeline: packAtlas uses `id` as the Phaser load key (this is
+  // what makes the frozen `key: "walk-cycle"` contract below achievable;
+  // Phase 1 authored the fixture without the field — see the Phase 3
+  // deviation note in the track metadata).
+  id: "walk-cycle",
   frames: [
     {
       id: "walk-1",
@@ -183,5 +186,136 @@ describe("atlas: phase-1 vacuity sentinel", () => {
   it("atlas: fixture has non-zero frame dimensions so vacuous passes are detectable", () => {
     expect(FROZEN_PHASER_LOAD.svgConfig.width).toBeGreaterThan(0);
     expect(FROZEN_PHASER_LOAD.svgConfig.height).toBeGreaterThan(0);
+  });
+});
+
+describe("atlas: json round-trip", () => {
+  it("atlas: atlas_json survives a JSON round-trip deep-equal", async () => {
+    const timeline = await compileTimeline(TWO_FRAME_TIMELINE, SVG_PARTS);
+    const packed = await packAtlas(timeline, {
+      cols: 2,
+      frame_w: 32,
+      frame_h: 32,
+    });
+    expect(JSON.parse(JSON.stringify(packed.atlas_json))).toEqual(
+      packed.atlas_json,
+    );
+  });
+});
+
+describe("atlas: sheet safety", () => {
+  it("atlas: sheet svg contains no script, style, event, or external references", async () => {
+    const timeline = await compileTimeline(TWO_FRAME_TIMELINE, SVG_PARTS);
+    const packed = await packAtlas(timeline, {
+      cols: 2,
+      frame_w: 32,
+      frame_h: 32,
+    });
+    expect(packed.sheet_svg).not.toMatch(/<\s*script/i);
+    expect(packed.sheet_svg).not.toMatch(/<\s*style/i);
+    expect(packed.sheet_svg).not.toMatch(/\son[a-z-]+\s*=/i);
+    expect(packed.sheet_svg).not.toMatch(/javascript:/i);
+    expect(packed.sheet_svg).not.toMatch(/url\(/i);
+  });
+
+  it("atlas: malicious frame content is rejected by the packer", async () => {
+    const timeline = await compileTimeline(TWO_FRAME_TIMELINE, SVG_PARTS);
+    const [frame0, frame1] = timeline.frames;
+    if (!frame0 || !frame1) throw new Error("missing frames");
+    const evil = {
+      id: timeline.id,
+      frames: [
+        {
+          ...frame0,
+          svg: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><script>alert(1)</script></svg>',
+        },
+        frame1,
+      ],
+    };
+    await expect(
+      packAtlas(evil, { cols: 2, frame_w: 32, frame_h: 32 }),
+    ).rejects.toThrow(AtlasValidationError);
+  });
+});
+
+describe("atlas: palette resolution", () => {
+  it("atlas: sheet inlines every palette reference with no orphan vars", async () => {
+    const timeline = await compileTimeline(
+      {
+        version: 1 as const,
+        id: "walk-cycle",
+        frames: [
+          {
+            id: "walk-1",
+            duration_ms: 120,
+            composition: BASE_COMPOSITION,
+            overrides: { palette: { skin: "#abcdef" } },
+          },
+          { id: "walk-2", duration_ms: 120, composition: BASE_COMPOSITION },
+        ],
+      },
+      SVG_PARTS,
+    );
+    const packed = await packAtlas(timeline, {
+      cols: 2,
+      frame_w: 32,
+      frame_h: 32,
+    });
+    // No unresolved var() refs survive into the sheet.
+    expect(packed.sheet_svg).not.toMatch(/var\(--/);
+    // The overridden frame value and the base frame value both land inline.
+    expect(packed.sheet_svg).toContain("#abcdef");
+    expect(packed.sheet_svg).toContain("#f2c18d");
+  });
+});
+
+describe("atlas: layout ordering", () => {
+  it("atlas: frame rects sort by id before layout, shuffled input yields equal rects", async () => {
+    const shuffled = {
+      version: 1 as const,
+      id: "walk-cycle",
+      frames: [TWO_FRAME_TIMELINE.frames[1]!, TWO_FRAME_TIMELINE.frames[0]!],
+    };
+    const options = { cols: 2, frame_w: 32, frame_h: 32 };
+    const base = await packAtlas(
+      await compileTimeline(TWO_FRAME_TIMELINE, SVG_PARTS),
+      options,
+    );
+    const mixed = await packAtlas(
+      await compileTimeline(shuffled, SVG_PARTS),
+      options,
+    );
+    expect(mixed.atlas_json.frame_rects).toEqual(base.atlas_json.frame_rects);
+    expect(mixed.atlas_json.durations_ms).toEqual(base.atlas_json.durations_ms);
+  });
+});
+
+describe("atlas: negative paths", () => {
+  it("atlas: packer throws on a timeline with zero frames", async () => {
+    await expect(
+      packAtlas({ id: "empty", frames: [] }, { cols: 2, frame_w: 32, frame_h: 32 }),
+    ).rejects.toThrow(AtlasValidationError);
+  });
+
+  it("atlas: packer throws on an unnamed timeline", async () => {
+    const timeline = await compileTimeline(
+      { version: 1 as const, frames: [TWO_FRAME_TIMELINE.frames[0]!] },
+      SVG_PARTS,
+    );
+    await expect(
+      packAtlas(timeline, { cols: 1, frame_w: 32, frame_h: 32 }),
+    ).rejects.toThrow(/timeline\.id/);
+  });
+
+  it("atlas: rejects metadata with a non-hex digest", () => {
+    expect(() =>
+      validateAtlasMetadata({
+        version: 1,
+        frames: [
+          { id: "f", x: 0, y: 0, width: 32, height: 32, duration_ms: 100 },
+        ],
+        digest: "not-hex",
+      }),
+    ).toThrow(/sheet_digest/);
   });
 });
