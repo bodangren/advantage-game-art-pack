@@ -1,18 +1,26 @@
 # Product Definition
 
-## Initial Concept
+## Product Direction
 
-Autonomous Sprite Factory is a procedural asset compiler for grid-aligned,
-production-ready 2D sprite sheets. The system uses structured specifications as
-the primary creative artifact and renders deterministic sprite output from those
-specifications without human cleanup.
+Sprite Foundry is an LLM-friendly factory for composable SVG assets.
+The primary creative artifacts are small, human-readable SVG parts and strict
+JSON composition specs. The system validates both, assembles parts in a stable
+layer order, and emits deterministic SVG plus machine-readable metadata.
+
+SVG is intentionally the source format: an LLM can author a new part as text,
+parts can be reused across many assets, and the same composition can be
+displayed at different sizes without producing a second source asset.
 
 ## Objectives
 
-- Generate aligned 64x64 multi-frame sprite sheets from strict JSON specs.
-- Reuse style packs across multiple games while preserving visual consistency.
-- Support players, NPCs, enemies, and effects in the same rendering pipeline.
-- Scale batch generation with deterministic outputs and automatic validation.
+- Let an LLM author or select reusable SVG parts through a constrained contract.
+- Compose parts with named anchors, stable layer ordering, and palette slots.
+- Preserve a stable viewBox while supporting variable output dimensions.
+- Keep every generated asset deterministic, inspectable, and easy to review.
+
+The first product surface is a vinext assembly desk rather than a Python CLI.
+The compiler remains a typed TypeScript module so the same contract powers the
+editor preview, exports, tests, and later game integrations.
 
 ## Core User Segments
 
@@ -39,34 +47,35 @@ individual sprite outputs.
 
 ## Core Workflows
 
-### Batch enemy generation
+### Part authoring
 
-Given a prompt like "generate 50 swamp enemies in chibi style", the product
-must translate that request into schema-compliant specifications and export
-ready-to-use sprite sheets plus metadata.
+An author or LLM writes a small SVG part, declares its anchors and palette
+variables, and validates it before it enters the reusable library.
 
-### NPC variation generation
+### Character composition
 
-Given a thematic request like "village NPCs: poor, ragged, fearful", the
-product must generate varied but style-consistent sprite sets through reusable
-parts and palette changes.
+A strict JSON spec selects a body, clothing, hair, and equipment parts, then
+attaches them to named anchors and exports one deterministic SVG composition.
 
-### Effect overlay generation
+### Size variants
 
-Given requests like "poison aura" or "ice pulse", the product must generate
-effects that can be exported as standalone sheets or layered onto entities.
+The same source composition can be emitted with its original viewBox, a 64px
+preview, or a larger display size without changing the part files.
 
 ## Functional Pillars
 
-- Strict spec generation and validation.
-- Deterministic procedural rendering.
-- Style packs with palette, animation, and part constraints.
-- Automated quality checks and regeneration hooks.
-- PNG + JSON export contracts for engine integration.
+- Strict SVG-part and composition-spec validation.
+- Deterministic XML composition and stable serialization.
+- Machine-readable catalogs for LLM context and tooling.
+- Named anchors, transforms, layer priorities, and palette variables.
+- SVG + JSON export contracts for downstream integration.
+- A fast browser desk for inspecting and changing a composition without a
+  separate authoring tool.
 
 ## Non-Goals
 
-- Photorealistic rendering.
+- Python runtime code or Python-based asset tooling.
+- Raster PNG generation as the source-of-truth workflow.
 - Freeform text-to-image diffusion workflows.
-- Manual art cleanup pipelines.
-- Illustration-level uniqueness over consistency and scale.
+- Unrestricted SVG features such as scripts, external images, or remote URLs.
+- Animation timelines and sprite-sheet packing in the first SVG phase.

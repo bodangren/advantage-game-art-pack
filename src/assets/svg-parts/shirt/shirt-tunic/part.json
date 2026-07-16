@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "part_id": "shirt-tunic",
+  "slot": "shirt",
+  "source_file": "part.svg",
+  "view_box": [0, 0, 24, 32],
+  "anchors": {
+    "root": [12, 0],
+    "waist": [12, 30]
+  },
+  "z_index": 20,
+  "palette_slots": ["cloth"],
+  "tags": ["clothing", "shirt", "tunic"],
+  "description": "Short tunic that attaches at a character torso anchor."
+}

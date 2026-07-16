@@ -2,9 +2,9 @@
 
 ## Product Positioning
 
-Autonomous Sprite Factory should be described as a deterministic content
-compiler, not an image generator. Project messaging must emphasize reproducible
-specs, aligned outputs, and engine-friendly exports.
+Sprite Foundry should be described as a deterministic SVG asset desk, not an
+image generator. Project messaging must emphasize reproducible specs, named
+anchors, and engine-friendly exports.
 
 ## Voice
 
@@ -16,11 +16,11 @@ specs, aligned outputs, and engine-friendly exports.
 
 - Prefer explicit schemas over prose-heavy configuration.
 - Show dimensions, pivots, palette rules, and frame mappings prominently.
-- Keep examples auditable: input spec, style pack, output sheet, metadata.
+- Keep examples auditable: input spec, SVG parts, output SVG, metadata.
 - Distinguish "implemented now" from "planned later" in docs and CLI output.
 
 ## Visual Direction
 
-- Favor readable pixel-art previews with visible grid/pivot concepts.
+- Favor readable SVG previews with visible viewBox, anchor, and layer concepts.
 - Keep artifact names and folders predictable for automation.
 - Use sample assets as style references, not hidden runtime dependencies.

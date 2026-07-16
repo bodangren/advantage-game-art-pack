@@ -1,6 +1,9 @@
 # Project Tracks
 
 This file tracks all major tracks for the project.
+Tracks dated before 2026-07-16 describe the retired Python/raster factory and
+remain only as historical records. The active product is the TypeScript 7
+vinext SVG desk.
 
 - [x] **Track: Style canon and annotation system**
   *Link: [./measure/archive/style_canon_annotation_system_20260405/](./measure/archive/style_canon_annotation_system_20260405/)*
@@ -197,4 +200,8 @@ This file tracks all major tracks for the project.
 - [x] **Track: Presentation Surface-to-Scene Assembler Integration**
   *Link: [./archive/presentation_surface_scene_integration_20260506/](./archive/presentation_surface_scene_integration_20260506/)*
   Align cover/loading backgrounds with real scene assembler output instead of hardcoded paths.
-  *Status: Complete — rendered_scene_image parameter added to assemble_cover_surface and assemble_loading_surface; backward compatible fallback to base.png convention; tests pass.*
+   *Status: Complete — rendered_scene_image parameter added to assemble_cover_surface and assemble_loading_surface; backward compatible fallback to base.png convention; tests pass.*
+
+- [x] **Track: Composable SVG Asset Factory Pivot**
+  *Link: [./tracks/composable_svg_assets_20260716/](./tracks/composable_svg_assets_20260716/)*
+  TypeScript 7/vinext SVG-first reusable parts, named-anchor composition, deterministic metadata, and Phaser load-time texture exports. The previous Python/raster project was retired; the browser desk and compiler contract are complete.

@@ -11,7 +11,7 @@
 
 ## Recurring Gotchas
 
-- (2026-04-05, sprite_compiler_mvp_20260405) Local envs may have Pillow but not pytest; default automation should use `unittest`.
+- (2026-07-16, composable_svg_assets_20260716) The active project is TypeScript 7 + vinext; use Vitest and browser smoke checks rather than Python tooling.
 
 ## Patterns That Worked Well
 
@@ -42,7 +42,7 @@
 - (2026-05-05, presentation_parallax_fix_20260505) Seeded hash-based offsets (using hash of program_id + layer_role) provide deterministic, analytically reproducible tile placement for parallax tiling instead of pseudo-random offsets.
 - (2026-05-05, ui_sheet_bin_packing_20260505) Best-fit decreasing (BFD) bin packing: sort tiles by area descending, place each in best-fit row or new row. Row class with __slots__ keeps memory low; overflow check after layout pass using sum of final row positions.
 - (2026-05-06, multi_layout_pose_sheet_expansion) When adding new layout types to LAYOUT_TYPES, must also update corpus_manifest.json taxonomy.layout_types AND the test helper _write_minimal_canon_project, else validation tests fail. _frame_drift in candidate_loop.py also needs updating to handle the new grid dimensions.
-- (2026-05-05, autonomous_review) No current_directive means nothing to do. Verify previous track tests pass, check memory files, commit clean state. This is a Python library (asf/), not a web app — unit tests (`python3 -m pytest`) replace browser-based smoke testing.
+- (2026-07-16, project_replacement) The previous Python/raster factory was intentionally retired. Do not reintroduce compatibility layers; port only behavior that supports the SVG product contract.
 - (2026-05-06, projectile_pickup_interactable_compiler) When adding new compiler families, update both canon.FAMILY_NAMES (for corpus validation) and compilers.SUPPORTED_COMPILER_FAMILIES (for compilation). Projectile rotation uses PIL Image.rotate with DIRECTION_ANGLES mapping. Test helpers must be updated when adding families/layouts.
 - (2026-05-09, e2e_llm_asset_pipeline) When adding CLI subcommands that import heavy modules (planner, orchestrator), import inside the command handler to avoid slow startup. BatchOrchestrator.run_from_plan() creates job_root at `.asf/batch/{job_id}` - must mkdir parents before writing programs. resolve_credentials() raises CredentialError (not CredentialLoadError) when no credentials found.
 - (2026-05-09, cli_resume_smoke_test) When adding optional --resume to a CLI subcommand that requires --brief, make --brief optional at parser level and validate at runtime; return early when resuming so brief is not needed. Create orchestrator with job_root pointing to same location used by run_from_plan (`.asf/generate`), not a different path.

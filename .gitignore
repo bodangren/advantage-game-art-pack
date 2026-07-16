@@ -1,6 +1,6 @@
-__pycache__/
-*.pyc
-.venv/
-build/
+node_modules/
+.vinext/
 dist/
-outputs/
+.next/
+coverage/
+.DS_Store
