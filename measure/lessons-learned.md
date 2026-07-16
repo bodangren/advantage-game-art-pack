@@ -12,6 +12,9 @@
 ## Recurring Gotchas
 
 - (2026-07-16, composable_svg_assets_20260716) The active project is TypeScript 7 + vinext; use Vitest and browser smoke checks rather than Python tooling.
+- (2026-07-16, animation_timeline_atlas_packing_20260716) validateSvgSource bans `<style>` and `data-*` attributes, so packed sheets cannot reuse it directly: the atlas inlines palette refs (no `<style>`/`var()` in the sheet) and validates against an engine-mirroring allowlist with a documented `data-part-id`/`data-slot` delta.
+- (2026-07-16, animation_timeline_atlas_packing_20260716) Frozen contract fixtures must carry every input the frozen output needs: the P1 atlas fixture froze Phaser key "walk-cycle" without a timeline id field and was unachievable until the schema gained `id`. Author fixture inputs from the outputs they must produce.
+- (2026-07-16, animation_timeline_atlas_packing_20260716) Tests that spawn a child `vitest run` need an explicit `testTimeout`; the child reloads every test file and outgrows the 5s default as the suite grows.
 
 ## Patterns That Worked Well
 
@@ -23,8 +26,6 @@
 
 - (2026-04-05, sprite_compiler_mvp_20260405) Split roadmap into renderer foundation, richer part libraries, and batch orchestration to avoid scope collapse.
 - (2026-04-17, prompt_to_asset_program_planner_20260405) Define provider abstraction before concrete implementations; this keeps the interface stable while allowing OpenAI/Anthropic/etc. to be swapped in.
-- (2026-04-24, llm_planner_provider_impl_20260424) urllib urlopen context manager needs both `__enter__` and `__exit__` mocked; HTTP 429 is the only retryable error; Anthropic uses `input_tokens`/`output_tokens` keys.
-- (2026-04-24, review_app_auth_and_images_20260424) FastAPI Depends(require_auth) applies to all routes; use BaseHTTPMiddleware for path exemptions. StaticFiles must mount after middleware in on_startup. rendered_files in SQLite need parsing before templates. Form data requires python-multipart package separately from fastapi.
 - (2026-04-23, lighting_renderer_fixes_20260423) Lighting double-darken: single combined ambient+directional factor applied once; shadow direction is OPPOSITE quadrant from light source. Layout resolver origin pile-up when all props get same bounds.
 - (2026-04-24, batch_generation_release_manifests_20260405) `to_dict` on dataclasses with Path fields needs explicit str() conversion. State machines must read persisted state back before advancing. Per-asset updates must check existing state before overwriting.
 - (2026-04-24, renderer_palette_refinement_20260424) Palette quantization must be deterministic: fixed bucket boundaries rather than floating-point depending on iteration order.
@@ -44,7 +45,5 @@
 - (2026-05-06, multi_layout_pose_sheet_expansion) When adding new layout types to LAYOUT_TYPES, must also update corpus_manifest.json taxonomy.layout_types AND the test helper _write_minimal_canon_project, else validation tests fail. _frame_drift in candidate_loop.py also needs updating to handle the new grid dimensions.
 - (2026-07-16, project_replacement) The previous Python/raster factory was intentionally retired. Do not reintroduce compatibility layers; port only behavior that supports the SVG product contract.
 - (2026-05-06, projectile_pickup_interactable_compiler) When adding new compiler families, update both canon.FAMILY_NAMES (for corpus validation) and compilers.SUPPORTED_COMPILER_FAMILIES (for compilation). Projectile rotation uses PIL Image.rotate with DIRECTION_ANGLES mapping. Test helpers must be updated when adding families/layouts.
-- (2026-05-09, e2e_llm_asset_pipeline) When adding CLI subcommands that import heavy modules (planner, orchestrator), import inside the command handler to avoid slow startup. BatchOrchestrator.run_from_plan() creates job_root at `.asf/batch/{job_id}` - must mkdir parents before writing programs. resolve_credentials() raises CredentialError (not CredentialLoadError) when no credentials found.
 - (2026-05-09, cli_resume_smoke_test) When adding optional --resume to a CLI subcommand that requires --brief, make --brief optional at parser level and validate at runtime; return early when resuming so brief is not needed. Create orchestrator with job_root pointing to same location used by run_from_plan (`.asf/generate`), not a different path.
 - (2026-05-09, critic_reference_calibration) FAMILY_NAMES naming differs from compilers.py (prop_or_fx_sheet vs prop_sheet/fx_sheet, parallax_layer_set vs parallax_layer). Presentation surfaces use surface_family field. ReferenceAssetLoader provides clean abstraction for loading reference PNGs with family-to-layout-type mapping.
-- (2026-05-09, critic_reference_calibration) _candidate_metrics is slow (1-4s per large image). Full critic evaluation on 7 demo refs takes 22+ seconds. This blocks threshold recalibration testing and requires metrics caching or downsampling optimization.

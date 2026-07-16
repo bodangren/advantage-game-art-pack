@@ -2,10 +2,11 @@
   "id": "animation_timeline_atlas_packing_20260716",
   "title": "Animation Timelines and Atlas Packing",
   "type": "feature",
-  "status": "pending",
+  "status": "completed",
   "created": "2026-07-16",
   "priority": "high",
   "estimated_tasks": 14,
-  "actual_tasks": null,
-  "depends_on": ["composable_svg_assets_20260716"]
+  "actual_tasks": 14,
+  "depends_on": ["composable_svg_assets_20260716"],
+  "deviation_notes": "Timeline schema gained an optional id (slug) carried into TimelineCompilation; packAtlas requires it as the Phaser load key. The P1 atlas fixture froze key \"walk-cycle\" without authoring the input field, so TWO_FRAME_TIMELINE gained id: \"walk-cycle\" (strategy §15 delegated this to downstream roles). TimelineCompiledFrame also carries duration_ms so the atlas can emit durations_ms. The phase1 sentinel evolved per strategy §4.7: tripwire removed in P2, invariants flipped to a post-Green guard in P3, and a 30s testTimeout added in P5 after the child vitest run outgrew the 5s default."
 }

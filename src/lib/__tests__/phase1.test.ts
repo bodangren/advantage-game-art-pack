@@ -95,6 +95,9 @@ function parseVitestJson(stdout: string): VitestReport {
 }
 
 describe("phase1: non-vacuity sentinel", () => {
+  // The sentinel spawns a full child `vitest run`, which takes several
+  // seconds (transform + import of every test file). The 30s timeout
+  // keeps the default 5s testTimeout from killing it on slower runs.
   it("phase1: non-vacuity sentinel", () => {
     const { stdout, exitCode } = runTargetedVitest();
     const report = parseVitestJson(stdout);
@@ -146,5 +149,5 @@ describe("phase1: non-vacuity sentinel", () => {
       `expected ≥${MIN_TARGETED_PASSING_TESTS} passing timeline|atlas tests (non-vacuity). ` +
         `Got ${passingTargetedNames.length}: ${passingTargetedNames.join(", ")}`,
     ).toBeGreaterThanOrEqual(MIN_TARGETED_PASSING_TESTS);
-  });
+  }, 30_000);
 });

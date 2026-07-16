@@ -33,5 +33,5 @@
 
 ## Phase 5: Verification
 
-- [ ] Run `npm run typecheck`, `npm test`, and `npm run build`.
-- [ ] Update the animation/atlas tech-debt entry to reflect delivery.
+- [x] Run `npm run typecheck`, `npm test`, and `npm run build`.
+- [x] Update the animation/atlas tech-debt entry to reflect delivery.
