@@ -210,6 +210,10 @@ vinext SVG desk.
   *Link: [./archive/directional_character_sheets_20260716/](./archive/directional_character_sheets_20260716/)*
   *Status: Complete — 4/8-way directional spec with declared flips (`src/lib/directional.ts`), per-direction timelines compiled and packed via the timeline/atlas pipeline, digest-pinned sheet manifest, checked-in knight walk+idle example with frozen manifest, and desk direction dock with selector + playback. 68/68 tests, typecheck, and build green.*
 
+- [x] **Track: Per-Game Asset Bundles**
+  *Link: [./archive/per_game_asset_bundles_20260716/](./archive/per_game_asset_bundles_20260716/)*
+  *Status: Complete — strict bundle manifest with slot enum and registry-based reference resolution (`src/lib/bundles.ts`), compile-every-reference validation with slot/ref error context, deterministic export tree (`bundle/<game>/<slot>/<asset>.svg` + bundle.json digests + audit report), and a seeded library-quest example. 79/79 tests, typecheck, and build green.*
+
 ## Retired (never started — Python/raster era)
 
 - [-] **Track: Release Bundle PNG Export** *Link: [./measure/archive/release_bundle_png_export_20260508/](./measure/archive/release_bundle_png_export_20260508/)*
@@ -219,4 +223,4 @@ vinext SVG desk.
 
 ## Active Tracks (TypeScript SVG desk)
 
-- [ ] **Track: Per-Game Asset Bundles** *Link: [./measure/tracks/per_game_asset_bundles_20260716/](./measure/tracks/per_game_asset_bundles_20260716/)* — Bundle manifest, validation, and deterministic export for advantage-games asset packs.
+All planned tracks are complete.

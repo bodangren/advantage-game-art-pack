@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "game": "library-quest",
+  "slots": [
+    {
+      "slot": "characters",
+      "refs": [{ "kind": "sheet", "id": "knight" }]
+    },
+    {
+      "slot": "fx",
+      "refs": [{ "kind": "timeline", "id": "walk-cycle" }]
+    },
+    {
+      "slot": "props",
+      "refs": [{ "kind": "composition", "id": "lpc-style-character" }]
+    }
+  ]
+}

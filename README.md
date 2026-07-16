@@ -41,16 +41,20 @@ artifacts that build consistently on the supported Node 22 Linux environment.
 - `src/lib/timeline.ts`: timeline spec validation, per-frame overrides, deterministic frame digests
 - `src/lib/atlas.ts`: row-major atlas packer, sheet safety guard, atlas JSON + Phaser load contract
 - `src/lib/directional.ts`: 4/8-way directional spec expansion, declared flips, sheet manifest
+- `src/lib/bundles.ts`: per-game bundle manifest validation, spec registry, deterministic exporter
 - `src/lib/catalog.ts`: checked-in SVG part catalog
 - `src/assets/svg-parts/`: human-readable SVG and part metadata
 - `src/lib/svg-assets.test.ts`: deterministic compiler and safety tests
 - `src/lib/timeline.test.ts` / `src/lib/atlas.test.ts`: timeline and atlas contract tests
 - `src/lib/directional.test.ts`: directional spec, expansion, and manifest contract tests
+- `src/lib/bundles.test.ts`: bundle manifest, compile, and export contract tests
 - `src/lib/walk-cycle.test.ts`: frozen-fixture contract for the checked-in example
 - `src/lib/knight-example.test.ts`: frozen-manifest contract for the knight example
 - `examples/svg_character.json`: standalone composition contract example
 - `examples/animation/`: walk-cycle timeline plus frozen digest, atlas, and Phaser fixtures
 - `examples/directional/`: knight 4-way walk+idle spec plus frozen sheet manifest
+- `examples/bundles/`: seeded per-game bundle manifests (exports land in the
+  gitignored `bundle/<game>/` tree)
 
 ## Contract
 
@@ -110,3 +114,29 @@ sheet manifest:
 - `manifest_digest`: SHA-256 over the sorted-key manifest body, so
   downstream Phaser loaders can pin an entire character sheet set with one
   hash.
+
+### Per-game bundles
+
+A bundle manifest is strict JSON: `{ version: 1, game, slots[] }`. Each slot
+declares `{ slot, refs[] }` where `slot` is one of `characters`, `enemies`,
+`props`, `fx`, `tiles`, `ui`, `surfaces` and each ref is
+`{ kind: "composition" | "timeline" | "sheet", id, atlas? }`. Refs resolve
+against the checked-in spec registry (`SPEC_REGISTRY`): the id must exist,
+its kind must match, and the spec's own declared id must equal the ref id.
+Ref ids are unique across the whole manifest; slots may cover any subset of
+categories.
+
+`compileBundle` validates the manifest and compiles every reference —
+compositions emit one SVG, timelines emit one packed atlas sheet, sheets
+emit one atlas per direction — reporting failures with `slot <s> ref <id>`
+context. `exportBundle` writes a deterministic tree:
+
+```
+bundle/<game>/<slot>/<asset>.svg
+bundle/<game>/bundle.json   # version, game, per-asset {slot, id, kind, file, digest}, bundle_digest
+bundle/<game>/audit.txt     # human-readable audit report
+```
+
+Every asset digest is the SHA-256 of its SVG file; `bundle_digest` pins the
+sorted asset list, so re-exporting identical input reproduces the tree and
+every digest byte-for-byte.

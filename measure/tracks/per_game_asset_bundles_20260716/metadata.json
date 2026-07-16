@@ -2,10 +2,11 @@
   "id": "per_game_asset_bundles_20260716",
   "title": "Per-Game Asset Bundles",
   "type": "feature",
-  "status": "pending",
+  "status": "completed",
   "created": "2026-07-16",
   "priority": "high",
   "estimated_tasks": 12,
-  "actual_tasks": null,
-  "depends_on": ["directional_character_sheets_20260716"]
+  "actual_tasks": 12,
+  "depends_on": ["directional_character_sheets_20260716"],
+  "deviation_notes": "Refs resolve against a code-side SPEC_REGISTRY keyed by spec id (with a kind match and a declared-id consistency check) instead of path-based references; new checked-in specs register there. Ref schema gained an optional atlas override for timeline packing; sheets always pack at cols 4 / 32x32. Export roots at <outDir>/<game>/ so repeated exports into one parent stay isolated."
 }
