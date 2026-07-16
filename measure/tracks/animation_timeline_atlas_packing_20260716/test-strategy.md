@@ -35,6 +35,11 @@ PROJECT_LINT="npm run typecheck"
 PROJECT_CHECKS="npm run build"
 PROJECT_TESTS="npm test"
 PROJECT_DEV_URL="http://localhost:3000"
+TYPECHECK_GATE="npm run typecheck"
+PRE_FLIGHT_FILTER="timeline|atlas"
+PRE_FLIGHT_MIN_EXECUTABLE_FAILURES=3
+PRE_FLIGHT_SHA256_GREP="sha256\\("
+PRE_FLIGHT_STUB_FILES="src/lib/timeline.ts src/lib/atlas.ts"
 ```
 
 Every per-phase gate below invokes `RED_TEST_COMMAND` (or `GREEN_TEST_COMMAND`
@@ -42,6 +47,14 @@ on closeout) with `vitest run` (no watch). The orchestrator may pass a `-t`
 filter for the phase-specific test names listed in §4–§8; the result must
 still be `exit 0` and the aggregate must show the targeted assertions
 described in each phase, not merely "passed".
+
+**Phase 1 adds a pre-flight layer (see §4.1) that mechanically enforces
+typecheck-clean imports, no module-not-found failures, ≥3 EXECUTABLE
+failing assertions, and that the atlas digest test calls the real
+`sha256` helper from `./svg-assets`.** The pre-flight checks are
+referenced by the gate names above (`TYPECHECK_GATE`,
+`PRE_FLIGHT_FILTER`, `PRE_FLIGHT_MIN_EXECUTABLE_FAILURES`,
+`PRE_FLIGHT_SHA256_GREP`, `PRE_FLIGHT_STUB_FILES`).
 
 ## 2. Risk classification & test architecture
 
@@ -58,6 +71,7 @@ described in each phase, not merely "passed".
 | Fixture drift (rebaseline without bake)           | medium     | P4, P5                       |
 | TypeScript strict regression in new modules        | medium     | P2, P3, P5                   |
 | Aggregating new tests into a vacuous PASS scaffold| medium     | P1                           |
+| Module-not-found masquerading as Red (suite-level failure)| critical | P1                       |
 | Registry note saying "resolved" while tests red   | low        | P5 (closeout)                |
 
 ## 3. Architecture guardrails & changed-contract risks
@@ -108,66 +122,203 @@ Changed-contract risks the strategy must defend against:
 
 **Risk class:** high (architectural). The first Red state must encode the
 acceptance criteria in `spec.md` as failing tests before any code lands.
+The Red state MUST be **executable** (assertion-level failures, not
+suite-level module-not-found failures) and **typecheck-clean** (no
+TS2307 / TS2xxx errors). A Red commit that fails these constraints is
+not contract-first; it is contract-missing.
 
-**Targeted Red command:**
-```bash
-npm test -- -t "timeline|atlas"
+### 4.1 Pre-flight: mechanical Red state acceptance
+
+The orchestrator MUST run all five pre-flight checks below and verify
+each passes BEFORE promoting the Phase 1 commit. A Red commit that
+fails any check is rejected; the Phase-1 implementer revises the
+commit, not the strategy.
+
+| # | Pre-flight check                                          | Command (gate name)                                              | Pass criterion                                            | Falsification                                        |
+|---|-----------------------------------------------------------|------------------------------------------------------------------|-----------------------------------------------------------|------------------------------------------------------|
+| 1 | Typecheck is clean                                         | `npm run typecheck` (`TYPECHECK_GATE`)                           | exit code 0; no `Cannot find module` / TS2307 errors      | Any TS2307 or other typecheck error                  |
+| 2 | No test file fails at import time                          | `npm test` (no `-t` filter)                                      | 0 `Failed Suites` entries with `Cannot find module`       | Any suite-level `Failed Suites` failure              |
+| 3 | Stub modules exist at production paths                     | `test -f src/lib/timeline.ts && test -f src/lib/atlas.ts`        | both files exist as TypeScript source                     | Either file missing                                  |
+| 4 | Targeted run produces ≥3 EXECUTABLE failures               | `npm test -- -t "timeline\|atlas"` (`PRE_FLIGHT_FILTER`)         | exit non-zero; `Tests  N failed` with N ≥ `PRE_FLIGHT_MIN_EXECUTABLE_FAILURES` (= 3) | 0 failures; or all failures are suite-level not test-level |
+| 5 | Atlas digest test invokes real `sha256` helper             | `grep -E 'sha256\(' src/lib/atlas.test.ts` (`PRE_FLIGHT_SHA256_GREP`) | ≥1 hit importing `sha256` from `./svg-assets`             | Atlas test computes digest by hand, hardcodes hex, or uses `crypto.createHash` directly |
+
+Check #1 enforces A4 (vacuous pass) at the typecheck layer: a
+typecheck-clean state means test files actually resolve their
+imports. Check #2 enforces the new "no module-not-found" invariant.
+Check #4 enforces "≥3 EXECUTABLE failing assertions" mechanically
+by counting test-level (not suite-level) failures. Check #5 enforces
+the sha256-helper contract: hand-rolled digests, hardcoded hex
+literals, or direct `node:crypto.createHash` usage bypass the helper
+and are rejected.
+
+### 4.2 Stub modules (Pattern A — preferred)
+
+`src/lib/timeline.ts` and `src/lib/atlas.ts` MUST exist as typed stub
+modules before the Red commit lands. The stubs export the interfaces
+and error classes from `spec.md`, plus throw stubs for each runtime
+function:
+
+- `class TimelineValidationError extends Error` with constructor
+  accepting a string message.
+- `class AtlasValidationError extends Error` with constructor
+  accepting a string message.
+- `function validateTimelineSpec(spec: unknown): TimelineSpec`: throws
+  `new Error("Phase 1 stub — implement in Phase 2")`.
+- `async function compileTimeline(spec: TimelineSpec, parts: readonly SvgPart[]): Promise<TimelineCompilation>`:
+  throws `new Error("Phase 1 stub — implement in Phase 2")`.
+- `function validateAtlasMetadata(metadata: unknown): AtlasMetadata`:
+  throws `new Error("Phase 1 stub — implement in Phase 3")`.
+- `async function packAtlas(timeline: TimelineCompilation, options: AtlasPackerOptions): Promise<AtlasPacked>`:
+  throws `new Error("Phase 1 stub — implement in Phase 3")`.
+
+Stubs satisfy `tsc --noEmit` because they have typed signatures and
+throw values for runtime calls. Phase 2 REPLACES `validateTimelineSpec`
+and `compileTimeline` bodies; Phase 3 REPLACES `validateAtlasMetadata`
+and `packAtlas` bodies. The error classes are kept across all phases
+(validation error contract is stable).
+
+Alternative — Pattern B (`import type` + inline stubs) — is permitted
+but discouraged: test files use `import type { ... } from "./timeline"`
+and provide local stub implementations of the runtime functions.
+Pattern A is preferred because (a) it gives Phase 2/3 a clean
+fill-in interface, (b) it matches the existing
+`composable_svg_assets_20260716` convention where every public
+compiler module has a real TypeScript file from the start, and
+(c) it lets `npm run build` succeed against the stub signatures.
+
+### 4.3 Red tests (must be present in the failing suite)
+
+Each numbered test below MUST be present in the failing suite and
+MUST produce an **assertion-level** failure (not a suite-level
+module-not-found failure). Every test name is a stable ID; the
+non-vacuity sentinel (§4.4) parses the test output and asserts
+these IDs appear by name.
+
+1. `timeline: rejects empty frame list` — `validateTimelineSpec({version:1, frames:[]})`
+   throws `TimelineValidationError("timeline.frames must be a non-empty array")`.
+2. `timeline: rejects non-positive frame duration` — guards "positive frame durations"
+   via `duration_ms === 0` and `duration_ms === -1` cases.
+3. `timeline: rejects duplicate stable frame ids` — guards stable-id
+   uniqueness; the typed error message must contain `duplicate frame id`.
+4. `timeline: rejects unknown part_id against sample library` — guards
+   "known part/anchor references only".
+5. `atlas: rejects metadata with empty frames array` — labeled-integer
+   parse for `frame_count` field must report the integer `0` (A3 guard).
+6. `atlas: metadata frame_rects carry labeled id/x/y/width/height` — explicit
+   label parse, not bare digit regex. Anchored regex on
+   `sheet_digest: /^[a-f0-9]{64}$/`.
+7. `atlas: sheet_digest matches sha256(sheet_svg) and is stable` — the
+   digest test computes the expected digest via the **real `sha256`
+   helper imported from `./svg-assets`**; see §4.5 for the exact
+   expected pattern.
+8. `atlas: phaser_load fixture matches frozen contract` — frozen
+   `{key, url, svgConfig:{width, height}}` equality against a
+   module-scoped constant.
+9. `phase1: non-vacuity sentinel` — see §4.4; runs the targeted vitest
+   invocation programmatically (via `vitest` Node API or a sidecar
+   script under `scripts/`) and asserts `exitCode !== 0` plus
+   `failedTestNames.length >= PRE_FLIGHT_MIN_EXECUTABLE_FAILURES`.
+
+### 4.4 Non-vacuity sentinel (mechanical)
+
+Phase 1 MUST include at least one executable sentinel test that
+verifies the failure mode is non-vacuous. The sentinel runs the
+targeted vitest command as a subprocess (or via the vitest Node API)
+and asserts:
+
+- `result.exitCode !== 0` — at least one failure was reported.
+- `result.failedTestNames.length >= PRE_FLIGHT_MIN_EXECUTABLE_FAILURES` —
+  at least three distinct test names failed.
+- `result.failedTestNames.every(name => /timeline|atlas/.test(name))` —
+  the failures come from the new modules, not unrelated breakage.
+- `!result.suiteLevelFailures.some(f => /Cannot find module/.test(f))` —
+  no import-level failures.
+
+Concretely, the sentinel test calls `execFileSync("npx", ["vitest",
+"run", "--reporter=json", "-t", "timeline|atlas"], { encoding: "utf8" })`,
+parses the JSON output, and asserts the four invariants above. A
+vacuous "everything green at P1" reading is rejected under A4. A
+"tests broken at import time" reading is rejected under pre-flight
+check #2.
+
+The sentinel test itself MUST be one of the failing tests (it
+asserts non-vacuity, so it cannot be vacuously green). It is the
+ninth Red test in §4.3.
+
+### 4.5 sha256 digest comparison (specific contract)
+
+The atlas digest test (test #7 in §4.3) MUST use the real `sha256`
+helper from `./svg-assets`. The exact pattern:
+
+```ts
+import { sha256 } from "./svg-assets";
+
+it("atlas: sheet_digest matches sha256(sheet_svg) and is stable", async () => {
+  const timeline = await compileTimeline(SAMPLE_TIMELINE, SVG_PARTS);
+  const first = await packAtlas(timeline, { cols: 2, frame_w: 32, frame_h: 32 });
+  const second = await packAtlas(timeline, { cols: 2, frame_w: 32, frame_h: 32 });
+
+  const expectedDigest = await sha256(first.sheet_svg); // <-- real helper
+  expect(first.atlas_json.sheet_digest).toBe(expectedDigest);
+  expect(first.atlas_json.sheet_digest).toMatch(/^[a-f0-9]{64}$/);
+  expect(first.atlas_json.sheet_digest).toBe(second.atlas_json.sheet_digest);
+});
 ```
-Expected: vitest exits non-zero. The new `src/lib/timeline.test.ts` and
-`src/lib/atlas.test.ts` files contain failing tests; existing
-`src/lib/svg-assets.test.ts` still passes (regression sentinel).
 
-**Red tests (must be present in the failing suite):**
+The contract is enforced by pre-flight check #5. Forbidden patterns:
 
-1. `validateTimelineSpec({version:1, frames:[]})` throws
-   `TimelineValidationError("timeline.frames must be a non-empty array")`.
-2. `validateTimelineSpec({version:1, frames:[{...}], composition:{part_id:"x"}} )`
-   throws on unknown `part_id` against a sample library — guards the
-   "known part/anchor references only" criterion.
-3. `validateTimelineSpec({version:1, frames:[{id:"f1", duration_ms:0, ...}]})`
-   throws on non-positive duration — guards "positive frame durations".
-4. `validateTimelineSpec({version:1, frames:[{id:"f1",...},{id:"f1",...}]})`
-   throws on duplicate stable frame id.
-5. `validateAtlasMetadata({version:1, frames:[], digest:"..."})` throws on
-   empty `frames` array — labeled-integer parse for `frame_count` field
-   must report the integer `0` (A3 guard).
-6. Atlas metadata contract test: `expect(metadata.frame_rects[0]).toEqual({
-   id, x, y, width, height })` — explicit label parse, not bare digit regex.
-7. Determinism Red test: `composeTimeline(spec).then(t => t.frames[0].svg)`
-   is byte-equal across two calls; `t.sheet_digest` matches across two
-   calls. (Implementation will be added in P2/P3 — these tests are Red.)
-8. Phaser contract Red test: `packAtlas(...)` JSON output equals a frozen
-   fixture. (Failing in P1, becomes the fixture in P3.)
-9. **Anti-A4 vacuity guard:** A Phase-1 sentinel test asserts at least one
-   `[x]` test passes before declaring "all Phase-1 tests Green" — so the
-   all-`[~]` fixture cannot be misread as PASS.
+- `const expectedDigest = "e3b0c44298fc...";` (hardcoded hex literal)
+- `import { createHash } from "node:crypto"; createHash("sha256")...` (bypass)
+- `const expectedDigest = digestFromSpy;` where `digestFromSpy` is a mock
 
-**Falsification conditions (A-class coverage):**
+The only allowed path is `import { sha256 } from "./svg-assets"`.
 
-- A3 (digit-only labeled count): every count/digest in P1 tests must be
-  asserted via a *labeled* path: `expect(meta.frame_count).toBe(4)` (integer
-  parse), `expect(meta.sheet_digest).toMatch(/^[a-f0-9]{64}$/)` (anchored
-  regex with hex-only charset). Bare `expect(...).toMatch(/[0-9]+/)` is
-  banned — that is A3's known failure mode.
-- A4 (vacuous pass on nothing-done): P1 Red command must surface ≥3
-  failures. A "Green" P1 with 0 failures is a vacuous PASS and is rejected.
-- A5 (false-claim text vs test reality): any plan claim of "all checks
-  pass" is checked against the actual `npm test` exit code.
+### 4.6 Falsification conditions (A-class coverage)
 
-**Green gate (P1 → P2):**
-- `npm run typecheck` exits 0 (Red tests are real TS modules).
+- A1 (substring-as-structured-signal): every test name in §4.3 is a
+  stable, greppable ID (e.g., `"timeline: rejects empty frame list"`),
+  not free prose.
+- A3 (digit-only labeled count): every count/digest in P1 tests is
+  asserted via a labeled path (`expect(meta.frame_count).toBe(N)`,
+  integer parse). The `sheet_digest` regex is anchored and hex-only.
+- A4 (vacuous pass on nothing-done): the non-vacuity sentinel
+  (§4.4) mechanically enforces ≥3 EXECUTABLE failures. Pre-flight
+  check #4 is the same invariant expressed at the gate layer.
+- A5 (false-claim text vs test reality): any plan claim of
+  "all checks pass" is checked against the actual `npm test` exit
+  code; pre-flight check #1 catches false typecheck claims.
+- A11 (module-not-found masquerading as Red — new): pre-flight
+  checks #1 and #2 reject the case where `Cannot find module`
+  errors inflate the failing-count while contributing zero
+  assertions.
+
+### 4.7 Green gate (P1 → P2)
+
+- All pre-flight checks (§4.1, #1–#5) pass.
+- `npm run typecheck` exits 0 (pre-flight #1).
 - `npm test` exits non-zero (Red is the point) with the targeted `-t`
-  filter surfacing exactly the failing tests in §4.
-- All non-targeted tests (existing `svg-assets.test.ts`) still pass.
+  filter surfacing exactly the failing tests in §4.3.
+- `npm test -- -t "non-vacuity sentinel"` exits non-zero (sentinel is
+  itself failing — that is the point).
+- All non-targeted tests (existing `svg-assets.test.ts`) still pass
+  (regression sentinel).
 
-**Closeout gate (P1):**
+### 4.8 Closeout gate (P1)
+
 - Aggregated `npm test` (no `-t` filter) exits non-zero with the same
   failing count. The aggregate is intentionally red; this is the only
   phase where the full suite is allowed to be red.
+- Pre-flight check #4 (≥3 EXECUTABLE failures) holds on the aggregate.
 
-**Artifact vs live-behavior:** Phase-1 tests are contract specs (program
-falsifiability), not yet live behavior. They define the contract that
-later phases will satisfy.
+### 4.9 Artifact vs live-behavior
+
+Phase-1 tests are contract specs (program falsifiability), not yet
+live behavior. They define the contract that later phases will
+satisfy. The stubs throw `Error("Phase 1 stub — implement in Phase N")`
+on runtime invocation, so every test produces an assertion-level
+failure that names the future implementation phase. The non-vacuity
+sentinel (§4.4) is itself a live-behavior test (it spawns a subprocess
+and parses the JSON output).
 
 ## 5. Phase 2 — Timeline Compiler
 
@@ -447,16 +598,22 @@ The aggregate suite is intentionally red during P1 (the entire design is
 TDD). The orchestrator must:
 
 1. Record `aggregate_status: intentionally_red` for P1, with the failing
-   test names enumerated.
-2. Not declare P1 Green until `npm test -- -t "timeline|atlas"` shows the
-   expected Red failures and `npm test` (untargeted) preserves the
-   pre-existing green tests in `svg-assets.test.ts`.
+   test names enumerated. The enumerated list MUST come from the
+   non-vacuity sentinel (§4.4) JSON output, not from string-grep on
+   vitest's human-readable summary.
+2. Not declare P1 Green until pre-flight checks #1–#5 (§4.1) all pass
+   on the current Red commit AND `npm test -- -t "timeline|atlas"`
+   shows the expected Red failures AND `npm test` (untargeted) preserves
+   the pre-existing green tests in `svg-assets.test.ts`.
 3. Promote aggregate to `green_only_when_targeted` for P2, P3, P4: the
    targeted `-t` filter is Green, the aggregate still shows P3/P4 Red
    tests until those phases complete.
 4. Reach `aggregate_green` only at the end of P5.
 
-A vacuous "everything green at P1" reading is rejected under A4.
+A vacuous "everything green at P1" reading is rejected under A4. A
+"tests broken at import time" reading is rejected under pre-flight
+check #2. A "tests passing but no real assertions ran" reading is
+rejected by pre-flight check #4 (test-level failure count).
 
 ## 12. Artifact vs live-behavior distinction
 
@@ -474,31 +631,43 @@ one live test in each phase must be Green before that phase closes.
 
 | Anti-pattern                                    | Defended in phases         | Defense                                                                                       |
 | ----------------------------------------------- | -------------------------- | --------------------------------------------------------------------------------------------- |
-| A1 — substring-as-structured-signal             | P1, P2, P3                 | Test names are structured strings (`"atlas: rect math row-major"`), not prose fragments.     |
+| A1 — substring-as-structured-signal             | P1, P2, P3                 | Test names are structured strings (`"atlas: rect math row-major"`, `"timeline: rejects empty frame list"`), not prose fragments. |
 | A3 — digit-only as labeled count                | P1, P3, P4                 | Counts asserted via labeled keys (`frame_count`, `sheet_digest`), integer-parse, anchored regex. |
-| A4 — vacuous pass on nothing-done               | P1, P4                     | P1 sentinel: ≥3 failing tests required to call P1 Green. P4 sentinel: ≥4 frames in example.   |
-| A5 — false-claim text vs test reality           | P1, P2, P3, P4, P5         | Each "deterministic / fixture locked / all checks pass" claim must cite a specific test ID.    |
+| A4 — vacuous pass on nothing-done               | P1, P4                     | P1: non-vacuity sentinel (§4.4) runs vitest programmatically and asserts `failedTestNames.length >= PRE_FLIGHT_MIN_EXECUTABLE_FAILURES` (3); pre-flight check #4 enforces the same at the gate layer. P4 sentinel: ≥4 frames in example. |
+| A5 — false-claim text vs test reality           | P1, P2, P3, P4, P5         | Each "deterministic / fixture locked / all checks pass" claim must cite a specific test ID; pre-flight check #1 (TYPECHECK_GATE) catches false typecheck claims. |
 | A6 — registry-note overstatement                | P5                         | Tech-debt entry for animation/atlas only moves to `Resolved` after adversarial determinism tests are Green. |
 | A9 — pre-existing test references archived paths| P5                         | All test paths point to `measure/tracks/animation_timeline_atlas_packing_20260716/...` until closeout. |
+| A11 — module-not-found masquerading as Red      | P1                         | Pre-flight check #1 (`TYPECHECK_GATE`): typecheck exits 0 (no TS2307). Pre-flight check #2: 0 `Failed Suites` entries with `Cannot find module`. Pre-flight check #4: failure count is test-level, not suite-level. |
 | B1 (security) — SVG injection via frame / sheet | P2, P3, P4                 | Every frame passes `validateSvgSource`; atlas sheet passes `validateSvgSource`; desk does not `dangerouslySetInnerHTML` untrusted SVG. |
 
 ## 14. Phase base SHA capture
 
 The orchestrator must capture the immutable `phase_base_sha` for each
-phase **immediately after the strategy commit lands on `main`**. Concretely:
+phase **immediately after the strategy commit lands on `main`** AND
+**after the Phase 1 pre-flight checks (§4.1) pass on the current
+Red commit**. Concretely:
 
 1. The strategy-role agent (this role) commits
    `measure/tracks/animation_timeline_atlas_packing_20260716/test-strategy.md`
    as the only staged file.
-2. The orchestrator reads `git rev-parse HEAD` *after* that commit and
-   stores the SHA as `phase_base_sha` for Phase 1.
-3. For subsequent phases, the orchestrator captures `phase_base_sha`
+2. The orchestrator verifies that the Phase 1 Red commit satisfies
+   pre-flight checks #1–#5 (§4.1): `TYPECHECK_GATE`, no-suite-level
+   module-not-found failures, stub files present,
+   `PRE_FLIGHT_FILTER` produces `>= PRE_FLIGHT_MIN_EXECUTABLE_FAILURES`
+   test-level failures, and `PRE_FLIGHT_SHA256_GREP` finds the real
+   `sha256` helper import in `src/lib/atlas.test.ts`.
+3. The orchestrator reads `git rev-parse HEAD` *after* that commit
+   and stores the SHA as `phase_base_sha` for Phase 1.
+4. For subsequent phases, the orchestrator captures `phase_base_sha`
    immediately after the prior phase's Green commit lands, before the
    next phase's first Red commit.
 
 This strategy file **must not** embed a SHA that predates the strategy
 commit. The SHA is recorded by the orchestrator, not authored into this
-file.
+file. The SHA is captured only when the current Red commit has cleared
+the Phase 1 pre-flight layer; a Red commit that fails pre-flight does
+not produce a `phase_base_sha`, and the Phase-1 implementer is asked
+to revise.
 
 ## 15. Open questions for downstream roles
 
