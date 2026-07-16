@@ -20,16 +20,16 @@
 
 - [x] Implement per-direction atlas generation via the atlas packer.
 - [x] Implement sheet manifest emission (directions, frames, rects, digests).
-- [~] Add fixture tests pinning the sheet manifest contract for downstream
+- [x] Add fixture tests pinning the sheet manifest contract for downstream
   Phaser loading.
 
 ## Phase 4: Example and Desk Preview
 
-- [ ] Author the checked-in knight-style 4-direction walk+idle example.
-- [ ] Add desk preview with direction selector and frame playback.
-- [ ] Document the directional spec and sheet manifest contracts.
+- [x] Author the checked-in knight-style 4-direction walk+idle example.
+- [x] Add desk preview with direction selector and frame playback.
+- [x] Document the directional spec and sheet manifest contracts.
 
 ## Phase 5: Verification
 
-- [ ] Run `npm run typecheck`, `npm test`, and `npm run build`.
+- [~] Run `npm run typecheck`, `npm test`, and `npm run build`.
 - [ ] Update product docs to note directional sheet capability.

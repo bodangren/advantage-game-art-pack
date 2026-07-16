@@ -3,9 +3,15 @@
 import { useEffect, useState } from "react";
 
 import walkCycleExample from "../examples/animation/walk-cycle.json";
+import knightExample from "../examples/directional/knight.json";
 import { packAtlas, type AtlasMetadata } from "../src/lib/atlas";
 import { DEFAULT_SPEC } from "../src/lib/default-spec";
 import { SVG_PARTS, partsForSlot, type SvgSlot } from "../src/lib/catalog";
+import {
+  compileDirectionalSheets,
+  type Direction,
+  type DirectionalSheetSet,
+} from "../src/lib/directional";
 import {
   buildPhaserLoadConfig,
   composeSvg,
@@ -17,6 +23,9 @@ import {
 } from "../src/lib/timeline";
 
 const WALK_CYCLE_ATLAS_OPTIONS = { cols: 4, frame_w: 32, frame_h: 32 } as const;
+const KNIGHT_ATLAS_OPTIONS = { cols: 4, frame_w: 32, frame_h: 32 } as const;
+const KNIGHT_DIRECTIONS = ["north", "south", "east", "west"] as const;
+const KNIGHT_ANIMATIONS = ["walk", "idle"] as const;
 
 interface WalkCyclePreview {
   readonly frames: ReadonlyArray<TimelineCompiledFrame>;
@@ -69,6 +78,11 @@ export default function Home() {
   const [copied, setCopied] = useState(false);
   const [copyError, setCopyError] = useState<string | null>(null);
   const [walkCycle, setWalkCycle] = useState<WalkCyclePreview | null>(null);
+  const [knight, setKnight] = useState<DirectionalSheetSet | null>(null);
+  const [direction, setDirection] = useState<Direction>("south");
+  const [animation, setAnimation] = useState<string>("walk");
+  const [frameIndex, setFrameIndex] = useState(0);
+  const [playing, setPlaying] = useState(true);
   const spec = replaceSelection(DEFAULT_SPEC, selection, palette);
   const svg = composeSvg(spec, SVG_PARTS);
 
@@ -90,6 +104,50 @@ export default function Home() {
       cancelled = true;
     };
   }, []);
+
+  useEffect(() => {
+    let cancelled = false;
+    void (async () => {
+      const compiled = await compileDirectionalSheets(
+        knightExample,
+        SVG_PARTS,
+        KNIGHT_ATLAS_OPTIONS,
+      );
+      if (!cancelled) setKnight(compiled);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const currentSheet =
+    knight?.sheets.find(
+      (sheet) => sheet.animation === animation && sheet.direction === direction,
+    ) ?? null;
+  const sheetFrameCount = currentSheet?.frames.length ?? 0;
+  const currentFrame =
+    currentSheet && sheetFrameCount > 0
+      ? (currentSheet.frames[frameIndex % sheetFrameCount] ?? null)
+      : null;
+
+  useEffect(() => {
+    if (!playing || !currentSheet || currentSheet.frames.length < 2) return;
+    const duration = currentSheet.frames[0]?.duration_ms ?? 120;
+    const interval = window.setInterval(() => {
+      setFrameIndex((index) => (index + 1) % currentSheet.frames.length);
+    }, duration);
+    return () => window.clearInterval(interval);
+  }, [playing, currentSheet]);
+
+  const selectAnimation = (next: string) => {
+    setAnimation(next);
+    setFrameIndex(0);
+  };
+
+  const selectDirection = (next: Direction) => {
+    setDirection(next);
+    setFrameIndex(0);
+  };
 
   const updateSelection = (slot: SelectableSlot, partId: string) => {
     setSelection((current) => ({ ...current, [slot]: partId }));
@@ -312,6 +370,88 @@ export default function Home() {
           </div>
         ) : (
           <p className="animation-loading">Compiling walk-cycle…</p>
+        )}
+      </section>
+
+      <section className="directional-dock" aria-label="Knight directional sheet preview">
+        <div className="panel-heading">
+          <span className="panel-index">05</span>
+          <div>
+            <p className="eyebrow">DIRECTIONAL / KNIGHT</p>
+            <h2>Direction sheets + playback</h2>
+          </div>
+        </div>
+
+        {knight && currentSheet ? (
+          <div className="directional-grid">
+            <div className="direction-controls">
+              <div className="control-group">
+                <span className="stack-label">ANIMATION</span>
+                <div className="segmented">
+                  {KNIGHT_ANIMATIONS.map((name) => (
+                    <button
+                      key={name}
+                      type="button"
+                      className={name === animation ? "segment segment-active" : "segment"}
+                      onClick={() => selectAnimation(name)}
+                    >
+                      {name}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <div className="control-group">
+                <span className="stack-label">DIRECTION</span>
+                <div className="segmented">
+                  {KNIGHT_DIRECTIONS.map((name) => (
+                    <button
+                      key={name}
+                      type="button"
+                      className={name === direction ? "segment segment-active" : "segment"}
+                      onClick={() => selectDirection(name)}
+                    >
+                      {name}
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <button className="button button-quiet" type="button" onClick={() => setPlaying((value) => !value)}>
+                {playing ? "Pause playback" : "Resume playback"}
+              </button>
+            </div>
+
+            <div className="playback-stage">
+              <div className="playback-frame">
+                {currentFrame ? (
+                  /* Frame SVGs are emitted by the deterministic directional pipeline. */
+                  <div dangerouslySetInnerHTML={{ __html: currentFrame.svg }} />
+                ) : null}
+              </div>
+              <div className="playback-meta">
+                <span>{currentSheet.timeline_id}</span>
+                <span>
+                  FRAME {(frameIndex % Math.max(sheetFrameCount, 1)) + 1}/{sheetFrameCount} ·{" "}
+                  {currentSheet.frames[0]?.duration_ms ?? "--"}MS
+                </span>
+                <span>{currentSheet.flip ? `FLIP / ${currentSheet.flip.toUpperCase()}` : "EXPLICIT"}</span>
+              </div>
+            </div>
+
+            <div className="atlas-panel">
+              <div className="atlas-sheet">
+                {/* The packed sheet passes the atlas safety guard before packing completes. */}
+                <div dangerouslySetInnerHTML={{ __html: currentSheet.sheet_svg }} />
+              </div>
+              <dl className="atlas-meta">
+                <div><dt>SHEET</dt><dd>{currentSheet.atlas_json.sheet_width} × {currentSheet.atlas_json.sheet_height}</dd></div>
+                <div><dt>DIGEST</dt><dd>{currentSheet.atlas_json.sheet_digest.slice(0, 16)}…</dd></div>
+                <div><dt>MANIFEST</dt><dd>{knight.manifest.manifest_digest.slice(0, 16)}…</dd></div>
+                <div><dt>PHASER</dt><dd>{currentSheet.phaser_load.key} / asset.svg</dd></div>
+              </dl>
+            </div>
+          </div>
+        ) : (
+          <p className="animation-loading">Compiling knight sheets…</p>
         )}
       </section>
 

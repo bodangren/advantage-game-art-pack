@@ -1,0 +1,360 @@
+{
+  "direction_set": "4-way",
+  "id": "knight",
+  "manifest_digest": "56b178b575d03067d517a75cb564af7baa80af972a677d134b2ef44b62a670fa",
+  "sheets": [
+    {
+      "animation": "idle",
+      "direction": "north",
+      "flip": null,
+      "frame_count": 2,
+      "frame_digests": [
+        "29362e300b18170cfa7f8f311ada1f14e32dba0dbd9fa2bceb82da811ea984dd",
+        "3bc3fbe4565bfb0aa1fd2fb1c937fff7b5e707c18c3722b46338340e7e2c94e7"
+      ],
+      "frame_rects": [
+        {
+          "height": 32,
+          "id": "idle-north-1",
+          "width": 32,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "height": 32,
+          "id": "idle-north-2",
+          "width": 32,
+          "x": 32,
+          "y": 0
+        }
+      ],
+      "phaser_load": {
+        "key": "knight-idle-north",
+        "svgConfig": {
+          "height": 32,
+          "width": 128
+        },
+        "url": "asset.svg"
+      },
+      "sheet_digest": "ee121b76dc816e2ca8046b899fbccd653ff7797d1372a82a6982644625c86690",
+      "timeline_id": "knight-idle-north"
+    },
+    {
+      "animation": "idle",
+      "direction": "south",
+      "flip": null,
+      "frame_count": 2,
+      "frame_digests": [
+        "29362e300b18170cfa7f8f311ada1f14e32dba0dbd9fa2bceb82da811ea984dd",
+        "3bc3fbe4565bfb0aa1fd2fb1c937fff7b5e707c18c3722b46338340e7e2c94e7"
+      ],
+      "frame_rects": [
+        {
+          "height": 32,
+          "id": "idle-south-1",
+          "width": 32,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "height": 32,
+          "id": "idle-south-2",
+          "width": 32,
+          "x": 32,
+          "y": 0
+        }
+      ],
+      "phaser_load": {
+        "key": "knight-idle-south",
+        "svgConfig": {
+          "height": 32,
+          "width": 128
+        },
+        "url": "asset.svg"
+      },
+      "sheet_digest": "387a2303ec2a59cd7a0a8fe414a2b559d926405ca7c2a01123d6b6a172ffeba7",
+      "timeline_id": "knight-idle-south"
+    },
+    {
+      "animation": "idle",
+      "direction": "east",
+      "flip": null,
+      "frame_count": 2,
+      "frame_digests": [
+        "29362e300b18170cfa7f8f311ada1f14e32dba0dbd9fa2bceb82da811ea984dd",
+        "3bc3fbe4565bfb0aa1fd2fb1c937fff7b5e707c18c3722b46338340e7e2c94e7"
+      ],
+      "frame_rects": [
+        {
+          "height": 32,
+          "id": "idle-east-1",
+          "width": 32,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "height": 32,
+          "id": "idle-east-2",
+          "width": 32,
+          "x": 32,
+          "y": 0
+        }
+      ],
+      "phaser_load": {
+        "key": "knight-idle-east",
+        "svgConfig": {
+          "height": 32,
+          "width": 128
+        },
+        "url": "asset.svg"
+      },
+      "sheet_digest": "6f316ff3b3eee598100ed97b85fa53f32dd3a7b0e9a9d705d3197d63431469be",
+      "timeline_id": "knight-idle-east"
+    },
+    {
+      "animation": "idle",
+      "direction": "west",
+      "flip": "horizontal",
+      "frame_count": 2,
+      "frame_digests": [
+        "455437f03be64617a8a06400079f9c62dd827d63c1044c37cbf111a51f44b9dd",
+        "c01669cc5413a6380d76576a1e1b4af8830a689ab5448cb2c9411a7e176355cf"
+      ],
+      "frame_rects": [
+        {
+          "height": 32,
+          "id": "idle-west-1",
+          "width": 32,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "height": 32,
+          "id": "idle-west-2",
+          "width": 32,
+          "x": 32,
+          "y": 0
+        }
+      ],
+      "phaser_load": {
+        "key": "knight-idle-west",
+        "svgConfig": {
+          "height": 32,
+          "width": 128
+        },
+        "url": "asset.svg"
+      },
+      "sheet_digest": "a1fce69f2a0c71d39cfb31c0f34b0d4607d2fee5863dec8ca44fa654f8f12e4a",
+      "timeline_id": "knight-idle-west"
+    },
+    {
+      "animation": "walk",
+      "direction": "north",
+      "flip": null,
+      "frame_count": 4,
+      "frame_digests": [
+        "6d2fcc713011f41dcea4fcf576177ab17d630381f1aab39a1091a11b062b825b",
+        "93e0a0cb0c8658b85fe3ffd993b479fe6e640fdcd562e96ef1703e4cb9d080bc",
+        "a952d511332c2b8b1d189567e74b98be31a3d571ae81b5a4b8ea49acb1d7cf0e",
+        "dc77756f10a23d80f63fc54e7bc3423e348e186a4a7f6f8771a7ede78a8bd616"
+      ],
+      "frame_rects": [
+        {
+          "height": 32,
+          "id": "walk-north-1",
+          "width": 32,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "height": 32,
+          "id": "walk-north-2",
+          "width": 32,
+          "x": 32,
+          "y": 0
+        },
+        {
+          "height": 32,
+          "id": "walk-north-3",
+          "width": 32,
+          "x": 64,
+          "y": 0
+        },
+        {
+          "height": 32,
+          "id": "walk-north-4",
+          "width": 32,
+          "x": 96,
+          "y": 0
+        }
+      ],
+      "phaser_load": {
+        "key": "knight-walk-north",
+        "svgConfig": {
+          "height": 32,
+          "width": 128
+        },
+        "url": "asset.svg"
+      },
+      "sheet_digest": "f5ebd3ead94ad0ab6944563ee00d4513f9415306da97e4a9c26d93083f641725",
+      "timeline_id": "knight-walk-north"
+    },
+    {
+      "animation": "walk",
+      "direction": "south",
+      "flip": null,
+      "frame_count": 4,
+      "frame_digests": [
+        "b9ede8775aec511c88641cb26469a1735e5b1ea40b4b27a8fe7a534a19d21576",
+        "00035147f865ef46962d2a38b8f02ec22fde7c482a2f98ca050a6fe3e03a99c4",
+        "352d99ab399d111eef6a2e4b00577ad1aea28a1370d8e9c3e21a9e446d71d891",
+        "45db224260f6f27c8611fee0d2b5a9aab8c3265885edac8bb19388433e2508b3"
+      ],
+      "frame_rects": [
+        {
+          "height": 32,
+          "id": "walk-south-1",
+          "width": 32,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "height": 32,
+          "id": "walk-south-2",
+          "width": 32,
+          "x": 32,
+          "y": 0
+        },
+        {
+          "height": 32,
+          "id": "walk-south-3",
+          "width": 32,
+          "x": 64,
+          "y": 0
+        },
+        {
+          "height": 32,
+          "id": "walk-south-4",
+          "width": 32,
+          "x": 96,
+          "y": 0
+        }
+      ],
+      "phaser_load": {
+        "key": "knight-walk-south",
+        "svgConfig": {
+          "height": 32,
+          "width": 128
+        },
+        "url": "asset.svg"
+      },
+      "sheet_digest": "b1ad9fcf7eec6e71258e1d92c8c8b2f518ba035b4f507aa8f6e08fb39ebcaf25",
+      "timeline_id": "knight-walk-south"
+    },
+    {
+      "animation": "walk",
+      "direction": "east",
+      "flip": null,
+      "frame_count": 4,
+      "frame_digests": [
+        "fb0cad9069afb3b138cbfc580395dbfab97bac700f833c36a45863f020a80b23",
+        "2ea73683b521be836954feb114ea42c29daafc64f2328968f8528a51eb8301d2",
+        "91d4e9140b9aa2ead8dba193eeaf9b92b4004e1563ee4a46c389456f05214ce5",
+        "2ea73683b521be836954feb114ea42c29daafc64f2328968f8528a51eb8301d2"
+      ],
+      "frame_rects": [
+        {
+          "height": 32,
+          "id": "walk-east-1",
+          "width": 32,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "height": 32,
+          "id": "walk-east-2",
+          "width": 32,
+          "x": 32,
+          "y": 0
+        },
+        {
+          "height": 32,
+          "id": "walk-east-3",
+          "width": 32,
+          "x": 64,
+          "y": 0
+        },
+        {
+          "height": 32,
+          "id": "walk-east-4",
+          "width": 32,
+          "x": 96,
+          "y": 0
+        }
+      ],
+      "phaser_load": {
+        "key": "knight-walk-east",
+        "svgConfig": {
+          "height": 32,
+          "width": 128
+        },
+        "url": "asset.svg"
+      },
+      "sheet_digest": "6f162c1975303922fe099c0c54c48c27e2997282b097814c684b5e9ad93d0d02",
+      "timeline_id": "knight-walk-east"
+    },
+    {
+      "animation": "walk",
+      "direction": "west",
+      "flip": "horizontal",
+      "frame_count": 4,
+      "frame_digests": [
+        "de2e12ae0a007421ede09bf27c020124084970823b44f7ddbd89c76e3c904f4f",
+        "5d0df0d95d95fb39d21b30204edf41d3663d18f02a88859e90809355d648c2c5",
+        "a0c6cd15074b272823e65c064e492a44a0deec1afee5e6a367aa65c8e7f976a8",
+        "5d0df0d95d95fb39d21b30204edf41d3663d18f02a88859e90809355d648c2c5"
+      ],
+      "frame_rects": [
+        {
+          "height": 32,
+          "id": "walk-west-1",
+          "width": 32,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "height": 32,
+          "id": "walk-west-2",
+          "width": 32,
+          "x": 32,
+          "y": 0
+        },
+        {
+          "height": 32,
+          "id": "walk-west-3",
+          "width": 32,
+          "x": 64,
+          "y": 0
+        },
+        {
+          "height": 32,
+          "id": "walk-west-4",
+          "width": 32,
+          "x": 96,
+          "y": 0
+        }
+      ],
+      "phaser_load": {
+        "key": "knight-walk-west",
+        "svgConfig": {
+          "height": 32,
+          "width": 128
+        },
+        "url": "asset.svg"
+      },
+      "sheet_digest": "c57a46334bc9af87d2e3a839cd6eca4d7d3520cb8d9ef97cec9a7cf826af324f",
+      "timeline_id": "knight-walk-west"
+    }
+  ],
+  "version": 1
+}

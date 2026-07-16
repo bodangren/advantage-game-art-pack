@@ -40,13 +40,17 @@ artifacts that build consistently on the supported Node 22 Linux environment.
 - `src/lib/svg-assets.ts`: typed validator, anchor resolver, serializer, and metadata builder
 - `src/lib/timeline.ts`: timeline spec validation, per-frame overrides, deterministic frame digests
 - `src/lib/atlas.ts`: row-major atlas packer, sheet safety guard, atlas JSON + Phaser load contract
+- `src/lib/directional.ts`: 4/8-way directional spec expansion, declared flips, sheet manifest
 - `src/lib/catalog.ts`: checked-in SVG part catalog
 - `src/assets/svg-parts/`: human-readable SVG and part metadata
 - `src/lib/svg-assets.test.ts`: deterministic compiler and safety tests
 - `src/lib/timeline.test.ts` / `src/lib/atlas.test.ts`: timeline and atlas contract tests
+- `src/lib/directional.test.ts`: directional spec, expansion, and manifest contract tests
 - `src/lib/walk-cycle.test.ts`: frozen-fixture contract for the checked-in example
+- `src/lib/knight-example.test.ts`: frozen-manifest contract for the knight example
 - `examples/svg_character.json`: standalone composition contract example
 - `examples/animation/`: walk-cycle timeline plus frozen digest, atlas, and Phaser fixtures
+- `examples/directional/`: knight 4-way walk+idle spec plus frozen sheet manifest
 
 ## Contract
 
@@ -83,3 +87,26 @@ them out row-major, and inlines palette references so the sheet carries no
 
 Phaser receives the resolved `asset.svg` as a load-time raster texture.
 Runtime SVG mutation remains intentionally out of scope.
+
+### Directional sheets
+
+A directional spec is strict JSON: `{ version: 1, id, direction_set,
+animations }`. `direction_set` is `"4-way"` (north/south/east/west) or
+`"8-way"`; every animation declares exactly that direction set. Each
+animation declares `{ frame_count, duration_ms, composition, directions }`.
+A direction entry is either explicit — `{ frames: [{ overrides? }] }` with
+exactly `frame_count` entries, reusing timeline per-frame overrides — or a
+declared flip: `{ mirror_of: <explicit direction>, flip: "horizontal" }`.
+No other mirroring is inferred.
+
+`compileDirectionalSheets` expands one validated timeline per direction
+(`<id>-<animation>-<direction>`), compiles each through the timeline/atlas
+pipeline (mirrored frames carry a `scale(-1 1)` wrapper and a re-computed
+digest), and packs one atlas per direction. It returns the sheets plus a
+sheet manifest:
+
+- `sheets[]`: `{ animation, direction, timeline_id, flip, frame_count,
+  frame_rects[], frame_digests[], sheet_digest, phaser_load }`.
+- `manifest_digest`: SHA-256 over the sorted-key manifest body, so
+  downstream Phaser loaders can pin an entire character sheet set with one
+  hash.
