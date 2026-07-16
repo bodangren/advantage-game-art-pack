@@ -202,6 +202,10 @@ vinext SVG desk.
   *Link: [./tracks/composable_svg_assets_20260716/](./tracks/composable_svg_assets_20260716/)*
   TypeScript 7/vinext SVG-first reusable parts, named-anchor composition, deterministic metadata, and Phaser load-time texture exports. The previous Python/raster project was retired; the browser desk and compiler contract are complete.
 
+- [x] **Track: Animation Timelines and Atlas Packing**
+  *Link: [./archive/animation_timeline_atlas_packing_20260716/](./archive/animation_timeline_atlas_packing_20260716/)*
+  *Status: Complete — deterministic timeline specs with per-frame overrides and SHA-256 digests (`src/lib/timeline.ts`), row-major atlas packer with inlined palettes and sheet safety guard (`src/lib/atlas.ts`), checked-in walk-cycle example with frozen fixtures, desk animation dock, and post-Green sentinel. 48/48 tests, typecheck, and build green.*
+
 ## Retired (never started — Python/raster era)
 
 - [-] **Track: Release Bundle PNG Export** *Link: [./measure/archive/release_bundle_png_export_20260508/](./measure/archive/release_bundle_png_export_20260508/)*
@@ -211,6 +215,5 @@ vinext SVG desk.
 
 ## Active Tracks (TypeScript SVG desk)
 
-- [x] **Track: Animation Timelines and Atlas Packing** *Link: [./measure/tracks/animation_timeline_atlas_packing_20260716/](./measure/tracks/animation_timeline_atlas_packing_20260716/)* — Deterministic animation timelines and SVG sprite-sheet atlas packing; clears deferred tech-debt item.
-- [ ] **Track: Directional Character Sheets** *Link: [./measure/tracks/directional_character_sheets_20260716/](./measure/tracks/directional_character_sheets_20260716/)* — 4/8-direction walk/idle sheets from SVG parts via the timeline/atlas pipeline.
+- [~] **Track: Directional Character Sheets** *Link: [./measure/tracks/directional_character_sheets_20260716/](./measure/tracks/directional_character_sheets_20260716/)* — 4/8-direction walk/idle sheets from SVG parts via the timeline/atlas pipeline.
 - [ ] **Track: Per-Game Asset Bundles** *Link: [./measure/tracks/per_game_asset_bundles_20260716/](./measure/tracks/per_game_asset_bundles_20260716/)* — Bundle manifest, validation, and deterministic export for advantage-games asset packs.

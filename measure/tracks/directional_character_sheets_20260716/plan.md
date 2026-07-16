@@ -2,25 +2,25 @@
 
 ## Phase 1: Contract-First Tests
 
-- [ ] Add failing tests for directional spec parsing and validation (direction
+- [x] Add failing tests for directional spec parsing and validation (direction
   enum, frame-count consistency, declared flips).
-- [ ] Add failing tests for sheet manifest schema (directions, frames, rects,
+- [x] Add failing tests for sheet manifest schema (directions, frames, rects,
   digests).
-- [ ] Add failing determinism tests for expansion and sheet output.
+- [x] Add failing determinism tests for expansion and sheet output.
 
 ## Phase 2: Direction Expansion
 
-- [ ] Implement direction enum and per-direction anchor/flip override mapping.
-- [ ] Implement expansion of a directional spec into per-direction timeline
+- [x] Implement direction enum and per-direction anchor/flip override mapping.
+- [x] Implement expansion of a directional spec into per-direction timeline
   specs.
-- [ ] Implement validation that expanded timelines reference only known parts
+- [x] Implement validation that expanded timelines reference only known parts
   and anchors.
 
 ## Phase 3: Sheet Assembly and Manifest
 
-- [ ] Implement per-direction atlas generation via the atlas packer.
-- [ ] Implement sheet manifest emission (directions, frames, rects, digests).
-- [ ] Add fixture tests pinning the sheet manifest contract for downstream
+- [x] Implement per-direction atlas generation via the atlas packer.
+- [x] Implement sheet manifest emission (directions, frames, rects, digests).
+- [~] Add fixture tests pinning the sheet manifest contract for downstream
   Phaser loading.
 
 ## Phase 4: Example and Desk Preview
