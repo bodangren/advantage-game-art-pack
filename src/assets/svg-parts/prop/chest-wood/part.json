@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "part_id": "chest-wood",
+  "slot": "prop",
+  "source_file": "part.svg",
+  "view_box": [0, 0, 24, 20],
+  "anchors": {
+    "root": [12, 20],
+    "lid": [12, 6]
+  },
+  "z_index": 10,
+  "palette_slots": ["wood", "metal"],
+  "tags": ["chest", "interactable", "prop", "ruins"],
+  "description": "Banded wooden treasure chest with root and lid placement anchors."
+}

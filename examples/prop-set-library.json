@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "asset_id": "prop-set-library",
+  "view_box": [0, 0, 96, 48],
+  "output": { "width": 384, "height": 192 },
+  "palette": {
+    "glass": "#bcd8e8",
+    "leaf": "#4f8a4f",
+    "liquid": "#c23a4a",
+    "metal": "#9aa2b5",
+    "stem": "#3a6b3a",
+    "stone": "#8d8a7d",
+    "wood": "#8a6a3b"
+  },
+  "parts": [
+    {
+      "id": "gate",
+      "part_id": "gate-stone",
+      "position": [24, 46],
+      "anchor": "root",
+      "attach_to": null,
+      "offset": [0, 0],
+      "scale": 1,
+      "rotate": 0,
+      "z_index": 5
+    },
+    {
+      "id": "chest",
+      "part_id": "chest-wood",
+      "position": [54, 46],
+      "anchor": "root",
+      "attach_to": null,
+      "offset": [0, 0],
+      "scale": 1,
+      "rotate": 0,
+      "z_index": 10
+    },
+    {
+      "id": "potion",
+      "part_id": "potion-red",
+      "position": [74, 46],
+      "anchor": "root",
+      "attach_to": null,
+      "offset": [0, 0],
+      "scale": 1,
+      "rotate": 0,
+      "z_index": 10
+    },
+    {
+      "id": "herb",
+      "part_id": "herb-green",
+      "position": [88, 46],
+      "anchor": "root",
+      "attach_to": null,
+      "offset": [0, 0],
+      "scale": 1,
+      "rotate": 0,
+      "z_index": 10
+    }
+  ]
+}

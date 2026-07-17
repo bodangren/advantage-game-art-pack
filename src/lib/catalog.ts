@@ -43,6 +43,20 @@ import tattersPrisonerSource from "../assets/svg-parts/shirt/tatters-prisoner/pa
 import shacklesPrisonerMetadata from "../assets/svg-parts/weapon/shackles-prisoner/part.json";
 import shacklesPrisonerSource from "../assets/svg-parts/weapon/shackles-prisoner/part.svg?raw";
 
+import chestWoodMetadata from "../assets/svg-parts/prop/chest-wood/part.json";
+import chestWoodSource from "../assets/svg-parts/prop/chest-wood/part.svg?raw";
+import gateStoneMetadata from "../assets/svg-parts/prop/gate-stone/part.json";
+import gateStoneSource from "../assets/svg-parts/prop/gate-stone/part.svg?raw";
+import potionRedMetadata from "../assets/svg-parts/prop/potion-red/part.json";
+import potionRedSource from "../assets/svg-parts/prop/potion-red/part.svg?raw";
+import herbGreenMetadata from "../assets/svg-parts/prop/herb-green/part.json";
+import herbGreenSource from "../assets/svg-parts/prop/herb-green/part.svg?raw";
+
+import projectileFireMetadata from "../assets/svg-parts/fx/projectile-fire/part.json";
+import projectileFireSource from "../assets/svg-parts/fx/projectile-fire/part.svg?raw";
+import auraMagicMetadata from "../assets/svg-parts/fx/aura-magic/part.json";
+import auraMagicSource from "../assets/svg-parts/fx/aura-magic/part.svg?raw";
+
 import {
   type SvgPart,
   type SvgPartMetadata,
@@ -77,13 +91,27 @@ export const SVG_PARTS = [
   part(tattersPrisonerMetadata, tattersPrisonerSource),
   part(hairPrisonerMetadata, hairPrisonerSource),
   part(shacklesPrisonerMetadata, shacklesPrisonerSource),
+  part(chestWoodMetadata, chestWoodSource),
+  part(gateStoneMetadata, gateStoneSource),
+  part(potionRedMetadata, potionRedSource),
+  part(herbGreenMetadata, herbGreenSource),
+  part(projectileFireMetadata, projectileFireSource),
+  part(auraMagicMetadata, auraMagicSource),
 ] as const satisfies readonly SvgPart[];
 
 export const SVG_PARTS_BY_ID = new Map(
   SVG_PARTS.map((asset) => [asset.metadata.part_id, asset]),
 );
 
-export const SVG_SLOTS = ["body", "shirt", "hair", "feature", "weapon"] as const;
+export const SVG_SLOTS = [
+  "body",
+  "shirt",
+  "hair",
+  "feature",
+  "weapon",
+  "prop",
+  "fx",
+] as const;
 export type SvgSlot = (typeof SVG_SLOTS)[number];
 
 export function partsForSlot(slot: SvgSlot): readonly SvgPart[] {

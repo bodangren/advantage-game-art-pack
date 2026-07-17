@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "part_id": "herb-green",
+  "slot": "prop",
+  "source_file": "part.svg",
+  "view_box": [0, 0, 16, 18],
+  "anchors": {
+    "root": [8, 18]
+  },
+  "z_index": 10,
+  "palette_slots": ["leaf", "stem"],
+  "tags": ["herb", "library", "pickup", "prop"],
+  "description": "Sprouting green herb with leaf pair, stem, and a root anchor."
+}

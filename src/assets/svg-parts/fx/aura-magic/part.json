@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "part_id": "aura-magic",
+  "slot": "fx",
+  "source_file": "part.svg",
+  "view_box": [0, 0, 32, 32],
+  "anchors": {
+    "root": [16, 16],
+    "top": [16, 2]
+  },
+  "z_index": 5,
+  "palette_slots": ["glow"],
+  "tags": ["aura", "fx", "library", "magic"],
+  "description": "Concentric magic aura ring with cardinal ticks and a center anchor."
+}

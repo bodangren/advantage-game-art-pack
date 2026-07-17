@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 20">
+  <rect x="2" y="6" width="20" height="14" fill="var(--wood)"/>
+  <rect x="2" y="6" width="20" height="3" fill="var(--metal)"/>
+  <rect x="10" y="11" width="4" height="4" fill="var(--metal)"/>
+</svg>

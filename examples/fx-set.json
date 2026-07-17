@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "asset_id": "fx-set",
+  "view_box": [0, 0, 48, 48],
+  "output": { "width": 192, "height": 192 },
+  "palette": {
+    "ember": "#ffd23a",
+    "flame": "#ff8c3a",
+    "glow": "#b48cff"
+  },
+  "parts": [
+    {
+      "id": "aura",
+      "part_id": "aura-magic",
+      "position": [16, 26],
+      "anchor": "root",
+      "attach_to": null,
+      "offset": [0, 0],
+      "scale": 1,
+      "rotate": 0,
+      "z_index": 5
+    },
+    {
+      "id": "projectile",
+      "part_id": "projectile-fire",
+      "position": [36, 22],
+      "anchor": "root",
+      "attach_to": null,
+      "offset": [0, 0],
+      "scale": 1,
+      "rotate": 0,
+      "z_index": 50
+    }
+  ]
+}

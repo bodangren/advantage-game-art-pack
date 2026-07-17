@@ -6,7 +6,9 @@ import bossDragonSpec from "../../examples/boss-dragon.json";
 import knightSpec from "../../examples/directional/knight.json";
 import enemyGoblinSpec from "../../examples/enemy-goblin.json";
 import enemySpectreSpec from "../../examples/enemy-spectre.json";
+import fxSetSpec from "../../examples/fx-set.json";
 import npcPrisonerSpec from "../../examples/npc-prisoner.json";
+import propSetLibrarySpec from "../../examples/prop-set-library.json";
 import svgCharacterSpec from "../../examples/svg_character.json";
 
 import { type AtlasPackerOptions, packAtlas } from "./atlas";
@@ -116,6 +118,8 @@ export const SPEC_REGISTRY: SpecRegistry = {
   "enemy-spectre": { kind: "composition", load: () => enemySpectreSpec },
   "boss-dragon": { kind: "composition", load: () => bossDragonSpec },
   "npc-prisoner": { kind: "composition", load: () => npcPrisonerSpec },
+  "prop-set-library": { kind: "composition", load: () => propSetLibrarySpec },
+  "fx-set": { kind: "composition", load: () => fxSetSpec },
 };
 
 type UnknownRecord = Record<string, unknown>;

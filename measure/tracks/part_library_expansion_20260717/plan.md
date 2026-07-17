@@ -22,14 +22,14 @@
 
 ## Phase 3: Prop and FX Parts
 
-- [~] Author prop parts (chest, gate, potion, herb) with placement anchors.
-- [ ] Author FX parts (projectile, aura) with palette slots.
-- [ ] Add seeded prop-set and FX composition specs and register them in the
+- [x] Author prop parts (chest, gate, potion, herb) with placement anchors.
+- [x] Author FX parts (projectile, aura) with palette slots.
+- [x] Add seeded prop-set and FX composition specs and register them in the
   bundle spec registry.
 
 ## Phase 4: Catalog, Bundle, and Desk Wiring
 
-- [ ] Extend catalog tag selection so parts are queryable by archetype, slot,
+- [~] Extend catalog tag selection so parts are queryable by archetype, slot,
   and theme.
 - [ ] Extend the seeded example bundle to reference the new archetype
   compositions.

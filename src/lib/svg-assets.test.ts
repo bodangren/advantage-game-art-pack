@@ -33,8 +33,14 @@ describe("SVG asset compiler", () => {
       "tatters-prisoner",
       "hair-prisoner",
       "shackles-prisoner",
+      "chest-wood",
+      "gate-stone",
+      "potion-red",
+      "herb-green",
+      "projectile-fire",
+      "aura-magic",
     ]);
-    expect(SVG_PARTS).toHaveLength(20);
+    expect(SVG_PARTS).toHaveLength(26);
   });
 
   it("composes deterministic anchor-attached SVG output", () => {
