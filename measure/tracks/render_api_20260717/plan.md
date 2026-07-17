@@ -11,17 +11,17 @@
 
 ## Phase 2: Render Module
 
-- [~] Implement palette inlining in `src/lib/render.ts`.
-- [ ] Implement `renderSpecToPng` via `@resvg/resvg-wasm`.
-- [ ] Add `@resvg/resvg-wasm` as a pinned direct dependency.
+- [x] Implement palette inlining in `src/lib/render.ts`.
+- [x] Implement `renderSpecToPng` via `@resvg/resvg-wasm`.
+- [x] Add `@resvg/resvg-wasm` as a pinned direct dependency.
 
 ## Phase 3: Route
 
-- [ ] Implement `pages/api/render.ts` with the method and error contract.
-- [ ] Smoke-verify through the dev server with curl: SVG, PNG, and 400 paths.
+- [x] Implement `pages/api/render.ts` with the method and error contract.
+- [x] Smoke-verify through the dev server with curl: SVG, PNG, and 400 paths.
 
 ## Phase 4: Docs and Verification
 
-- [ ] Document the endpoint with a curl example in the README; record the
+- [~] Document the endpoint with a curl example in the README; record the
   resvg-wasm dependency in `tech-stack.md`.
 - [ ] Run `npm run typecheck`, `npm test`, and `npm run build`.

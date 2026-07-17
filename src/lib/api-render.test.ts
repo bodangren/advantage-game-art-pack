@@ -1,10 +1,7 @@
 import { describe, expect, it } from "vitest";
 
-// Phase 1 Red: pages/api/render.ts does not exist yet. The handler is
-// reached through a runtime dynamic import so the suite stays importable
-// for the post-Green phase-1 sentinel while assertions fail until the
-// route lands. Phase 3 flips this to a direct typed import.
 import bossDragon from "../../examples/boss-dragon.json";
+import handler from "../../pages/api/render";
 
 interface ApiRequest {
   readonly method?: string;
@@ -20,14 +17,6 @@ interface ApiResponse {
   status(code: number): ApiResponse;
   json(data: unknown): void;
   send(data: unknown): void;
-}
-
-type RouteHandler = (req: ApiRequest, res: ApiResponse) => Promise<void> | void;
-
-async function loadHandler(): Promise<RouteHandler> {
-  const specifier = "../../pages/api/render";
-  const module = (await import(specifier)) as { default: RouteHandler };
-  return module.default;
 }
 
 function mockResponse(): ApiResponse {
@@ -59,7 +48,6 @@ function postRequest(body: unknown, query: Record<string, string> = {}): ApiRequ
 
 describe("api: POST /api/render", () => {
   it("api: renders a valid composition spec as SVG", async () => {
-    const handler = await loadHandler();
     const res = mockResponse();
     await handler(postRequest(bossDragon), res);
     expect(res.statusCode).toBe(200);
@@ -69,7 +57,6 @@ describe("api: POST /api/render", () => {
   });
 
   it("api: renders PNG when format=png", async () => {
-    const handler = await loadHandler();
     const res = mockResponse();
     await handler(postRequest(bossDragon, { format: "png" }), res);
     expect(res.statusCode).toBe(200);
@@ -79,15 +66,16 @@ describe("api: POST /api/render", () => {
   });
 
   it("api: rejects an invalid spec with 400 and the validation message", async () => {
-    const handler = await loadHandler();
     const res = mockResponse();
-    await handler(postRequest({ version: 2, asset_id: "bad" }), res);
+    await handler(
+      postRequest({ version: 2, asset_id: "bad", view_box: [0, 0, 64, 64], palette: {}, parts: [] }),
+      res,
+    );
     expect(res.statusCode).toBe(400);
     expect(String((res.body as { error?: string })?.error)).toMatch(/version/);
   });
 
   it("api: rejects an unknown part id with 400", async () => {
-    const handler = await loadHandler();
     const res = mockResponse();
     const spec = {
       ...bossDragon,
@@ -99,7 +87,6 @@ describe("api: POST /api/render", () => {
   });
 
   it("api: rejects non-POST methods with 405", async () => {
-    const handler = await loadHandler();
     const res = mockResponse();
     await handler({ method: "GET", query: {}, body: undefined }, res);
     expect(res.statusCode).toBe(405);

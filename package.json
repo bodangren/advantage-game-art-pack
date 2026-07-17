@@ -21,6 +21,7 @@
     "vite-plugin-dynamic-import": "1.5.0"
   },
   "dependencies": {
+    "@resvg/resvg-wasm": "2.4.0",
     "react": "19.2.7",
     "react-dom": "19.2.7",
     "vinext": "1.0.0-beta.1"
