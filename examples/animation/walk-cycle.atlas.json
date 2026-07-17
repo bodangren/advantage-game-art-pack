@@ -1,43 +1,43 @@
 {
+  "version": 1,
+  "frame_count": 4,
+  "frame_rects": [
+    {
+      "id": "walk-1",
+      "x": 0,
+      "y": 0,
+      "width": 32,
+      "height": 32
+    },
+    {
+      "id": "walk-2",
+      "x": 32,
+      "y": 0,
+      "width": 32,
+      "height": 32
+    },
+    {
+      "id": "walk-3",
+      "x": 64,
+      "y": 0,
+      "width": 32,
+      "height": 32
+    },
+    {
+      "id": "walk-4",
+      "x": 96,
+      "y": 0,
+      "width": 32,
+      "height": 32
+    }
+  ],
   "durations_ms": [
     120,
     120,
     120,
     120
   ],
-  "frame_count": 4,
-  "frame_rects": [
-    {
-      "height": 32,
-      "id": "walk-1",
-      "width": 32,
-      "x": 0,
-      "y": 0
-    },
-    {
-      "height": 32,
-      "id": "walk-2",
-      "width": 32,
-      "x": 32,
-      "y": 0
-    },
-    {
-      "height": 32,
-      "id": "walk-3",
-      "width": 32,
-      "x": 64,
-      "y": 0
-    },
-    {
-      "height": 32,
-      "id": "walk-4",
-      "width": 32,
-      "x": 96,
-      "y": 0
-    }
-  ],
-  "sheet_digest": "0b738fc8764658c49a5346e8c5253f78584da59df2f9d2c69d401d22b738a5a7",
-  "sheet_height": 32,
+  "sheet_digest": "92427dddfa3668ca8a499c56090566c0e1f76ff680c45b3577cc35ba41816304",
   "sheet_width": 128,
-  "version": 1
+  "sheet_height": 32
 }

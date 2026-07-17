@@ -1,4 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 48">
+  <rect x="8" y="2" width="8" height="11" fill="var(--skin)"/>
   <path d="M8 12h8l4 14-4 15H8l-4-15z" fill="var(--skin)"/>
   <rect x="7" y="19" width="10" height="12" fill="var(--cloth)"/>
   <rect x="7" y="40" width="4" height="7" fill="var(--shoe)"/>
