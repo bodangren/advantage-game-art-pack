@@ -212,6 +212,18 @@ vinext SVG desk.
   *Link: [./archive/per_game_asset_bundles_20260716/](./archive/per_game_asset_bundles_20260716/)*
   *Status: Complete — strict bundle manifest with slot enum and registry-based reference resolution (`src/lib/bundles.ts`), compile-every-reference validation with slot/ref error context, deterministic export tree (`bundle/<game>/<slot>/<asset>.svg` + bundle.json digests + audit report), and a seeded library-quest example. 79/79 tests, typecheck, and build green.*
 
+- [x] **Track: SVG Part Library Expansion**
+  *Link: [./archive/part_library_expansion_20260717/](./archive/part_library_expansion_20260717/)*
+  *Status: Complete — archetype part sets (goblin + spectre enemies, dragon boss, prisoner NPC) plus prop/fx parts grown 4 → 26 catalog entries, tag-based selection (`selectParts`/`catalogEntries`), seeded set compositions, and demand-audit-grounded archetype choices. Tests, typecheck, and build green.*
+
+- [x] **Track: Composition Render API**
+  *Link: [./archive/render_api_20260717/](./archive/render_api_20260717/)*
+  *Status: Complete — render module with palette inlining and PNG rasterization, `/api/render` route covered by node-level mock req/res tests plus live curl smoke (SVG, PNG, 400, 405). Tests, typecheck, and build green.*
+
+- [x] **Track: Mockup-Driven Part Art Pass**
+  *Link: [./archive/mockup_art_pass_20260717/](./archive/mockup_art_pass_20260717/)*
+  *Status: Complete — curated mmx mockups + manifest as art references, ramp shading applied across all part sets, shadow-ground fx part anchoring character compositions (26 → 27 parts), knight kept as shared shaded humanoid base. Tests, typecheck, and build green.*
+
 ## Retired (never started — Python/raster era)
 
 - [-] **Track: Release Bundle PNG Export** *Link: [./measure/archive/release_bundle_png_export_20260508/](./measure/archive/release_bundle_png_export_20260508/)*
@@ -220,6 +232,10 @@ vinext SVG desk.
 - [-] **Track: Interactable and Book Compiler Families** *Link: [./measure/archive/interactable_and_book_compiler_20260524/](./measure/archive/interactable_and_book_compiler_20260524/)*
 
 ## Active Tracks (TypeScript SVG desk)
+
+- [~] **Track: SVG Part Art Quality Iteration**
+  *Link: [./tracks/svg_art_quality_iteration_20260717/](./tracks/svg_art_quality_iteration_20260717/)*
+  Iterate each archetype's parts until compositions track their mmx reference silhouettes, proportions, and shading inside the safe flat-shape SVG dialect; checked-in review-page scratch (`measure/review-scratch.mts`) regenerates `measure/review.html`; knight rebuilt as plate armor (`armor-plate`, `helmet-knight`, `cape-red`, `sword-long`). Depends on mockup_art_pass_20260717.
 
 - [ ] **Track: Tile and Scene Composition Engine**
   *Link: [./tracks/tile_scene_composition_20260717/](./tracks/tile_scene_composition_20260717/)*
@@ -232,3 +248,7 @@ vinext SVG desk.
 - [ ] **Track: LLM Part and Spec Authoring Loop**
   *Link: [./tracks/llm_part_authoring_20260717/](./tracks/llm_part_authoring_20260717/)*
   Provider-abstracted, catalog-grounded authoring loop with bounded validate-and-repair retries; authored parts/specs land in a staging area, mock provider and eval fixtures keep tests deterministic. Depends on part_library_expansion_20260717.
+
+- [ ] **Track: Presentation Surfaces: UI Atlases, Covers, and Loading Screens**
+  *Link: [./tracks/presentation_surfaces_20260718/](./tracks/presentation_surfaces_20260718/)*
+  Strict presentation spec compiling UI frame atlases (named frame rects) plus cover/loading surfaces that reuse scene backgrounds and anchored compositions; deterministic SVG + manifest with safe-zone metadata; text rendering stays downstream. Depends on tile_scene_composition_20260717.

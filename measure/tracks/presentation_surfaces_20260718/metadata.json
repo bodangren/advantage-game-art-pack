@@ -1,0 +1,10 @@
+{
+  "id": "presentation_surfaces_20260718",
+  "title": "Presentation Surfaces: UI Atlases, Covers, and Loading Screens",
+  "type": "feature",
+  "status": "pending",
+  "created": "2026-07-18",
+  "priority": "high",
+  "estimated_tasks": 14,
+  "depends_on": ["tile_scene_composition_20260717"]
+}
