@@ -36,21 +36,24 @@ artifacts that build consistently on the supported Node 22 Linux environment.
 
 ## Structure
 
-- `pages/`: vinext Pages Router surface (assembly desk + animation dock)
+- `pages/`: vinext Pages Router surface (assembly desk, animation + directional docks, archetype library)
 - `src/lib/svg-assets.ts`: typed validator, anchor resolver, serializer, and metadata builder
 - `src/lib/timeline.ts`: timeline spec validation, per-frame overrides, deterministic frame digests
 - `src/lib/atlas.ts`: row-major atlas packer, sheet safety guard, atlas JSON + Phaser load contract
 - `src/lib/directional.ts`: 4/8-way directional spec expansion, declared flips, sheet manifest
 - `src/lib/bundles.ts`: per-game bundle manifest validation, spec registry, deterministic exporter
-- `src/lib/catalog.ts`: checked-in SVG part catalog
+- `src/lib/catalog.ts`: checked-in SVG part catalog with tag-based selection
 - `src/assets/svg-parts/`: human-readable SVG and part metadata
 - `src/lib/svg-assets.test.ts`: deterministic compiler and safety tests
 - `src/lib/timeline.test.ts` / `src/lib/atlas.test.ts`: timeline and atlas contract tests
 - `src/lib/directional.test.ts`: directional spec, expansion, and manifest contract tests
 - `src/lib/bundles.test.ts`: bundle manifest, compile, and export contract tests
+- `src/lib/catalog.test.ts`: catalog contents, tag selection, and catalog JSON contract tests
+- `src/lib/archetype-parts.test.ts` / `src/lib/archetype-examples.test.ts`: archetype part fixture and seeded composition contract tests
 - `src/lib/walk-cycle.test.ts`: frozen-fixture contract for the checked-in example
 - `src/lib/knight-example.test.ts`: frozen-manifest contract for the knight example
 - `examples/svg_character.json`: standalone composition contract example
+- `examples/enemy-goblin.json` / `enemy-spectre.json` / `boss-dragon.json` / `npc-prisoner.json` / `prop-set-library.json` / `fx-set.json`: seeded archetype compositions with frozen digests (`examples/composition-digests.json`)
 - `examples/animation/`: walk-cycle timeline plus frozen digest, atlas, and Phaser fixtures
 - `examples/directional/`: knight 4-way walk+idle spec plus frozen sheet manifest
 - `examples/bundles/`: seeded per-game bundle manifests (exports land in the
@@ -63,6 +66,15 @@ layer priority. Compositions declare a stable viewBox, optional output size,
 concrete hex colors, and direct or anchor-attached placements. The accepted SVG
 dialect rejects scripts, text, external references, event attributes, and
 unsupported elements.
+
+### Catalog selection
+
+Part slots are `body`, `shirt`, `hair`, `feature`, `weapon`, `prop`, and `fx`.
+`selectParts({ archetype?, slot?, theme? })` filters the checked-in library
+with AND semantics — archetype and theme match against part tags — and returns
+parts sorted by `part_id`. `catalogEntries()` emits the stable, sorted catalog
+JSON (slot, anchors, palette slots, layer priority, tags, description per
+part) suitable for LLM prompt context.
 
 ### Timeline JSON
 

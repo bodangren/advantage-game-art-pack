@@ -2,9 +2,11 @@
   "id": "part_library_expansion_20260717",
   "title": "SVG Part Library Expansion",
   "type": "feature",
-  "status": "pending",
+  "status": "completed",
   "created": "2026-07-17",
   "priority": "high",
   "estimated_tasks": 15,
-  "depends_on": ["composable_svg_assets_20260716"]
+  "actual_tasks": 15,
+  "depends_on": ["composable_svg_assets_20260716"],
+  "deviation_notes": "Phase 1 Red was kept at assertion level (fs-loaded part/spec fixtures, structural casts for the not-yet-exported selectParts/catalogEntries) instead of the usual missing-module imports, because the post-Green phase-1 sentinel spawns a full child vitest run that fails on any suite import error; catalog.test.ts flipped to direct typed imports in Phase 4. Two existing tests tracked the expanded library by design: svg-assets.test.ts catalog contents (4 -> 26 parts) and bundles.test.ts seeded bundle assets (10 -> 16). Archetype choices grounded in the demand audit: goblin + spectre enemies, dragon boss, prisoner NPC/rescue; themes library/ruins. Frozen digests were generated from real compiler output via a scratch vitest generator, per the fixture-authoring lesson."
 }
