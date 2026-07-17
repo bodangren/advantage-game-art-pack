@@ -221,6 +221,14 @@ vinext SVG desk.
 
 ## Active Tracks (TypeScript SVG desk)
 
+- [ ] **Track: Composition Render API**
+  *Link: [./tracks/render_api_20260717/](./tracks/render_api_20260717/)*
+  POST /api/render turning a composition spec into deterministic SVG or server-rasterized PNG (palette-inlined, resvg-wasm), so asset authoring becomes a fast spec → image loop and asset packs gain an export path. Depends on part_library_expansion_20260717.
+
+- [ ] **Track: Mockup-Driven Part Art Pass**
+  *Link: [./tracks/mockup_art_pass_20260717/](./tracks/mockup_art_pass_20260717/)*
+  mmx-generated pixel-art reference mockups checked in with a manifest; palette-ramp shading vocabulary (light/base/shadow, flat banded shapes, dither — no blur/filters); rework all shipped part sets toward the mockups with browser verification. Depends on render_api_20260717.
+
 - [ ] **Track: Tile and Scene Composition Engine**
   *Link: [./tracks/tile_scene_composition_20260717/](./tracks/tile_scene_composition_20260717/)*
   Scene spec with seam-safe tile grids, ordered layers, and prop placement compiled through the existing engine; deterministic scene SVG + manifest, parallax layer-set export, checked-in examples. Depends on part_library_expansion_20260717.
