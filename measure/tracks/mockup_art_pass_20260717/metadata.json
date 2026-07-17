@@ -2,9 +2,11 @@
   "id": "mockup_art_pass_20260717",
   "title": "Mockup-Driven Part Art Pass",
   "type": "feature",
-  "status": "pending",
+  "status": "completed",
   "created": "2026-07-17",
   "priority": "high",
   "estimated_tasks": 13,
-  "depends_on": ["render_api_20260717"]
+  "actual_tasks": 13,
+  "depends_on": ["render_api_20260717"],
+  "deviation_notes": "A shadow-ground fx part joined the catalog (26 -> 27 parts) so every character composition anchors with a ground-shadow ellipse; catalog and svg-assets test id lists/counts bumped by design. Ground shadows were applied to the five static character examples only, not animation frames (shadows layer at runtime for animated sprites). The knight set was kept as the shared shaded humanoid base (desk default and animations reuse it) rather than rebuilt into the mockup's full plate armor — a dedicated armor part family is future work. The aura reference was regenerated for a simpler ground-ring target and prisoner mockup 002 was selected over a soft 001. timeline.test positional parts index bumped after the shadow placement insertion; two earlier lessons-learned edits were re-applied after silent anchor mismatches."
 }
