@@ -2,16 +2,16 @@
 
 ## Phase 1: Contract-First Tests
 
-- [ ] Add failing tests for palette inlining: composed SVG rewritten with
+- [x] Add failing tests for palette inlining: composed SVG rewritten with
   concrete hex values, no `var()` or `<style>` remaining, deterministic.
-- [ ] Add failing tests for `renderSpecToPng`: PNG magic bytes, output
+- [x] Add failing tests for `renderSpecToPng`: PNG magic bytes, output
   dimensions honored (spec.output, else viewBox), byte-identical repeat.
-- [ ] Add failing tests for the route handler contract: 200 SVG for a valid
+- [x] Add failing tests for the route handler contract: 200 SVG for a valid
   spec, 400 with `{ error }` for invalid spec and unknown part, 405 for GET.
 
 ## Phase 2: Render Module
 
-- [ ] Implement palette inlining in `src/lib/render.ts`.
+- [~] Implement palette inlining in `src/lib/render.ts`.
 - [ ] Implement `renderSpecToPng` via `@resvg/resvg-wasm`.
 - [ ] Add `@resvg/resvg-wasm` as a pinned direct dependency.
 
