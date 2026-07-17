@@ -117,3 +117,52 @@ export type SvgSlot = (typeof SVG_SLOTS)[number];
 export function partsForSlot(slot: SvgSlot): readonly SvgPart[] {
   return SVG_PARTS.filter((part) => part.metadata.slot === slot);
 }
+
+export interface PartQuery {
+  readonly archetype?: string;
+  readonly slot?: SvgSlot;
+  readonly theme?: string;
+}
+
+// Tag-based selection for LLM prompt context: filters combine with AND
+// semantics and results are always sorted by part_id for stable output.
+export function selectParts(query: PartQuery): readonly SvgPart[] {
+  return SVG_PARTS.filter((part) => {
+    if (query.slot !== undefined && part.metadata.slot !== query.slot) {
+      return false;
+    }
+    if (query.archetype !== undefined && !part.metadata.tags.includes(query.archetype)) {
+      return false;
+    }
+    if (query.theme !== undefined && !part.metadata.tags.includes(query.theme)) {
+      return false;
+    }
+    return true;
+  }).sort((a, b) => a.metadata.part_id.localeCompare(b.metadata.part_id));
+}
+
+export interface CatalogEntry {
+  readonly part_id: string;
+  readonly slot: string;
+  readonly anchors: SvgPartMetadata["anchors"];
+  readonly palette_slots: readonly string[];
+  readonly z_index: number;
+  readonly tags: readonly string[];
+  readonly description: string;
+}
+
+// Stable, sorted catalog JSON suitable for LLM context: every part with
+// its slot, anchors, palette slots, layer priority, and tags.
+export function catalogEntries(): readonly CatalogEntry[] {
+  return [...SVG_PARTS]
+    .sort((a, b) => a.metadata.part_id.localeCompare(b.metadata.part_id))
+    .map((part) => ({
+      part_id: part.metadata.part_id,
+      slot: part.metadata.slot,
+      anchors: part.metadata.anchors,
+      palette_slots: part.metadata.palette_slots,
+      z_index: part.metadata.z_index,
+      tags: part.metadata.tags,
+      description: part.metadata.description,
+    }));
+}

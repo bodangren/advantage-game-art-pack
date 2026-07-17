@@ -29,14 +29,14 @@
 
 ## Phase 4: Catalog, Bundle, and Desk Wiring
 
-- [~] Extend catalog tag selection so parts are queryable by archetype, slot,
+- [x] Extend catalog tag selection so parts are queryable by archetype, slot,
   and theme.
-- [ ] Extend the seeded example bundle to reference the new archetype
+- [x] Extend the seeded example bundle to reference the new archetype
   compositions.
-- [ ] Surface the new parts and compositions in the desk.
+- [x] Surface the new parts and compositions in the desk.
 
 ## Phase 5: Verification
 
-- [ ] Run `npm run typecheck`, `npm test`, and `npm run build`.
+- [~] Run `npm run typecheck`, `npm test`, and `npm run build`.
 - [ ] Update product docs and lessons learned where the library contract
   changed.

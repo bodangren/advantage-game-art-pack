@@ -97,9 +97,10 @@ describe("bundles: compile-every-reference", () => {
   it("bundles: compiles every referenced spec into digested assets", async () => {
     const compiled = await compileBundle(seededExample);
     expect(compiled.game).toBe("library-quest");
-    // knight sheet → 8 direction sheets, walk-cycle timeline → 1 sheet,
-    // lpc-style-character composition → 1 svg.
-    expect(compiled.assets).toHaveLength(10);
+    // knight sheet → 8 direction sheets, npc-prisoner + 3 enemy
+    // compositions + lpc-style-character + prop-set-library → 6 svgs,
+    // walk-cycle timeline → 1 sheet, fx-set composition → 1 svg.
+    expect(compiled.assets).toHaveLength(16);
     for (const asset of compiled.assets) {
       expect(asset.digest).toMatch(/^[a-f0-9]{64}$/);
       expect(asset.digest).toBe(await sha256(asset.svg));
@@ -170,7 +171,7 @@ describe("bundles: export determinism", () => {
       const result = await exportBundle(await compileBundle(seededExample), outDir);
       expect(result.bundle_json.version).toBe(1);
       expect(result.bundle_json.game).toBe("library-quest");
-      expect(result.bundle_json.assets).toHaveLength(10);
+      expect(result.bundle_json.assets).toHaveLength(16);
       const written = JSON.parse(
         await readFile(join(outDir, "library-quest", "bundle.json"), "utf8"),
       );

@@ -4,15 +4,32 @@
   "slots": [
     {
       "slot": "characters",
-      "refs": [{ "kind": "sheet", "id": "knight" }]
+      "refs": [
+        { "kind": "sheet", "id": "knight" },
+        { "kind": "composition", "id": "npc-prisoner" }
+      ]
+    },
+    {
+      "slot": "enemies",
+      "refs": [
+        { "kind": "composition", "id": "enemy-goblin" },
+        { "kind": "composition", "id": "enemy-spectre" },
+        { "kind": "composition", "id": "boss-dragon" }
+      ]
     },
     {
       "slot": "fx",
-      "refs": [{ "kind": "timeline", "id": "walk-cycle" }]
+      "refs": [
+        { "kind": "timeline", "id": "walk-cycle" },
+        { "kind": "composition", "id": "fx-set" }
+      ]
     },
     {
       "slot": "props",
-      "refs": [{ "kind": "composition", "id": "lpc-style-character" }]
+      "refs": [
+        { "kind": "composition", "id": "lpc-style-character" },
+        { "kind": "composition", "id": "prop-set-library" }
+      ]
     }
   ]
 }

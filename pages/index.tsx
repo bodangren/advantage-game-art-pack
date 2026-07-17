@@ -3,10 +3,16 @@
 import { useEffect, useState } from "react";
 
 import walkCycleExample from "../examples/animation/walk-cycle.json";
+import bossDragonExample from "../examples/boss-dragon.json";
 import knightExample from "../examples/directional/knight.json";
+import enemyGoblinExample from "../examples/enemy-goblin.json";
+import enemySpectreExample from "../examples/enemy-spectre.json";
+import fxSetExample from "../examples/fx-set.json";
+import npcPrisonerExample from "../examples/npc-prisoner.json";
+import propSetLibraryExample from "../examples/prop-set-library.json";
 import { packAtlas, type AtlasMetadata } from "../src/lib/atlas";
 import { DEFAULT_SPEC } from "../src/lib/default-spec";
-import { SVG_PARTS, partsForSlot, type SvgSlot } from "../src/lib/catalog";
+import { SVG_PARTS, SVG_SLOTS, partsForSlot, type SvgSlot } from "../src/lib/catalog";
 import {
   compileDirectionalSheets,
   type Direction,
@@ -38,6 +44,23 @@ const SLOT_ORDER: readonly SvgSlot[] = ["body", "shirt", "hair", "weapon"];
 const PALETTE_ORDER = ["skin", "hair", "cloth", "leather", "metal", "shoe"] as const;
 const SELECTABLE_SLOTS = ["shirt", "hair", "weapon"] as const;
 type SelectableSlot = (typeof SELECTABLE_SLOTS)[number];
+
+const LIBRARY_EXAMPLES = [
+  enemyGoblinExample,
+  enemySpectreExample,
+  bossDragonExample,
+  npcPrisonerExample,
+  propSetLibraryExample,
+  fxSetExample,
+] as const;
+
+// Seeded archetype previews are deterministic, so they compose once at
+// module scope alongside the desk's other static contracts.
+const LIBRARY_PREVIEWS = LIBRARY_EXAMPLES.map((spec) => ({
+  assetId: spec.asset_id,
+  partCount: spec.parts.length,
+  svg: composeSvg(spec as unknown as SvgCompositionSpec, SVG_PARTS),
+}));
 
 const INITIAL_SELECTION: Record<SelectableSlot, string> = {
   shirt: "shirt-tunic",
@@ -453,6 +476,44 @@ export default function Home() {
         ) : (
           <p className="animation-loading">Compiling knight sheets…</p>
         )}
+      </section>
+
+      <section className="animation-dock" aria-label="Archetype part library and seeded compositions">
+        <div className="panel-heading">
+          <span className="panel-index">06</span>
+          <div>
+            <p className="eyebrow">LIBRARY / {String(SVG_PARTS.length).padStart(2, "0")} PARTS</p>
+            <h2>Archetype catalog + seeded sets</h2>
+          </div>
+        </div>
+
+        <div className="animation-grid">
+          <div className="frame-strip">
+            {LIBRARY_PREVIEWS.map((preview) => (
+              <figure className="frame-cell" key={preview.assetId}>
+                <div className="frame-stage">
+                  {/* Seeded previews are emitted by the deterministic composition engine. */}
+                  <div dangerouslySetInnerHTML={{ __html: preview.svg }} />
+                </div>
+                <figcaption>
+                  <strong>{preview.assetId}</strong>
+                  <small>{preview.partCount} parts / seeded</small>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+
+          <div className="layer-stack">
+            <div className="stack-label">CATALOG <span>SLOT / PARTS</span></div>
+            {SVG_SLOTS.map((slot) => (
+              <div className="layer-row" key={slot}>
+                <span>{slot}</span>
+                <span>{partsForSlot(slot).map((part) => part.metadata.part_id).join(", ")}</span>
+                <small>{String(partsForSlot(slot).length).padStart(2, "0")}</small>
+              </div>
+            ))}
+          </div>
+        </div>
       </section>
 
       <footer className="site-footer">
