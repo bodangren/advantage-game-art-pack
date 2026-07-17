@@ -221,7 +221,7 @@ vinext SVG desk.
 
 ## Active Tracks (TypeScript SVG desk)
 
-- [ ] **Track: Mockup-Driven Part Art Pass**
+- [~] **Track: Mockup-Driven Part Art Pass**
   *Link: [./tracks/mockup_art_pass_20260717/](./tracks/mockup_art_pass_20260717/)*
   mmx-generated pixel-art reference mockups checked in with a manifest; palette-ramp shading vocabulary (light/base/shadow, flat banded shapes, dither — no blur/filters); rework all shipped part sets toward the mockups with browser verification. Depends on render_api_20260717.
 

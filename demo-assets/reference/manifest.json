@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "generated_with": "mmx image generate",
+  "style_suffix": "16-bit SNES style, flat colors with 3-tone shading, crisp pixels, solid black background, video game asset, centered",
+  "notes": "Reference mockups for the mockup-driven art pass. Light direction is top-left across the set; shading is 3-tone banded flat shapes with no outlines; characters carry a dark ground-shadow ellipse.",
+  "references": [
+    {
+      "archetype": "knight",
+      "file": "knight-mockup_001.jpg",
+      "prompt": "pixel art game sprite, armored knight character holding a sword, front view, full body",
+      "candidates": ["knight-mockup_001.jpg", "knight-mockup_002.jpg"],
+      "targets": ["body-base", "shirt-tunic", "hair-short", "sword-basic"]
+    },
+    {
+      "archetype": "goblin",
+      "file": "goblin-mockup_001.jpg",
+      "prompt": "pixel art game sprite, goblin enemy character, front view, full body",
+      "candidates": ["goblin-mockup_001.jpg", "goblin-mockup_002.jpg"],
+      "targets": ["body-goblin", "ears-goblin", "rags-goblin", "club-goblin"]
+    },
+    {
+      "archetype": "spectre",
+      "file": "spectre-mockup_001.jpg",
+      "prompt": "pixel art game sprite, ghostly hooded spectre with glowing eyes and a floating magic orb, front view, full body",
+      "candidates": ["spectre-mockup_001.jpg", "spectre-mockup_002.jpg"],
+      "targets": ["body-spectre", "eyes-spectre", "shroud-spectre", "orb-spectre"]
+    },
+    {
+      "archetype": "dragon",
+      "file": "dragon-mockup_001.jpg",
+      "prompt": "pixel art game sprite, mighty dragon boss with spread wings breathing fire, side profile, full body",
+      "candidates": ["dragon-mockup_001.jpg", "dragon-mockup_002.jpg"],
+      "targets": ["body-dragon", "wings-dragon", "plate-dragon", "breath-dragon"]
+    },
+    {
+      "archetype": "prisoner",
+      "file": "prisoner-mockup_002.jpg",
+      "prompt": "pixel art game sprite, weary prisoner in tattered clothes with iron shackles, front view, full body",
+      "candidates": ["prisoner-mockup_001.jpg", "prisoner-mockup_002.jpg"],
+      "targets": ["body-prisoner", "hair-prisoner", "tatters-prisoner", "shackles-prisoner"]
+    },
+    {
+      "archetype": "prop-chest",
+      "file": "chest-mockup_001.jpg",
+      "prompt": "pixel art game sprite, wooden treasure chest with metal bands, game item",
+      "candidates": ["chest-mockup_001.jpg", "chest-mockup_002.jpg"],
+      "targets": ["chest-wood"]
+    },
+    {
+      "archetype": "prop-gate",
+      "file": "gate-mockup_001.jpg",
+      "prompt": "pixel art game sprite, stone dungeon gate with metal portcullis bars, game structure",
+      "candidates": ["gate-mockup_001.jpg", "gate-mockup_002.jpg"],
+      "targets": ["gate-stone"]
+    },
+    {
+      "archetype": "prop-potion",
+      "file": "potion-mockup_001.jpg",
+      "prompt": "pixel art game sprite, red potion in a glass bottle, game pickup item",
+      "candidates": ["potion-mockup_001.jpg", "potion-mockup_002.jpg"],
+      "targets": ["potion-red"]
+    },
+    {
+      "archetype": "prop-herb",
+      "file": "herb-mockup_001.jpg",
+      "prompt": "pixel art game sprite, green herb plant sprout with leaves, game pickup item",
+      "candidates": ["herb-mockup_001.jpg", "herb-mockup_002.jpg"],
+      "targets": ["herb-green"]
+    },
+    {
+      "archetype": "fx-projectile",
+      "file": "projectile-mockup_001.jpg",
+      "prompt": "pixel art game sprite, fireball projectile with flame trail flying right, side view, game effect",
+      "candidates": ["projectile-mockup_001.jpg", "projectile-mockup_002.jpg"],
+      "targets": ["projectile-fire"]
+    },
+    {
+      "archetype": "fx-aura",
+      "file": "aura-mockup_001.jpg",
+      "prompt": "pixel art game sprite, simple glowing magic circle on the ground seen from above, thin ring with small rune marks, purple and lavender glow",
+      "candidates": ["aura-mockup_001.jpg", "aura-mockup_002.jpg"],
+      "targets": ["aura-magic"]
+    }
+  ]
+}

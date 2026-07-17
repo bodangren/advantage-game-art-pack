@@ -2,16 +2,16 @@
 
 ## Phase 1: Reference Mockups
 
-- [ ] Generate and curate mmx mockups for the five character archetypes;
+- [x] Generate and curate mmx mockups for the five character archetypes;
   check into `demo-assets/reference/` with a prompt/archetype manifest.
-- [ ] Generate and curate mmx mockups for the prop and FX sets; extend the
+- [x] Generate and curate mmx mockups for the prop and FX sets; extend the
   manifest.
 
 ## Phase 2: Shading Convention
 
-- [ ] Add failing ramp-convention tests: character palettes carry
+- [x] Add failing ramp-convention tests: character palettes carry
   light/base/shadow ramps and every declared ramp slot is used by parts.
-- [ ] Document the flat-shape shading vocabulary (ramps, banding, dither,
+- [~] Document the flat-shape shading vocabulary (ramps, banding, dither,
   ground shadow; no blur/filters) in DESIGN.md and the README contract.
 
 ## Phase 3: Art Pass
