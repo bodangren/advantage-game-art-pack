@@ -50,7 +50,7 @@
       "position": [0, 0],
       "anchor": "root",
       "attach_to": { "placement_id": "body", "anchor": "hand" },
-      "offset": [0, 0],
+      "offset": [-4, 8],
       "scale": 1,
       "rotate": 0,
       "z_index": 40
