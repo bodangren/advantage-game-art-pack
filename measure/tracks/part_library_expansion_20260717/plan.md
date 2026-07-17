@@ -2,12 +2,12 @@
 
 ## Phase 1: Contract-First Tests
 
-- [ ] Add failing validation tests for the planned archetype part fixtures
+- [x] Add failing validation tests for the planned archetype part fixtures
   (enemy, boss, NPC, prop, FX) covering metadata exact keys, anchors, and
   palette slots.
-- [ ] Add failing catalog tests asserting the new part ids, slot coverage, and
+- [x] Add failing catalog tests asserting the new part ids, slot coverage, and
   tag-based selection by archetype and theme.
-- [ ] Add failing composition tests for the seeded enemy, boss, NPC, prop-set,
+- [x] Add failing composition tests for the seeded enemy, boss, NPC, prop-set,
   and FX example specs with frozen digests.
 
 ## Phase 2: Character Archetype Parts

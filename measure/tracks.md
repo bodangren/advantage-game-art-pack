@@ -221,7 +221,7 @@ vinext SVG desk.
 
 ## Active Tracks (TypeScript SVG desk)
 
-- [ ] **Track: SVG Part Library Expansion**
+- [~] **Track: SVG Part Library Expansion**
   *Link: [./tracks/part_library_expansion_20260717/](./tracks/part_library_expansion_20260717/)*
   Expand the checked-in part library beyond the knight set: enemy, boss, and NPC/rescue archetype part sets plus prop and FX parts, tag-based catalog selection, seeded example compositions registered in the bundle spec registry.
 
