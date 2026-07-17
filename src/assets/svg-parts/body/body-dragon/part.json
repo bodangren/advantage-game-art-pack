@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "part_id": "body-dragon",
+  "slot": "body",
+  "source_file": "part.svg",
+  "view_box": [0, 0, 48, 48],
+  "anchors": {
+    "root": [24, 48],
+    "head": [38, 8],
+    "torso": [22, 26],
+    "hand": [10, 32]
+  },
+  "z_index": 10,
+  "palette_slots": ["scale", "belly"],
+  "tags": ["body", "boss", "dragon", "ruins", "scales"],
+  "description": "Massive side-profile dragon body with head, torso, and claw anchors."
+}

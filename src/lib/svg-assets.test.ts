@@ -17,8 +17,24 @@ describe("SVG asset compiler", () => {
       "shirt-tunic",
       "hair-short",
       "sword-basic",
+      "body-goblin",
+      "rags-goblin",
+      "ears-goblin",
+      "club-goblin",
+      "body-spectre",
+      "shroud-spectre",
+      "eyes-spectre",
+      "orb-spectre",
+      "body-dragon",
+      "plate-dragon",
+      "wings-dragon",
+      "breath-dragon",
+      "body-prisoner",
+      "tatters-prisoner",
+      "hair-prisoner",
+      "shackles-prisoner",
     ]);
-    expect(SVG_PARTS).toHaveLength(4);
+    expect(SVG_PARTS).toHaveLength(20);
   });
 
   it("composes deterministic anchor-attached SVG output", () => {

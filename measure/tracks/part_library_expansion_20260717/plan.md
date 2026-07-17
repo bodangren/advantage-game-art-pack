@@ -12,17 +12,17 @@
 
 ## Phase 2: Character Archetype Parts
 
-- [ ] Author body, feature, clothing, and weapon parts for two enemy
+- [x] Author body, feature, clothing, and weapon parts for two enemy
   archetypes and validate them.
-- [ ] Author the boss archetype part set with declared anchors and palette
+- [x] Author the boss archetype part set with declared anchors and palette
   slots.
-- [ ] Author the NPC/rescue archetype part set.
-- [ ] Add seeded enemy, boss, and NPC composition specs under `examples/` and
+- [x] Author the NPC/rescue archetype part set.
+- [x] Add seeded enemy, boss, and NPC composition specs under `examples/` and
   register them in the bundle spec registry.
 
 ## Phase 3: Prop and FX Parts
 
-- [ ] Author prop parts (chest, gate, potion, herb) with placement anchors.
+- [~] Author prop parts (chest, gate, potion, herb) with placement anchors.
 - [ ] Author FX parts (projectile, aura) with palette slots.
 - [ ] Add seeded prop-set and FX composition specs and register them in the
   bundle spec registry.

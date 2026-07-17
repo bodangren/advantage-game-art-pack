@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 36">
+  <path d="M4 6C4 2 7 0 12 0s8 2 8 6l2 30H2z" fill="var(--shroud)"/>
+  <rect x="8" y="4" width="8" height="6" fill="var(--shade)"/>
+</svg>

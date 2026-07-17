@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "part_id": "club-goblin",
+  "slot": "weapon",
+  "source_file": "part.svg",
+  "view_box": [0, 0, 20, 28],
+  "anchors": {
+    "grip": [3, 20],
+    "root": [3, 26]
+  },
+  "z_index": 40,
+  "palette_slots": ["wood", "bone"],
+  "tags": ["club", "enemy", "goblin", "ruins", "weapon"],
+  "description": "Knotted wood club with a bone spike and a grip anchor for the hand."
+}

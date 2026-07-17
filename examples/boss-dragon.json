@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "asset_id": "boss-dragon",
+  "view_box": [0, 0, 64, 64],
+  "output": { "width": 256, "height": 256 },
+  "palette": {
+    "belly": "#e0c48f",
+    "bone": "#e8e0cc",
+    "ember": "#ffd23a",
+    "flame": "#ff8c3a",
+    "membrane": "#d98a4a",
+    "scale": "#8c3b2e"
+  },
+  "parts": [
+    {
+      "id": "body",
+      "part_id": "body-dragon",
+      "position": [24, 56],
+      "anchor": "root",
+      "attach_to": null,
+      "offset": [0, 0],
+      "scale": 1,
+      "rotate": 0,
+      "z_index": 10
+    },
+    {
+      "id": "wings",
+      "part_id": "wings-dragon",
+      "position": [0, 0],
+      "anchor": "root",
+      "attach_to": { "placement_id": "body", "anchor": "torso" },
+      "offset": [0, 0],
+      "scale": 1,
+      "rotate": 0,
+      "z_index": 5
+    },
+    {
+      "id": "plate",
+      "part_id": "plate-dragon",
+      "position": [0, 0],
+      "anchor": "root",
+      "attach_to": { "placement_id": "body", "anchor": "torso" },
+      "offset": [0, 0],
+      "scale": 1,
+      "rotate": 0,
+      "z_index": 20
+    },
+    {
+      "id": "breath",
+      "part_id": "breath-dragon",
+      "position": [0, 0],
+      "anchor": "root",
+      "attach_to": { "placement_id": "body", "anchor": "head" },
+      "offset": [0, 0],
+      "scale": 1,
+      "rotate": 0,
+      "z_index": 40
+    }
+  ]
+}

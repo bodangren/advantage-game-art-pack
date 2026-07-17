@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 32">
+  <path d="M5 2h14l2 8-3 2v16l-3-2-3 2-3-2-3 2-3-2V12l-3-2z" fill="var(--cloth)"/>
+  <rect x="6" y="13" width="12" height="3" fill="var(--leather)"/>
+</svg>

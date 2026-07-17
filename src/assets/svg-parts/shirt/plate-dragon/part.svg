@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+  <path d="M4 0h16l2 12-4 10H6l-4-10z" fill="var(--belly)"/>
+  <polygon points="12,4 16,12 12,20 8,12" fill="var(--bone)"/>
+</svg>

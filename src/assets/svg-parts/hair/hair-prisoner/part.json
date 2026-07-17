@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "part_id": "hair-prisoner",
+  "slot": "hair",
+  "source_file": "part.svg",
+  "view_box": [0, 0, 24, 16],
+  "anchors": {
+    "root": [12, 16]
+  },
+  "z_index": 30,
+  "palette_slots": ["hair"],
+  "tags": ["hair", "library", "npc", "prisoner"],
+  "description": "Long unkempt prisoner hair aligned to the body head anchor."
+}

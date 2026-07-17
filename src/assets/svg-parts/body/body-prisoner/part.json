@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "part_id": "body-prisoner",
+  "slot": "body",
+  "source_file": "part.svg",
+  "view_box": [0, 0, 24, 48],
+  "anchors": {
+    "root": [12, 48],
+    "head": [12, 6],
+    "torso": [12, 25],
+    "hand": [3, 24]
+  },
+  "z_index": 10,
+  "palette_slots": ["skin", "cloth", "shoe"],
+  "tags": ["body", "humanoid", "library", "npc", "prisoner"],
+  "description": "Worn prisoner body with the stable head, torso, and hand anchor set."
+}

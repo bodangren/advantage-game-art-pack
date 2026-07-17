@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "part_id": "shackles-prisoner",
+  "slot": "weapon",
+  "source_file": "part.svg",
+  "view_box": [0, 0, 20, 28],
+  "anchors": {
+    "grip": [10, 14],
+    "root": [10, 10]
+  },
+  "z_index": 40,
+  "palette_slots": ["metal"],
+  "tags": ["library", "npc", "prisoner", "shackles", "trinket"],
+  "description": "Iron wrist shackles with a chain, hanging from the hand anchor."
+}

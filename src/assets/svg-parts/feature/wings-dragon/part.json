@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "part_id": "wings-dragon",
+  "slot": "feature",
+  "source_file": "part.svg",
+  "view_box": [0, 0, 48, 24],
+  "anchors": {
+    "root": [24, 24]
+  },
+  "z_index": 5,
+  "palette_slots": ["membrane", "scale"],
+  "tags": ["boss", "dragon", "feature", "ruins", "wings"],
+  "description": "Spread dragon wings that sit behind the body at the torso anchor."
+}

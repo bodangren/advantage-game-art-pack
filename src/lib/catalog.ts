@@ -7,6 +7,42 @@ import shirtSource from "../assets/svg-parts/shirt/shirt-tunic/part.svg?raw";
 import swordMetadata from "../assets/svg-parts/weapon/sword-basic/part.json";
 import swordSource from "../assets/svg-parts/weapon/sword-basic/part.svg?raw";
 
+import bodyGoblinMetadata from "../assets/svg-parts/body/body-goblin/part.json";
+import bodyGoblinSource from "../assets/svg-parts/body/body-goblin/part.svg?raw";
+import earsGoblinMetadata from "../assets/svg-parts/feature/ears-goblin/part.json";
+import earsGoblinSource from "../assets/svg-parts/feature/ears-goblin/part.svg?raw";
+import ragsGoblinMetadata from "../assets/svg-parts/shirt/rags-goblin/part.json";
+import ragsGoblinSource from "../assets/svg-parts/shirt/rags-goblin/part.svg?raw";
+import clubGoblinMetadata from "../assets/svg-parts/weapon/club-goblin/part.json";
+import clubGoblinSource from "../assets/svg-parts/weapon/club-goblin/part.svg?raw";
+
+import bodySpectreMetadata from "../assets/svg-parts/body/body-spectre/part.json";
+import bodySpectreSource from "../assets/svg-parts/body/body-spectre/part.svg?raw";
+import eyesSpectreMetadata from "../assets/svg-parts/feature/eyes-spectre/part.json";
+import eyesSpectreSource from "../assets/svg-parts/feature/eyes-spectre/part.svg?raw";
+import shroudSpectreMetadata from "../assets/svg-parts/shirt/shroud-spectre/part.json";
+import shroudSpectreSource from "../assets/svg-parts/shirt/shroud-spectre/part.svg?raw";
+import orbSpectreMetadata from "../assets/svg-parts/weapon/orb-spectre/part.json";
+import orbSpectreSource from "../assets/svg-parts/weapon/orb-spectre/part.svg?raw";
+
+import bodyDragonMetadata from "../assets/svg-parts/body/body-dragon/part.json";
+import bodyDragonSource from "../assets/svg-parts/body/body-dragon/part.svg?raw";
+import wingsDragonMetadata from "../assets/svg-parts/feature/wings-dragon/part.json";
+import wingsDragonSource from "../assets/svg-parts/feature/wings-dragon/part.svg?raw";
+import plateDragonMetadata from "../assets/svg-parts/shirt/plate-dragon/part.json";
+import plateDragonSource from "../assets/svg-parts/shirt/plate-dragon/part.svg?raw";
+import breathDragonMetadata from "../assets/svg-parts/weapon/breath-dragon/part.json";
+import breathDragonSource from "../assets/svg-parts/weapon/breath-dragon/part.svg?raw";
+
+import bodyPrisonerMetadata from "../assets/svg-parts/body/body-prisoner/part.json";
+import bodyPrisonerSource from "../assets/svg-parts/body/body-prisoner/part.svg?raw";
+import hairPrisonerMetadata from "../assets/svg-parts/hair/hair-prisoner/part.json";
+import hairPrisonerSource from "../assets/svg-parts/hair/hair-prisoner/part.svg?raw";
+import tattersPrisonerMetadata from "../assets/svg-parts/shirt/tatters-prisoner/part.json";
+import tattersPrisonerSource from "../assets/svg-parts/shirt/tatters-prisoner/part.svg?raw";
+import shacklesPrisonerMetadata from "../assets/svg-parts/weapon/shackles-prisoner/part.json";
+import shacklesPrisonerSource from "../assets/svg-parts/weapon/shackles-prisoner/part.svg?raw";
+
 import {
   type SvgPart,
   type SvgPartMetadata,
@@ -25,13 +61,29 @@ export const SVG_PARTS = [
   part(shirtMetadata, shirtSource),
   part(hairMetadata, hairSource),
   part(swordMetadata, swordSource),
+  part(bodyGoblinMetadata, bodyGoblinSource),
+  part(ragsGoblinMetadata, ragsGoblinSource),
+  part(earsGoblinMetadata, earsGoblinSource),
+  part(clubGoblinMetadata, clubGoblinSource),
+  part(bodySpectreMetadata, bodySpectreSource),
+  part(shroudSpectreMetadata, shroudSpectreSource),
+  part(eyesSpectreMetadata, eyesSpectreSource),
+  part(orbSpectreMetadata, orbSpectreSource),
+  part(bodyDragonMetadata, bodyDragonSource),
+  part(plateDragonMetadata, plateDragonSource),
+  part(wingsDragonMetadata, wingsDragonSource),
+  part(breathDragonMetadata, breathDragonSource),
+  part(bodyPrisonerMetadata, bodyPrisonerSource),
+  part(tattersPrisonerMetadata, tattersPrisonerSource),
+  part(hairPrisonerMetadata, hairPrisonerSource),
+  part(shacklesPrisonerMetadata, shacklesPrisonerSource),
 ] as const satisfies readonly SvgPart[];
 
 export const SVG_PARTS_BY_ID = new Map(
   SVG_PARTS.map((asset) => [asset.metadata.part_id, asset]),
 );
 
-export const SVG_SLOTS = ["body", "shirt", "hair", "weapon"] as const;
+export const SVG_SLOTS = ["body", "shirt", "hair", "feature", "weapon"] as const;
 export type SvgSlot = (typeof SVG_SLOTS)[number];
 
 export function partsForSlot(slot: SvgSlot): readonly SvgPart[] {

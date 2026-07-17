@@ -2,7 +2,11 @@ import { mkdir, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 
 import walkCycleSpec from "../../examples/animation/walk-cycle.json";
+import bossDragonSpec from "../../examples/boss-dragon.json";
 import knightSpec from "../../examples/directional/knight.json";
+import enemyGoblinSpec from "../../examples/enemy-goblin.json";
+import enemySpectreSpec from "../../examples/enemy-spectre.json";
+import npcPrisonerSpec from "../../examples/npc-prisoner.json";
 import svgCharacterSpec from "../../examples/svg_character.json";
 
 import { type AtlasPackerOptions, packAtlas } from "./atlas";
@@ -108,6 +112,10 @@ export const SPEC_REGISTRY: SpecRegistry = {
   knight: { kind: "sheet", load: () => knightSpec },
   "walk-cycle": { kind: "timeline", load: () => walkCycleSpec },
   "lpc-style-character": { kind: "composition", load: () => svgCharacterSpec },
+  "enemy-goblin": { kind: "composition", load: () => enemyGoblinSpec },
+  "enemy-spectre": { kind: "composition", load: () => enemySpectreSpec },
+  "boss-dragon": { kind: "composition", load: () => bossDragonSpec },
+  "npc-prisoner": { kind: "composition", load: () => npcPrisonerSpec },
 };
 
 type UnknownRecord = Record<string, unknown>;

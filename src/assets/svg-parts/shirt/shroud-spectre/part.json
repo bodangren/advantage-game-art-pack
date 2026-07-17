@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "part_id": "shroud-spectre",
+  "slot": "shirt",
+  "source_file": "part.svg",
+  "view_box": [0, 0, 24, 36],
+  "anchors": {
+    "root": [12, 2],
+    "waist": [12, 34]
+  },
+  "z_index": 20,
+  "palette_slots": ["shroud", "shade"],
+  "tags": ["clothing", "enemy", "library", "shroud", "spectre"],
+  "description": "Hooded spectre cloak with a dark face opening, attaching at the head."
+}

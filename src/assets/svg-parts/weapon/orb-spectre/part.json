@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "part_id": "orb-spectre",
+  "slot": "weapon",
+  "source_file": "part.svg",
+  "view_box": [0, 0, 16, 20],
+  "anchors": {
+    "grip": [8, 14],
+    "root": [8, 19]
+  },
+  "z_index": 40,
+  "palette_slots": ["glow", "metal"],
+  "tags": ["enemy", "library", "orb", "spectre", "weapon"],
+  "description": "Chained spirit orb that hovers above the spectre hand anchor."
+}

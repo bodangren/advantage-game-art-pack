@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 16">
+  <path d="M0 8l6-6 4 2 6-4 8 8-8 8-6-4-4 2z" fill="var(--flame)"/>
+  <circle cx="15" cy="8" r="2" fill="var(--ember)"/>
+</svg>
