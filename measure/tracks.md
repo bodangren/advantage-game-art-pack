@@ -221,10 +221,6 @@ vinext SVG desk.
 
 ## Active Tracks (TypeScript SVG desk)
 
-- [x] **Track: SVG Part Library Expansion**
-  *Link: [./tracks/part_library_expansion_20260717/](./tracks/part_library_expansion_20260717/)*
-  Expand the checked-in part library beyond the knight set: enemy, boss, and NPC/rescue archetype part sets plus prop and FX parts, tag-based catalog selection, seeded example compositions registered in the bundle spec registry.
-
 - [ ] **Track: Tile and Scene Composition Engine**
   *Link: [./tracks/tile_scene_composition_20260717/](./tracks/tile_scene_composition_20260717/)*
   Scene spec with seam-safe tile grids, ordered layers, and prop placement compiled through the existing engine; deterministic scene SVG + manifest, parallax layer-set export, checked-in examples. Depends on part_library_expansion_20260717.
