@@ -8,7 +8,7 @@
     "root": [12, 1]
   },
   "z_index": 30,
-  "palette_slots": ["glow"],
+  "palette_slots": ["glow", "glow-light"],
   "tags": ["enemy", "eyes", "feature", "library", "spectre"],
-  "description": "Twin glowing spectre eyes aligned to float inside the shroud opening."
+  "description": "Twin glowing spectre eyes with bright cores, floating inside the shroud opening."
 }

@@ -9,7 +9,7 @@
     "root": [8, 19]
   },
   "z_index": 40,
-  "palette_slots": ["glow", "metal"],
+  "palette_slots": ["glow", "glow-light", "metal"],
   "tags": ["enemy", "library", "orb", "spectre", "weapon"],
-  "description": "Chained spirit orb that hovers above the spectre hand anchor."
+  "description": "Chained spirit orb with a bright glowing core, hovering above the hand anchor."
 }

@@ -28,3 +28,22 @@ SVG preview dominant.
 - Keep previews large, crisp, and pixelated without pretending SVG is a bitmap.
 - Prefer editorial serif display type paired with a monospaced utility face.
 - Preserve keyboard focus, readable contrast, and compact responsive layouts.
+
+## Asset Art Direction
+
+The shipped part library targets 16-bit pixel art for game export. The
+vocabulary is deliberately flat so the safe SVG dialect can express it, and
+it mirrors the curated mmx references in `demo-assets/reference/`:
+
+- **Ramps**: every core material carries three tones named `<slot>`,
+  `<slot>-light`, and `<slot>-shadow` in part metadata and composition
+  palettes.
+- **Light direction**: top-left. Highlight shapes sit on upper-left
+  surfaces, shadow tones on lower-right surfaces.
+- **Banding and dither**: shading is banded flat shapes; texture (scale,
+  stone, cloth weave) is sparse small-rect dither, never noise.
+- **Ground shadow**: characters place a `shadow-ground` ellipse below the
+  body (z below 10) to anchor the figure.
+- **No blur, filters, or CSS gradients**: softness is faked with stepped
+  bands of flat color.
+- **No outlines**: shapes separate by tone contrast, not strokes.

@@ -39,8 +39,9 @@ describe("SVG asset compiler", () => {
       "herb-green",
       "projectile-fire",
       "aura-magic",
+      "shadow-ground",
     ]);
-    expect(SVG_PARTS).toHaveLength(26);
+    expect(SVG_PARTS).toHaveLength(27);
   });
 
   it("composes deterministic anchor-attached SVG output", () => {

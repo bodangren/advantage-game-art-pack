@@ -8,7 +8,7 @@
     "root": [6, 16]
   },
   "z_index": 10,
-  "palette_slots": ["glass", "liquid"],
+  "palette_slots": ["glass", "glass-light", "liquid", "liquid-light", "liquid-shadow", "wood", "wood-light"],
   "tags": ["library", "pickup", "potion", "prop"],
-  "description": "Glass potion bottle with a filled liquid core and a root anchor."
+  "description": "Corked glass potion bottle with a shining ramp and filled liquid core."
 }

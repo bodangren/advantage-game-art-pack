@@ -26,10 +26,10 @@
         }
       ],
       "frame_digests": [
-        "1c1a643658181ace6038484261bc51ef45b8fe990a5511e45c5fd9faaeec397a",
-        "ac8b1fcb4a2ba0e1d64c8b9464c2e61ef56831a6d8758a280d3d9141c6c2c896"
+        "0c4bb94b307502eae4cee5e87d65714a829270992ee79820ee5e632e7221b181",
+        "963a4110fb954d3bf1faa089b7c036065927535b5d5b3a5baafeb2417017c462"
       ],
-      "sheet_digest": "5dc7b8b7cdadbd2b89b5ac7789bdee3f812a5b5f7bc9de893e45e491fd342416",
+      "sheet_digest": "9731f42c9ab61355f81aae7de81ce52ea79978b892f7355e6ad00201d6bf8bf0",
       "phaser_load": {
         "key": "knight-idle-north",
         "url": "asset.svg",
@@ -62,10 +62,10 @@
         }
       ],
       "frame_digests": [
-        "1c1a643658181ace6038484261bc51ef45b8fe990a5511e45c5fd9faaeec397a",
-        "ac8b1fcb4a2ba0e1d64c8b9464c2e61ef56831a6d8758a280d3d9141c6c2c896"
+        "0c4bb94b307502eae4cee5e87d65714a829270992ee79820ee5e632e7221b181",
+        "963a4110fb954d3bf1faa089b7c036065927535b5d5b3a5baafeb2417017c462"
       ],
-      "sheet_digest": "de455705b6e37bc5d233f6bf0888b7d14aeae7ee4ab523cc0cbf8909135d028e",
+      "sheet_digest": "53000fb3dec69a5e656a713518d1a0809d5f937d1467bd3189bb68abea049dda",
       "phaser_load": {
         "key": "knight-idle-south",
         "url": "asset.svg",
@@ -98,10 +98,10 @@
         }
       ],
       "frame_digests": [
-        "1c1a643658181ace6038484261bc51ef45b8fe990a5511e45c5fd9faaeec397a",
-        "ac8b1fcb4a2ba0e1d64c8b9464c2e61ef56831a6d8758a280d3d9141c6c2c896"
+        "0c4bb94b307502eae4cee5e87d65714a829270992ee79820ee5e632e7221b181",
+        "963a4110fb954d3bf1faa089b7c036065927535b5d5b3a5baafeb2417017c462"
       ],
-      "sheet_digest": "8ef6015930bf9edc6cc2df8111351f2fbcc3fa3deb048580cc7ea13a370755a9",
+      "sheet_digest": "9fe18e75f5f014bb949d7c7f2f4f09270f3a1baedde8001732ba588aafadfdf0",
       "phaser_load": {
         "key": "knight-idle-east",
         "url": "asset.svg",
@@ -134,10 +134,10 @@
         }
       ],
       "frame_digests": [
-        "df2e0fc5e9a151f47d2a13ab7ad23eb75a2969fd4a3e9b079c41f1acf6486a15",
-        "150f6110cffe500419f3d15b4c0b6602531b4da82e99cb9b6719cb3d83c90634"
+        "e41e6252002a3dd8f1b8af12a757d1e2369cfc0ad8a2d4ba7dc64ba64108820a",
+        "9d039dea10e3588139d706fd092ca4fda025cd1998e12132bcf546ef64405d7c"
       ],
-      "sheet_digest": "7152bcb7b5684ea32ca45251b7cbbf45615670d94d58074fe5e3345d0ce9e91b",
+      "sheet_digest": "07d4f2a4f3f9ab3ededbd6844e030e0e2e5338c46789ffdb1d87d247155933c9",
       "phaser_load": {
         "key": "knight-idle-west",
         "url": "asset.svg",
@@ -184,12 +184,12 @@
         }
       ],
       "frame_digests": [
-        "3d49e191b17d44c011c93252129e2ac896d09e1febba8b7f74779867153228bb",
-        "43d61b2592551863ec83b0a1ad9032d5c7c93e139ec3a6b0821d6e4ce1c2ba24",
-        "d36e3947fac0a7e184a9bab47f069f18a8e5c40499db7a608e3cd3c271ff045b",
-        "8ee3eebc032dee3d13370f626cae1b691f6b86a61c2ad89fbd60844c913b57df"
+        "e249345d94b75c2200b2ed2bffca6bfccdabbbee4b48b276ff035ecec93268f5",
+        "61cb5b2753d101b010c1d7677c69f82cbee46aa72e445ff7fca05bebe60739c5",
+        "a5611359d7b7407564e30b6a2de633ccd559a8e431a2511f07230872e7deaf66",
+        "1aac5a708702df63666e83fcb0c734c4912af93f6757865e1b55bd41353da36d"
       ],
-      "sheet_digest": "52172739e17cc8d4ed04080eb4986cbfa4c018934de80e0dd56157fa4784aa04",
+      "sheet_digest": "6a2ca149b9ea51d3288504f4bab4faaaa4b19676c5171ebe7d3caeecc4bfe2e3",
       "phaser_load": {
         "key": "knight-walk-north",
         "url": "asset.svg",
@@ -236,12 +236,12 @@
         }
       ],
       "frame_digests": [
-        "dbc4274b40ac3d522afa7fa14369a4fd43a4655b4251353b054b5c1513727602",
-        "d2b5279309ab49a218f25d26179d72a5207baaad275a2c56d8dc86656a9a44f9",
-        "f9f20e550780e3038944783c5ff8358bda911c5291a8254a9bdbba6c76028fc3",
-        "478e9c058e52e84cf6c150aa596e43c13395a4a17ee54594e260501445a52095"
+        "f4ef77219ac6f2ea42422f9ad5e160ba9ceb415b87c8710790335903bca91c0c",
+        "f90c95ee6eaab5c5561e8cf1293e1bce1d7eb4f0fc8a8f8b212c2663d377ec24",
+        "0ffa2da412709b89d67f29d03920c4be69df7867e895deff97dd526ce74c0498",
+        "d0931aeb8ea5b5e4793865bf6637accbc8969aafbb84496b74a1eba0c8f338bb"
       ],
-      "sheet_digest": "893606bb8c9be812b06736d84592a4c01d8fa7ea7bdafd6abcdfaea66a68d4e8",
+      "sheet_digest": "96dd8810ccbac3c79c359afd788983f3ba551bfcbfee634fe7573ecb7e58be88",
       "phaser_load": {
         "key": "knight-walk-south",
         "url": "asset.svg",
@@ -288,12 +288,12 @@
         }
       ],
       "frame_digests": [
-        "61941e3f4decbe504ad85d82f129695d9ca24ca7c73f2c3d5e11ea1fa0b96d7d",
-        "1b4255afb24cac5e5040c7e303946541d13a36803f7f48b010ae7ee370d9d295",
-        "e03734f2ee1e27b1266f4062fe808e55f410459f0e4d93f20b12af500f3a6473",
-        "1b4255afb24cac5e5040c7e303946541d13a36803f7f48b010ae7ee370d9d295"
+        "e8871677eabb37cac563790b51acc16b09aa2f93719d831ac13992196f827090",
+        "5e081412c749163ba116634d2feba396ba691a5eb24ffff826b33f3e548fd389",
+        "6c290b1b4e03d4f262ce8fafd83fa6ccb9f2d5d20db7172b1cafcce2dbca12fc",
+        "5e081412c749163ba116634d2feba396ba691a5eb24ffff826b33f3e548fd389"
       ],
-      "sheet_digest": "f173b2f24b0daa77243bf72719c95149ad55c05b454d1a1bca271e4d78ad443b",
+      "sheet_digest": "6bc14d0065fdda1161182e9832dde82cd66a47562c92f77509d604d8106e39f9",
       "phaser_load": {
         "key": "knight-walk-east",
         "url": "asset.svg",
@@ -340,12 +340,12 @@
         }
       ],
       "frame_digests": [
-        "40de12b3734b51286b2229512ebe94541c5efa2bf42cae962ae9f729a9878748",
-        "b83f6c265caf539c28c6bb4bf335206a526a32e598c1a1e1d36370b9b0bd6aa1",
-        "796d511e97e2a66d6fdc6683de6bbe7e17729ea535997e13a64a25f56995f7ea",
-        "b83f6c265caf539c28c6bb4bf335206a526a32e598c1a1e1d36370b9b0bd6aa1"
+        "0b63bd5a7d9f6416957796ed16c5fb841a48c7d1f909803960ac7fd650b6bd81",
+        "be8c1eabf8bc37c85390163be64d80fc2d9bedc475c5b48dfe1a7df8dc4c8ddc",
+        "70a93c4eec25eb99548e58e32519444a207e34b264cf1d6791de0115854000d7",
+        "be8c1eabf8bc37c85390163be64d80fc2d9bedc475c5b48dfe1a7df8dc4c8ddc"
       ],
-      "sheet_digest": "599973ebb46c9fec646413442cfda6255673bfbf6b548174fa666056403539ce",
+      "sheet_digest": "97f45c5f04f00cb2e8d0becf563b58dbd9b8b4cd6930853c9cd4a5d98a29e4bc",
       "phaser_load": {
         "key": "knight-walk-west",
         "url": "asset.svg",
@@ -356,5 +356,5 @@
       }
     }
   ],
-  "manifest_digest": "795b3ab987367494c8c209278b479bcad0a522f8deaa962e18488bef86bacf27"
+  "manifest_digest": "b33d2518085987def7232162570d1cbfb1c5ac4a0bb3049bcf8857929db5732d"
 }

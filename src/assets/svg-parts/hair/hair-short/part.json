@@ -8,7 +8,7 @@
     "root": [12, 16]
   },
   "z_index": 30,
-  "palette_slots": ["hair"],
+  "palette_slots": ["hair", "hair-light", "hair-shadow"],
   "tags": ["hair", "head", "short"],
-  "description": "Short hair cap aligned to the base body's head anchor."
+  "description": "Short hair cap aligned to the base body's head anchor, with crown highlight."
 }

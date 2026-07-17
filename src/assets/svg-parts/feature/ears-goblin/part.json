@@ -8,7 +8,7 @@
     "root": [12, 12]
   },
   "z_index": 30,
-  "palette_slots": ["skin"],
+  "palette_slots": ["skin", "skin-light", "skin-shadow"],
   "tags": ["ears", "enemy", "feature", "goblin", "ruins"],
-  "description": "Wide pointed goblin ears that attach at the body head anchor."
+  "description": "Wide pointed goblin ears with lit rims and shaded inner folds."
 }

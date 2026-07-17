@@ -2,5 +2,10 @@
   <rect x="7" y="8" width="2" height="10" fill="var(--stem)"/>
   <path d="M8 10C4 10 2 7 2 3c4 0 6 2 6 5z" fill="var(--leaf)"/>
   <path d="M8 10c4 0 6-3 6-7-4 0-6 2-6 5z" fill="var(--leaf)"/>
+  <path d="M7 8C5 8 3 6 3 4c2 0 4 1 4 3z" fill="var(--leaf-light)"/>
+  <path d="M9 8c2 0 4-2 4-4-2 0-4 1-4 3z" fill="var(--leaf-light)"/>
+  <path d="M8 10c-1 0-2 0-3-1l2 2z" fill="var(--leaf-shadow)"/>
+  <path d="M8 10c1 0 2 0 3-1l-2 2z" fill="var(--leaf-shadow)"/>
   <circle cx="8" cy="4" r="2" fill="var(--leaf)"/>
+  <circle cx="7" cy="3" r="1" fill="var(--leaf-light)"/>
 </svg>

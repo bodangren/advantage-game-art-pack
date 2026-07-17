@@ -56,6 +56,8 @@ import projectileFireMetadata from "../assets/svg-parts/fx/projectile-fire/part.
 import projectileFireSource from "../assets/svg-parts/fx/projectile-fire/part.svg?raw";
 import auraMagicMetadata from "../assets/svg-parts/fx/aura-magic/part.json";
 import auraMagicSource from "../assets/svg-parts/fx/aura-magic/part.svg?raw";
+import shadowGroundMetadata from "../assets/svg-parts/fx/shadow-ground/part.json";
+import shadowGroundSource from "../assets/svg-parts/fx/shadow-ground/part.svg?raw";
 
 import {
   type SvgPart,
@@ -97,6 +99,7 @@ export const SVG_PARTS = [
   part(herbGreenMetadata, herbGreenSource),
   part(projectileFireMetadata, projectileFireSource),
   part(auraMagicMetadata, auraMagicSource),
+  part(shadowGroundMetadata, shadowGroundSource),
 ] as const satisfies readonly SvgPart[];
 
 export const SVG_PARTS_BY_ID = new Map(

@@ -9,7 +9,7 @@
     "top": [16, 2]
   },
   "z_index": 10,
-  "palette_slots": ["stone", "metal"],
+  "palette_slots": ["stone", "stone-light", "stone-shadow", "metal", "metal-light"],
   "tags": ["gate", "prop", "ruins", "structure"],
-  "description": "Stone gate with a metal portcullis and root and top placement anchors."
+  "description": "Stone gate with ramped block faces and a metal portcullis."
 }

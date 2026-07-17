@@ -1,3 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 16">
   <path d="M3 14V7C3 2 7 0 12 0s9 2 9 7v7h-3V8h-3v3H9V8H6v6z" fill="var(--hair)"/>
+  <path d="M5 6C5 3 8 1 12 1v4H8v3H5z" fill="var(--hair-light)"/>
+  <path d="M18 8h3v6h-3z" fill="var(--hair-shadow)"/>
+  <path d="M6 11h3v3H6z" fill="var(--hair-shadow)"/>
 </svg>

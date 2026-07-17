@@ -8,7 +8,7 @@
     "root": [2, 8]
   },
   "z_index": 40,
-  "palette_slots": ["flame", "ember"],
+  "palette_slots": ["flame", "flame-light", "ember"],
   "tags": ["boss", "breath", "dragon", "fire", "ruins", "weapon"],
-  "description": "Cone of dragon flame that projects from the head anchor."
+  "description": "Cone of dragon flame with a hot inner band and ember core, projecting from the head."
 }

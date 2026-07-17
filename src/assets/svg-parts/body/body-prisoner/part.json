@@ -11,7 +11,7 @@
     "hand": [3, 24]
   },
   "z_index": 10,
-  "palette_slots": ["skin", "cloth", "shoe"],
+  "palette_slots": ["skin", "skin-light", "skin-shadow", "cloth", "cloth-light", "cloth-shadow"],
   "tags": ["body", "humanoid", "library", "npc", "prisoner"],
-  "description": "Worn prisoner body with the stable head, torso, and hand anchor set."
+  "description": "Worn barefoot prisoner body with a 3-tone ramp and the stable anchor set."
 }

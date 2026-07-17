@@ -1,7 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 48">
   <rect x="8" y="2" width="8" height="11" fill="var(--skin)"/>
+  <rect x="8" y="2" width="3" height="4" fill="var(--skin-light)"/>
+  <rect x="9" y="7" width="2" height="2" fill="var(--skin-shadow)"/>
+  <rect x="14" y="7" width="2" height="2" fill="var(--skin-shadow)"/>
+  <rect x="13" y="9" width="3" height="4" fill="var(--skin-shadow)"/>
   <path d="M8 12h8l2 15-2 14H8l-2-14z" fill="var(--skin)"/>
+  <path d="M8 12h4l-1 10H7z" fill="var(--skin-light)"/>
+  <path d="M14 14h3l1 13-2 13h-3z" fill="var(--skin-shadow)"/>
   <rect x="7" y="18" width="10" height="13" fill="var(--cloth)"/>
-  <rect x="7" y="39" width="4" height="8" fill="var(--shoe)"/>
-  <rect x="13" y="39" width="4" height="8" fill="var(--shoe)"/>
+  <rect x="7" y="18" width="10" height="2" fill="var(--cloth-light)"/>
+  <rect x="14" y="18" width="3" height="13" fill="var(--cloth-shadow)"/>
+  <rect x="7" y="39" width="4" height="8" fill="var(--skin)"/>
+  <rect x="13" y="39" width="4" height="8" fill="var(--skin)"/>
+  <rect x="7" y="44" width="4" height="3" fill="var(--skin-shadow)"/>
+  <rect x="13" y="44" width="4" height="3" fill="var(--skin-shadow)"/>
 </svg>

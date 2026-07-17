@@ -17,11 +17,13 @@
 - (2026-07-16, animation_timeline_atlas_packing_20260716) Tests that spawn a child `vitest run` need an explicit `testTimeout`; the child reloads every test file and outgrows the 5s default as the suite grows.
 - (2026-07-16, directional_character_sheets_20260716 + per_game_asset_bundles_20260716) Extend the pipeline at its boundaries, not its internals: declared flips wrap the compiled frame SVG (mirror group + re-digest) and bundle refs resolve through a code-side registry, so timeline/atlas/compiler modules shipped unchanged.
 - (2026-07-17, part_library_expansion_20260717) New contract-first tests must fail at assertion level, not import level: the post-Green phase-1 sentinel spawns a full child `vitest run` that exits non-zero on any suite import failure. Load not-yet-existing fixtures via fs and reach not-yet-exported APIs through structural casts, then flip to direct typed imports at Green.
+- (2026-07-17, head_idiom_fix) Visual review of composed previews must check part cohesion, not only rendering: the original anchor idiom drew no head (hair/ears anchored into empty space), and every new archetype inherited the flaw while digests stayed green. Browser review via kimi-webbridge catches what silhouette rasterization (Inkscape drops var() fills) and frozen digests cannot.
+- (2026-07-17, render_api_20260717) Rasterizers (resvg, Inkscape) cannot resolve CSS custom properties: always inline palette hex values and drop the `<style>` block before rasterizing, mirroring the atlas packer. resvg-wasm `fitTo: "original"` honors composed width/height attrs, so spec.output drives PNG dimensions with no extra mapping.
+- (2026-07-17, mockup_art_pass_20260717) Adding palette slots to a catalog part has library-wide blast radius: every composition, example, and inline test fixture using that part must gain values (missing-palette errors surface at resolve time). Deriving inline test fixtures from DEFAULT_SPEC contained it to two positional index bumps. When adding a placement to DEFAULT_SPEC, grep for positional `parts[N]` pins in tests.
 
 ## Patterns That Worked Well
 
 - (2026-04-05, sprite_compiler_mvp_20260405) Treat sample PNGs as reference material while keeping runtime output generated entirely from code + specs.
-- (2026-04-05, candidate_generation_critic_loop_20260502) Demo assets are for canon extraction and critic calibration, not direct pixel sources for newly generated outputs.
 - (2026-04-05, primitive_library_promotion_pipeline_20260405) Keep primitive manifests path-based and deterministic; rebuilds should sort by family, subtype, and primitive_id so seed data stays auditable in git.
 
 ## Planning Improvements

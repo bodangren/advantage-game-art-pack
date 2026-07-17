@@ -1,3 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 32">
   <path d="M5 2h14l3 7-4 2v19H6V11L2 9z" fill="var(--cloth)"/>
+  <path d="M5 2h7l-2 9H6l-4-2z" fill="var(--cloth-light)"/>
+  <path d="M15 3h4l3 6-4 2v19h-4V11z" fill="var(--cloth-shadow)"/>
+  <path d="M9 24l2 3 2-3 2 3v5H9z" fill="var(--cloth-shadow)"/>
+  <rect x="6" y="12" width="12" height="3" fill="var(--leather)"/>
 </svg>

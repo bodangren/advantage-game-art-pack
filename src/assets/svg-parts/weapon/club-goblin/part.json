@@ -9,7 +9,7 @@
     "root": [3, 26]
   },
   "z_index": 40,
-  "palette_slots": ["wood", "bone"],
+  "palette_slots": ["wood", "wood-light", "wood-shadow", "bone"],
   "tags": ["club", "enemy", "goblin", "ruins", "weapon"],
-  "description": "Knotted wood club with a bone spike and a grip anchor for the hand."
+  "description": "Knotted wood club with ramp shading, a bone spike, and a grip anchor."
 }

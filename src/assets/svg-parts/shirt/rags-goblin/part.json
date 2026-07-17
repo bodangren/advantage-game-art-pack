@@ -9,7 +9,7 @@
     "waist": [12, 30]
   },
   "z_index": 20,
-  "palette_slots": ["cloth", "leather"],
+  "palette_slots": ["cloth", "cloth-light", "cloth-shadow", "leather"],
   "tags": ["clothing", "enemy", "goblin", "rags", "ruins"],
-  "description": "Tattered goblin rags with a leather belt, attaching at a torso anchor."
+  "description": "Tattered goblin rags with ramp folds and a leather belt, attaching at a torso anchor."
 }

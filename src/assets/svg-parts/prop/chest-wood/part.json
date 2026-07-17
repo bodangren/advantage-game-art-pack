@@ -9,7 +9,7 @@
     "lid": [12, 6]
   },
   "z_index": 10,
-  "palette_slots": ["wood", "metal"],
+  "palette_slots": ["wood", "wood-light", "wood-shadow", "metal", "metal-light"],
   "tags": ["chest", "interactable", "prop", "ruins"],
-  "description": "Banded wooden treasure chest with root and lid placement anchors."
+  "description": "Banded wooden treasure chest with ramp planks, metal bands, and a keyhole."
 }

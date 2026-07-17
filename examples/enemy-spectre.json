@@ -1,23 +1,58 @@
 {
   "version": 1,
   "asset_id": "enemy-spectre",
-  "view_box": [0, 0, 64, 64],
-  "output": { "width": 256, "height": 256 },
+  "view_box": [
+    0,
+    0,
+    64,
+    64
+  ],
+  "output": {
+    "width": 256,
+    "height": 256
+  },
   "palette": {
-    "glow": "#ffd866",
+    "glow": "#b8e6ff",
+    "glow-light": "#ffffff",
     "metal": "#9aa2b5",
     "shade": "#23253a",
+    "shadow": "#1a1c22",
     "shroud": "#4a4e6d",
+    "shroud-light": "#6d7398",
+    "shroud-shadow": "#32354d",
     "wisp": "#aab4e8"
   },
   "parts": [
     {
-      "id": "body",
-      "part_id": "body-spectre",
-      "position": [32, 56],
+      "id": "shadow",
+      "part_id": "shadow-ground",
+      "position": [
+        32,
+        58
+      ],
       "anchor": "root",
       "attach_to": null,
-      "offset": [0, 0],
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "rotate": 0,
+      "z_index": null
+    },
+    {
+      "id": "body",
+      "part_id": "body-spectre",
+      "position": [
+        32,
+        56
+      ],
+      "anchor": "root",
+      "attach_to": null,
+      "offset": [
+        0,
+        0
+      ],
       "scale": 1,
       "rotate": 0,
       "z_index": 10
@@ -25,10 +60,19 @@
     {
       "id": "shroud",
       "part_id": "shroud-spectre",
-      "position": [0, 0],
+      "position": [
+        0,
+        0
+      ],
       "anchor": "root",
-      "attach_to": { "placement_id": "body", "anchor": "head" },
-      "offset": [0, 0],
+      "attach_to": {
+        "placement_id": "body",
+        "anchor": "head"
+      },
+      "offset": [
+        0,
+        0
+      ],
       "scale": 1,
       "rotate": 0,
       "z_index": 20
@@ -36,10 +80,19 @@
     {
       "id": "eyes",
       "part_id": "eyes-spectre",
-      "position": [0, 0],
+      "position": [
+        0,
+        0
+      ],
       "anchor": "root",
-      "attach_to": { "placement_id": "body", "anchor": "head" },
-      "offset": [0, 0],
+      "attach_to": {
+        "placement_id": "body",
+        "anchor": "head"
+      },
+      "offset": [
+        0,
+        0
+      ],
       "scale": 1,
       "rotate": 0,
       "z_index": 30
@@ -47,10 +100,19 @@
     {
       "id": "orb",
       "part_id": "orb-spectre",
-      "position": [0, 0],
+      "position": [
+        0,
+        0
+      ],
       "anchor": "root",
-      "attach_to": { "placement_id": "body", "anchor": "hand" },
-      "offset": [-4, 8],
+      "attach_to": {
+        "placement_id": "body",
+        "anchor": "hand"
+      },
+      "offset": [
+        -4,
+        8
+      ],
       "scale": 1,
       "rotate": 0,
       "z_index": 40

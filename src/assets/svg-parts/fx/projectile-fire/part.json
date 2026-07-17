@@ -9,7 +9,7 @@
     "nose": [14, 8]
   },
   "z_index": 50,
-  "palette_slots": ["flame", "ember"],
+  "palette_slots": ["flame", "flame-light", "flame-shadow", "ember", "ember-light"],
   "tags": ["fire", "fx", "projectile", "ruins"],
-  "description": "Fireball projectile with a trailing flame, root tail, and nose anchors."
+  "description": "Fireball projectile with a banded flame trail and bright ember core."
 }

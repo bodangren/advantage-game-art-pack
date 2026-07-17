@@ -9,7 +9,7 @@
     "waist": [12, 30]
   },
   "z_index": 20,
-  "palette_slots": ["cloth"],
+  "palette_slots": ["cloth", "cloth-light", "cloth-shadow", "leather"],
   "tags": ["clothing", "shirt", "tunic"],
-  "description": "Short tunic that attaches at a character torso anchor."
+  "description": "Short tunic that attaches at a character torso anchor, with ramp folds and a belt."
 }

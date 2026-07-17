@@ -8,7 +8,7 @@
     "root": [8, 18]
   },
   "z_index": 10,
-  "palette_slots": ["leaf", "stem"],
+  "palette_slots": ["leaf", "leaf-light", "leaf-shadow", "stem"],
   "tags": ["herb", "library", "pickup", "prop"],
-  "description": "Sprouting green herb with leaf pair, stem, and a root anchor."
+  "description": "Sprouting green herb with ramped leaf pair, bud, and a root anchor."
 }

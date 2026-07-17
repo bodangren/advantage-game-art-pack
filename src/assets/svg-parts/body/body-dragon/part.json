@@ -11,7 +11,7 @@
     "hand": [10, 32]
   },
   "z_index": 10,
-  "palette_slots": ["scale", "belly"],
+  "palette_slots": ["scale", "scale-light", "scale-shadow", "belly", "bone"],
   "tags": ["body", "boss", "dragon", "ruins", "scales"],
-  "description": "Massive side-profile dragon body with head, torso, and claw anchors."
+  "description": "Massive side-profile dragon body with horns, ramp shading, and the stable anchor set."
 }

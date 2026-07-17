@@ -9,7 +9,7 @@
     "top": [16, 2]
   },
   "z_index": 5,
-  "palette_slots": ["glow"],
+  "palette_slots": ["glow", "glow-light", "glow-shadow"],
   "tags": ["aura", "fx", "library", "magic"],
-  "description": "Concentric magic aura ring with cardinal ticks and a center anchor."
+  "description": "Concentric magic aura ring with banded glow arcs and cardinal rune ticks."
 }

@@ -9,7 +9,7 @@
     "waist": [12, 34]
   },
   "z_index": 20,
-  "palette_slots": ["shroud", "shade"],
+  "palette_slots": ["shroud", "shroud-light", "shroud-shadow", "shade"],
   "tags": ["clothing", "enemy", "library", "shroud", "spectre"],
-  "description": "Hooded spectre cloak with a dark face opening, attaching at the head."
+  "description": "Hooded spectre cloak with ramped folds and a dark face opening, attaching at the head."
 }

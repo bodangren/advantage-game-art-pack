@@ -8,7 +8,7 @@
     "root": [12, 16]
   },
   "z_index": 30,
-  "palette_slots": ["hair"],
+  "palette_slots": ["hair", "hair-light", "hair-shadow"],
   "tags": ["hair", "library", "npc", "prisoner"],
-  "description": "Long unkempt prisoner hair aligned to the body head anchor."
+  "description": "Long unkempt prisoner hair with a lit crown and shaded strands."
 }

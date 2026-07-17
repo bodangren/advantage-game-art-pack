@@ -1,24 +1,63 @@
 {
   "version": 1,
   "asset_id": "enemy-goblin",
-  "view_box": [0, 0, 64, 64],
-  "output": { "width": 256, "height": 256 },
+  "view_box": [
+    0,
+    0,
+    64,
+    64
+  ],
+  "output": {
+    "width": 256,
+    "height": 256
+  },
   "palette": {
     "bone": "#e8e0cc",
     "cloth": "#6b4f2e",
+    "cloth-light": "#8a6a42",
+    "cloth-shadow": "#4a3520",
+    "glow": "#ff9a3a",
     "leather": "#7a4b2a",
+    "shadow": "#1a1c22",
     "shoe": "#3a3226",
     "skin": "#7da05c",
-    "wood": "#8a6a3b"
+    "skin-light": "#a4c47c",
+    "skin-shadow": "#567038",
+    "wood": "#8a6a3b",
+    "wood-light": "#a88754",
+    "wood-shadow": "#5f4527"
   },
   "parts": [
     {
-      "id": "body",
-      "part_id": "body-goblin",
-      "position": [32, 56],
+      "id": "shadow",
+      "part_id": "shadow-ground",
+      "position": [
+        32,
+        58
+      ],
       "anchor": "root",
       "attach_to": null,
-      "offset": [0, 0],
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "rotate": 0,
+      "z_index": null
+    },
+    {
+      "id": "body",
+      "part_id": "body-goblin",
+      "position": [
+        32,
+        56
+      ],
+      "anchor": "root",
+      "attach_to": null,
+      "offset": [
+        0,
+        0
+      ],
       "scale": 1,
       "rotate": 0,
       "z_index": 10
@@ -26,10 +65,19 @@
     {
       "id": "rags",
       "part_id": "rags-goblin",
-      "position": [0, 0],
+      "position": [
+        0,
+        0
+      ],
       "anchor": "root",
-      "attach_to": { "placement_id": "body", "anchor": "torso" },
-      "offset": [0, 0],
+      "attach_to": {
+        "placement_id": "body",
+        "anchor": "torso"
+      },
+      "offset": [
+        0,
+        0
+      ],
       "scale": 1,
       "rotate": 0,
       "z_index": 20
@@ -37,10 +85,19 @@
     {
       "id": "ears",
       "part_id": "ears-goblin",
-      "position": [0, 0],
+      "position": [
+        0,
+        0
+      ],
       "anchor": "root",
-      "attach_to": { "placement_id": "body", "anchor": "head" },
-      "offset": [0, 0],
+      "attach_to": {
+        "placement_id": "body",
+        "anchor": "head"
+      },
+      "offset": [
+        0,
+        0
+      ],
       "scale": 1,
       "rotate": 0,
       "z_index": 30
@@ -48,10 +105,19 @@
     {
       "id": "club",
       "part_id": "club-goblin",
-      "position": [0, 0],
+      "position": [
+        0,
+        0
+      ],
       "anchor": "root",
-      "attach_to": { "placement_id": "body", "anchor": "hand" },
-      "offset": [-3, 0],
+      "attach_to": {
+        "placement_id": "body",
+        "anchor": "hand"
+      },
+      "offset": [
+        -3,
+        0
+      ],
       "scale": 1,
       "rotate": 0,
       "z_index": 40

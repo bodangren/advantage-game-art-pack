@@ -8,7 +8,7 @@
     "root": [24, 24]
   },
   "z_index": 5,
-  "palette_slots": ["membrane", "scale"],
+  "palette_slots": ["membrane", "membrane-shadow", "scale", "scale-light"],
   "tags": ["boss", "dragon", "feature", "ruins", "wings"],
-  "description": "Spread dragon wings that sit behind the body at the torso anchor."
+  "description": "Spread dragon wings with shaded membranes, sitting behind the body at the torso anchor."
 }

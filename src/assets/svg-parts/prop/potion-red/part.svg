@@ -1,5 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 16">
-  <rect x="4" y="0" width="4" height="3" fill="var(--glass)"/>
-  <path d="M3 3h6l3 5v8H2V8z" fill="var(--glass)"/>
+  <rect x="4" y="0" width="4" height="2" fill="var(--wood)"/>
+  <rect x="4" y="0" width="2" height="2" fill="var(--wood-light)"/>
+  <rect x="4" y="2" width="4" height="2" fill="var(--glass)"/>
+  <path d="M3 4h6l3 4v8H2V8z" fill="var(--glass)"/>
+  <rect x="3" y="5" width="2" height="8" fill="var(--glass-light)"/>
   <rect x="3" y="9" width="8" height="6" fill="var(--liquid)"/>
+  <rect x="3" y="9" width="3" height="3" fill="var(--liquid-light)"/>
+  <rect x="8" y="12" width="3" height="3" fill="var(--liquid-shadow)"/>
 </svg>

@@ -11,24 +11,24 @@
 
 - [x] Add failing ramp-convention tests: character palettes carry
   light/base/shadow ramps and every declared ramp slot is used by parts.
-- [~] Document the flat-shape shading vocabulary (ramps, banding, dither,
+- [x] Document the flat-shape shading vocabulary (ramps, banding, dither,
   ground shadow; no blur/filters) in DESIGN.md and the README contract.
 
 ## Phase 3: Art Pass
 
-- [ ] Rework the knight set (body, shirt, hair, sword) toward its mockup;
+- [x] Rework the knight set (body, shirt, hair, sword) toward its mockup;
   browser-verify via the render API.
-- [ ] Rework the goblin set toward its mockup; browser-verify.
-- [ ] Rework the spectre set toward its mockup; browser-verify.
-- [ ] Rework the dragon set toward its mockup; browser-verify.
-- [ ] Rework the prisoner set toward its mockup; browser-verify.
-- [ ] Rework the prop set (chest, gate, potion, herb) with ramps and
+- [x] Rework the goblin set toward its mockup; browser-verify.
+- [x] Rework the spectre set toward its mockup; browser-verify.
+- [x] Rework the dragon set toward its mockup; browser-verify.
+- [x] Rework the prisoner set toward its mockup; browser-verify.
+- [x] Rework the prop set (chest, gate, potion, herb) with ramps and
   shading; browser-verify.
-- [ ] Rework the FX set (projectile, aura) with banded glow shapes;
+- [x] Rework the FX set (projectile, aura) with banded glow shapes;
   browser-verify.
 
 ## Phase 4: Fixtures and Verification
 
-- [ ] Update example palettes with ramps and re-freeze all fixtures.
-- [ ] Run `npm run typecheck`, `npm test`, and `npm run build`; update
+- [x] Update example palettes with ramps and re-freeze all fixtures.
+- [x] Run `npm run typecheck`, `npm test`, and `npm run build`; update
   lessons learned.

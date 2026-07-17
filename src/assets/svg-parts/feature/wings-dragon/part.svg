@@ -1,5 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 24">
   <path d="M22 24L2 4l10 2 10-6 2 10z" fill="var(--membrane)"/>
   <path d="M26 24l20-20-10 2-10-6-2 10z" fill="var(--membrane)"/>
+  <path d="M20 22L6 8l8 2 6-4z" fill="var(--membrane-shadow)"/>
+  <path d="M28 22l14-14-8 2-6-4z" fill="var(--membrane-shadow)"/>
   <polygon points="20,24 24,12 28,24" fill="var(--scale)"/>
+  <polygon points="22,24 24,16 26,24" fill="var(--scale-light)"/>
 </svg>

@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "part_id": "shadow-ground",
+  "slot": "fx",
+  "source_file": "part.svg",
+  "view_box": [0, 0, 32, 12],
+  "anchors": {
+    "root": [16, 6]
+  },
+  "z_index": 1,
+  "palette_slots": ["shadow"],
+  "tags": ["fx", "ground", "shadow", "utility"],
+  "description": "Flat ground-shadow ellipse that anchors characters to the floor."
+}

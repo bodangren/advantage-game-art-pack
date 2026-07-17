@@ -1,4 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
   <path d="M0 8l6-5 4 2 6-4v14l-6-4-4 2z" fill="var(--flame)"/>
+  <path d="M4 8l4-3 3 1 4-3v10l-4-3-3 1z" fill="var(--flame-light)"/>
+  <path d="M1 8l3-2 2 1-2 2z" fill="var(--flame-shadow)"/>
   <circle cx="12" cy="8" r="3" fill="var(--ember)"/>
+  <circle cx="11" cy="7" r="1" fill="var(--ember-light)"/>
 </svg>

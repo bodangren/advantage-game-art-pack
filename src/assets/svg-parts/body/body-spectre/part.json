@@ -11,7 +11,7 @@
     "hand": [3, 24]
   },
   "z_index": 10,
-  "palette_slots": ["shroud", "wisp"],
+  "palette_slots": ["shroud", "shroud-light", "shroud-shadow", "wisp"],
   "tags": ["body", "enemy", "spectre", "spirit", "library"],
-  "description": "Floating spectre body with a wispy tail and the stable anchor set."
+  "description": "Floating spectre body with ramped folds, a wispy tail, and the stable anchor set."
 }

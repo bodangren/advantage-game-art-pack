@@ -220,8 +220,8 @@ describe("timeline: per-frame overrides", () => {
     expect(sibling?.svg).toContain('id="sword" data-part-id="sword-basic"');
     expect(swapped?.digest).not.toBe(sibling?.digest);
     // The override merge does not mutate the base spec object.
-    expect(BASE_COMPOSITION.parts[3]?.part_id).toBe("sword-basic");
-    expect(spec.frames[0]?.composition.parts[3]?.part_id).toBe("sword-basic");
+    expect(BASE_COMPOSITION.parts[4]?.part_id).toBe("sword-basic");
+    expect(spec.frames[0]?.composition.parts[4]?.part_id).toBe("sword-basic");
   });
 
   it("timeline: placement offset override shifts only the named placement", async () => {

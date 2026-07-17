@@ -1,25 +1,50 @@
 {
   "version": 1,
   "asset_id": "prop-set-library",
-  "view_box": [0, 0, 96, 48],
-  "output": { "width": 384, "height": 192 },
+  "view_box": [
+    0,
+    0,
+    96,
+    48
+  ],
+  "output": {
+    "width": 384,
+    "height": 192
+  },
   "palette": {
     "glass": "#bcd8e8",
+    "glass-light": "#e8f4fa",
     "leaf": "#4f8a4f",
+    "leaf-light": "#74ad74",
+    "leaf-shadow": "#356038",
     "liquid": "#c23a4a",
+    "liquid-light": "#e0636e",
+    "liquid-shadow": "#8f2434",
     "metal": "#9aa2b5",
+    "metal-light": "#c3cad6",
+    "metal-shadow": "#6a7283",
     "stem": "#3a6b3a",
     "stone": "#8d8a7d",
-    "wood": "#8a6a3b"
+    "stone-light": "#adaa9b",
+    "stone-shadow": "#63604f",
+    "wood": "#8a6a3b",
+    "wood-light": "#a88754",
+    "wood-shadow": "#5f4527"
   },
   "parts": [
     {
       "id": "gate",
       "part_id": "gate-stone",
-      "position": [24, 46],
+      "position": [
+        24,
+        46
+      ],
       "anchor": "root",
       "attach_to": null,
-      "offset": [0, 0],
+      "offset": [
+        0,
+        0
+      ],
       "scale": 1,
       "rotate": 0,
       "z_index": 5
@@ -27,10 +52,16 @@
     {
       "id": "chest",
       "part_id": "chest-wood",
-      "position": [54, 46],
+      "position": [
+        54,
+        46
+      ],
       "anchor": "root",
       "attach_to": null,
-      "offset": [0, 0],
+      "offset": [
+        0,
+        0
+      ],
       "scale": 1,
       "rotate": 0,
       "z_index": 10
@@ -38,10 +69,16 @@
     {
       "id": "potion",
       "part_id": "potion-red",
-      "position": [74, 46],
+      "position": [
+        74,
+        46
+      ],
       "anchor": "root",
       "attach_to": null,
-      "offset": [0, 0],
+      "offset": [
+        0,
+        0
+      ],
       "scale": 1,
       "rotate": 0,
       "z_index": 10
@@ -49,10 +86,16 @@
     {
       "id": "herb",
       "part_id": "herb-green",
-      "position": [88, 46],
+      "position": [
+        88,
+        46
+      ],
       "anchor": "root",
       "attach_to": null,
-      "offset": [0, 0],
+      "offset": [
+        0,
+        0
+      ],
       "scale": 1,
       "rotate": 0,
       "z_index": 10

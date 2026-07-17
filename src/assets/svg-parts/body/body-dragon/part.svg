@@ -1,4 +1,9 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
   <path d="M4 48l2-18 8-10 10-8 4-8 8-4 6 2 2 6-6 6-8 2-6 8-4 10-8 8z" fill="var(--scale)"/>
+  <path d="M8 34l6-8 8-6 4-6-10 4-8 8-2 10z" fill="var(--scale-light)"/>
+  <path d="M14 40l4-8 4 2-4 10-6 4z" fill="var(--scale-shadow)"/>
   <path d="M18 34l8-10 6 2-4 10z" fill="var(--belly)"/>
+  <polygon points="36,3 39,0 39,5" fill="var(--bone)"/>
+  <polygon points="41,4 44,2 44,6" fill="var(--bone)"/>
+  <rect x="38" y="6" width="2" height="2" fill="var(--scale-shadow)"/>
 </svg>

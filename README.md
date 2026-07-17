@@ -79,6 +79,15 @@ parts sorted by `part_id`. `catalogEntries()` emits the stable, sorted catalog
 JSON (slot, anchors, palette slots, layer priority, tags, description per
 part) suitable for LLM prompt context.
 
+### Pixel shading vocabulary
+
+Shipped art targets 16-bit pixel art (see `DESIGN.md` Asset Art Direction and
+the mmx references in `demo-assets/reference/`). Core materials carry 3-tone
+ramps named `<slot>`, `<slot>-light`, `<slot>-shadow`; light comes from the
+top-left; shading is banded flat shapes with sparse dither — never blur,
+filters, or CSS gradients. Every character composition places a
+`shadow-ground` ellipse below the body.
+
 ### Render API
 
 `POST /api/render` renders a composition spec over HTTP. The body is a

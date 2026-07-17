@@ -1,23 +1,62 @@
 {
   "version": 1,
   "asset_id": "npc-prisoner",
-  "view_box": [0, 0, 64, 64],
-  "output": { "width": 256, "height": 256 },
+  "view_box": [
+    0,
+    0,
+    64,
+    64
+  ],
+  "output": {
+    "width": 256,
+    "height": 256
+  },
   "palette": {
     "cloth": "#8a8578",
-    "hair": "#4a3423",
+    "cloth-light": "#a5a192",
+    "cloth-shadow": "#635f55",
+    "hair": "#d9b36a",
+    "hair-light": "#ecd28f",
+    "hair-shadow": "#a8834a",
     "metal": "#9aa2b5",
-    "shoe": "#2b2d42",
-    "skin": "#f2c18d"
+    "metal-light": "#c3cad6",
+    "metal-shadow": "#6a7283",
+    "shadow": "#1a1c22",
+    "skin": "#e0a97e",
+    "skin-light": "#f2c9a4",
+    "skin-shadow": "#b37a52"
   },
   "parts": [
     {
-      "id": "body",
-      "part_id": "body-prisoner",
-      "position": [32, 56],
+      "id": "shadow",
+      "part_id": "shadow-ground",
+      "position": [
+        32,
+        58
+      ],
       "anchor": "root",
       "attach_to": null,
-      "offset": [0, 0],
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "rotate": 0,
+      "z_index": null
+    },
+    {
+      "id": "body",
+      "part_id": "body-prisoner",
+      "position": [
+        32,
+        56
+      ],
+      "anchor": "root",
+      "attach_to": null,
+      "offset": [
+        0,
+        0
+      ],
       "scale": 1,
       "rotate": 0,
       "z_index": 10
@@ -25,10 +64,19 @@
     {
       "id": "tatters",
       "part_id": "tatters-prisoner",
-      "position": [0, 0],
+      "position": [
+        0,
+        0
+      ],
       "anchor": "root",
-      "attach_to": { "placement_id": "body", "anchor": "torso" },
-      "offset": [0, 0],
+      "attach_to": {
+        "placement_id": "body",
+        "anchor": "torso"
+      },
+      "offset": [
+        0,
+        0
+      ],
       "scale": 1,
       "rotate": 0,
       "z_index": 20
@@ -36,10 +84,19 @@
     {
       "id": "hair",
       "part_id": "hair-prisoner",
-      "position": [0, 0],
+      "position": [
+        0,
+        0
+      ],
       "anchor": "root",
-      "attach_to": { "placement_id": "body", "anchor": "head" },
-      "offset": [0, 0],
+      "attach_to": {
+        "placement_id": "body",
+        "anchor": "head"
+      },
+      "offset": [
+        0,
+        0
+      ],
       "scale": 1,
       "rotate": 0,
       "z_index": 30
@@ -47,10 +104,19 @@
     {
       "id": "shackles",
       "part_id": "shackles-prisoner",
-      "position": [0, 0],
+      "position": [
+        0,
+        0
+      ],
       "anchor": "root",
-      "attach_to": { "placement_id": "body", "anchor": "hand" },
-      "offset": [0, 0],
+      "attach_to": {
+        "placement_id": "body",
+        "anchor": "hand"
+      },
+      "offset": [
+        0,
+        0
+      ],
       "scale": 1,
       "rotate": 0,
       "z_index": 40

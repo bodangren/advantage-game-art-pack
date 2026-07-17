@@ -11,7 +11,7 @@
     "hand": [3, 24]
   },
   "z_index": 10,
-  "palette_slots": ["skin", "cloth", "shoe"],
+  "palette_slots": ["skin", "skin-light", "skin-shadow", "cloth", "cloth-light", "cloth-shadow", "shoe"],
   "tags": ["base", "humanoid", "body"],
-  "description": "Base humanoid body with stable head, torso, and hand anchors."
+  "description": "Base humanoid body with stable head, torso, and hand anchors, shaded with a 3-tone ramp."
 }

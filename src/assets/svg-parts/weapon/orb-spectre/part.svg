@@ -1,4 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20">
   <circle cx="8" cy="7" r="6" fill="var(--glow)"/>
+  <circle cx="6" cy="5" r="2" fill="var(--glow-light)"/>
   <rect x="6" y="13" width="4" height="6" fill="var(--metal)"/>
+  <rect x="6" y="13" width="4" height="2" fill="var(--glow-light)"/>
 </svg>

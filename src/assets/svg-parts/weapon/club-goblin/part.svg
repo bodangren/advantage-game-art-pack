@@ -1,5 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 28">
   <path d="M1 7l3-7 6 4-2 8-6 2z" fill="var(--wood)"/>
+  <path d="M3 5l2-4 3 2-2 4z" fill="var(--wood-light)"/>
+  <path d="M7 8l2 1-1 4-4 1z" fill="var(--wood-shadow)"/>
   <polygon points="8,1 11,3 8,5" fill="var(--bone)"/>
   <rect x="2" y="13" width="3" height="13" fill="var(--wood)"/>
+  <rect x="2" y="22" width="3" height="4" fill="var(--wood-shadow)"/>
 </svg>

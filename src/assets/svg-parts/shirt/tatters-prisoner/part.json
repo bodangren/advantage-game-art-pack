@@ -9,7 +9,7 @@
     "waist": [12, 30]
   },
   "z_index": 20,
-  "palette_slots": ["cloth"],
+  "palette_slots": ["cloth", "cloth-light", "cloth-shadow"],
   "tags": ["clothing", "library", "npc", "prisoner", "tatters"],
-  "description": "Patched prison tatters that attach at a torso anchor."
+  "description": "Patched prison tatters with ramp folds, attaching at a torso anchor."
 }

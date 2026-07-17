@@ -9,7 +9,7 @@
     "root": [2, 26]
   },
   "z_index": 40,
-  "palette_slots": ["metal", "leather"],
+  "palette_slots": ["metal", "metal-light", "metal-shadow", "leather"],
   "tags": ["equipment", "sword", "weapon"],
-  "description": "Compact sword with a grip anchor for hand attachment."
+  "description": "Compact sword with a grip anchor for hand attachment and a ramped blade."
 }

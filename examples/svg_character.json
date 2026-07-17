@@ -1,24 +1,64 @@
 {
   "version": 1,
   "asset_id": "lpc-style-character",
-  "view_box": [0, 0, 64, 64],
-  "output": { "width": 256, "height": 256 },
+  "view_box": [
+    0,
+    0,
+    64,
+    64
+  ],
+  "output": {
+    "width": 256,
+    "height": 256
+  },
   "palette": {
     "cloth": "#3d5a80",
     "hair": "#6b3e26",
     "leather": "#7a4b2a",
     "metal": "#c7d0d9",
     "shoe": "#2b2d42",
-    "skin": "#f2c18d"
+    "skin": "#f2c18d",
+    "skin-light": "#ffd9ad",
+    "skin-shadow": "#c98f5f",
+    "cloth-light": "#5a7aad",
+    "cloth-shadow": "#2a3f5c",
+    "hair-light": "#8a5433",
+    "hair-shadow": "#4a2a18",
+    "metal-light": "#eef4f8",
+    "metal-shadow": "#8a97a5",
+    "shadow": "#1a1c22"
   },
   "parts": [
     {
-      "id": "body",
-      "part_id": "body-base",
-      "position": [32, 56],
+      "id": "shadow",
+      "part_id": "shadow-ground",
+      "position": [
+        32,
+        58
+      ],
       "anchor": "root",
       "attach_to": null,
-      "offset": [0, 0],
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "rotate": 0,
+      "z_index": null
+    },
+    {
+      "id": "body",
+      "part_id": "body-base",
+      "position": [
+        32,
+        56
+      ],
+      "anchor": "root",
+      "attach_to": null,
+      "offset": [
+        0,
+        0
+      ],
       "scale": 1,
       "rotate": 0,
       "z_index": 10
@@ -26,10 +66,19 @@
     {
       "id": "shirt",
       "part_id": "shirt-tunic",
-      "position": [0, 0],
+      "position": [
+        0,
+        0
+      ],
       "anchor": "root",
-      "attach_to": { "placement_id": "body", "anchor": "torso" },
-      "offset": [0, 0],
+      "attach_to": {
+        "placement_id": "body",
+        "anchor": "torso"
+      },
+      "offset": [
+        0,
+        0
+      ],
       "scale": 1,
       "rotate": 0,
       "z_index": 20
@@ -37,10 +86,19 @@
     {
       "id": "hair",
       "part_id": "hair-short",
-      "position": [0, 0],
+      "position": [
+        0,
+        0
+      ],
       "anchor": "root",
-      "attach_to": { "placement_id": "body", "anchor": "head" },
-      "offset": [0, 0],
+      "attach_to": {
+        "placement_id": "body",
+        "anchor": "head"
+      },
+      "offset": [
+        0,
+        0
+      ],
       "scale": 1,
       "rotate": 0,
       "z_index": 30
@@ -48,10 +106,19 @@
     {
       "id": "sword",
       "part_id": "sword-basic",
-      "position": [0, 0],
+      "position": [
+        0,
+        0
+      ],
       "anchor": "root",
-      "attach_to": { "placement_id": "body", "anchor": "hand" },
-      "offset": [0, 0],
+      "attach_to": {
+        "placement_id": "body",
+        "anchor": "hand"
+      },
+      "offset": [
+        0,
+        0
+      ],
       "scale": 1,
       "rotate": 0,
       "z_index": 40

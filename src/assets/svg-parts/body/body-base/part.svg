@@ -1,7 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 48">
   <rect x="8" y="2" width="8" height="11" fill="var(--skin)"/>
+  <rect x="8" y="2" width="3" height="4" fill="var(--skin-light)"/>
+  <rect x="9" y="7" width="2" height="2" fill="var(--skin-shadow)"/>
+  <rect x="14" y="7" width="2" height="2" fill="var(--skin-shadow)"/>
+  <rect x="13" y="9" width="3" height="4" fill="var(--skin-shadow)"/>
   <path d="M7 12h10l3 15-3 14H7L4 27z" fill="var(--skin)"/>
+  <path d="M7 12h4l-1 10H6z" fill="var(--skin-light)"/>
+  <path d="M15 14h3l2 13-3 13h-3z" fill="var(--skin-shadow)"/>
   <rect x="6" y="18" width="12" height="14" fill="var(--cloth)"/>
+  <rect x="6" y="18" width="12" height="2" fill="var(--cloth-light)"/>
+  <rect x="14" y="18" width="4" height="14" fill="var(--cloth-shadow)"/>
   <rect x="6" y="39" width="5" height="8" fill="var(--shoe)"/>
   <rect x="13" y="39" width="5" height="8" fill="var(--shoe)"/>
 </svg>

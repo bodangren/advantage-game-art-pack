@@ -9,7 +9,7 @@
     "root": [10, 10]
   },
   "z_index": 40,
-  "palette_slots": ["metal"],
+  "palette_slots": ["metal", "metal-light", "metal-shadow"],
   "tags": ["library", "npc", "prisoner", "shackles", "trinket"],
-  "description": "Iron wrist shackles with a chain, hanging from the hand anchor."
+  "description": "Iron wrist shackles with ramp shading and a chain, hanging from the hand anchor."
 }
