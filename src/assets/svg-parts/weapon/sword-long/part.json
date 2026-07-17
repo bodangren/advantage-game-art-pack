@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "part_id": "sword-long",
+  "slot": "weapon",
+  "source_file": "part.svg",
+  "view_box": [0, 0, 12, 34],
+  "anchors": {
+    "grip": [5, 27],
+    "root": [5, 30]
+  },
+  "z_index": 40,
+  "palette_slots": ["armor", "armor-light", "armor-shadow", "brass", "brass-light", "leather"],
+  "tags": ["equipment", "knight", "sword", "weapon"],
+  "description": "Long arming sword held upright — fullered blade, brass crossguard and pommel, leather grip — with a grip anchor for hand attachment."
+}

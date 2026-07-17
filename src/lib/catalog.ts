@@ -7,6 +7,15 @@ import shirtSource from "../assets/svg-parts/shirt/shirt-tunic/part.svg?raw";
 import swordMetadata from "../assets/svg-parts/weapon/sword-basic/part.json";
 import swordSource from "../assets/svg-parts/weapon/sword-basic/part.svg?raw";
 
+import armorPlateMetadata from "../assets/svg-parts/shirt/armor-plate/part.json";
+import armorPlateSource from "../assets/svg-parts/shirt/armor-plate/part.svg?raw";
+import helmetKnightMetadata from "../assets/svg-parts/hair/helmet-knight/part.json";
+import helmetKnightSource from "../assets/svg-parts/hair/helmet-knight/part.svg?raw";
+import capeRedMetadata from "../assets/svg-parts/feature/cape-red/part.json";
+import capeRedSource from "../assets/svg-parts/feature/cape-red/part.svg?raw";
+import swordLongMetadata from "../assets/svg-parts/weapon/sword-long/part.json";
+import swordLongSource from "../assets/svg-parts/weapon/sword-long/part.svg?raw";
+
 import bodyGoblinMetadata from "../assets/svg-parts/body/body-goblin/part.json";
 import bodyGoblinSource from "../assets/svg-parts/body/body-goblin/part.svg?raw";
 import earsGoblinMetadata from "../assets/svg-parts/feature/ears-goblin/part.json";
@@ -77,6 +86,10 @@ export const SVG_PARTS = [
   part(shirtMetadata, shirtSource),
   part(hairMetadata, hairSource),
   part(swordMetadata, swordSource),
+  part(armorPlateMetadata, armorPlateSource),
+  part(helmetKnightMetadata, helmetKnightSource),
+  part(capeRedMetadata, capeRedSource),
+  part(swordLongMetadata, swordLongSource),
   part(bodyGoblinMetadata, bodyGoblinSource),
   part(ragsGoblinMetadata, ragsGoblinSource),
   part(earsGoblinMetadata, earsGoblinSource),

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 42">
+  <polygon points="10,0 22,0 26,10 27,28 25,35 22,39 19,36 16,40 13,36 10,39 7,35 5,28 6,10" fill="var(--cape)"/>
+  <polygon points="10,0 14,0 12,38 10,39 7,35 5,28 6,10" fill="var(--cape-light)"/>
+  <polygon points="18,0 22,0 26,10 27,28 25,35 22,39 19,36 18,38" fill="var(--cape-shadow)"/>
+  <polygon points="15,0 17,0 16,38 14,38" fill="var(--cape-shadow)"/>
+  <rect x="10" y="0" width="12" height="1" fill="var(--cape-light)"/>
+</svg>

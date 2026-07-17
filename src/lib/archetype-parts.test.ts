@@ -65,6 +65,10 @@ const ARCHETYPE_FIXTURES: readonly PartFixture[] = [
   fixture("hair-prisoner", "hair", "prisoner", "library"),
   fixture("tatters-prisoner", "shirt", "prisoner", "library"),
   fixture("shackles-prisoner", "weapon", "prisoner", "library"),
+  fixture("armor-plate", "shirt", "knight", "armor"),
+  fixture("helmet-knight", "hair", "knight", "armor"),
+  fixture("cape-red", "feature", "knight", "cape"),
+  fixture("sword-long", "weapon", "knight", "equipment"),
 ];
 
 const PROP_FX_FIXTURES: readonly PartFixture[] = [
@@ -101,7 +105,7 @@ describe("archetype parts: safe-dialect validation", () => {
       expect(part.metadata.part_id).toBe(item.partId);
       expect(part.metadata.slot).toBe(item.slot);
     }
-    expect(ALL_FIXTURES).toHaveLength(22);
+    expect(ALL_FIXTURES).toHaveLength(26);
   });
 
   it("archetype parts: metadata carries the exact contract keys", () => {
@@ -143,7 +147,7 @@ describe("archetype parts: anchors", () => {
 
   it("archetype parts: attachable parts expose a root or grip anchor", () => {
     const attachable = ARCHETYPE_FIXTURES.filter((item) => item.slot !== "body");
-    expect(attachable).toHaveLength(12);
+    expect(attachable).toHaveLength(16);
     for (const item of attachable) {
       const part = loadFixture(item);
       const names = Object.keys(part.metadata.anchors);

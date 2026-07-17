@@ -1,0 +1,10 @@
+{
+  "id": "svg_art_quality_iteration_20260717",
+  "title": "SVG Part Art Quality Iteration",
+  "type": "feature",
+  "status": "in_progress",
+  "created": "2026-07-17",
+  "priority": "high",
+  "estimated_tasks": 14,
+  "depends_on": ["mockup_art_pass_20260717"]
+}

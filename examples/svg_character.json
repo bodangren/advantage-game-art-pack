@@ -12,21 +12,24 @@
     "height": 256
   },
   "palette": {
+    "armor": "#a8b8cc",
+    "armor-light": "#dce8f4",
+    "armor-shadow": "#6a7d94",
+    "brass": "#d9a83a",
+    "brass-light": "#f2d06a",
+    "cape": "#8c2f3a",
+    "cape-light": "#b8434a",
+    "cape-shadow": "#5f1e28",
     "cloth": "#3d5a80",
-    "hair": "#6b3e26",
+    "cloth-light": "#5a7aad",
+    "cloth-shadow": "#2a3f5c",
     "leather": "#7a4b2a",
-    "metal": "#c7d0d9",
+    "shadow": "#1a1c22",
     "shoe": "#2b2d42",
     "skin": "#f2c18d",
     "skin-light": "#ffd9ad",
     "skin-shadow": "#c98f5f",
-    "cloth-light": "#5a7aad",
-    "cloth-shadow": "#2a3f5c",
-    "hair-light": "#8a5433",
-    "hair-shadow": "#4a2a18",
-    "metal-light": "#eef4f8",
-    "metal-shadow": "#8a97a5",
-    "shadow": "#1a1c22"
+    "visor": "#171a22"
   },
   "parts": [
     {
@@ -38,6 +41,26 @@
       ],
       "anchor": "root",
       "attach_to": null,
+      "offset": [
+        0,
+        0
+      ],
+      "scale": 1,
+      "rotate": 0,
+      "z_index": null
+    },
+    {
+      "id": "cape",
+      "part_id": "cape-red",
+      "position": [
+        0,
+        0
+      ],
+      "anchor": "root",
+      "attach_to": {
+        "placement_id": "body",
+        "anchor": "torso"
+      },
       "offset": [
         0,
         0
@@ -64,8 +87,8 @@
       "z_index": 10
     },
     {
-      "id": "shirt",
-      "part_id": "shirt-tunic",
+      "id": "armor",
+      "part_id": "armor-plate",
       "position": [
         0,
         0
@@ -81,11 +104,11 @@
       ],
       "scale": 1,
       "rotate": 0,
-      "z_index": 20
+      "z_index": null
     },
     {
-      "id": "hair",
-      "part_id": "hair-short",
+      "id": "helmet",
+      "part_id": "helmet-knight",
       "position": [
         0,
         0
@@ -101,11 +124,11 @@
       ],
       "scale": 1,
       "rotate": 0,
-      "z_index": 30
+      "z_index": null
     },
     {
       "id": "sword",
-      "part_id": "sword-basic",
+      "part_id": "sword-long",
       "position": [
         0,
         0
@@ -121,7 +144,7 @@
       ],
       "scale": 1,
       "rotate": 0,
-      "z_index": 40
+      "z_index": null
     }
   ]
 }

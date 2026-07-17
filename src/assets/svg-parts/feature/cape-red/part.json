@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "part_id": "cape-red",
+  "slot": "feature",
+  "source_file": "part.svg",
+  "view_box": [0, 0, 32, 42],
+  "anchors": {
+    "root": [16, 16]
+  },
+  "z_index": 5,
+  "palette_slots": ["cape", "cape-light", "cape-shadow"],
+  "tags": ["cape", "cloth", "feature", "knight"],
+  "description": "Floor-length crimson cape worn behind the body, attached at the torso anchor with a jagged hem and fold shading."
+}

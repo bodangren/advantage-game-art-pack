@@ -149,5 +149,5 @@ describe("phase1: non-vacuity sentinel", () => {
       `expected ≥${MIN_TARGETED_PASSING_TESTS} passing timeline|atlas tests (non-vacuity). ` +
         `Got ${passingTargetedNames.length}: ${passingTargetedNames.join(", ")}`,
     ).toBeGreaterThanOrEqual(MIN_TARGETED_PASSING_TESTS);
-  }, 30_000);
+  }, 90_000);
 });

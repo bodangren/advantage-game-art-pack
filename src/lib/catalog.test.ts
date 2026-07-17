@@ -9,6 +9,7 @@ import {
 } from "./catalog";
 
 const SORTED_PART_IDS = [
+  "armor-plate",
   "aura-magic",
   "body-base",
   "body-dragon",
@@ -16,6 +17,7 @@ const SORTED_PART_IDS = [
   "body-prisoner",
   "body-spectre",
   "breath-dragon",
+  "cape-red",
   "chest-wood",
   "club-goblin",
   "ears-goblin",
@@ -23,6 +25,7 @@ const SORTED_PART_IDS = [
   "gate-stone",
   "hair-prisoner",
   "hair-short",
+  "helmet-knight",
   "herb-green",
   "orb-spectre",
   "plate-dragon",
@@ -34,6 +37,7 @@ const SORTED_PART_IDS = [
   "shirt-tunic",
   "shroud-spectre",
   "sword-basic",
+  "sword-long",
   "tatters-prisoner",
   "wings-dragon",
 ] as const;
@@ -42,7 +46,7 @@ describe("catalog: expanded part library", () => {
   it("catalog: contains the knight set plus the 22 expansion parts", () => {
     const ids = SVG_PARTS.map((part) => part.metadata.part_id);
     expect([...ids].sort((a, b) => a.localeCompare(b))).toEqual(SORTED_PART_IDS);
-    expect(SVG_PARTS).toHaveLength(27);
+    expect(SVG_PARTS).toHaveLength(31);
   });
 
   it("catalog: every declared slot has at least one part", () => {
@@ -57,7 +61,7 @@ describe("catalog: expanded part library", () => {
   it("catalog: slot coverage for the new archetype categories", () => {
     expect(
       selectParts({ slot: "feature" }).map((part) => part.metadata.part_id),
-    ).toEqual(["ears-goblin", "eyes-spectre", "wings-dragon"]);
+    ).toEqual(["cape-red", "ears-goblin", "eyes-spectre", "wings-dragon"]);
     expect(selectParts({ slot: "prop" })).toHaveLength(4);
     expect(selectParts({ slot: "fx" })).toHaveLength(3);
   });

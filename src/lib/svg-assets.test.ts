@@ -17,6 +17,10 @@ describe("SVG asset compiler", () => {
       "shirt-tunic",
       "hair-short",
       "sword-basic",
+      "armor-plate",
+      "helmet-knight",
+      "cape-red",
+      "sword-long",
       "body-goblin",
       "rags-goblin",
       "ears-goblin",
@@ -41,7 +45,7 @@ describe("SVG asset compiler", () => {
       "aura-magic",
       "shadow-ground",
     ]);
-    expect(SVG_PARTS).toHaveLength(27);
+    expect(SVG_PARTS).toHaveLength(31);
   });
 
   it("composes deterministic anchor-attached SVG output", () => {

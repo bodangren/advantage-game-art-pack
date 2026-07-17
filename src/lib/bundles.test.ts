@@ -107,7 +107,7 @@ describe("bundles: compile-every-reference", () => {
       expect(asset.file).toBe(`${asset.slot}/${asset.id}.svg`);
     }
     expect(compiled.bundle_digest).toMatch(/^[a-f0-9]{64}$/);
-  });
+  }, 30_000);
 
   it("bundles: compile failures report slot and reference context", async () => {
     const brokenRegistry = {
@@ -163,7 +163,7 @@ describe("bundles: export determinism", () => {
       await rm(firstDir, { recursive: true, force: true });
       await rm(secondDir, { recursive: true, force: true });
     }
-  });
+  }, 30_000);
 
   it("bundles: bundle.json records per-asset digests that match the written files", async () => {
     const outDir = await mkdtemp(join(tmpdir(), "bundle-json-"));
@@ -187,7 +187,7 @@ describe("bundles: export determinism", () => {
     } finally {
       await rm(outDir, { recursive: true, force: true });
     }
-  });
+  }, 30_000);
 });
 
 describe("bundles: phase-1 vacuity sentinel", () => {

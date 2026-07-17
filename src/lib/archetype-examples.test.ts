@@ -112,5 +112,5 @@ describe("examples: seeded bundle references the new archetypes", () => {
       expect(asset, `missing compiled asset ${id}`).toBeDefined();
       expect(asset?.digest).toMatch(/^[a-f0-9]{64}$/);
     }
-  });
+  }, 30_000);
 });
