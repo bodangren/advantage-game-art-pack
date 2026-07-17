@@ -10,6 +10,8 @@
 
 - Vite 8 through vinext
 - Vitest 4 for unit tests
+- `@resvg/resvg-wasm` for server-side PNG rasterization in the render API
+  (wasm-only, no native bindings)
 - Browser Web Crypto for SHA-256 asset metadata
 - No Python runtime or Python dependency is part of the project
 

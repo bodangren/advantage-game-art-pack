@@ -2,9 +2,11 @@
   "id": "render_api_20260717",
   "title": "Composition Render API",
   "type": "feature",
-  "status": "pending",
+  "status": "completed",
   "created": "2026-07-17",
   "priority": "high",
   "estimated_tasks": 10,
-  "depends_on": ["part_library_expansion_20260717"]
+  "actual_tasks": 10,
+  "depends_on": ["part_library_expansion_20260717"],
+  "deviation_notes": "The invalid-spec route test initially asserted the version message for a body that failed earlier at the missing-keys check; the fixture was corrected to carry all required keys so the intended validation stage is exercised. Route handler is covered by node-level mock req/res tests plus a live curl smoke (SVG, PNG, 400, 405) rather than an HTTP-level test harness. atlas-phaser.json key order was preserved by hand after regeneration to keep the diff signal-only."
 }

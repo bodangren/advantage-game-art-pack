@@ -37,7 +37,9 @@ artifacts that build consistently on the supported Node 22 Linux environment.
 ## Structure
 
 - `pages/`: vinext Pages Router surface (assembly desk, animation + directional docks, archetype library)
+- `pages/api/render.ts`: composition render endpoint (SVG or PNG over HTTP)
 - `src/lib/svg-assets.ts`: typed validator, anchor resolver, serializer, and metadata builder
+- `src/lib/render.ts`: palette inlining and server-side PNG rasterization
 - `src/lib/timeline.ts`: timeline spec validation, per-frame overrides, deterministic frame digests
 - `src/lib/atlas.ts`: row-major atlas packer, sheet safety guard, atlas JSON + Phaser load contract
 - `src/lib/directional.ts`: 4/8-way directional spec expansion, declared flips, sheet manifest
@@ -49,6 +51,7 @@ artifacts that build consistently on the supported Node 22 Linux environment.
 - `src/lib/directional.test.ts`: directional spec, expansion, and manifest contract tests
 - `src/lib/bundles.test.ts`: bundle manifest, compile, and export contract tests
 - `src/lib/catalog.test.ts`: catalog contents, tag selection, and catalog JSON contract tests
+- `src/lib/render.test.ts` / `src/lib/api-render.test.ts`: palette inlining, PNG rasterization, and render route contract tests
 - `src/lib/archetype-parts.test.ts` / `src/lib/archetype-examples.test.ts`: archetype part fixture and seeded composition contract tests
 - `src/lib/walk-cycle.test.ts`: frozen-fixture contract for the checked-in example
 - `src/lib/knight-example.test.ts`: frozen-manifest contract for the knight example
@@ -75,6 +78,26 @@ with AND semantics — archetype and theme match against part tags — and retur
 parts sorted by `part_id`. `catalogEntries()` emits the stable, sorted catalog
 JSON (slot, anchors, palette slots, layer priority, tags, description per
 part) suitable for LLM prompt context.
+
+### Render API
+
+`POST /api/render` renders a composition spec over HTTP. The body is a
+composition spec JSON; the response is the composed SVG as `image/svg+xml`.
+Append `?format=png` (or send a `"format": "png"` body field) for a
+server-rasterized PNG at the spec's output dimensions — palette values are
+inlined before rasterization, and scaling is nearest-neighbor for pixel-art
+export. Invalid specs and unknown part ids return `400` with a JSON
+`{ "error": "<validation message>" }`; non-POST methods return `405`.
+
+```bash
+curl -X POST http://localhost:3000/api/render?format=png \
+  -H 'Content-Type: application/json' \
+  --data-binary @examples/boss-dragon.json \
+  -o boss-dragon.png
+```
+
+Identical spec bytes yield byte-identical SVG and PNG, so renders can be
+pinned by the same SHA-256 contracts as the rest of the pipeline.
 
 ### Timeline JSON
 

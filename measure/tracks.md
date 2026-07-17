@@ -221,7 +221,7 @@ vinext SVG desk.
 
 ## Active Tracks (TypeScript SVG desk)
 
-- [~] **Track: Composition Render API**
+- [x] **Track: Composition Render API**
   *Link: [./tracks/render_api_20260717/](./tracks/render_api_20260717/)*
   POST /api/render turning a composition spec into deterministic SVG or server-rasterized PNG (palette-inlined, resvg-wasm), so asset authoring becomes a fast spec → image loop and asset packs gain an export path. Depends on part_library_expansion_20260717.
 
