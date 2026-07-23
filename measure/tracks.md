@@ -222,7 +222,11 @@ vinext SVG desk.
 
 - [x] **Track: Mockup-Driven Part Art Pass**
   *Link: [./archive/mockup_art_pass_20260717/](./archive/mockup_art_pass_20260717/)*
-  *Status: Complete — curated mmx mockups + manifest as art references, ramp shading applied across all part sets, shadow-ground fx part anchoring character compositions (26 → 27 parts), knight kept as shared shaded humanoid base. Tests, typecheck, and build green.*
+  *Status: Complete as historical prototype evidence only — curated MMX mockups
+  and the derived SVG pass are not production-authorized references or pack
+  members. Current downstream production requires accepted ontology hashes and
+  its built-in image generator. The archived mechanical tests remain historical
+  evidence; current visual admission remains closed.*
 
 ## Retired (never started — Python/raster era)
 
@@ -231,24 +235,74 @@ vinext SVG desk.
 - [-] **Track: Critic Metrics Performance Optimization** *Link: [./measure/archive/critic_metrics_performance_optimization_20260524/](./measure/archive/critic_metrics_performance_optimization_20260524/)*
 - [-] **Track: Interactable and Book Compiler Families** *Link: [./measure/archive/interactable_and_book_compiler_20260524/](./measure/archive/interactable_and_book_compiler_20260524/)*
 
-## Active Tracks (TypeScript SVG desk)
+## Active and Upcoming Tracks
 
-- [~] **Track: SVG Part Art Quality Iteration**
-  *Link: [./tracks/svg_art_quality_iteration_20260717/](./tracks/svg_art_quality_iteration_20260717/)*
-  Iterate each archetype's parts until compositions track their mmx reference silhouettes, proportions, and shading inside the safe flat-shape SVG dialect; checked-in review-page scratch (`measure/review-scratch.mts`) regenerates `measure/review.html`; knight rebuilt as plate armor (`armor-plate`, `helmet-knight`, `cape-red`, `sword-long`). Depends on mockup_art_pass_20260717.
+- [~] **SVG Part Art Quality Iteration**
+  _Link: [./tracks/svg_art_quality_iteration_20260717/](./tracks/svg_art_quality_iteration_20260717/)_
+  Re-author/rebuild SVG-native parts against valid generated references. Current
+  outputs remain barred from production until visual acceptance.
 
-- [ ] **Track: Tile and Scene Composition Engine**
-  *Link: [./tracks/tile_scene_composition_20260717/](./tracks/tile_scene_composition_20260717/)*
-  Scene spec with seam-safe tile grids, ordered layers, and prop placement compiled through the existing engine; deterministic scene SVG + manifest, parallax layer-set export, checked-in examples. Depends on part_library_expansion_20260717.
+- [~] **Tile and Scene Composition Engine**
+  _Link: [./tracks/tile_scene_composition_20260717/](./tracks/tile_scene_composition_20260717/)_
+  Pixel-owned SVG-native tiles, scenes, and parallax exports. The S2 browser,
+  seam, and composition scaffold passes mechanically but its 24 candidates and
+  eight exemplars failed Kimi visual admission. S3 generation is blocked on the
+  downstream accepted ontology hashes, a provenance-capable built-in-generator
+  contract, and reference-board approval. The strict draft board validator is
+  implemented and green, but all current outputs remain non-shipping.
 
-- [ ] **Track: Phaser Integration Harness**
-  *Link: [./tracks/phaser_integration_harness_20260717/](./tracks/phaser_integration_harness_20260717/)*
-  Minimal Phaser 4 consumer proving the export contract: versioned loader-config module, harness scene loading a bundle export (composition textures + walk-cycle atlas), deterministic export fixture and Node smoke test. Depends on per_game_asset_bundles_20260716.
+- [b] **Phaser Integration Harness** (blocked:admitted-model-five-clips-and-pack)
+      _Link: [./tracks/phaser_integration_harness_20260717/](./tracks/phaser_integration_harness_20260717/)_
+      Downstream mixed-pack consumer and export harness; strict temporal staging
+      exists, but admitted playback inputs and browser/Kimi acceptance do not.
 
-- [ ] **Track: LLM Part and Spec Authoring Loop**
-  *Link: [./tracks/llm_part_authoring_20260717/](./tracks/llm_part_authoring_20260717/)*
-  Provider-abstracted, catalog-grounded authoring loop with bounded validate-and-repair retries; authored parts/specs land in a staging area, mock provider and eval fixtures keep tests deterministic. Depends on part_library_expansion_20260717.
+- [b] **LLM Part and Spec Authoring Loop** (blocked:accepted-reference-assets-and-production-contract)
+      _Link: [./tracks/llm_part_authoring_20260717/](./tracks/llm_part_authoring_20260717/)_
+      SVG-native authoring remains local and semantic 3D requests route to public
+      MCP ingestion.
 
-- [ ] **Track: Presentation Surfaces: UI Atlases, Covers, and Loading Screens**
-  *Link: [./tracks/presentation_surfaces_20260718/](./tracks/presentation_surfaces_20260718/)*
-  Strict presentation spec compiling UI frame atlases (named frame rects) plus cover/loading surfaces that reuse scene backgrounds and anchored compositions; deterministic SVG + manifest with safe-zone metadata; text rendering stays downstream. Depends on tile_scene_composition_20260717.
+- [b] **Presentation Surfaces: UI Atlases, Covers, and Loading Screens** (blocked:tile-scene-and-import-acceptance)
+      _Link: [./tracks/presentation_surfaces_20260718/](./tracks/presentation_surfaces_20260718/)_
+      SVG-native layouts that may reference validated imported artifacts.
+
+- [~] **Fantasy Asset Forge MCP Pack Ingestion**
+      _Link: [./tracks/fantasy_asset_forge_mcp_pack_ingestion_20260722/](./tracks/fantasy_asset_forge_mcp_pack_ingestion_20260722/)_
+      Public MCP discovery/retrieval, negotiated static interchange, immutable
+      imports, exact-five temporal reconstruction, and deterministic non-shipping
+      work-order planning. The 26 frames, five pose sheets, atlas, source GLB,
+      phase-bearing bundle, public chunks, and local five-clip playback pass the
+      mechanical qualification boundary; this baseline is not the final pose or
+      animation library. The current S13 model still fails visual admission, and
+      production roster freeze, pack admission, downstream playback, and final
+      Kimi acceptance remain blocked by the accepted-model and downstream
+      ontology/policy gates.
+
+- [ ] **Repository Test Suite Repair: Frozen Digest and Palette Declaration**
+      _Link: [./tracks/test_suite_repair_20260724/](./tracks/test_suite_repair_20260724/)_
+      Repair the two known repository-wide failures (one frozen composition digest
+      mismatch and one `cloth-light` / `cloth-shadow` palette-declaration
+      mismatch) without masking, skipping, or regressing the green Forge
+      ingestion slice. Unblocks a green baseline every other track depends on.
+
+- [ ] **Cross-Output Determinism Regression Suite**
+      _Link: [./tracks/determinism_regression_suite_20260724/](./tracks/determinism_regression_suite_20260724/)_
+      Always-on byte-determinism guard proving composed SVG, JSON manifests,
+      packed atlases, bundle exports, and rasterized PNGs are byte-identical
+      across clean-state runs; detects frozen-digest drift early instead of via
+      manual browser review. Depends on the repaired green baseline.
+
+- [ ] **Continuous Integration Quality Gate Pipeline**
+      _Link: [./tracks/ci_quality_gate_pipeline_20260724/](./tracks/ci_quality_gate_pipeline_20260724/)_
+      GitHub Actions pipeline running `typecheck`, `test`, and `build` on every
+      PR and push, with live/external `*.live.test.ts` tests isolated behind an
+      opt-in secret-gated job so default CI stays green. Enforces the repaired
+      baseline continuously.
+
+- [ ] **Executable Contract Reference Documentation**
+      _Link: [./tracks/contract_reference_documentation_20260724/](./tracks/contract_reference_documentation_20260724/)_
+      Consolidated, auditable reference for every active versioned contract
+      (forge interchange v1, education-app pack profiles v1/v2, temporal render
+      artifacts v1, batch artifacts v1, five-clip authoring, staging plans,
+      dual-theme demand catalog v2, theme-pack production plan v1) with field
+      schemas, validation rules, and checked-in examples validated against the
+      real validators so docs cannot drift from code.

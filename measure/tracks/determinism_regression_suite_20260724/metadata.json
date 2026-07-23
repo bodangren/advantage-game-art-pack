@@ -1,0 +1,21 @@
+{
+  "id": "determinism_regression_suite_20260724",
+  "title": "Cross-Output Determinism Regression Suite",
+  "type": "feature",
+  "status": "new",
+  "created": "2026-07-24",
+  "priority": "high",
+  "estimated_tasks": 11,
+  "depends_on": ["test_suite_repair_20260724"],
+  "contracts": [
+    "forge-asset-interchange-manifest/v1",
+    "education-app-pack-profile/v1",
+    "education-app-pack-profile/v2",
+    "forge-temporal-render-artifacts/v1"
+  ],
+  "deviation_notes": [
+    "Prevents the recurring frozen-digest drift captured in lessons-learned (animation_timeline_atlas_packing, mockup_art_pass, head_idiom_fix) by adding a dedicated, always-on determinism guard.",
+    "Depends on test_suite_repair_20260724 so the suite starts from a green baseline; the determinism guard itself does not depend on visual acceptance.",
+    "Does not re-freeze production digests or admit assets; it pins already-frozen example/fixture outputs and detects drift early."
+  ]
+}

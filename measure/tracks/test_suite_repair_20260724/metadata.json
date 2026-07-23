@@ -1,0 +1,19 @@
+{
+  "id": "test_suite_repair_20260724",
+  "title": "Repository Test Suite Repair: Frozen Digest and Palette Declaration",
+  "type": "bug",
+  "status": "new",
+  "created": "2026-07-24",
+  "priority": "high",
+  "estimated_tasks": 9,
+  "depends_on": [],
+  "contracts": [
+    "forge-asset-interchange-manifest/v1",
+    "education-app-pack-profile/v1"
+  ],
+  "deviation_notes": [
+    "Resolves the Open Medium tech-debt row in measure/tech-debt.md: one frozen composition digest mismatch and one palette-declaration mismatch for unused cloth-light / cloth-shadow slots.",
+    "Scope is strictly the two repository-wide failures. The Forge ingestion slice is already green (135/135) and must not be regressed or masked.",
+    "Does not touch rejected production assets or visual acceptance; this is a mechanical correctness repair."
+  ]
+}

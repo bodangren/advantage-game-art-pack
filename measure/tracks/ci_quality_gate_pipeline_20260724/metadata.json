@@ -1,0 +1,16 @@
+{
+  "id": "ci_quality_gate_pipeline_20260724",
+  "title": "Continuous Integration Quality Gate Pipeline",
+  "type": "chore",
+  "status": "new",
+  "created": "2026-07-24",
+  "priority": "medium",
+  "estimated_tasks": 10,
+  "depends_on": ["test_suite_repair_20260724"],
+  "contracts": [],
+  "deviation_notes": [
+    "Wires the existing manual quality gates (npm run typecheck / npm test / npm run build) into GitHub Actions; the remote is github.com/bodangren/advantage-game-art-pack.",
+    "Live/external tests (*.live.test.ts) and Forge MCP replay must be gated behind opt-in conditions so CI is green without secrets or external services.",
+    "Starts from the green baseline delivered by test_suite_repair_20260724; once green, CI enforces it continuously. Does not modify automation-supervisor.py."
+  ]
+}

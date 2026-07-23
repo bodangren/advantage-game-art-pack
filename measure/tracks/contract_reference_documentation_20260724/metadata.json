@@ -1,0 +1,27 @@
+{
+  "id": "contract_reference_documentation_20260724",
+  "title": "Executable Contract Reference Documentation",
+  "type": "feature",
+  "status": "new",
+  "created": "2026-07-24",
+  "priority": "medium",
+  "estimated_tasks": 10,
+  "depends_on": [],
+  "contracts": [
+    "forge-asset-interchange-manifest/v1",
+    "education-app-pack-profile/v1",
+    "education-app-pack-profile/v2",
+    "forge-temporal-render-artifacts/v1",
+    "forge-temporal-render-batch-artifacts/v1",
+    "forge-reference-five-clip-authoring/v1",
+    "pixel-forge-temporal-staging-plan/v1",
+    "pixel-forge-five-clip-staging-plan/v1",
+    "dual-theme-asset-demand-catalog/v2",
+    "theme-pack-production-plan/v1"
+  ],
+  "deviation_notes": [
+    "Documentation is executable: every documented example is validated against the real contract validators, not prose-only.",
+    "Does not author or admit production assets; examples use existing checked-in non-production fixtures and frozen example specs.",
+    "Aligns with product-guidelines.md: prefer explicit schemas over prose; keep examples auditable; distinguish implemented now vs staged support."
+  ]
+}
