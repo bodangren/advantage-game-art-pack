@@ -1,39 +1,42 @@
 # Plan: SVG Part Art Quality Iteration
 
-## Phase 1: Iteration Loop
+All outputs currently in the repository are rejected prototypes until this
+track's delivery-resolution visual review and pack-admission evidence pass.
+References are evidence, not source artifacts. Preserve the existing in-flight
+markers below.
 
-- [ ] Write `measure/review-scratch.mts` (Node `--experimental-strip-types`):
-  reads parts from `src/assets/svg-parts/**`, composes the seven example
-  specs, inlines palettes, regenerates `measure/review.html`; `--png <dir>`
-  rasterizes per-row PNGs via resvg-wasm for headless review.
-- [ ] Verify the scratch reproduces the current page byte-structure and
-  renders match the checked-in page.
+## Phase 1: Replacement Review Loop
 
-## Phase 2: Knight Armor Set
+- [ ] Write `measure/review-scratch.mts` to compose replacement specs, inline
+      palettes, regenerate the page, and rasterize delivery-resolution rows.
+- [ ] Verify the scratch reproduces the page structure and exposes profile,
+      provenance, resolution, and review evidence for each candidate.
 
-- [ ] Add `armor-plate` (shirt), `helmet-knight` (hair), `cape-red`
-  (feature), `sword-long` (weapon) parts toward `knight-mockup_001.jpg`.
-- [ ] Repoint `examples/svg_character.json` to the new parts with a steel
-  palette; keep villager parts untouched for the animation fixtures.
-- [ ] Register the four parts in `src/lib/catalog.ts`; update catalog and
-  archetype part-count tests.
-- [ ] Iterate via scratch PNG until the knight row tracks its reference.
+## Phase 2: Replacement Knight Set
 
-## Phase 3: Archetype Art Passes (parallel)
+- [ ] Add replacement `armor-plate`, `helmet-knight`, `cape-red`, and
+      `sword-long` parts from the valid references; do not promote current parts.
+- [ ] Repoint the example and register replacement parts with profile/provenance
+      metadata while preserving animation fixtures as non-production fixtures.
+- [ ] Iterate and visually review the knight at delivery resolution.
 
-- [ ] Goblin set (body, rags, ears, club) toward `goblin-mockup_001.jpg`.
-- [ ] Spectre set (body, shroud, eyes, orb) toward `spectre-mockup_001.jpg`.
-- [ ] Dragon set (body, wings, plate, breath) toward `dragon-mockup_001.jpg`.
-- [ ] Prisoner set (body, tatters, hair, shackles) toward
-  `prisoner-mockup_002.jpg`.
-- [ ] Prop set (chest, gate, potion, herb) toward their mockups.
-- [ ] FX set (projectile, aura) toward their mockups.
+## Phase 3: Replacement Archetype Art Passes (parallel)
 
-## Phase 4: Integration and Verification
+- [~] Re-author goblin set toward its valid reference; current outputs remain
+  barred from production.
+- [~] Re-author spectre set toward its valid reference; current outputs remain
+  barred from production.
+- [~] Re-author dragon set toward its valid reference; current outputs remain
+  barred from production.
+- [~] Re-author prisoner set toward its valid reference; current outputs remain
+  barred from production.
+- [~] Re-author prop set toward valid references; current outputs remain barred.
+- [~] Re-author FX set toward valid references; current outputs remain barred.
 
-- [ ] Re-freeze `examples/composition-digests.json` from real compiler
-  output; regenerate `measure/review.html`.
-- [ ] Browser-verify all seven rows against references via kimi-webbridge
-  screenshots; fix stragglers.
-- [ ] Run `npm run typecheck`, `npm test`, `npm run build`; update lessons
-  learned.
+## Phase 4: Admission and Verification
+
+- [~] Freeze digests only for accepted replacement compiler output and regenerate
+  the review page.
+- [~] Browser-verify all seven rows at delivery resolution and record evidence.
+- [~] Run typecheck, tests, and build; update lessons learned without claiming
+  Forge animation or complete-pack outputs.

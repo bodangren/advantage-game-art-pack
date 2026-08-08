@@ -5,6 +5,12 @@
   "status": "pending",
   "created": "2026-07-18",
   "priority": "high",
-  "estimated_tasks": 14,
-  "depends_on": ["tile_scene_composition_20260717"]
+  "estimated_tasks": 13,
+  "depends_on": ["tile_scene_composition_20260717"],
+  "contracts": [
+    "forge-asset-interchange-manifest/v1",
+    "education-app-pack-profile/v1"
+  ],
+  "default_style_profile": "cute_chibi_v1",
+  "secondary_style_profile": "heroic_stylized_v1"
 }

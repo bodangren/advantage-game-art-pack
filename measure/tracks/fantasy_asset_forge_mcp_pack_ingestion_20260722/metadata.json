@@ -1,0 +1,59 @@
+{
+  "id": "fantasy_asset_forge_mcp_pack_ingestion_20260722",
+  "title": "Fantasy Asset Forge MCP Pack Ingestion",
+  "type": "feature",
+  "status": "in_progress",
+  "created": "2026-07-22",
+  "priority": "high",
+  "estimated_tasks": 20,
+  "depends_on": ["per_game_asset_bundles_20260716"],
+  "contracts": [
+    "forge-asset-interchange-manifest/v1",
+    "forge-temporal-render-artifacts/v1",
+    "forge-temporal-render-batch-artifacts/v1",
+    "forge-reference-five-clip-authoring/v1",
+    "forge-authoring-review-manifest/v1",
+    "pixel-forge-temporal-staging-plan/v1",
+    "pixel-forge-five-clip-staging-plan/v1",
+    "education-app-pack-profile/v1",
+    "education-app-pack-profile/v2",
+    "dual-theme-asset-demand-catalog/v2",
+    "theme-pack-production-plan/v1"
+  ],
+  "external_dependencies": [
+    {
+      "track": "engine_interop_evidence_20260719",
+      "acceptance": "bounded delegated acceptance for static staging; final visual admission remains separate",
+      "status": "accepted for static staging only"
+    },
+    {
+      "track": "rigid_animation_sprite_pipeline_20260717",
+      "acceptance": "required before production temporal admission and playback acceptance",
+      "status": "exact five-clip batch, public retrieval, Pixel reconstruction, and local browser playback verified; S12-D and S13 base models rejected by public authoring comparison and Kimi review; reference-converged model, production motion quality, pack admission, and downstream acceptance incomplete"
+    },
+    {
+      "track": "village_asset_pack_20260718",
+      "acceptance": "required before complete-pack ingestion",
+      "status": "not accepted"
+    },
+    {
+      "track": "reading-advantage-monorepo/measure/tracks/apk_independent_acceptance_handoff_20260712",
+      "acceptance": "must publish product-owner-accepted ontology and usage hashes before production roster freeze or pack admission",
+      "status": "pending; downstream apk_dual_theme_asset_production_20260712 remains blocked"
+    }
+  ],
+  "deviation_notes": [
+    "Static public-MCP PNG/GLB retrieval and pending-review staging are implemented under the delegated static acceptance binding; final visual admission remains closed.",
+    "Pixel strictly validates the historical four-frame temporal diagnostic and the exact-five batch successor. The current public retrieval reconstructs 26 frames, five pose sheets, atlas, source GLB, and phase-bearing bundle and remains validated_unadmitted because the placeholder model fails visual admission.",
+    "The historical temporal diagnostic binds its inline source GLB; its batch successor satisfies the exact mechanical idle, walk_forward, walk_right, attack, and receive_damage contract but not the accepted-model visual gate.",
+    "Deterministic mirrored non-character work-order planning is implemented for audio, equipment, presentation, projectile, prop, tile_environment, UI, and VFX, but no admitted production inventory exists and the plan remains non-shipping.",
+    "Pixel does not import Forge source, call internal handlers, share mutable filesystem state, or recompute Forge animation atlases.",
+    "Production temporal admission remains gated on rigid_animation_sprite_pipeline_20260717 acceptance; complete-pack ingestion remains gated on village_asset_pack_20260718 acceptance.",
+    "The downstream accepted ontology hashes are absent, so current demand records, character exemplars, and RB-01 through RB-08 remain non-admitted planning evidence rather than a frozen production roster.",
+    "Downstream Story S3 currently conflicts with the product-owner-directed Forge 3D snapshot workflow; Forge hardening may continue, but admission requires an authorized downstream reconciliation.",
+    "Public temporal retrieval and local five-clip browser playback are verified. Downstream playback, final-character Kimi acceptance, and pack admission remain incomplete.",
+    "Public authoring review for S12-D reconstructed four 512x512 views and a 2048x530 contact sheet through bounded MCP evidence chunks under delivery.fc7ac38220080a14b7650a05b15fc5dde04969c88a8da8ee3a81f0ed233df598; two clean runtime roots reproduced identical identities and hashes while the static interchange manifest remained unchanged.",
+    "Kimi browser evidence at /tmp/kimi-webbridge-pdfs/S12-D guard authoring comparison.pdf loaded the approved 1280x720 turnaround plus every public comparison artifact and rejected the model for reference-fidelity, silhouette, anatomy, clothing, equipment, and side/back-view defects.",
+    "S13 public replay produced revision.cff416912eb9b942b21c11826a66ac0309f2e15f7cc6eea6d9e159e6334cceac and delivery.30d91994f6f47cf70d455ef6f947a43e6be1a7bee3da9b5fa9c6313889f74513 deterministically across clean roots, but /tmp/kimi-webbridge-pdfs/S13 guard authoring comparison.pdf rejects the model for detached helmet ornaments, faceted face/hair, wrong layered costume and palette, disconnected anatomy/boots, proportions, and collapsed side/back volume. S14-or-later base-model convergence must pass before temporal production resumes."
+  ]
+}

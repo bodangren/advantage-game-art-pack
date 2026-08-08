@@ -13,6 +13,16 @@ This document summarizes the current downstream asset demand observed in
 The goal is to ground the sprite-factory roadmap in the actual mini-game series
 instead of a generic fantasy-asset assumption.
 
+This is legacy discovery evidence from the standalone repository snapshot, not
+the authoritative production ontology. The current acceptance target is
+`/home/daniel-bo/Desktop/reading-advantage-monorepo`. Its
+`apk_independent_acceptance_handoff_20260712` track has not yet published the
+accepted ontology and usage hashes required by
+`apk_dual_theme_asset_production_20260712`. Therefore the families and examples
+below may guide capability hardening and draft briefs, but they cannot freeze a
+production roster, prove coverage, or authorize generation/admission. Reconcile
+every retained demand to the downstream accepted hashes when that gate opens.
+
 ## Key Finding
 
 The target system does not need to produce only sprite sheets.
@@ -26,7 +36,11 @@ It must support three classes of outputs:
 
 ## Runtime Gameplay Asset Families
 
-### 1. Directional and stateful pose sheets
+### 1. Legacy directional and stateful pose/state sheets
+
+The filenames below describe existing downstream assets and migration demand.
+They are legacy discovery evidence, not an authoritative interchange schema, a
+required Forge filename convention, or evidence that temporal animation exists.
 
 Observed examples:
 
@@ -38,13 +52,18 @@ Observed examples:
 - `player-3x3-sheet-facing-down.png`
 - `player-3x3-sheet-facing-camera.png`
 
-Requirements implied by the downstream games:
+Compatibility requirements implied by the downstream games:
 
 - support multiple grid layouts, not just `3x3`
 - support directional variants such as `facing_down`, `facing_up`,
   `facing_camera`
 - support row semantics beyond simple animation states, such as attack, defeat,
   correct/incorrect, or pose banks
+
+A legacy pose/state sheet is a grid whose cells encode selected directions,
+poses, or gameplay states. Unless a separate versioned metadata contract declares
+ordered frames, timing, and loop behavior, it is non-temporal and must not be
+treated as an animation atlas.
 
 ### 2. NPC, rescue, and boss families
 
@@ -230,3 +249,57 @@ Any future track that talks about “asset generation” must state which of the
 families it covers. Avoid writing tracks that only say “generate assets” without
 declaring whether that means pose sheets, tiles, scenes, parallax, UI, or
 presentation surfaces.
+
+## Cross-Project Production Direction (2026-07-22)
+
+- Pixel is the educational-app pack assembler and SVG-native owner for tiles,
+  UI, backgrounds, and presentation; Forge's public MCP supplies semantic
+  3D-derived transparent 128x128 PNGs and GLBs. The current temporal producer
+  path deterministically delivers the five required clips (`idle`,
+  `walk_forward`, `walk_right`, `attack`, and `receive_damage`) as 26 timed
+  source frames, five pose sheets, one atlas, one exact source GLB, and one
+  phase-bearing bundle. Pixel reconstructs and verifies that delivery from the
+  public MCP manifest/chunk boundary, but it remains `validated_unadmitted`:
+  the motion is a scaffold on a rejected placeholder model, not pack art.
+- The exact interchange contracts are `forge-asset-interchange-manifest/v1`
+  and `education-app-pack-profile/v1`.
+- Use `cute_chibi_v1` by default and `heroic_stylized_v1` secondarily. Profiles
+  must be original and project-owned. Project review records provenance and
+  rejects copied franchise names, symbols, characters, costumes, or distinctive
+  combinations; this is not a legal guarantee.
+- All current Pixel assets and compositions are rejected prototypes and cannot
+  enter production packs. `demo-assets/reference/manifest.json` and generated
+  reference images remain valid art-direction evidence only.
+- Every production asset needs profile/provenance, delivery-resolution visual
+  acceptance, and pack-admission evidence.
+- Do not promote the observed temporal diagnostic into a production claim. Its
+  accepted model and five clips, playback, pack admission, public-retrieval
+  reconciliation, downstream browser result, and Kimi acceptance remain incomplete.
+- Deterministic mirrored non-character work-order planning exists for audio,
+  equipment, presentation, projectiles, props, tiles/environments, UI, and VFX.
+  It reports missing/candidate/admitted evidence but does not produce or admit
+  those native families.
+
+### Three distinct delivery contracts
+
+1. **Static eight-direction dossier (current Forge contract):** one immutable
+   asset revision containing exactly eight independent transparent 128x128 source
+   PNGs for `N`, `NE`, `E`, `SE`, `S`, `SW`, `W`, and `NW`, at least one source
+   GLB, and digest-pinned evidence. Any static directional contact sheet is a
+   derived review surface only. It is non-temporal and cannot replace the eight
+   source PNGs.
+2. **Legacy pose/state sheet (downstream compatibility demand):** an existing
+   grid or pose bank whose cells may encode directions, poses, correctness,
+   defeat, attack, or other gameplay states. The examples above remain useful
+   migration evidence, but their filenames, layouts, and inferred row meanings
+   are non-authoritative until a game-specific manifest pins them.
+3. **Temporal animation staging (implemented, unadmitted):** ordered individual
+   transparent source frames, a Forge-derived atlas, and
+   `forge-temporal-render-artifacts/v1` metadata binding exact immutable
+   identities, frame and source-GLB digests, dimensions, rectangles, timing,
+   loop, direction/action, framing, and ground anchors. Pixel validates and
+   content-addresses the exact frame, atlas, GLB, and manifest bytes without
+   recomputing the atlas. Production readiness still requires one accepted model
+   and the five clips `idle`, `walk_forward`, `walk_right`, `attack`, and
+   `receive_damage`, plus playback, public-retrieval reconciliation, and
+   visual/Kimi acceptance. An atlas, contact sheet, or legacy pose sheet alone is incomplete.

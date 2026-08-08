@@ -19,6 +19,18 @@ never directly in the library — keeping human review in the promotion path.
 
 ## Functional Requirements
 
+Pixel-native authoring uses `cute_chibi_v1` by default or the
+`heroic_stylized_v1` profile when explicitly selected. Profiles must be original
+and project-owned; project review records provenance and rejects copied
+franchise names, symbols, characters, costumes, or distinctive combinations.
+This is not a legal guarantee. Semantic 3D requests route to Fantasy Asset
+Forge through public MCP and
+`forge-asset-interchange-manifest/v1`; this track does not invent Forge
+outputs. Imported results require immutable provenance, delivery-resolution
+review, and admission evidence for `education-app-pack-profile/v1`. Current
+Pixel source assets remain rejected prototypes and cannot be production
+exemplars.
+
 - A provider abstraction (structured text generation from a prompt) with a
   deterministic mock provider used by all tests.
 - A prompt builder that injects catalog JSON (slots, anchors, palette slots,
@@ -45,17 +57,17 @@ never directly in the library — keeping human review in the promotion path.
 
 ## Acceptance Criteria
 
-- [ ] Provider interface is defined and exercised through the mock provider;
-  request shape and output parsing are covered by tests.
-- [ ] Prompt builder output is snapshot-tested and provably includes catalog
-  grounding and dialect rules.
-- [ ] Repair loop feeds validation errors back to the provider, respects the
-  retry bound, and exits with a diagnostic on unrepairable output.
-- [ ] Authoring entry points stage parts and specs without touching the
-  checked-in library.
-- [ ] Eval fixtures cover valid, invalid-then-repaired, and unrepairable
-  canned outputs.
-- [ ] `npm run typecheck`, `npm test`, and `npm run build` pass.
+- [b] Provider interface is defined and exercised through the mock provider;
+      request shape and output parsing are covered by tests.
+- [b] Prompt builder output is snapshot-tested and provably includes catalog
+      grounding and dialect rules.
+- [b] Repair loop feeds validation errors back to the provider, respects the
+      retry bound, and exits with a diagnostic on unrepairable output.
+- [b] Authoring entry points stage parts and specs without touching the
+      checked-in library.
+- [b] Eval fixtures cover valid, invalid-then-repaired, and unrepairable
+      canned outputs.
+- [b] `npm run typecheck`, `npm test`, and `npm run build` pass.
 
 ## Out Of Scope
 

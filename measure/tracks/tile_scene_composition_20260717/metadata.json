@@ -2,9 +2,66 @@
   "id": "tile_scene_composition_20260717",
   "title": "Tile and Scene Composition Engine",
   "type": "feature",
-  "status": "pending",
+  "status": "in_progress",
   "created": "2026-07-17",
   "priority": "high",
-  "estimated_tasks": 16,
-  "depends_on": ["part_library_expansion_20260717"]
+  "estimated_tasks": 14,
+  "depends_on": ["part_library_expansion_20260717"],
+  "contracts": [
+    "forge-asset-interchange-manifest/v1",
+    "education-app-pack-profile/v1",
+    "pixel-tile-candidate-manifest/v1",
+    "pixel-tile-scene/v1",
+    "pixel-tile-scene-artifact/v1",
+    "pixel-tile-scene-exemplar-set/v1",
+    "pixel-parallax-set/v1",
+    "tile-scene-reference-board/v1"
+  ],
+  "default_style_profile": "cute_chibi_v1",
+  "secondary_style_profile": "heroic_stylized_v1",
+  "candidate_microbatch": {
+    "semantic_roles": 12,
+    "theme_profiles": 2,
+    "svg_candidates": 24,
+    "iteration": "s2-kimi-rejected-reference-gate",
+    "compiled_exemplar_scenes": 8,
+    "last_visual_gate": "rejected",
+    "last_visual_gate_loaded_assets": 32,
+    "accepted_infrastructure_scope": "candidate_browser_seam_composition_scaffold_only",
+    "rejection_evidence": "/tmp/kimi-webbridge-pdfs/Tile scene V2 Kimi QA.pdf",
+    "next_visual_gate": "blocked_on_reference_board_approval",
+    "state": "candidate_unadmitted",
+    "shipping": false,
+    "visual_review": "pending"
+  },
+  "reference_board_gate": {
+    "contract": "tile-scene-reference-board/v1-draft",
+    "scene_families": 4,
+    "theme_profiles": 2,
+    "required_boards": 8,
+    "briefs_drafted": 8,
+    "schema_and_validator_implemented": true,
+    "focused_contract_tests_passed": 21,
+    "material_samples_required": true,
+    "composed_gameplay_target_required": true,
+    "edge_or_repetition_proof_required": true,
+    "provenance_and_digest_required": true,
+    "board_state": "awaiting_primary_generation_and_approval",
+    "s3_generation_allowed": false
+  },
+  "downstream_production_gate": {
+    "acceptance_track": "apk_independent_acceptance_handoff_20260712",
+    "consumer_track": "apk_dual_theme_asset_production_20260712",
+    "accepted_ontology_hashes_available": false,
+    "reference_briefs_are_draft_only": true,
+    "required_generator": "built_in_image_generator",
+    "generator_contract_ready": false,
+    "generator_gaps": [
+      "canonical image result returns raw bytes without image-generation provenance",
+      "OpenAI and Google adapters do not forward declared size or seed",
+      "no accepted reference-board command or versioned manifest writer"
+    ],
+    "mmx_allowed": false,
+    "production_generation_allowed": false
+  }
 }

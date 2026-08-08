@@ -32,8 +32,8 @@
 </head>
 <body>
   <header>
-    <h1>SVG COMPOSITIONS vs MMX REFERENCES</h1>
-    <p>Left: mmx mockup targets (demo-assets/reference/). Right: deterministic output of the composition engine (palette-inlined SVG). Regenerate via the review-page scratch after any art change.</p>
+    <h1>HISTORICAL PROTOTYPE — SVG COMPOSITIONS vs MMX REFERENCES</h1>
+    <p>These archived MMX targets and SVG outputs are rejected, non-production evidence only. They cannot satisfy current reference approval or pack admission. Current production is gated on accepted downstream ontology hashes and the downstream-required built-in image generator.</p>
   </header>
     <section class="row">
       <div class="refs">
@@ -175,44 +175,153 @@
 <ellipse cx="16" cy="6" rx="14" ry="4" fill="#1a1c22" fill-opacity="0.35"/>
   </g>
   <g id="body" data-part-id="body-goblin" data-slot="body" transform="matrix(1 0 0 1 20 8)">
-<rect x="6" y="2" width="12" height="12" fill="#7da05c"/>
-  <rect x="6" y="2" width="5" height="4" fill="#a4c47c"/>
-  <rect x="8" y="8" width="3" height="3" fill="#ff9a3a"/>
-  <rect x="14" y="8" width="3" height="3" fill="#ff9a3a"/>
-  <rect x="14" y="10" width="4" height="4" fill="#567038"/>
-  <path d="M8 14h8l4 12-4 15H8l-4-15z" fill="#7da05c"/>
-  <path d="M8 14h4l-2 9H6z" fill="#a4c47c"/>
-  <path d="M15 16h3l2 10-3 13h-3z" fill="#567038"/>
-  <rect x="7" y="22" width="10" height="9" fill="#6b4f2e"/>
-  <rect x="7" y="22" width="10" height="2" fill="#8a6a42"/>
-  <rect x="14" y="22" width="3" height="9" fill="#4a3520"/>
-  <rect x="7" y="40" width="4" height="7" fill="#3a3226"/>
-  <rect x="13" y="40" width="4" height="7" fill="#3a3226"/>
+<!-- HEAD -->
+  <!-- Base Head Shape -->
+  <path d="M5 2c0-2 14-2 14 0c2 2 2 10 0 11c-2 2-12 2-14 0c-2-1-2-9 0-11z" fill="#7da05c"/>
+  <!-- Head Highlights (Forehead & Cheeks) -->
+  <path d="M7 2c0-1 10-1 10 0c1 1 1 3 0 4c-1 1-9 1-10 0c-1-1-1-3 0-4z" fill="#a4c47c"/>
+  <rect x="5" y="6" width="3" height="3" fill="#a4c47c"/>
+  <rect x="16" y="6" width="3" height="3" fill="#a4c47c"/>
+  <rect x="10" y="2" width="4" height="2" fill="#a4c47c"/>
+  <!-- Head Shadows -->
+  <path d="M5 9c0 1 1 3 3 3h8c2 0 3-2 3-3c0 2-2 3-3 3H8c-2 0-3-1-3-3z" fill="#567038"/>
+  <rect x="6" y="9" width="12" height="1" fill="#567038"/>
+  <rect x="11" y="10" width="2" height="2" fill="#567038"/>
+  <!-- Eyes (Glowing Orange with white/yellow centers) -->
+  <!-- Left Eye Socket and Glow -->
+  <polygon points="5,8 10,6 10,9 6,10" fill="#567038"/>
+  <polygon points="6,8 9,7 9,9 7,9" fill="#ff9a3a"/>
+  <rect x="7" y="8" width="1" height="1" fill="#fff"/>
+  <!-- Right Eye Socket and Glow -->
+  <polygon points="19,8 14,6 14,9 18,10" fill="#567038"/>
+  <polygon points="18,8 15,7 15,9 17,9" fill="#ff9a3a"/>
+  <rect x="16" y="8" width="1" height="1" fill="#fff"/>
+
+  <!-- TORSO & LIMBS -->
+  <!-- Neck -->
+  <rect x="10" y="12" width="4" height="3" fill="#567038"/>
+  
+  <!-- Torso Base -->
+  <path d="M7 14h10l3 11l-3 15H7l-3-11z" fill="#7da05c"/>
+  <!-- Chest / Abs definition -->
+  <rect x="11" y="17" width="2" height="10" fill="#567038"/>
+  <rect x="8" y="19" width="8" height="1" fill="#567038"/>
+  <rect x="8" y="22" width="8" height="1" fill="#567038"/>
+  <rect x="8" y="15" width="8" height="2" fill="#a4c47c"/>
+  <rect x="8" y="18" width="3" height="1" fill="#a4c47c"/>
+  <rect x="13" y="18" width="3" height="1" fill="#a4c47c"/>
+  <rect x="8" y="20" width="3" height="1" fill="#a4c47c"/>
+  <rect x="13" y="20" width="3" height="1" fill="#a4c47c"/>
+
+  <!-- Left Arm (with Leather Bracer/Band) -->
+  <path d="M18 15l4 2l1 8l-3 3l-2-2z" fill="#7da05c"/>
+  <path d="M19 16l2 1l1 4h-2z" fill="#a4c47c"/>
+  <path d="M20 22l2-1l1 3l-2 1z" fill="#567038"/>
+  <!-- Leather Band -->
+  <rect x="18" y="19" width="4" height="3" fill="#7a4b2a"/>
+  <rect x="18" y="19" width="4" height="1" fill="#8a6a42"/>
+  <rect x="18" y="21" width="4" height="1" fill="#4a3520"/>
+  <!-- Left Clawed Hand -->
+  <polygon points="18,26 21,27 20,29 18,28" fill="#567038"/>
+  <rect x="19" y="27" width="1" height="2" fill="#a4c47c"/>
+  <rect x="21" y="26" width="1" height="3" fill="#7da05c"/>
+
+  <!-- Right Arm (Green Muscle) -->
+  <path d="M6 15l-4 2l-1 8l3 3l2-2z" fill="#7da05c"/>
+  <path d="M5 16l-2 1l-1 4h2z" fill="#a4c47c"/>
+  <path d="M4 22l-2-1l-1 3l2 1z" fill="#567038"/>
+  <!-- Right Clawed Hand -->
+  <polygon points="6,26 3,27 4,29 6,28" fill="#567038"/>
+  <rect x="4" y="27" width="1" height="2" fill="#a4c47c"/>
+  <rect x="2" y="26" width="1" height="3" fill="#7da05c"/>
+
+  <!-- LEGS & FEET -->
+  <!-- Thighs / Knees -->
+  <path d="M5 34l2 6l5 1l-1-7z" fill="#7da05c"/>
+  <path d="M19 34l-2 6l-5 1l1-7z" fill="#7da05c"/>
+  <rect x="5" y="36" width="2" height="2" fill="#a4c47c"/>
+  <rect x="17" y="36" width="2" height="2" fill="#a4c47c"/>
+  <path d="M9 35l1 5h1z" fill="#567038"/>
+  <path d="M15 35l-1 5h-1z" fill="#567038"/>
+  
+  <!-- Clawed Feet -->
+  <polygon points="4,43 8,43 9,48 3,48" fill="#7da05c"/>
+  <polygon points="20,43 16,43 15,48 21,48" fill="#7da05c"/>
+  <!-- Left Foot Details -->
+  <rect x="4" y="44" width="1" height="4" fill="#a4c47c"/>
+  <rect x="8" y="45" width="1" height="3" fill="#567038"/>
+  <rect x="5" y="47" width="1" height="1" fill="#fff"/>
+  <rect x="7" y="47" width="1" height="1" fill="#fff"/>
+  <!-- Right Foot Details -->
+  <rect x="19" y="44" width="1" height="4" fill="#a4c47c"/>
+  <rect x="15" y="45" width="1" height="3" fill="#567038"/>
+  <rect x="18" y="47" width="1" height="1" fill="#fff"/>
+  <rect x="16" y="47" width="1" height="1" fill="#fff"/>
   </g>
-  <g id="rags" data-part-id="rags-goblin" data-slot="shirt" transform="matrix(1 0 0 1 20 33)">
-<path d="M5 2h14l2 8-3 2v16l-3-2-3 2-3-2-3 2-3-2V12l-3-2z" fill="#6b4f2e"/>
-  <path d="M5 2h6l-1 8H6l-4-2z" fill="#8a6a42"/>
-  <path d="M15 3h4l2 7-3 2v16l-3-2z" fill="#4a3520"/>
-  <rect x="6" y="13" width="12" height="3" fill="#7a4b2a"/>
+  <g id="rags" data-part-id="rags-goblin" data-slot="shirt" transform="matrix(1 0 0 1 20 22)">
+<!-- Tattered Tunic / Vest -->
+  <path d="M6 0l-3 4l1 8l2 18l6-3l6 3l2-18l1-8l-3-4z" fill="#6b4f2e"/>
+  <!-- Highlight folds -->
+  <path d="M6 0l-3 4l1 6l3-2l1 18l2-1z" fill="#8a6a42"/>
+  <polygon points="12,3 9,7 15,7" fill="#4a3520"/> <!-- V-Neck Cutout -->
+  <!-- Shadow folds -->
+  <path d="M18 0l3 4l-1 6l-3-2l-1 18l-2-1z" fill="#4a3520"/>
+  
+  <!-- Belt/Strap -->
+  <rect x="5" y="16" width="14" height="3" fill="#7a4b2a"/>
+  <rect x="5" y="16" width="14" height="1" fill="#8a6a42"/>
+  <rect x="5" y="18" width="14" height="1" fill="#4a3520"/>
+  
+  <!-- Silver Medallion with Red Gem -->
+  <circle cx="12" cy="17" r="3" fill="#dce8f4"/> <!-- Silver border -->
+  <circle cx="12" cy="17" r="2" fill="#8c2f3a"/> <!-- Red Gem Base -->
+  <rect x="11" y="16" width="1" height="1" fill="#ff6a4d"/> <!-- Gem Highlight -->
   </g>
-  <g id="ears" data-part-id="ears-goblin" data-slot="feature" transform="matrix(1 0 0 1 20 2)">
-<polygon points="11,12 8,3 2,0 7,10" fill="#7da05c"/>
-  <polygon points="13,12 16,3 22,0 17,10" fill="#7da05c"/>
-  <polygon points="9,10 7,4 4,3 8,9" fill="#567038"/>
-  <polygon points="15,10 17,4 20,3 16,9" fill="#567038"/>
-  <polygon points="10,8 9,4 6,2 9,7" fill="#a4c47c"/>
-  <polygon points="14,8 15,4 18,2 15,7" fill="#a4c47c"/>
+  <g id="ears" data-part-id="ears-goblin" data-slot="feature" transform="matrix(1 0 0 1 14 2)">
+<!-- Left Ear (Centered at x=18, extending to x=0) -->
+  <!-- Base Shadow -->
+  <polygon points="18,12 16,11 8,9 3,6 1,4 5,7 13,9" fill="#567038"/>
+  <!-- Main Ear Body -->
+  <polygon points="18,11 13,9 7,7 2,4 0,2 4,5 10,7 18,9" fill="#7da05c"/>
+  <!-- Top Highlight Rim -->
+  <polygon points="18,9 10,7 4,5 0,2 15,2 18,6" fill="#a4c47c"/>
+  
+  <!-- Right Ear (Centered at x=18, extending to x=36) -->
+  <!-- Base Shadow -->
+  <polygon points="18,12 20,11 28,9 33,6 35,4 31,7 23,9" fill="#567038"/>
+  <!-- Main Ear Body -->
+  <polygon points="18,11 23,9 29,7 34,4 36,2 32,5 26,7 18,9" fill="#7da05c"/>
+  <!-- Top Highlight Rim -->
+  <polygon points="18,9 26,7 32,5 36,2 21,2 18,6" fill="#a4c47c"/>
   </g>
-  <g id="club" data-part-id="club-goblin" data-slot="weapon" transform="matrix(1 0 0 1 17 6)">
-<path d="M1 7l3-7 6 4-2 8-6 2z" fill="#8a6a3b"/>
-  <path d="M3 5l2-4 3 2-2 4z" fill="#a88754"/>
-  <path d="M7 8l2 1-1 4-4 1z" fill="#5f4527"/>
-  <polygon points="8,1 11,3 8,5" fill="#e8e0cc"/>
-  <rect x="2" y="13" width="3" height="13" fill="#8a6a3b"/>
-  <rect x="2" y="22" width="3" height="4" fill="#5f4527"/>
+  <g id="club" data-part-id="club-goblin" data-slot="weapon" transform="matrix(1 0 0 1 10 6)">
+<!-- Club Head (Knotted heavy wood, centered at x=10) -->
+  <path d="M5 12c-3-4-1-10 3-11s9 2 10 6s-2 10-6 11z" fill="#8a6a3b"/>
+  <!-- Highlight -->
+  <path d="M8 2c-1 2-1 6 2 7c3 1 5-1 6-4c1-2 0-4-2-5c-2-1-4-1-6 2z" fill="#a88754"/>
+  <!-- Shadows -->
+  <path d="M10 12c-1 2 1 4 4 3c2-1 3-4 2-6c-1 2-2 3-4 3z" fill="#5f4527"/>
+  
+  <!-- Knots & Spikes -->
+  <circle cx="8" cy="4" r="2" fill="#5f4527"/>
+  <circle cx="13" cy="8" r="2.5" fill="#5f4527"/>
+  <!-- Bone Spikes (Pointing left and right) -->
+  <polygon points="15,4 19,2 17,6" fill="#e8e0cc"/>
+  <polygon points="5,6 1,4 4,3" fill="#e8e0cc"/>
+  <polygon points="10,1 12,0 11,3" fill="#e8e0cc"/>
+  
+  <!-- Handle / Shaft (Centered at x=10) -->
+  <rect x="9" y="11" width="3" height="15" fill="#8a6a3b"/>
+  <rect x="9" y="11" width="1" height="15" fill="#a88754"/>
+  <rect x="11" y="11" width="1" height="15" fill="#5f4527"/>
+  
+  <!-- Leather Grip Wrap -->
+  <rect x="9" y="17" width="3" height="5" fill="#7a4b2a"/>
+  <rect x="9" y="18" width="3" height="1" fill="#5f4527"/>
+  <rect x="9" y="21" width="3" height="1" fill="#5f4527"/>
   </g>
 </svg></div>
-        <figcaption>SVG · enemy-goblin · sha256 3964a41134a7…</figcaption>
+        <figcaption>SVG · enemy-goblin · sha256 fb522dc5c466…</figcaption>
       </figure>
       <h2>goblin (enemy)</h2>
     </section>
@@ -229,33 +338,69 @@
 <ellipse cx="16" cy="6" rx="14" ry="4" fill="#1a1c22" fill-opacity="0.35"/>
   </g>
   <g id="body" data-part-id="body-spectre" data-slot="body" transform="matrix(1 0 0 1 20 8)">
-<path d="M7 10h10l3 16-2 9-3-4-3 4-3-4-3 4-2-9z" fill="#4a4e6d"/>
-  <path d="M7 10h5l-2 14-3 2z" fill="#6d7398"/>
-  <path d="M14 12h3l3 14-2 9-3-4z" fill="#32354d"/>
-  <path d="M9 38l3 5 3-5 3 5-3 5-3-5-3 5z" fill="#aab4e8"/>
-  <path d="M11 39l2 3-2 3-2-3z" fill="#32354d"/>
+<!-- Wispy levitating tail / base -->
+  <!-- Wisps (Wisp trails) -->
+  <path d="M7 40l2-8l5 12l-4 4z" fill="#aab4e8"/>
+  <path d="M17 38l-2-6l4 10l-2 3z" fill="#aab4e8"/>
+  
+  <!-- Main flowing shroud (floating lower body) -->
+  <path d="M8 12h8l4 12l1 10l-3 10l-4-5l-2 3l-3-4l-3 6l-3-10z" fill="#4a4e6d"/>
+  <!-- Shroud highlights -->
+  <path d="M8 12h4l-2 14l-3 10l2-2l1-10z" fill="#6d7398"/>
+  <path d="M12 20h2l1 10l-1 5l-1-5z" fill="#6d7398"/>
+  <!-- Shroud shadows -->
+  <path d="M15 14l1 10l3 10l-2 10l-2-5l-1-5z" fill="#32354d"/>
+  <path d="M9 22l-1 8l-2 4l1-12z" fill="#32354d"/>
   </g>
   <g id="shroud" data-part-id="shroud-spectre" data-slot="shirt" transform="matrix(1 0 0 1 20 12)">
-<path d="M4 6C4 2 7 0 12 0s8 2 8 6l2 30H2z" fill="#4a4e6d"/>
-  <path d="M4 6C4 3 6 1 9 0l-1 12-4 3z" fill="#6d7398"/>
-  <path d="M16 3c2 1 3 2 4 3l2 30h-6V11z" fill="#32354d"/>
-  <path d="M6 28l2 4-2 4H4z" fill="#32354d"/>
-  <rect x="8" y="4" width="8" height="6" fill="#23253a"/>
+<!-- Hood and cloak upper body -->
+  <!-- Base Cloak shape -->
+  <path d="M5 6c0-4 4-6 7-6s7 2 7 6l3 12l1 12h-22l1-12z" fill="#4a4e6d"/>
+  <!-- Highlights on hood and shoulders -->
+  <path d="M5 6c0-3 3-5 7-5s4 1 5 3l-2 8l-6 1z" fill="#6d7398"/>
+  <path d="M4 14l1 10l3 6v-12z" fill="#6d7398"/>
+  <!-- Shadows on hood and shoulders -->
+  <path d="M15 2c2 1 4 2 4 4l1 12l2 12h-4v-18z" fill="#32354d"/>
+  <path d="M12 18l1 12l3 4v-16z" fill="#32354d"/>
+  
+  <!-- Dark Hood Opening -->
+  <path d="M8 5c0-1 2-2 4-2s4 1 4 2v6c0 2-2 3-4 3s-4-1-4-3z" fill="#23253a"/>
+  <!-- Inner hood shadow -->
+  <path d="M8 5c0-1 1-1 3-1v8c-2 0-3-1-3-3z" fill="#0b0d12"/>
   </g>
   <g id="eyes" data-part-id="eyes-spectre" data-slot="feature" transform="matrix(1 0 0 1 20 13)">
-<rect x="6" y="4" width="4" height="6" fill="#b8e6ff"/>
-  <rect x="14" y="4" width="4" height="6" fill="#b8e6ff"/>
-  <rect x="7" y="5" width="2" height="2" fill="#ffffff"/>
-  <rect x="15" y="5" width="2" height="2" fill="#ffffff"/>
+<!-- Left Eye (Slanted \ for aggressive look, centered at y=8) -->
+  <polygon points="5,6 9,9 10,9 6,6" fill="#b8e6ff"/>
+  <polygon points="5,6 9,9 8,9 5,7" fill="#ffffff"/>
+  <polygon points="6,6 10,9 9,9 6,7" fill="#003d5b"/>
+  
+  <!-- Right Eye (Slanted / for aggressive look, centered at y=8) -->
+  <polygon points="19,6 15,9 14,9 18,6" fill="#b8e6ff"/>
+  <polygon points="19,6 15,9 16,9 19,7" fill="#ffffff"/>
+  <polygon points="18,6 14,9 15,9 18,7" fill="#003d5b"/>
   </g>
   <g id="orb" data-part-id="orb-spectre" data-slot="weapon" transform="matrix(1 0 0 1 11 21)">
-<circle cx="8" cy="7" r="6" fill="#b8e6ff"/>
-  <circle cx="6" cy="5" r="2" fill="#ffffff"/>
-  <rect x="6" y="13" width="4" height="6" fill="#9aa2b5"/>
-  <rect x="6" y="13" width="4" height="2" fill="#ffffff"/>
+<!-- Sparkles / Glow particles -->
+  <rect x="2" y="3" width="1" height="1" fill="#ffffff"/>
+  <rect x="13" y="2" width="1" height="1" fill="#ffffff"/>
+  <rect x="1" y="9" width="1" height="1" fill="#ffffff"/>
+  <rect x="14" y="8" width="1" height="1" fill="#ffffff"/>
+  <!-- Sparkle Plus signs -->
+  <polygon points="11,1 12,1 12,0 13,0 13,1 14,1 14,2 13,2 13,3 12,3 12,2 11,2" fill="#ffffff"/>
+  <polygon points="2,11 3,11 3,10 4,10 4,11 5,11 5,12 4,12 4,13 3,13 3,12 2,12" fill="#ffffff"/>
+  
+  <!-- Glowing Orb Base -->
+  <circle cx="8" cy="7" r="5" fill="#b8e6ff"/>
+  <circle cx="7" cy="6" r="3.5" fill="#ffffff"/>
+  <circle cx="6.5" cy="5.5" r="1.5" fill="#fff"/>
+  
+  <!-- Metal Stand / Skeletal Hand -->
+  <path d="M5 12c1 2 2 3 3 3s2-1 3-3v4l-3 3l-3-3z" fill="#9aa2b5"/>
+  <path d="M5 12h1l1 2h2l1-2h1v1c0 2-2 3-3 3s-3-1-3-3z" fill="#ffffff"/>
+  <path d="M8 15v4l1-1v-3z" fill="#9aa2b5"/>
   </g>
 </svg></div>
-        <figcaption>SVG · enemy-spectre · sha256 8de859fa5fe1…</figcaption>
+        <figcaption>SVG · enemy-spectre · sha256 a0da3739c268…</figcaption>
       </figure>
       <h2>spectre (enemy)</h2>
     </section>
@@ -272,35 +417,103 @@
 <ellipse cx="16" cy="6" rx="14" ry="4" fill="#1a1c22" fill-opacity="0.35"/>
   </g>
   <g id="wings" data-part-id="wings-dragon" data-slot="feature" transform="matrix(1 0 0 1 -2 10)">
-<path d="M22 24L2 4l10 2 10-6 2 10z" fill="#d98a4a"/>
-  <path d="M26 24l20-20-10 2-10-6-2 10z" fill="#d98a4a"/>
-  <path d="M20 22L6 8l8 2 6-4z" fill="#a85c2a"/>
-  <path d="M28 22l14-14-8 2-6-4z" fill="#a85c2a"/>
-  <polygon points="20,24 24,12 28,24" fill="#8c3b2e"/>
-  <polygon points="22,24 24,16 26,24" fill="#b8553f"/>
+<!-- Wing Membranes (Background, dark) -->
+  <!-- Left Wing Membrane -->
+  <path d="M22 20c-5-2-12-8-15-14c0 0-2 8 3 12c4 3 9 2 12 2z" fill="#a85c2a"/>
+  <path d="M15 10c-3-2-7-5-9-8c0 0-2 6 2 9c3 2 6 1 7-1z" fill="#d98a4a"/>
+  
+  <!-- Right Wing Membrane -->
+  <path d="M26 20c5-2 12-8 15-14c0 0 2 8-3 12c-4 3-9 2-12 2z" fill="#a85c2a"/>
+  <path d="M33 10c3-2 7-5 9-8c0 0 2 6-2 9c-3 2-6 1-7-1z" fill="#d98a4a"/>
+  
+  <!-- Wing struts / bone fingers -->
+  <!-- Left Wing Struts -->
+  <path d="M24 22L7 6c-2 0-3-2-3-4s2-2 4 0l16 20z" fill="#8c3b2e"/>
+  <path d="M24 22L15 10c-1-1-2-2-2-3s1-2 2-1l9 16z" fill="#8c3b2e"/>
+  <path d="M24 22L21 12c0-1-1-2-1-3s1-2 2-1l1 14z" fill="#8c3b2e"/>
+  <!-- Right Wing Struts -->
+  <path d="M24 22L41 6c2 0 3-2 3-4s-2-2-4 0l-16 20z" fill="#8c3b2e"/>
+  <path d="M24 22L33 10c1-1 2-2 2-3s-1-2-2-1l-9 16z" fill="#8c3b2e"/>
+  
+  <!-- Highlights on struts -->
+  <path d="M24 22L7 6c-1 0-2-1-2-2s1-1 2 0l17 18z" fill="#b8553f"/>
+  <path d="M24 22L41 6c1 0 2-1 2-2s-1-1-2 0l-17 18z" fill="#b8553f"/>
+  
+  <!-- Bone claws at the wing tips -->
+  <polygon points="4,2 1,0 4,-1" fill="#e8e0cc"/>
+  <polygon points="44,2 47,0 44,-1" fill="#e8e0cc"/>
   </g>
   <g id="body" data-part-id="body-dragon" data-slot="body" transform="matrix(1 0 0 1 0 8)">
-<path d="M4 48l2-18 8-10 10-8 4-8 8-4 6 2 2 6-6 6-8 2-6 8-4 10-8 8z" fill="#8c3b2e"/>
-  <path d="M8 34l6-8 8-6 4-6-10 4-8 8-2 10z" fill="#b8553f"/>
-  <path d="M14 40l4-8 4 2-4 10-6 4z" fill="#5f2418"/>
-  <path d="M18 34l8-10 6 2-4 10z" fill="#e0c48f"/>
-  <polygon points="36,3 39,0 39,5" fill="#e8e0cc"/>
-  <polygon points="41,4 44,2 44,6" fill="#e8e0cc"/>
-  <rect x="38" y="6" width="2" height="2" fill="#5f2418"/>
+<!-- Tail (Left side, curving back and up) -->
+  <path d="M18 36c-5 0-10-3-12-8c-2-5-1-10 3-12c4-2 7 1 8 4c1 4-2 7-5 7c-2 0-3-2-2-3" fill="#8c3b2e"/>
+  
+  <!-- Massive Torso (Connecting neck, tail, and legs) -->
+  <path d="M14 34c-3-5 2-12 8-14c6-2 12 1 14 6c2 5-2 10-8 11c-6 1-11-1-14-3z" fill="#8c3b2e"/>
+  <path d="M16 26c1-3 5-5 8-5s6 2 6 5s-2 5-6 5s-8-2-8-5z" fill="#b8553f"/>
+  <path d="M20 32c1 2 3 3 6 3s5-1 5-3v2c0 2-2 3-5 3s-6-1-6-3z" fill="#5f2418"/>
+  
+  <!-- Hind Leg (Back leg - shadow) -->
+  <path d="M12 36l3 8l4 2l-1-11z" fill="#5f2418"/>
+  
+  <!-- Hind Leg (Front leg - primary) -->
+  <path d="M22 32c1 3 3 8 5 12l4 2l-3-14z" fill="#8c3b2e"/>
+  
+  <!-- Neck (Going up and right to head) -->
+  <path d="M22 26l8-16l8 3l-10 15z" fill="#8c3b2e"/>
+  
+  <!-- Snout Head (Facing right, snarling) -->
+  <path d="M30 6c1-5 12-4 15-1c3 3 3 7 0 9c-3 2-12 2-15-1c-2-2-2-5 0-7z" fill="#8c3b2e"/>
+  <!-- Snout snout detailing -->
+  <path d="M39 5l4 1l1 4l-4-1z" fill="#b8553f"/>
+  <!-- Snout Snarl mouth and white teeth -->
+  <path d="M39 10h6l-3-3z" fill="#000"/>
+  <polygon points="41,10 42,9 43,10" fill="#fff"/>
+  <polygon points="43,10 44,9 45,10" fill="#fff"/>
+  
+  <!-- Horns (Back of head pointing left/up) -->
+  <polygon points="32,4 28,1 31,1" fill="#e8e0cc"/>
+  <polygon points="30,6 25,3 28,3" fill="#e8e0cc"/>
+  
+  <!-- Front Leg (Clawed hand/arm) -->
+  <path d="M22 26l-6 6l-6-2l2-4l6-2z" fill="#8c3b2e"/>
+  <rect x="10" y="30" width="2" height="2" fill="#e8e0cc"/>
   </g>
-  <g id="plate" data-part-id="plate-dragon" data-slot="shirt" transform="matrix(1 0 0 1 10 34)">
-<path d="M4 0h16l2 12-4 10H6l-4-10z" fill="#e0c48f"/>
-  <rect x="4" y="0" width="16" height="3" fill="#f2e0bd"/>
-  <path d="M18 14l2-2 1 5-4 5h-3z" fill="#b3925c"/>
-  <polygon points="12,4 16,12 12,20 8,12" fill="#e8e0cc"/>
+  <g id="plate" data-part-id="plate-dragon" data-slot="shirt" transform="matrix(1 0 0 1 20 32)">
+<!-- Belly Plate (Shield-like ridges) -->
+  <path d="M8 2h8l2 6l-2 12l-8 3l-2-3l2-12z" fill="#e0c48f"/>
+  <!-- Highlights (Left side) -->
+  <path d="M8 2h4l-2 18l-4 1z" fill="#f2e0bd"/>
+  <rect x="7" y="6" width="3" height="2" fill="#f2e0bd"/>
+  <rect x="7" y="10" width="4" height="2" fill="#f2e0bd"/>
+  <!-- Shadows (Right side) -->
+  <path d="M12 2h4l2 6l-2 12l-4 1z" fill="#b3925c"/>
+  
+  <!-- Bone ridges/crests -->
+  <path d="M6 8l3-1l2 2l-5 1z" fill="#e8e0cc"/>
+  <path d="M18 8l-3-1l-2 2l5 1z" fill="#e8e0cc"/>
+  <path d="M5 13l4-1l1 2l-5 1z" fill="#e8e0cc"/>
+  <path d="M19 13l-4-1l-1 2l5 1z" fill="#e8e0cc"/>
   </g>
   <g id="breath" data-part-id="breath-dragon" data-slot="weapon" transform="matrix(1 0 0 1 42 10)">
-<path d="M0 8l6-6 4 2 6-4 8 8-8 8-6-4-4 2z" fill="#ff8c3a"/>
-  <path d="M4 8l4-4 3 2 4-2 5 4-5 4-4-2-3 2z" fill="#ffb361"/>
-  <circle cx="15" cy="8" r="2" fill="#ffd23a"/>
+<!-- Crackling Dragon Flame -->
+  <!-- Base Flame (Orange) -->
+  <path d="M2 8c2-2 6-4 12-6c6-2 10 0 10 4c0 3-4 6-10 8c-6 2-10 0-12-6z" fill="#ff8c3a"/>
+  <path d="M4 8c3-3 8-5 14-3c6 2 6 4 2 5c-4 1-13 1-16-2z" fill="#ff8c3a"/>
+  
+  <!-- Hot Inner Core (Light Orange/Yellow) -->
+  <path d="M4 8c2-1 5-2 10-2c5 0 8 1 8 2c0 1-3 2-8 2c-5 0-8-1-10-2z" fill="#ffb361"/>
+  <rect x="8" y="7" width="8" height="2" fill="#ffb361"/>
+  
+  <!-- Embers (Yellow core particles flying off) -->
+  <rect x="20" y="3" width="2" height="2" fill="#ffd23a"/>
+  <rect x="22" y="6" width="1.5" height="1.5" fill="#ffd23a"/>
+  <rect x="18" y="11" width="2" height="2" fill="#ffd23a"/>
+  <rect x="23" y="10" width="1" height="1" fill="#ffd23a"/>
+  <polygon points="12,5 14,4 13,6" fill="#ffd23a"/>
+  <polygon points="15,10 17,9 16,11" fill="#ffd23a"/>
   </g>
 </svg></div>
-        <figcaption>SVG · boss-dragon · sha256 a05c2fab43c5…</figcaption>
+        <figcaption>SVG · boss-dragon · sha256 b432bc3a3157…</figcaption>
       </figure>
       <h2>dragon (boss)</h2>
     </section>
@@ -317,45 +530,138 @@
 <ellipse cx="16" cy="6" rx="14" ry="4" fill="#1a1c22" fill-opacity="0.35"/>
   </g>
   <g id="body" data-part-id="body-prisoner" data-slot="body" transform="matrix(1 0 0 1 20 8)">
-<rect x="8" y="2" width="8" height="11" fill="#e0a97e"/>
-  <rect x="8" y="2" width="3" height="4" fill="#f2c9a4"/>
-  <rect x="9" y="7" width="2" height="2" fill="#b37a52"/>
-  <rect x="14" y="7" width="2" height="2" fill="#b37a52"/>
-  <rect x="13" y="9" width="3" height="4" fill="#b37a52"/>
-  <path d="M8 12h8l2 15-2 14H8l-2-14z" fill="#e0a97e"/>
-  <path d="M8 12h4l-1 10H7z" fill="#f2c9a4"/>
-  <path d="M14 14h3l1 13-2 13h-3z" fill="#b37a52"/>
-  <rect x="7" y="18" width="10" height="13" fill="#8a8578"/>
-  <rect x="7" y="18" width="10" height="2" fill="#a5a192"/>
-  <rect x="14" y="18" width="3" height="13" fill="#635f55"/>
-  <rect x="7" y="39" width="4" height="8" fill="#e0a97e"/>
-  <rect x="13" y="39" width="4" height="8" fill="#e0a97e"/>
-  <rect x="7" y="44" width="4" height="3" fill="#b37a52"/>
-  <rect x="13" y="44" width="4" height="3" fill="#b37a52"/>
+<!-- HEAD (around 12, 6) -->
+  <!-- Base Head Shape -->
+  <path d="M7 2c0-2 10-2 10 0c2 2 1 8-1 9c-2 1-7 1-9-1c-1-1-1-6 0-8z" fill="#e0a97e"/>
+  <!-- Head Highlights (Forehead & Cheeks) -->
+  <path d="M8 2c0-1 8-1 8 0c1 1 0 3-1 4c-1 1-7 1-7-1c0-1 0-2 0-2z" fill="#f2c9a4"/>
+  <rect x="7" y="6" width="2" height="2" fill="#f2c9a4"/>
+  <rect x="15" y="6" width="2" height="2" fill="#f2c9a4"/>
+  <!-- Head Shadows -->
+  <path d="M7 9c0 1 1 2 2 2h6c1 0 2-1 2-2c0 1-1 2-2 2H9c-1 0-2-1-2-2z" fill="#b37a52"/>
+  <rect x="8" y="9" width="8" height="1" fill="#b37a52"/>
+  <!-- Eyes & Eyebrows (Detailed human face) -->
+  <rect x="9" y="5" width="2" height="1" fill="#4a3728"/> <!-- Left brow -->
+  <rect x="13" y="5" width="2" height="1" fill="#4a3728"/> <!-- Right brow -->
+  <rect x="9" y="6" width="2" height="1.5" fill="#fff"/> <!-- Left eye -->
+  <rect x="10" y="6" width="1" height="1.5" fill="#000"/>
+  <rect x="13" y="6" width="2" height="1.5" fill="#fff"/> <!-- Right eye -->
+  <rect x="13" y="6" width="1" height="1.5" fill="#000"/>
+  <!-- Nose and Mouth -->
+  <rect x="11" y="7" width="2" height="2" fill="#b37a52"/>
+  <rect x="10" y="9" width="4" height="1" fill="#b37a52"/>
+
+  <!-- TORSO & LIMBS -->
+  <!-- Neck -->
+  <rect x="10" y="11" width="4" height="2" fill="#b37a52"/>
+  
+  <!-- Chest and Abdomen (Highly muscular bare skin) -->
+  <path d="M6 13h12l2 12l-2 15H6l-2-15z" fill="#e0a97e"/>
+  <!-- Muscle lines (Shadows) -->
+  <rect x="11" y="14" width="2" height="12" fill="#b37a52"/>
+  <rect x="7" y="17" width="10" height="1" fill="#b37a52"/>
+  <rect x="7" y="20" width="10" height="1" fill="#b37a52"/>
+  <rect x="7" y="23" width="10" height="1" fill="#b37a52"/>
+  <!-- Muscle highlights -->
+  <rect x="7" y="14" width="4" height="2.5" fill="#f2c9a4"/>
+  <rect x="13" y="14" width="4" height="2.5" fill="#f2c9a4"/>
+  <rect x="7" y="18" width="4" height="1.5" fill="#f2c9a4"/>
+  <rect x="13" y="18" width="4" height="1.5" fill="#f2c9a4"/>
+  <rect x="7" y="21" width="4" height="1.5" fill="#f2c9a4"/>
+  <rect x="13" y="21" width="4" height="1.5" fill="#f2c9a4"/>
+  
+  <!-- Neck/Shoulder Chains (Mockup feature: heavy dark chain around neck) -->
+  <path d="M6 13c1 2 3 3 6 3s5-1 6-3c0 2-2 4-6 4s-6-2-6-4z" fill="#3a3c42"/>
+  <rect x="8" y="14" width="2" height="2" fill="#5a5d64"/>
+  <rect x="14" y="14" width="2" height="2" fill="#5a5d64"/>
+  <rect x="11" y="15" width="2" height="1.5" fill="#3a3c42"/>
+  <rect x="11" y="15" width="1" height="1" fill="#5a5d64"/>
+
+  <!-- Left Arm (Bare muscle) -->
+  <path d="M18 13l4 3l1 10l-3 4l-2-2z" fill="#e0a97e"/>
+  <path d="M19 14l2 2l1 6h-2z" fill="#f2c9a4"/>
+  <path d="M20 22l2 1l1 4l-2 1z" fill="#b37a52"/>
+  <!-- Left Hand (Bare) -->
+  <polygon points="18,28 21,29 20,32 18,31" fill="#b37a52"/>
+  <rect x="19" y="29" width="1" height="2.5" fill="#f2c9a4"/>
+
+  <!-- Right Arm (Bare muscle) -->
+  <path d="M6 13l-4 3l-1 10l3 4l2-2z" fill="#e0a97e"/>
+  <path d="M5 14l-2 2l-1 6h2z" fill="#f2c9a4"/>
+  <path d="M4 22l-2 1l-1 4l2 1z" fill="#b37a52"/>
+  <!-- Right Hand (Bare) -->
+  <polygon points="6,28 3,29 4,32 6,31" fill="#b37a52"/>
+  <rect x="4" y="29" width="1" height="2.5" fill="#f2c9a4"/>
+
+  <!-- LEGS & FEET -->
+  <!-- Bare legs protruding under pants -->
+  <path d="M8 35v10h2v-10z" fill="#e0a97e"/>
+  <path d="M14 35v10h2v-10z" fill="#e0a97e"/>
+  <path d="M8 35v6" fill="#f2c9a4"/>
+  <path d="M15 35v6" fill="#b37a52"/>
+  
+  <!-- Bare Feet at the very bottom -->
+  <polygon points="6,44 10,44 11,48 5,48" fill="#e0a97e"/>
+  <polygon points="18,44 14,44 13,48 19,48" fill="#e0a97e"/>
+  <!-- Left Foot details -->
+  <rect x="6" y="45" width="1" height="3.5" fill="#f2c9a4"/>
+  <rect x="10" y="45" width="1" height="3" fill="#b37a52"/>
+  <!-- Right Foot details -->
+  <rect x="17" y="45" width="1" height="3.5" fill="#f2c9a4"/>
+  <rect x="13" y="45" width="1" height="3" fill="#b37a52"/>
   </g>
-  <g id="tatters" data-part-id="tatters-prisoner" data-slot="shirt" transform="matrix(1 0 0 1 20 33)">
-<path d="M5 2h14l2 7-3 2v17l-3-2-3 2-3-2-3 2-3-2V11l-3-2z" fill="#8a8578"/>
-  <path d="M5 2h6l-1 8H6l-4-2z" fill="#a5a192"/>
-  <path d="M15 3h4l2 6-3 2v17l-3-2z" fill="#635f55"/>
-  <path d="M9 22l2 3-2 3H7z" fill="#635f55"/>
+  <g id="tatters" data-part-id="tatters-prisoner" data-slot="shirt" transform="matrix(1 0 0 1 20 23)">
+<!-- Tattered Trousers / Pants -->
+  <path d="M6 0h12l3 6v14l-3 10l-4-4l-2 2l-2-2l-4 4l-3-10V6z" fill="#8a8578"/>
+  <!-- Highlight folds -->
+  <path d="M6 0h6l-1 6l-3 12l2 8v-10l-3-6z" fill="#a5a192"/>
+  <path d="M7 6l3 2l-1 12l-2-1z" fill="#a5a192"/>
+  <!-- Shadow folds -->
+  <path d="M12 0h6l1 6l3 12l-2 8v-10l3-6z" fill="#635f55"/>
+  <path d="M14 6l-1 12l3 2l1-14z" fill="#635f55"/>
+  
+  <!-- Rips and Patches -->
+  <rect x="7" y="14" width="3" height="3" fill="#635f55"/>
+  <rect x="8" y="15" width="1.5" height="1.5" fill="#a5a192"/>
+  <rect x="14" y="18" width="3" height="3" fill="#635f55"/>
+  <rect x="15" y="19" width="1.5" height="1.5" fill="#a5a192"/>
   </g>
   <g id="hair" data-part-id="hair-prisoner" data-slot="hair" transform="matrix(1 0 0 1 20 -2)">
-<path d="M3 16V8C3 2 7 0 12 0s9 2 9 8v8h-2l-1-4-2 4-2-4-2 4-2-4-2 4-1-4-2 4z" fill="#d9b36a"/>
-  <path d="M5 7C5 3 8 1 11 1v4H8v3H5z" fill="#ecd28f"/>
-  <path d="M18 9h3v7h-2l-1-4z" fill="#a8834a"/>
-  <path d="M5 12h3l-1 4H4z" fill="#a8834a"/>
+<!-- Base Hair Shape (Flowing down sides, crown at y=12) -->
+  <path d="M6 20c-1-6 2-8 6-8s7 2 6 8v8l-3-3l-3 3v-8z" fill="#d9b36a"/>
+  
+  <!-- Highlights (Crown and strands) -->
+  <path d="M7 18c0-4 2-6 5-6s2 1 3 3l-1 5l-4-1z" fill="#ecd28f"/>
+  <path d="M5 20h2v5l-2-2z" fill="#ecd28f"/>
+  
+  <!-- Shadows (Underneath and back strands) -->
+  <path d="M12 12c2 0 6 2 6 6l-1 8l-2-2l-1-6z" fill="#a8834a"/>
+  <path d="M17 20h2v5l-2-2z" fill="#a8834a"/>
+  
+  <!-- Part in the middle -->
+  <rect x="11.5" y="12" width="1" height="4" fill="#a8834a"/>
   </g>
   <g id="shackles" data-part-id="shackles-prisoner" data-slot="weapon" transform="matrix(1 0 0 1 13 22)">
-<circle cx="5" cy="6" r="4" fill="#9aa2b5"/>
-  <circle cx="15" cy="6" r="4" fill="#9aa2b5"/>
-  <circle cx="4" cy="5" r="1" fill="#c3cad6"/>
-  <circle cx="14" cy="5" r="1" fill="#c3cad6"/>
-  <path d="M8 9l-2 2v2l2 0z" fill="#6a7283"/>
-  <path d="M7 10l3 4 3-4 3 4-2 4-4-2-4 2-1-4z" fill="#9aa2b5"/>
-  <path d="M13 14l3 0-2 4-2-1z" fill="#6a7283"/>
+<!-- Wrist Shackles -->
+  <!-- Left wrist band -->
+  <rect x="1" y="8" width="5" height="3.5" fill="#9aa2b5"/>
+  <rect x="1" y="8" width="5" height="1" fill="#c3cad6"/>
+  <rect x="1" y="10.5" width="5" height="1" fill="#6a7283"/>
+  <!-- Right wrist band -->
+  <rect x="14" y="8" width="5" height="3.5" fill="#9aa2b5"/>
+  <rect x="14" y="8" width="5" height="1" fill="#c3cad6"/>
+  <rect x="14" y="10.5" width="5" height="1" fill="#6a7283"/>
+  
+  <!-- Hanging Chain between wrists -->
+  <path d="M4 10c1 4 3 6 6 6s5-2 6-6h-2c-1 2-2 4-4 4s-3-2-4-4H4z" fill="#9aa2b5"/>
+  <path d="M4 10c1 3 3 5 6 5s5-2 6-5h-1c-1 2-2 3-5 3s-4-1-5-3H4z" fill="#c3cad6"/>
+  <!-- Chain Links (Drawn with small rects/polygons) -->
+  <rect x="6" y="13" width="2" height="2" fill="#c3cad6"/>
+  <rect x="12" y="13" width="2" height="2" fill="#6a7283"/>
+  <rect x="9.5" y="15" width="1.5" height="2" fill="#c3cad6"/>
   </g>
 </svg></div>
-        <figcaption>SVG · npc-prisoner · sha256 6cca796e367b…</figcaption>
+        <figcaption>SVG · npc-prisoner · sha256 3b40f07ea800…</figcaption>
       </figure>
       <h2>prisoner (npc)</h2>
     </section>
@@ -381,57 +687,168 @@
       <figure class="ours">
         <div class="svg-cell"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 48" width="384" height="192">
   <g id="gate" data-part-id="gate-stone" data-slot="prop" transform="matrix(1 0 0 1 8 2)">
-<rect x="2" y="6" width="6" height="38" fill="#8d8a7d"/>
-  <rect x="24" y="6" width="6" height="38" fill="#8d8a7d"/>
-  <rect x="0" y="0" width="32" height="8" fill="#8d8a7d"/>
-  <rect x="2" y="6" width="2" height="38" fill="#adaa9b"/>
-  <rect x="24" y="6" width="2" height="38" fill="#adaa9b"/>
+<!-- Stone Archway Base Structure -->
+  <!-- Left Pillar -->
+  <rect x="0" y="8" width="8" height="36" fill="#8d8a7d"/>
+  <rect x="0" y="8" width="2.5" height="36" fill="#adaa9b"/>
+  <rect x="5.5" y="8" width="2.5" height="36" fill="#63604f"/>
+  
+  <!-- Right Pillar -->
+  <rect x="24" y="8" width="8" height="36" fill="#8d8a7d"/>
+  <rect x="24" y="8" width="2.5" height="36" fill="#adaa9b"/>
+  <rect x="29.5" y="8" width="2.5" height="36" fill="#63604f"/>
+  
+  <!-- Top Arch lintel -->
+  <rect x="0" y="0" width="32" height="10" fill="#8d8a7d"/>
   <rect x="0" y="0" width="32" height="2" fill="#adaa9b"/>
-  <rect x="6" y="6" width="2" height="38" fill="#63604f"/>
-  <rect x="28" y="6" width="2" height="38" fill="#63604f"/>
-  <rect x="0" y="6" width="32" height="2" fill="#63604f"/>
-  <rect x="2" y="20" width="6" height="1" fill="#63604f"/>
-  <rect x="24" y="20" width="6" height="1" fill="#63604f"/>
-  <rect x="2" y="32" width="6" height="1" fill="#63604f"/>
-  <rect x="24" y="32" width="6" height="1" fill="#63604f"/>
-  <rect x="11" y="10" width="3" height="30" fill="#9aa2b5"/>
-  <rect x="18" y="10" width="3" height="30" fill="#9aa2b5"/>
-  <rect x="12" y="10" width="1" height="30" fill="#c3cad6"/>
-  <rect x="19" y="10" width="1" height="30" fill="#c3cad6"/>
+  <rect x="0" y="8" width="32" height="2" fill="#63604f"/>
+  
+  <!-- Keystone (center brick) -->
+  <polygon points="13,0 19,0 18,10 14,10" fill="#adaa9b"/>
+  <polygon points="15,0 17,0 17,10 15,10" fill="#8d8a7d"/>
+  <rect x="13" y="10" width="6" height="1.5" fill="#63604f"/>
+
+  <!-- Brick joint lines (shading) -->
+  <rect x="0" y="18" width="8" height="1.5" fill="#63604f"/>
+  <rect x="0" y="18" width="8" height="0.5" fill="#adaa9b"/>
+  <rect x="0" y="30" width="8" height="1.5" fill="#63604f"/>
+  <rect x="0" y="30" width="8" height="0.5" fill="#adaa9b"/>
+  
+  <rect x="24" y="18" width="8" height="1.5" fill="#63604f"/>
+  <rect x="24" y="18" width="8" height="0.5" fill="#adaa9b"/>
+  <rect x="24" y="30" width="8" height="1.5" fill="#63604f"/>
+  <rect x="24" y="30" width="8" height="0.5" fill="#adaa9b"/>
+
+  <!-- Inner arch opening (dark background) -->
+  <rect x="8" y="10" width="16" height="34" fill="#13171b"/>
+
+  <!-- Metal Portcullis (grill bars) -->
+  <!-- Vertical bars -->
+  <rect x="11" y="10" width="1.5" height="34" fill="#9aa2b5"/>
+  <rect x="11" y="10" width="0.5" height="34" fill="#c3cad6"/>
+  
+  <rect x="15.5" y="10" width="1.5" height="34" fill="#9aa2b5"/>
+  <rect x="15.5" y="10" width="0.5" height="34" fill="#c3cad6"/>
+  
+  <rect x="20" y="10" width="1.5" height="34" fill="#9aa2b5"/>
+  <rect x="20" y="10" width="0.5" height="34" fill="#c3cad6"/>
+  
+  <!-- Horizontal bars -->
+  <rect x="8" y="16" width="16" height="1.5" fill="#9aa2b5"/>
+  <rect x="8" y="16" width="16" height="0.5" fill="#c3cad6"/>
+  
+  <rect x="8" y="26" width="16" height="1.5" fill="#9aa2b5"/>
+  <rect x="8" y="26" width="16" height="0.5" fill="#c3cad6"/>
+  
+  <rect x="8" y="36" width="16" height="1.5" fill="#9aa2b5"/>
+  <rect x="8" y="36" width="16" height="0.5" fill="#c3cad6"/>
+  
+  <!-- Spike tips at the bottom of portcullis -->
+  <polygon points="11,44 12.5,44 11.75,46" fill="#9aa2b5"/>
+  <polygon points="15.5,44 17,44 16.25,46" fill="#9aa2b5"/>
+  <polygon points="20,44 21.5,44 20.75,46" fill="#9aa2b5"/>
   </g>
   <g id="chest" data-part-id="chest-wood" data-slot="prop" transform="matrix(1 0 0 1 42 26)">
-<rect x="2" y="6" width="20" height="14" fill="#8a6a3b"/>
-  <rect x="2" y="6" width="20" height="3" fill="#a88754"/>
-  <rect x="2" y="16" width="20" height="4" fill="#5f4527"/>
-  <rect x="2" y="11" width="20" height="1" fill="#5f4527"/>
-  <rect x="2" y="6" width="20" height="3" fill="#9aa2b5"/>
-  <rect x="2" y="6" width="20" height="1" fill="#c3cad6"/>
-  <rect x="10" y="11" width="4" height="4" fill="#9aa2b5"/>
-  <rect x="11" y="12" width="2" height="2" fill="#5f4527"/>
+<!-- Wooden Chest Base Planks -->
+  <rect x="2" y="2" width="20" height="17" fill="#8a6a3b"/>
+  <!-- Plank lines and highlights -->
+  <rect x="2" y="2" width="20" height="2" fill="#a88754"/>
+  <rect x="2" y="4" width="20" height="1" fill="#5f4527"/>
+  <rect x="2" y="8" width="20" height="2" fill="#a88754"/>
+  <rect x="2" y="10" width="20" height="1" fill="#5f4527"/>
+  <rect x="2" y="14" width="20" height="1" fill="#5f4527"/>
+  <rect x="2" y="17" width="20" height="2" fill="#5f4527"/>
+  
+  <!-- Outer Metal Frame/Borders (Steel bands) -->
+  <!-- Left/Right borders -->
+  <rect x="2" y="2" width="2.5" height="17" fill="#9aa2b5"/>
+  <rect x="19.5" y="2" width="2.5" height="17" fill="#9aa2b5"/>
+  <!-- Top/Bottom/Middle borders -->
+  <rect x="2" y="2" width="20" height="2.5" fill="#9aa2b5"/>
+  <rect x="2" y="9.5" width="20" height="2.5" fill="#9aa2b5"/>
+  <rect x="2" y="16.5" width="20" height="2.5" fill="#9aa2b5"/>
+  
+  <!-- Vertical Metal Bands -->
+  <rect x="6.5" y="2" width="2" height="17" fill="#9aa2b5"/>
+  <rect x="15.5" y="2" width="2" height="17" fill="#9aa2b5"/>
+  
+  <!-- Metal Highlights -->
+  <rect x="2" y="2" width="20" height="1" fill="#c3cad6"/>
+  <rect x="2.5" y="2" width="1" height="17" fill="#c3cad6"/>
+  <rect x="6.5" y="2" width="0.75" height="17" fill="#c3cad6"/>
+  <rect x="15.5" y="2" width="0.75" height="17" fill="#c3cad6"/>
+  
+  <!-- Corner brackets (mockup L-shapes) -->
+  <rect x="2" y="2" width="4" height="4" fill="#c3cad6"/>
+  <rect x="18" y="2" width="4" height="4" fill="#c3cad6"/>
+  <rect x="2" y="15" width="4" height="4" fill="#c3cad6"/>
+  <rect x="18" y="15" width="4" height="4" fill="#c3cad6"/>
+  <!-- Corner cutouts back to main metal -->
+  <rect x="3.5" y="3.5" width="2.5" height="2.5" fill="#9aa2b5"/>
+  <rect x="18" y="3.5" width="2.5" height="2.5" fill="#9aa2b5"/>
+  <rect x="3.5" y="15" width="2.5" height="2.5" fill="#9aa2b5"/>
+  <rect x="18" y="15" width="2.5" height="2.5" fill="#9aa2b5"/>
+  
+  <!-- Lock / Latch (Central clasp) -->
+  <rect x="10.5" y="8.5" width="3" height="5" fill="#9aa2b5"/>
+  <rect x="10.5" y="8.5" width="3" height="1" fill="#c3cad6"/>
+  <rect x="11.5" y="10.5" width="1" height="1.5" fill="#000"/> <!-- Keyhole -->
   </g>
   <g id="potion" data-part-id="potion-red" data-slot="prop" transform="matrix(1 0 0 1 68 30)">
-<rect x="4" y="0" width="4" height="2" fill="#8a6a3b"/>
-  <rect x="4" y="0" width="2" height="2" fill="#a88754"/>
-  <rect x="4" y="2" width="4" height="2" fill="#bcd8e8"/>
-  <path d="M3 4h6l3 4v8H2V8z" fill="#bcd8e8"/>
-  <rect x="3" y="5" width="2" height="8" fill="#e8f4fa"/>
-  <rect x="3" y="9" width="8" height="6" fill="#c23a4a"/>
-  <rect x="3" y="9" width="3" height="3" fill="#e0636e"/>
-  <rect x="8" y="12" width="3" height="3" fill="#8f2434"/>
+<!-- Cork Stopper -->
+  <rect x="4" y="0" width="4" height="3" fill="#8a6a3b"/>
+  <rect x="4" y="0" width="2" height="1" fill="#a88754"/>
+  <rect x="4" y="2" width="4" height="1" fill="#a88754"/>
+  
+  <!-- Neck of the bottle -->
+  <rect x="3" y="3" width="6" height="3" fill="#bcd8e8"/>
+  <rect x="3" y="3" width="1.5" height="3" fill="#e8f4fa"/>
+  
+  <!-- Round Bottle Flask body -->
+  <circle cx="6" cy="10" r="5" fill="#bcd8e8"/>
+  <!-- Glare highlight on glass -->
+  <circle cx="6" cy="10" r="4.5" fill="#e8f4fa"/>
+  
+  <!-- Liquid inside -->
+  <circle cx="6" cy="10.5" r="4" fill="#c23a4a"/>
+  <path d="M2.5 10c0 2 1.5 4.5 3.5 4.5s3.5-2.5 3.5-4.5c0-1-1-1-3.5-1s-3.5 0-3.5 1z" fill="#8f2434"/>
+  <!-- Glowing liquid highlight -->
+  <circle cx="4.5" cy="9" r="1.5" fill="#e0636e"/>
+  <rect x="4.5" y="9" width="1" height="1" fill="#fff"/>
+  
+  <!-- Glass front glare highlight -->
+  <path d="M8.5 7.5c1.5 1 2 2.5 2 2.5s-0.5-2-2-2.5z" fill="#fff" opacity="0.6"/>
   </g>
   <g id="herb" data-part-id="herb-green" data-slot="prop" transform="matrix(1 0 0 1 80 28)">
-<rect x="7" y="8" width="2" height="10" fill="#3a6b3a"/>
-  <path d="M8 10C4 10 2 7 2 3c4 0 6 2 6 5z" fill="#4f8a4f"/>
-  <path d="M8 10c4 0 6-3 6-7-4 0-6 2-6 5z" fill="#4f8a4f"/>
-  <path d="M7 8C5 8 3 6 3 4c2 0 4 1 4 3z" fill="#74ad74"/>
-  <path d="M9 8c2 0 4-2 4-4-2 0-4 1-4 3z" fill="#74ad74"/>
-  <path d="M8 10c-1 0-2 0-3-1l2 2z" fill="#356038"/>
-  <path d="M8 10c1 0 2 0 3-1l-2 2z" fill="#356038"/>
-  <circle cx="8" cy="4" r="2" fill="#4f8a4f"/>
-  <circle cx="7" cy="3" r="1" fill="#74ad74"/>
+<!-- Central Stem -->
+  <path d="M7.5 18l0.5-14l0.5 14z" fill="#3a6b3a"/>
+  
+  <!-- Lower Left Leaf -->
+  <path d="M8 12c-4 0-7-2-7-5c0 0 4-1 6 2c1 2 1 3 1 3z" fill="#4f8a4f"/>
+  <path d="M8 12c-3-1-5-2-5-4c0 0 3 0 4 2c1 1 1 2 1 2z" fill="#74ad74"/>
+  <path d="M6 10c-2 1-3 1-3 1s2-2 3-2c1 1 0 1 0 1z" fill="#356038"/>
+  
+  <!-- Lower Right Leaf -->
+  <path d="M8 12c4 0 7-2 7-5c0 0-4-1-6 2c-1 2-1 3-1 3z" fill="#4f8a4f"/>
+  <path d="M8 12c3-1 5-2 5-4c0 0-3 0-4 2c-1 1-1 2-1 2z" fill="#74ad74"/>
+  <path d="M10 10c2 1 3 1 3 1s-2-2-3-2c-1 1 0 1 0 1z" fill="#356038"/>
+  
+  <!-- Upper Left Leaf -->
+  <path d="M8 7c-3-1-5-3-4-6c0 0 3 1 4 3c0 2 0 3 0 3z" fill="#4f8a4f"/>
+  <path d="M8 7c-2-1-4-2-3-4c0 0 2 1 3 2c0 1 0 2 0 2z" fill="#74ad74"/>
+  <path d="M6 5c-1 1-2 1-2 1s1-2 2-2c0 1 0 1 0 1z" fill="#356038"/>
+  
+  <!-- Upper Right Leaf -->
+  <path d="M8 7c3-1 5-3 4-6c0 0-3 1-4 3c0 2 0 3 0 3z" fill="#4f8a4f"/>
+  <path d="M8 7c2-1 4-2 3-4c0 0-2 1-3 2c0 1 0 2 0 2z" fill="#74ad74"/>
+  <path d="M10 5c1 1 2 1 2 1s-1-2-2-2c0 1 0 1 0 1z" fill="#356038"/>
+  
+  <!-- Central Flower Bud / Sprout Core -->
+  <circle cx="8" cy="4" r="1.5" fill="#74ad74"/>
+  <circle cx="8" cy="4" r="0.75" fill="#fff"/>
   </g>
 </svg></div>
-        <figcaption>SVG · prop-set-library · sha256 f7c56ea613c9…</figcaption>
+        <figcaption>SVG · prop-set-library · sha256 58e4d5755bb3…</figcaption>
       </figure>
       <h2>prop set</h2>
     </section>
@@ -449,24 +866,48 @@
       <figure class="ours">
         <div class="svg-cell"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="192" height="192">
   <g id="aura" data-part-id="aura-magic" data-slot="fx" transform="matrix(1 0 0 1 0 10)">
-<circle cx="16" cy="16" r="13" fill="none" stroke="#b48cff" stroke-width="2"/>
-  <circle cx="16" cy="16" r="7" fill="none" stroke="#b48cff" stroke-width="1"/>
-  <path d="M16 3A13 13 0 0 1 29 16l-2 0A11 11 0 0 0 16 5z" fill="#d9c2ff" fill-opacity="0.5"/>
-  <path d="M16 29A13 13 0 0 1 3 16l2 0A11 11 0 0 0 16 27z" fill="#7d54c9" fill-opacity="0.5"/>
-  <rect x="15" y="1" width="2" height="4" fill="#d9c2ff"/>
-  <rect x="15" y="27" width="2" height="4" fill="#b48cff"/>
-  <rect x="1" y="15" width="4" height="2" fill="#b48cff"/>
-  <rect x="27" y="15" width="4" height="2" fill="#d9c2ff"/>
+<!-- Outer Magic Ring (Glowing shadow border) -->
+  <circle cx="16" cy="16" r="14" fill="none" stroke="#7d54c9" stroke-width="3.5" opacity="0.5"/>
+  <circle cx="16" cy="16" r="13" fill="none" stroke="#b48cff" stroke-width="2"/>
+  <circle cx="16" cy="16" r="12" fill="none" stroke="#d9c2ff" stroke-width="0.75"/>
+  
+  <!-- Inner Magic Ring -->
+  <circle cx="16" cy="16" r="9" fill="none" stroke="#7d54c9" stroke-width="1"/>
+  
+  <!-- Cardinal Rune Ticks (Small rectangles/polygons at 12, 3, 6, 9 o'clock) -->
+  <rect x="15" y="1" width="2" height="3" fill="#d9c2ff"/>
+  <rect x="15" y="28" width="2" height="3" fill="#d9c2ff"/>
+  <rect x="1" y="15" width="3" height="2" fill="#d9c2ff"/>
+  <rect x="28" y="15" width="3" height="2" fill="#d9c2ff"/>
+  
+  <!-- Diagonal Sparkles -->
+  <rect x="5" y="5" width="2" height="2" fill="#d9c2ff"/>
+  <rect x="25" y="5" width="2" height="2" fill="#d9c2ff"/>
+  <rect x="5" y="25" width="2" height="2" fill="#d9c2ff"/>
+  <rect x="25" y="25" width="2" height="2" fill="#d9c2ff"/>
   </g>
   <g id="projectile" data-part-id="projectile-fire" data-slot="fx" transform="matrix(1 0 0 1 32 14)">
-<path d="M0 8l6-5 4 2 6-4v14l-6-4-4 2z" fill="#ff8c3a"/>
-  <path d="M4 8l4-3 3 1 4-3v10l-4-3-3 1z" fill="#ffb361"/>
-  <path d="M1 8l3-2 2 1-2 2z" fill="#d95f1e"/>
-  <circle cx="12" cy="8" r="3" fill="#ffd23a"/>
-  <circle cx="11" cy="7" r="1" fill="#fff0a0"/>
+<!-- Flame tail (trailing left) -->
+  <path d="M0 8c2-2 5-3 8-3c-1 2-1 4 0 6c-3 0-6-1-8-3z" fill="#d95f1e"/>
+  <path d="M2 8c2-1 4-2 6-2c-1 1-1 3 0 4c-2 0-4-1-6-2z" fill="#ff8c3a"/>
+  
+  <!-- Fireball Body (Orange flame) -->
+  <circle cx="9" cy="8" r="5" fill="#ff8c3a"/>
+  <circle cx="10" cy="8" r="4" fill="#ffb361"/>
+  
+  <!-- Glowing Core (Yellow/White) -->
+  <circle cx="11.5" cy="8" r="2" fill="#ffd23a"/>
+  <circle cx="12" cy="8" r="1" fill="#fff0a0"/>
+  <rect x="12" y="7.5" width="0.75" height="1" fill="#fff"/>
+  
+  <!-- Flying embers / sparks -->
+  <rect x="3" y="4" width="1" height="1" fill="#ffd23a"/>
+  <rect x="5" y="11" width="1" height="1" fill="#ffd23a"/>
+  <rect x="1" y="7" width="1" height="1" fill="#d95f1e"/>
+  <rect x="14" y="4" width="1" height="1" fill="#ffb361"/>
   </g>
 </svg></div>
-        <figcaption>SVG · fx-set · sha256 66994bee371d…</figcaption>
+        <figcaption>SVG · fx-set · sha256 f950ce83a6d0…</figcaption>
       </figure>
       <h2>fx set</h2>
     </section>

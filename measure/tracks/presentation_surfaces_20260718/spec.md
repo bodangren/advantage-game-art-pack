@@ -24,6 +24,13 @@ and label art is baked by downstream games, not this factory.
 
 ## Functional Requirements
 
+Presentation remains SVG-native and may reference only replacement Pixel assets
+or validated Fantasy Asset Forge imports retrieved through public MCP. Imports
+must negotiate `forge-asset-interchange-manifest/v1`, retain immutable
+profile/provenance metadata, pass delivery-resolution visual review, and carry
+admission evidence for `education-app-pack-profile/v1`. Current Pixel source
+assets are rejected prototypes and cannot be grandfathered into examples.
+
 - Strict presentation spec: versioned id, surface kind (`ui-atlas`, `cover`,
   `loading`), viewBox, ordered entries referencing catalog parts or scene
   specs, one palette, unknown-reference rejection.

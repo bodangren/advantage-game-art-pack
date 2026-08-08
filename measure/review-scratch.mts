@@ -133,8 +133,8 @@ const PAGE_HEAD = `<!doctype html>
 </head>
 <body>
   <header>
-    <h1>SVG COMPOSITIONS vs MMX REFERENCES</h1>
-    <p>Left: mmx mockup targets (demo-assets/reference/). Right: deterministic output of the composition engine (palette-inlined SVG). Regenerate via the review-page scratch after any art change.</p>
+    <h1>HISTORICAL PROTOTYPE — SVG COMPOSITIONS vs MMX REFERENCES</h1>
+    <p>These archived MMX targets and SVG outputs are rejected, non-production evidence only. They cannot satisfy current reference approval or pack admission. Current production is gated on accepted downstream ontology hashes and the downstream-required built-in image generator.</p>
   </header>`;
 
 function argValue(flag: string): string | null {
