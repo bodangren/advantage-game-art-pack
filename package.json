@@ -9,7 +9,8 @@
     "start": "vinext start",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "forge:replay-admit": "node scripts/forge-replay-admit.mjs"
   },
   "overrides": {
     "@oxc-project/types": "0.138.0",
