@@ -1,0 +1,123 @@
+{
+  "admission": {
+    "shipping": false,
+    "state": "candidate_unadmitted",
+    "visual_review": "pending"
+  },
+  "contract": "pixel-tile-scene-artifact/v1",
+  "layers": [
+    {
+      "id": "ruins",
+      "kind": "tile_map",
+      "layer_sha256": "18854d5f0c53ed79072c2c9dcec5a960b00a3619bc2d2988a5fbc26c6d05d4b6",
+      "rects": [
+        {
+          "asset_id": "cute-chibi-wizard-vs-zombie-ruins-tile",
+          "height": 32,
+          "width": 32,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "asset_id": "cute-chibi-wizard-vs-zombie-ruins-tile",
+          "height": 32,
+          "width": 32,
+          "x": 32,
+          "y": 0
+        },
+        {
+          "asset_id": "cute-chibi-wizard-vs-zombie-ruins-tile",
+          "height": 32,
+          "width": 32,
+          "x": 64,
+          "y": 0
+        },
+        {
+          "asset_id": "cute-chibi-wizard-vs-zombie-ruins-tile",
+          "height": 32,
+          "width": 32,
+          "x": 96,
+          "y": 0
+        },
+        {
+          "asset_id": "cute-chibi-wizard-vs-zombie-ruins-tile",
+          "height": 32,
+          "width": 32,
+          "x": 0,
+          "y": 32
+        },
+        {
+          "asset_id": "cute-chibi-wizard-vs-zombie-ruins-tile",
+          "height": 32,
+          "width": 32,
+          "x": 32,
+          "y": 32
+        },
+        {
+          "asset_id": "cute-chibi-wizard-vs-zombie-ruins-tile",
+          "height": 32,
+          "width": 32,
+          "x": 64,
+          "y": 32
+        },
+        {
+          "asset_id": "cute-chibi-wizard-vs-zombie-ruins-tile",
+          "height": 32,
+          "width": 32,
+          "x": 96,
+          "y": 32
+        },
+        {
+          "asset_id": "cute-chibi-wizard-vs-zombie-ruins-tile",
+          "height": 32,
+          "width": 32,
+          "x": 0,
+          "y": 64
+        },
+        {
+          "asset_id": "cute-chibi-wizard-vs-zombie-ruins-tile",
+          "height": 32,
+          "width": 32,
+          "x": 32,
+          "y": 64
+        },
+        {
+          "asset_id": "cute-chibi-wizard-vs-zombie-ruins-tile",
+          "height": 32,
+          "width": 32,
+          "x": 64,
+          "y": 64
+        },
+        {
+          "asset_id": "cute-chibi-wizard-vs-zombie-ruins-tile",
+          "height": 32,
+          "width": 32,
+          "x": 96,
+          "y": 64
+        }
+      ],
+      "references": [
+        "cute-chibi-wizard-vs-zombie-ruins-tile"
+      ],
+      "z_index": 0
+    }
+  ],
+  "manifest_sha256": "93c1076a8ac7440a7a54eca008e178c81cf2f45e7c3da747c1c06d7350e4ea80",
+  "palette_id": "cute-chibi-environment-v1",
+  "provenance": {
+    "authoring": "replacement_native",
+    "created_utc": "2026-07-22T19:09:22Z",
+    "origin": "pixel_native_svg",
+    "reference_ids": [],
+    "source_repository": "pixel-art-generator"
+  },
+  "scene_id": "cute-chibi-wizard-vs-zombie-environment-exemplar",
+  "svg_sha256": "b237ad8cbdad76f8b37e60915dbcc9d6488a857752753723667a401ce11f0931",
+  "theme_profile": "cute_chibi_v1",
+  "view_box": [
+    0,
+    0,
+    128,
+    96
+  ]
+}

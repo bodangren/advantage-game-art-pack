@@ -1,0 +1,170 @@
+{
+  "admission": {
+    "shipping": false,
+    "state": "candidate_unadmitted",
+    "visual_review": "pending"
+  },
+  "contract": "pixel-tile-scene-artifact/v1",
+  "layers": [
+    {
+      "id": "floor",
+      "kind": "tile_map",
+      "layer_sha256": "960c71055f9961d09050c906d6bf3569c0f036bd49e4e02dba162ff8e419f9d4",
+      "rects": [
+        {
+          "asset_id": "cute-chibi-potion-rush-shop-floor",
+          "height": 32,
+          "width": 32,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "asset_id": "cute-chibi-potion-rush-shop-floor",
+          "height": 32,
+          "width": 32,
+          "x": 32,
+          "y": 0
+        },
+        {
+          "asset_id": "cute-chibi-potion-rush-shop-floor",
+          "height": 32,
+          "width": 32,
+          "x": 64,
+          "y": 0
+        },
+        {
+          "asset_id": "cute-chibi-potion-rush-shop-floor",
+          "height": 32,
+          "width": 32,
+          "x": 96,
+          "y": 0
+        },
+        {
+          "asset_id": "cute-chibi-potion-rush-shop-floor",
+          "height": 32,
+          "width": 32,
+          "x": 0,
+          "y": 32
+        },
+        {
+          "asset_id": "cute-chibi-potion-rush-shop-floor",
+          "height": 32,
+          "width": 32,
+          "x": 32,
+          "y": 32
+        },
+        {
+          "asset_id": "cute-chibi-potion-rush-shop-floor",
+          "height": 32,
+          "width": 32,
+          "x": 64,
+          "y": 32
+        },
+        {
+          "asset_id": "cute-chibi-potion-rush-shop-floor",
+          "height": 32,
+          "width": 32,
+          "x": 96,
+          "y": 32
+        },
+        {
+          "asset_id": "cute-chibi-potion-rush-shop-floor",
+          "height": 32,
+          "width": 32,
+          "x": 0,
+          "y": 64
+        },
+        {
+          "asset_id": "cute-chibi-potion-rush-shop-floor",
+          "height": 32,
+          "width": 32,
+          "x": 32,
+          "y": 64
+        },
+        {
+          "asset_id": "cute-chibi-potion-rush-shop-floor",
+          "height": 32,
+          "width": 32,
+          "x": 64,
+          "y": 64
+        },
+        {
+          "asset_id": "cute-chibi-potion-rush-shop-floor",
+          "height": 32,
+          "width": 32,
+          "x": 96,
+          "y": 64
+        }
+      ],
+      "references": [
+        "cute-chibi-potion-rush-shop-floor"
+      ],
+      "z_index": 0
+    },
+    {
+      "id": "shop-fixtures",
+      "kind": "placements",
+      "layer_sha256": "8b910f7faae49bbca51c581931c72a19139f3b13f33807cae39801d0a019978a",
+      "rects": [
+        {
+          "asset_id": "cute-chibi-potion-rush-shop-wall",
+          "height": 32,
+          "width": 32,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "asset_id": "cute-chibi-potion-rush-shop-wall",
+          "height": 32,
+          "width": 32,
+          "x": 32,
+          "y": 0
+        },
+        {
+          "asset_id": "cute-chibi-potion-rush-shop-wall",
+          "height": 32,
+          "width": 32,
+          "x": 64,
+          "y": 0
+        },
+        {
+          "asset_id": "cute-chibi-potion-rush-shop-wall",
+          "height": 32,
+          "width": 32,
+          "x": 96,
+          "y": 0
+        },
+        {
+          "asset_id": "cute-chibi-potion-rush-shop-counter",
+          "height": 32,
+          "width": 32,
+          "x": 48,
+          "y": 40
+        }
+      ],
+      "references": [
+        "cute-chibi-potion-rush-shop-counter",
+        "cute-chibi-potion-rush-shop-wall"
+      ],
+      "z_index": 10
+    }
+  ],
+  "manifest_sha256": "621f2e9a6bd160580268b5cd6b8265771b57a623ceaf2a75b9de76ece6dd5e41",
+  "palette_id": "cute-chibi-environment-v1",
+  "provenance": {
+    "authoring": "replacement_native",
+    "created_utc": "2026-07-22T19:09:22Z",
+    "origin": "pixel_native_svg",
+    "reference_ids": [],
+    "source_repository": "pixel-art-generator"
+  },
+  "scene_id": "cute-chibi-potion-rush-environment-exemplar",
+  "svg_sha256": "faf846104d0c97b31e2b9a916c620ac9bcca5c801739c446f62749213711e23a",
+  "theme_profile": "cute_chibi_v1",
+  "view_box": [
+    0,
+    0,
+    128,
+    96
+  ]
+}

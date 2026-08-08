@@ -1,0 +1,40 @@
+{
+  "admission": {
+    "shipping": false,
+    "state": "candidate_unadmitted",
+    "visual_review": "pending"
+  },
+  "contract": "pixel-tile-scene-exemplar-set/v1",
+  "scenes": [
+    {
+      "manifest_file": "./castle-defense.manifest.json",
+      "manifest_sha256": "5688b3897613394b48a55b68bfe1436fae13e2b4cf7d705c2d39c86492dd32ef",
+      "scene_id": "heroic-stylized-castle-defense-environment-exemplar",
+      "svg_file": "./castle-defense.svg",
+      "svg_sha256": "61d7166307e20ab54583f4865c0b8f6e22ea7b9daa256159df059ed43e9d43c0"
+    },
+    {
+      "manifest_file": "./potion-rush.manifest.json",
+      "manifest_sha256": "abfe7b76c4cf18181f6268cd6496fbf12be59961dc48dafe9fd35f4ba89974c6",
+      "scene_id": "heroic-stylized-potion-rush-environment-exemplar",
+      "svg_file": "./potion-rush.svg",
+      "svg_sha256": "525c9e3b9c3d0fba98e1a64bfc4c5accc50a5086ec333ca2b788a20ec3138247"
+    },
+    {
+      "manifest_file": "./wizard-vs-zombie.manifest.json",
+      "manifest_sha256": "61ab30a0ce334ddbb45c0d59e917c1afa4bbd6ffca5a92db63fbb482b7bc152e",
+      "scene_id": "heroic-stylized-wizard-vs-zombie-environment-exemplar",
+      "svg_file": "./wizard-vs-zombie.svg",
+      "svg_sha256": "3248d9048037e0c2960a6b4fbd45a04771dd859e28919c4289cf8a9d906c79be"
+    },
+    {
+      "manifest_file": "./rune-match.manifest.json",
+      "manifest_sha256": "ac51276a3b570f57d488a18fd418d051747be5ad3ee70b1d3327f31a6bd8421a",
+      "scene_id": "heroic-stylized-rune-match-environment-exemplar",
+      "svg_file": "./rune-match.svg",
+      "svg_sha256": "03a2e1393f2f183e3c97da3c98ded4eaad9de7bd59ebb607a0349bea30c76af0"
+    }
+  ],
+  "set_sha256": "f1cb53d95ea58db0400e73a824d50c976c69ff6735befa590288803fbc82b30c",
+  "theme_profile": "heroic_stylized_v1"
+}

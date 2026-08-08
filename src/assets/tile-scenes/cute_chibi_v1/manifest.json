@@ -1,0 +1,405 @@
+{
+  "contract": "pixel-tile-candidate-manifest/v1",
+  "batch_id": "environment-microbatch-s2-20260723-cute-chibi-v1",
+  "theme_profile": "cute_chibi_v1",
+  "palette_id": "cute-chibi-environment-v1",
+  "admission": {
+    "state": "candidate_unadmitted",
+    "shipping": false,
+    "visual_review": "pending"
+  },
+  "provenance": {
+    "origin": "pixel_native_svg",
+    "authoring": "replacement_native",
+    "source_repository": "pixel-art-generator",
+    "created_utc": "2026-07-22T19:09:22Z",
+    "reference_ids": []
+  },
+  "candidates": [
+    {
+      "asset_id": "cute-chibi-castle-defense-grass-a",
+      "semantic_role": "castle-defense.grass-a",
+      "theme_profile": "cute_chibi_v1",
+      "palette_id": "cute-chibi-environment-v1",
+      "source_file": "./grass-a.svg",
+      "view_box": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "edges": {
+        "north": {
+          "seam": "grass",
+          "continues": true
+        },
+        "east": {
+          "seam": "grass",
+          "continues": true
+        },
+        "south": {
+          "seam": "grass",
+          "continues": true
+        },
+        "west": {
+          "seam": "grass",
+          "continues": true
+        }
+      },
+      "svg_sha256": "87fdfb0af92d98cca631412ce948d906d21b924dfca446ab9c0f5c9baf59a245"
+    },
+    {
+      "asset_id": "cute-chibi-castle-defense-grass-b",
+      "semantic_role": "castle-defense.grass-b",
+      "theme_profile": "cute_chibi_v1",
+      "palette_id": "cute-chibi-environment-v1",
+      "source_file": "./grass-b.svg",
+      "view_box": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "edges": {
+        "north": {
+          "seam": "grass",
+          "continues": true
+        },
+        "east": {
+          "seam": "grass",
+          "continues": true
+        },
+        "south": {
+          "seam": "grass",
+          "continues": true
+        },
+        "west": {
+          "seam": "grass",
+          "continues": true
+        }
+      },
+      "svg_sha256": "6144756eabbada2f56b23f1d3f28ddb7d7492caf5bc26d3d27ea95289b1d50cf"
+    },
+    {
+      "asset_id": "cute-chibi-castle-defense-grass-c",
+      "semantic_role": "castle-defense.grass-c",
+      "theme_profile": "cute_chibi_v1",
+      "palette_id": "cute-chibi-environment-v1",
+      "source_file": "./grass-c.svg",
+      "view_box": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "edges": {
+        "north": {
+          "seam": "grass",
+          "continues": true
+        },
+        "east": {
+          "seam": "grass",
+          "continues": true
+        },
+        "south": {
+          "seam": "grass",
+          "continues": true
+        },
+        "west": {
+          "seam": "grass",
+          "continues": true
+        }
+      },
+      "svg_sha256": "5fa806492d932db10c7f0e0d20d136917da2aea2515dc017693a6ff9675b242d"
+    },
+    {
+      "asset_id": "cute-chibi-castle-defense-grass-d",
+      "semantic_role": "castle-defense.grass-d",
+      "theme_profile": "cute_chibi_v1",
+      "palette_id": "cute-chibi-environment-v1",
+      "source_file": "./grass-d.svg",
+      "view_box": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "edges": {
+        "north": {
+          "seam": "grass",
+          "continues": true
+        },
+        "east": {
+          "seam": "grass",
+          "continues": true
+        },
+        "south": {
+          "seam": "grass",
+          "continues": true
+        },
+        "west": {
+          "seam": "grass",
+          "continues": true
+        }
+      },
+      "svg_sha256": "ff9ed000d258c2a31e9023b3f12ddd819a702b4b5f16428ba3410fa14d604abf"
+    },
+    {
+      "asset_id": "cute-chibi-castle-defense-road-ew",
+      "semantic_role": "castle-defense.road-ew",
+      "theme_profile": "cute_chibi_v1",
+      "palette_id": "cute-chibi-environment-v1",
+      "source_file": "./road-ew.svg",
+      "view_box": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "edges": {
+        "north": {
+          "seam": "grass",
+          "continues": true
+        },
+        "east": {
+          "seam": "road",
+          "continues": true
+        },
+        "south": {
+          "seam": "grass",
+          "continues": true
+        },
+        "west": {
+          "seam": "road",
+          "continues": true
+        }
+      },
+      "svg_sha256": "454cd8d49e5c3e43863fe6fc11728671f86466779ab2ecdd32d80daab63b636d"
+    },
+    {
+      "asset_id": "cute-chibi-castle-defense-road-ns",
+      "semantic_role": "castle-defense.road-ns",
+      "theme_profile": "cute_chibi_v1",
+      "palette_id": "cute-chibi-environment-v1",
+      "source_file": "./road-ns.svg",
+      "view_box": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "edges": {
+        "north": {
+          "seam": "road",
+          "continues": true
+        },
+        "east": {
+          "seam": "grass",
+          "continues": true
+        },
+        "south": {
+          "seam": "road",
+          "continues": true
+        },
+        "west": {
+          "seam": "grass",
+          "continues": true
+        }
+      },
+      "svg_sha256": "4b695123ef892fb48932b621e78b6e17f7746ac7d32780081dfdd0d38e2b1c7a"
+    },
+    {
+      "asset_id": "cute-chibi-castle-defense-road-corner-ne",
+      "semantic_role": "castle-defense.road-corner-ne",
+      "theme_profile": "cute_chibi_v1",
+      "palette_id": "cute-chibi-environment-v1",
+      "source_file": "./road-corner-ne.svg",
+      "view_box": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "edges": {
+        "north": {
+          "seam": "road",
+          "continues": true
+        },
+        "east": {
+          "seam": "road",
+          "continues": true
+        },
+        "south": {
+          "seam": "grass",
+          "continues": true
+        },
+        "west": {
+          "seam": "grass",
+          "continues": true
+        }
+      },
+      "svg_sha256": "2bd66e9daccc46651cc49edc8f0357b4c8b95cd0b1e6829ac961ea84b05b76e7"
+    },
+    {
+      "asset_id": "cute-chibi-potion-rush-shop-wall",
+      "semantic_role": "potion-rush.shop-wall",
+      "theme_profile": "cute_chibi_v1",
+      "palette_id": "cute-chibi-environment-v1",
+      "source_file": "./shop-wall.svg",
+      "view_box": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "edges": {
+        "north": {
+          "seam": "shop-wall-top",
+          "continues": false
+        },
+        "east": {
+          "seam": "shop-wall-row",
+          "continues": true
+        },
+        "south": {
+          "seam": "shop-wall-bottom",
+          "continues": false
+        },
+        "west": {
+          "seam": "shop-wall-row",
+          "continues": true
+        }
+      },
+      "svg_sha256": "5a92438e4dcc6cadd63bdb4b08e001841bf1bbeaab5ea61faff57cd46ae27d61"
+    },
+    {
+      "asset_id": "cute-chibi-potion-rush-shop-floor",
+      "semantic_role": "potion-rush.shop-floor",
+      "theme_profile": "cute_chibi_v1",
+      "palette_id": "cute-chibi-environment-v1",
+      "source_file": "./shop-floor.svg",
+      "view_box": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "edges": {
+        "north": {
+          "seam": "shop-floor",
+          "continues": true
+        },
+        "east": {
+          "seam": "shop-floor",
+          "continues": true
+        },
+        "south": {
+          "seam": "shop-floor",
+          "continues": true
+        },
+        "west": {
+          "seam": "shop-floor",
+          "continues": true
+        }
+      },
+      "svg_sha256": "18a1fe7733692b092a15c53cce1093b01e9ac6d1698d4b27a3c671ec74a60330"
+    },
+    {
+      "asset_id": "cute-chibi-potion-rush-shop-counter",
+      "semantic_role": "potion-rush.shop-counter",
+      "theme_profile": "cute_chibi_v1",
+      "palette_id": "cute-chibi-environment-v1",
+      "source_file": "./shop-counter.svg",
+      "view_box": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "edges": {
+        "north": {
+          "seam": "counter-top",
+          "continues": false
+        },
+        "east": {
+          "seam": "counter-right",
+          "continues": false
+        },
+        "south": {
+          "seam": "counter-bottom",
+          "continues": false
+        },
+        "west": {
+          "seam": "counter-left",
+          "continues": false
+        }
+      },
+      "svg_sha256": "334ac78b8f223c0233ab732f20dca7ced59086541506cab1d72f247b3af87573"
+    },
+    {
+      "asset_id": "cute-chibi-wizard-vs-zombie-ruins-tile",
+      "semantic_role": "wizard-vs-zombie.ruins-tile",
+      "theme_profile": "cute_chibi_v1",
+      "palette_id": "cute-chibi-environment-v1",
+      "source_file": "./ruins-tile.svg",
+      "view_box": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "edges": {
+        "north": {
+          "seam": "ruins",
+          "continues": true
+        },
+        "east": {
+          "seam": "ruins",
+          "continues": true
+        },
+        "south": {
+          "seam": "ruins",
+          "continues": true
+        },
+        "west": {
+          "seam": "ruins",
+          "continues": true
+        }
+      },
+      "svg_sha256": "f408cdaebec6c95feb6d4de72bbed35fc24d6e3acf907affbf51f4b31e81cd0e"
+    },
+    {
+      "asset_id": "cute-chibi-rune-match-playfield-background",
+      "semantic_role": "rune-match.playfield-background",
+      "theme_profile": "cute_chibi_v1",
+      "palette_id": "cute-chibi-environment-v1",
+      "source_file": "./playfield-background.svg",
+      "view_box": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "edges": {
+        "north": {
+          "seam": "rune-field",
+          "continues": true
+        },
+        "east": {
+          "seam": "rune-field",
+          "continues": true
+        },
+        "south": {
+          "seam": "rune-field",
+          "continues": true
+        },
+        "west": {
+          "seam": "rune-field",
+          "continues": true
+        }
+      },
+      "svg_sha256": "2213721a25e80b9558eb24492ddb37442b1ae874750668d56c05316cef33eadc"
+    }
+  ],
+  "manifest_sha256": "8aa8cb74ab328d3285d7ee82b902db531e19aade61bf31bd7b6f87e3f2e01c95"
+}

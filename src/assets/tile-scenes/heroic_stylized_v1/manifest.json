@@ -1,0 +1,405 @@
+{
+  "contract": "pixel-tile-candidate-manifest/v1",
+  "batch_id": "environment-microbatch-s2-20260723-heroic-stylized-v1",
+  "theme_profile": "heroic_stylized_v1",
+  "palette_id": "heroic-stylized-environment-v1",
+  "admission": {
+    "state": "candidate_unadmitted",
+    "shipping": false,
+    "visual_review": "pending"
+  },
+  "provenance": {
+    "origin": "pixel_native_svg",
+    "authoring": "replacement_native",
+    "source_repository": "pixel-art-generator",
+    "created_utc": "2026-07-22T19:09:22Z",
+    "reference_ids": []
+  },
+  "candidates": [
+    {
+      "asset_id": "heroic-stylized-castle-defense-grass-a",
+      "semantic_role": "castle-defense.grass-a",
+      "theme_profile": "heroic_stylized_v1",
+      "palette_id": "heroic-stylized-environment-v1",
+      "source_file": "./grass-a.svg",
+      "view_box": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "edges": {
+        "north": {
+          "seam": "grass",
+          "continues": true
+        },
+        "east": {
+          "seam": "grass",
+          "continues": true
+        },
+        "south": {
+          "seam": "grass",
+          "continues": true
+        },
+        "west": {
+          "seam": "grass",
+          "continues": true
+        }
+      },
+      "svg_sha256": "4b441d1778a920243286d3868443a47e8f6dc40813258f7efb9fa8c7d4f98f4a"
+    },
+    {
+      "asset_id": "heroic-stylized-castle-defense-grass-b",
+      "semantic_role": "castle-defense.grass-b",
+      "theme_profile": "heroic_stylized_v1",
+      "palette_id": "heroic-stylized-environment-v1",
+      "source_file": "./grass-b.svg",
+      "view_box": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "edges": {
+        "north": {
+          "seam": "grass",
+          "continues": true
+        },
+        "east": {
+          "seam": "grass",
+          "continues": true
+        },
+        "south": {
+          "seam": "grass",
+          "continues": true
+        },
+        "west": {
+          "seam": "grass",
+          "continues": true
+        }
+      },
+      "svg_sha256": "707e6c332d6ecc79e8573f245ef00103556e56eec3a241b28c1a285a1a8f140f"
+    },
+    {
+      "asset_id": "heroic-stylized-castle-defense-grass-c",
+      "semantic_role": "castle-defense.grass-c",
+      "theme_profile": "heroic_stylized_v1",
+      "palette_id": "heroic-stylized-environment-v1",
+      "source_file": "./grass-c.svg",
+      "view_box": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "edges": {
+        "north": {
+          "seam": "grass",
+          "continues": true
+        },
+        "east": {
+          "seam": "grass",
+          "continues": true
+        },
+        "south": {
+          "seam": "grass",
+          "continues": true
+        },
+        "west": {
+          "seam": "grass",
+          "continues": true
+        }
+      },
+      "svg_sha256": "8bbe3ebd29bab5f385dd0dfd6448d5ba91f4a76ba16f0ca1738905abc622dda9"
+    },
+    {
+      "asset_id": "heroic-stylized-castle-defense-grass-d",
+      "semantic_role": "castle-defense.grass-d",
+      "theme_profile": "heroic_stylized_v1",
+      "palette_id": "heroic-stylized-environment-v1",
+      "source_file": "./grass-d.svg",
+      "view_box": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "edges": {
+        "north": {
+          "seam": "grass",
+          "continues": true
+        },
+        "east": {
+          "seam": "grass",
+          "continues": true
+        },
+        "south": {
+          "seam": "grass",
+          "continues": true
+        },
+        "west": {
+          "seam": "grass",
+          "continues": true
+        }
+      },
+      "svg_sha256": "866b8311fefee31392d94473bfb54921e50245364cb1e61da3726858fc0fc07e"
+    },
+    {
+      "asset_id": "heroic-stylized-castle-defense-road-ew",
+      "semantic_role": "castle-defense.road-ew",
+      "theme_profile": "heroic_stylized_v1",
+      "palette_id": "heroic-stylized-environment-v1",
+      "source_file": "./road-ew.svg",
+      "view_box": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "edges": {
+        "north": {
+          "seam": "grass",
+          "continues": true
+        },
+        "east": {
+          "seam": "road",
+          "continues": true
+        },
+        "south": {
+          "seam": "grass",
+          "continues": true
+        },
+        "west": {
+          "seam": "road",
+          "continues": true
+        }
+      },
+      "svg_sha256": "e55b875d9194938eb29b0e0ddc1450dd2dbf95a238c964388279a1fdc2f7acaf"
+    },
+    {
+      "asset_id": "heroic-stylized-castle-defense-road-ns",
+      "semantic_role": "castle-defense.road-ns",
+      "theme_profile": "heroic_stylized_v1",
+      "palette_id": "heroic-stylized-environment-v1",
+      "source_file": "./road-ns.svg",
+      "view_box": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "edges": {
+        "north": {
+          "seam": "road",
+          "continues": true
+        },
+        "east": {
+          "seam": "grass",
+          "continues": true
+        },
+        "south": {
+          "seam": "road",
+          "continues": true
+        },
+        "west": {
+          "seam": "grass",
+          "continues": true
+        }
+      },
+      "svg_sha256": "aff8792219e8b957b6db69bf83ccf7918ac568ad64184b5a4b24c4368b7261e9"
+    },
+    {
+      "asset_id": "heroic-stylized-castle-defense-road-corner-ne",
+      "semantic_role": "castle-defense.road-corner-ne",
+      "theme_profile": "heroic_stylized_v1",
+      "palette_id": "heroic-stylized-environment-v1",
+      "source_file": "./road-corner-ne.svg",
+      "view_box": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "edges": {
+        "north": {
+          "seam": "road",
+          "continues": true
+        },
+        "east": {
+          "seam": "road",
+          "continues": true
+        },
+        "south": {
+          "seam": "grass",
+          "continues": true
+        },
+        "west": {
+          "seam": "grass",
+          "continues": true
+        }
+      },
+      "svg_sha256": "6dc20244aeabd9d08d8fb33fc2ad613d5fe1676dab11e6a708eee891c7c521ba"
+    },
+    {
+      "asset_id": "heroic-stylized-potion-rush-shop-wall",
+      "semantic_role": "potion-rush.shop-wall",
+      "theme_profile": "heroic_stylized_v1",
+      "palette_id": "heroic-stylized-environment-v1",
+      "source_file": "./shop-wall.svg",
+      "view_box": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "edges": {
+        "north": {
+          "seam": "shop-wall-top",
+          "continues": false
+        },
+        "east": {
+          "seam": "shop-wall-row",
+          "continues": true
+        },
+        "south": {
+          "seam": "shop-wall-bottom",
+          "continues": false
+        },
+        "west": {
+          "seam": "shop-wall-row",
+          "continues": true
+        }
+      },
+      "svg_sha256": "9a44cef4872902cf7d2f473ed08f349078181a5d3d70075af6682267cb737a61"
+    },
+    {
+      "asset_id": "heroic-stylized-potion-rush-shop-floor",
+      "semantic_role": "potion-rush.shop-floor",
+      "theme_profile": "heroic_stylized_v1",
+      "palette_id": "heroic-stylized-environment-v1",
+      "source_file": "./shop-floor.svg",
+      "view_box": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "edges": {
+        "north": {
+          "seam": "shop-floor",
+          "continues": true
+        },
+        "east": {
+          "seam": "shop-floor",
+          "continues": true
+        },
+        "south": {
+          "seam": "shop-floor",
+          "continues": true
+        },
+        "west": {
+          "seam": "shop-floor",
+          "continues": true
+        }
+      },
+      "svg_sha256": "2da7da14f6135eab7af848715df77779e75c7fdf0c543c24af71e0292b3f4567"
+    },
+    {
+      "asset_id": "heroic-stylized-potion-rush-shop-counter",
+      "semantic_role": "potion-rush.shop-counter",
+      "theme_profile": "heroic_stylized_v1",
+      "palette_id": "heroic-stylized-environment-v1",
+      "source_file": "./shop-counter.svg",
+      "view_box": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "edges": {
+        "north": {
+          "seam": "counter-top",
+          "continues": false
+        },
+        "east": {
+          "seam": "counter-right",
+          "continues": false
+        },
+        "south": {
+          "seam": "counter-bottom",
+          "continues": false
+        },
+        "west": {
+          "seam": "counter-left",
+          "continues": false
+        }
+      },
+      "svg_sha256": "9238b7fac414d3feb04339209ee2ef3dba8161131027e8fd3d1867cd380399d7"
+    },
+    {
+      "asset_id": "heroic-stylized-wizard-vs-zombie-ruins-tile",
+      "semantic_role": "wizard-vs-zombie.ruins-tile",
+      "theme_profile": "heroic_stylized_v1",
+      "palette_id": "heroic-stylized-environment-v1",
+      "source_file": "./ruins-tile.svg",
+      "view_box": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "edges": {
+        "north": {
+          "seam": "ruins",
+          "continues": true
+        },
+        "east": {
+          "seam": "ruins",
+          "continues": true
+        },
+        "south": {
+          "seam": "ruins",
+          "continues": true
+        },
+        "west": {
+          "seam": "ruins",
+          "continues": true
+        }
+      },
+      "svg_sha256": "a17cd228bf08327f9b11e82cb42e9c8ed16f308eacaf72392c2d1d705ff1bf6c"
+    },
+    {
+      "asset_id": "heroic-stylized-rune-match-playfield-background",
+      "semantic_role": "rune-match.playfield-background",
+      "theme_profile": "heroic_stylized_v1",
+      "palette_id": "heroic-stylized-environment-v1",
+      "source_file": "./playfield-background.svg",
+      "view_box": [
+        0,
+        0,
+        32,
+        32
+      ],
+      "edges": {
+        "north": {
+          "seam": "rune-field",
+          "continues": true
+        },
+        "east": {
+          "seam": "rune-field",
+          "continues": true
+        },
+        "south": {
+          "seam": "rune-field",
+          "continues": true
+        },
+        "west": {
+          "seam": "rune-field",
+          "continues": true
+        }
+      },
+      "svg_sha256": "4f5a426f53dbcdf9684c0f296b37cc57ceb9353717bd4aaaa1a40dfa8efb3879"
+    }
+  ],
+  "manifest_sha256": "cdd2786f9ad951807fe1feb0c2cda0386f548b80cdee87e55d6faf97b2658062"
+}

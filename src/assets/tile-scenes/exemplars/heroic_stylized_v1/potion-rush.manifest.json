@@ -1,0 +1,170 @@
+{
+  "admission": {
+    "shipping": false,
+    "state": "candidate_unadmitted",
+    "visual_review": "pending"
+  },
+  "contract": "pixel-tile-scene-artifact/v1",
+  "layers": [
+    {
+      "id": "floor",
+      "kind": "tile_map",
+      "layer_sha256": "b8fdf4047e1e8a73f4613c474be3f6e2154b6238df31657ab93a3823f35b73c3",
+      "rects": [
+        {
+          "asset_id": "heroic-stylized-potion-rush-shop-floor",
+          "height": 32,
+          "width": 32,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "asset_id": "heroic-stylized-potion-rush-shop-floor",
+          "height": 32,
+          "width": 32,
+          "x": 32,
+          "y": 0
+        },
+        {
+          "asset_id": "heroic-stylized-potion-rush-shop-floor",
+          "height": 32,
+          "width": 32,
+          "x": 64,
+          "y": 0
+        },
+        {
+          "asset_id": "heroic-stylized-potion-rush-shop-floor",
+          "height": 32,
+          "width": 32,
+          "x": 96,
+          "y": 0
+        },
+        {
+          "asset_id": "heroic-stylized-potion-rush-shop-floor",
+          "height": 32,
+          "width": 32,
+          "x": 0,
+          "y": 32
+        },
+        {
+          "asset_id": "heroic-stylized-potion-rush-shop-floor",
+          "height": 32,
+          "width": 32,
+          "x": 32,
+          "y": 32
+        },
+        {
+          "asset_id": "heroic-stylized-potion-rush-shop-floor",
+          "height": 32,
+          "width": 32,
+          "x": 64,
+          "y": 32
+        },
+        {
+          "asset_id": "heroic-stylized-potion-rush-shop-floor",
+          "height": 32,
+          "width": 32,
+          "x": 96,
+          "y": 32
+        },
+        {
+          "asset_id": "heroic-stylized-potion-rush-shop-floor",
+          "height": 32,
+          "width": 32,
+          "x": 0,
+          "y": 64
+        },
+        {
+          "asset_id": "heroic-stylized-potion-rush-shop-floor",
+          "height": 32,
+          "width": 32,
+          "x": 32,
+          "y": 64
+        },
+        {
+          "asset_id": "heroic-stylized-potion-rush-shop-floor",
+          "height": 32,
+          "width": 32,
+          "x": 64,
+          "y": 64
+        },
+        {
+          "asset_id": "heroic-stylized-potion-rush-shop-floor",
+          "height": 32,
+          "width": 32,
+          "x": 96,
+          "y": 64
+        }
+      ],
+      "references": [
+        "heroic-stylized-potion-rush-shop-floor"
+      ],
+      "z_index": 0
+    },
+    {
+      "id": "shop-fixtures",
+      "kind": "placements",
+      "layer_sha256": "ed56a6cd0a2866d964550f30329af99243d9f65e48daccc60b67e00a2c4b1151",
+      "rects": [
+        {
+          "asset_id": "heroic-stylized-potion-rush-shop-wall",
+          "height": 32,
+          "width": 32,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "asset_id": "heroic-stylized-potion-rush-shop-wall",
+          "height": 32,
+          "width": 32,
+          "x": 32,
+          "y": 0
+        },
+        {
+          "asset_id": "heroic-stylized-potion-rush-shop-wall",
+          "height": 32,
+          "width": 32,
+          "x": 64,
+          "y": 0
+        },
+        {
+          "asset_id": "heroic-stylized-potion-rush-shop-wall",
+          "height": 32,
+          "width": 32,
+          "x": 96,
+          "y": 0
+        },
+        {
+          "asset_id": "heroic-stylized-potion-rush-shop-counter",
+          "height": 32,
+          "width": 32,
+          "x": 48,
+          "y": 40
+        }
+      ],
+      "references": [
+        "heroic-stylized-potion-rush-shop-counter",
+        "heroic-stylized-potion-rush-shop-wall"
+      ],
+      "z_index": 10
+    }
+  ],
+  "manifest_sha256": "abfe7b76c4cf18181f6268cd6496fbf12be59961dc48dafe9fd35f4ba89974c6",
+  "palette_id": "heroic-stylized-environment-v1",
+  "provenance": {
+    "authoring": "replacement_native",
+    "created_utc": "2026-07-22T19:09:22Z",
+    "origin": "pixel_native_svg",
+    "reference_ids": [],
+    "source_repository": "pixel-art-generator"
+  },
+  "scene_id": "heroic-stylized-potion-rush-environment-exemplar",
+  "svg_sha256": "525c9e3b9c3d0fba98e1a64bfc4c5accc50a5086ec333ca2b788a20ec3138247",
+  "theme_profile": "heroic_stylized_v1",
+  "view_box": [
+    0,
+    0,
+    128,
+    96
+  ]
+}

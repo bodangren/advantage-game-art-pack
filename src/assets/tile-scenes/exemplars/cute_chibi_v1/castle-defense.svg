@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 96" width="128" height="96">
+  <g id="terrain" data-layer-kind="tile_map" data-z-index="0">
+    <g id="terrain-cell-0" transform="translate(0 0) scale(1 1)"><rect width="32" height="32" fill="#6b9557"/>
+  <path d="M5 12h2V8h2v4h2v2H5zM23 27h2v-5h2v5h2v2h-6z" fill="#3f7045"/>
+  <path d="M13 5h2v3h-2zM4 24h3v2H4zM25 9h3v2h-3z" fill="#88ad68"/>
+  <circle cx="16" cy="18" r="2" fill="#f0c66f"/>
+  <circle cx="13" cy="18" r="2" fill="#f7e4a4"/>
+  <circle cx="19" cy="18" r="2" fill="#f7e4a4"/>
+  <circle cx="16" cy="15" r="2" fill="#fff0bd"/>
+  <circle cx="16" cy="21" r="2" fill="#fff0bd"/></g>
+    <g id="terrain-cell-1" transform="translate(32 0) scale(1 1)"><rect width="32" height="32" fill="#6b9557"/>
+  <path d="M6 25h2v-6h2v4h2v2h-2v3H8v-3zM24 10h2V5h2v5h2v2h-6z" fill="#416d43"/>
+  <path d="M15 8h2v3h-2zM4 7h4v2H4zM22 25h4v2h-4z" fill="#8caf6a"/>
+  <circle cx="16" cy="18" r="2" fill="#436f45"/>
+  <circle cx="13" cy="16" r="3" fill="#7fb862"/>
+  <circle cx="19" cy="16" r="3" fill="#82bc65"/>
+  <circle cx="16" cy="21" r="3" fill="#76ac59"/></g>
+    <g id="terrain-cell-2" transform="translate(64 0) scale(1 1)"><rect width="32" height="32" fill="#6b9557"/>
+  <path d="M4 16h2v-5h2v5h2v2H4zM22 28h2v-5h2v5h2v2h-6z" fill="#3f7045"/>
+  <path d="M18 6h3v2h-3zM5 26h4v2H5zM26 13h2v3h-2z" fill="#8caf6a"/>
+  <path d="M11 20h8l2 3-3 4h-8l-2-3z" fill="#6f766d"/>
+  <path d="M12 20h7l-2 2h-7z" fill="#a7aa96"/>
+  <path d="M12 24h5v2h-5z" fill="#58645a"/></g>
+    <g id="terrain-cell-3" transform="translate(96 0) scale(1 1)"><rect width="32" height="32" fill="#6b9557"/>
+  <path d="M3 9h2V5h2v4h2v2H3zM20 25h2v-6h2v4h2v2h-2v3h-2v-3z" fill="#406f44"/>
+  <path d="M13 27h3v2h-3zM25 7h3v2h-3zM5 20h2v2H5z" fill="#89ae69"/>
+  <path d="M12 13h9v5h-9z" fill="#e9cf8e"/>
+  <path d="M14 18h5v8h-5z" fill="#f2e4bc"/>
+  <path d="M11 13l3-4h5l3 4z" fill="#ca6f67"/>
+  <path d="M14 10h2v2h-2z" fill="#f4b6a5"/></g>
+    <g id="terrain-cell-4" transform="translate(0 32) scale(1 1)"><rect width="32" height="32" fill="#6b9557"/>
+  <rect y="9" width="32" height="14" fill="#866347"/>
+  <rect y="11" width="32" height="10" fill="#c39a61"/>
+  <path d="M3 13h6v3H3zM12 17h7v3h-7zM22 12h7v3h-7z" fill="#ddb878"/>
+  <path d="M6 18h3v2H6zM20 16h2v2h-2zM27 18h3v2h-3z" fill="#9f784f"/>
+  <path d="M4 6h2V3h2v3h2v2H4zM23 28h2v-4h2v4h2v2h-6z" fill="#416f45"/></g>
+    <g id="terrain-cell-5" transform="translate(32 32) scale(1 1)"><rect width="32" height="32" fill="#6b9557"/>
+  <rect y="9" width="32" height="14" fill="#866347"/>
+  <rect y="11" width="32" height="10" fill="#c39a61"/>
+  <path d="M3 13h6v3H3zM12 17h7v3h-7zM22 12h7v3h-7z" fill="#ddb878"/>
+  <path d="M6 18h3v2H6zM20 16h2v2h-2zM27 18h3v2h-3z" fill="#9f784f"/>
+  <path d="M4 6h2V3h2v3h2v2H4zM23 28h2v-4h2v4h2v2h-6z" fill="#416f45"/></g>
+    <g id="terrain-cell-6" transform="translate(64 32) scale(1 1)"><rect width="32" height="32" fill="#6b9557"/>
+  <rect y="9" width="32" height="14" fill="#866347"/>
+  <rect y="11" width="32" height="10" fill="#c39a61"/>
+  <path d="M3 13h6v3H3zM12 17h7v3h-7zM22 12h7v3h-7z" fill="#ddb878"/>
+  <path d="M6 18h3v2H6zM20 16h2v2h-2zM27 18h3v2h-3z" fill="#9f784f"/>
+  <path d="M4 6h2V3h2v3h2v2H4zM23 28h2v-4h2v4h2v2h-6z" fill="#416f45"/></g>
+    <g id="terrain-cell-7" transform="translate(96 32) scale(1 1)"><rect width="32" height="32" fill="#6b9557"/>
+  <rect y="9" width="32" height="14" fill="#866347"/>
+  <rect y="11" width="32" height="10" fill="#c39a61"/>
+  <path d="M3 13h6v3H3zM12 17h7v3h-7zM22 12h7v3h-7z" fill="#ddb878"/>
+  <path d="M6 18h3v2H6zM20 16h2v2h-2zM27 18h3v2h-3z" fill="#9f784f"/>
+  <path d="M4 6h2V3h2v3h2v2H4zM23 28h2v-4h2v4h2v2h-6z" fill="#416f45"/></g>
+    <g id="terrain-cell-8" transform="translate(0 64) scale(1 1)"><rect width="32" height="32" fill="#6b9557"/>
+  <path d="M4 16h2v-5h2v5h2v2H4zM22 28h2v-5h2v5h2v2h-6z" fill="#3f7045"/>
+  <path d="M18 6h3v2h-3zM5 26h4v2H5zM26 13h2v3h-2z" fill="#8caf6a"/>
+  <path d="M11 20h8l2 3-3 4h-8l-2-3z" fill="#6f766d"/>
+  <path d="M12 20h7l-2 2h-7z" fill="#a7aa96"/>
+  <path d="M12 24h5v2h-5z" fill="#58645a"/></g>
+    <g id="terrain-cell-9" transform="translate(32 64) scale(1 1)"><rect width="32" height="32" fill="#6b9557"/>
+  <path d="M5 12h2V8h2v4h2v2H5zM23 27h2v-5h2v5h2v2h-6z" fill="#3f7045"/>
+  <path d="M13 5h2v3h-2zM4 24h3v2H4zM25 9h3v2h-3z" fill="#88ad68"/>
+  <circle cx="16" cy="18" r="2" fill="#f0c66f"/>
+  <circle cx="13" cy="18" r="2" fill="#f7e4a4"/>
+  <circle cx="19" cy="18" r="2" fill="#f7e4a4"/>
+  <circle cx="16" cy="15" r="2" fill="#fff0bd"/>
+  <circle cx="16" cy="21" r="2" fill="#fff0bd"/></g>
+    <g id="terrain-cell-10" transform="translate(64 64) scale(1 1)"><rect width="32" height="32" fill="#6b9557"/>
+  <path d="M3 9h2V5h2v4h2v2H3zM20 25h2v-6h2v4h2v2h-2v3h-2v-3z" fill="#406f44"/>
+  <path d="M13 27h3v2h-3zM25 7h3v2h-3zM5 20h2v2H5z" fill="#89ae69"/>
+  <path d="M12 13h9v5h-9z" fill="#e9cf8e"/>
+  <path d="M14 18h5v8h-5z" fill="#f2e4bc"/>
+  <path d="M11 13l3-4h5l3 4z" fill="#ca6f67"/>
+  <path d="M14 10h2v2h-2z" fill="#f4b6a5"/></g>
+    <g id="terrain-cell-11" transform="translate(96 64) scale(1 1)"><rect width="32" height="32" fill="#6b9557"/>
+  <path d="M6 25h2v-6h2v4h2v2h-2v3H8v-3zM24 10h2V5h2v5h2v2h-6z" fill="#416d43"/>
+  <path d="M15 8h2v3h-2zM4 7h4v2H4zM22 25h4v2h-4z" fill="#8caf6a"/>
+  <circle cx="16" cy="18" r="2" fill="#436f45"/>
+  <circle cx="13" cy="16" r="3" fill="#7fb862"/>
+  <circle cx="19" cy="16" r="3" fill="#82bc65"/>
+  <circle cx="16" cy="21" r="3" fill="#76ac59"/></g>
+  </g>
+</svg>

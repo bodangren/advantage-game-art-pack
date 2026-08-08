@@ -1,0 +1,127 @@
+{
+  "admission": {
+    "shipping": false,
+    "state": "candidate_unadmitted",
+    "visual_review": "pending"
+  },
+  "contract": "pixel-tile-scene-artifact/v1",
+  "layers": [
+    {
+      "id": "terrain",
+      "kind": "tile_map",
+      "layer_sha256": "aa2aedcf172f41e78b560db0ee78bce0e60ddce833d8d9050735f31fdb175493",
+      "rects": [
+        {
+          "asset_id": "heroic-stylized-castle-defense-grass-a",
+          "height": 32,
+          "width": 32,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "asset_id": "heroic-stylized-castle-defense-grass-b",
+          "height": 32,
+          "width": 32,
+          "x": 32,
+          "y": 0
+        },
+        {
+          "asset_id": "heroic-stylized-castle-defense-grass-c",
+          "height": 32,
+          "width": 32,
+          "x": 64,
+          "y": 0
+        },
+        {
+          "asset_id": "heroic-stylized-castle-defense-grass-d",
+          "height": 32,
+          "width": 32,
+          "x": 96,
+          "y": 0
+        },
+        {
+          "asset_id": "heroic-stylized-castle-defense-road-ew",
+          "height": 32,
+          "width": 32,
+          "x": 0,
+          "y": 32
+        },
+        {
+          "asset_id": "heroic-stylized-castle-defense-road-ew",
+          "height": 32,
+          "width": 32,
+          "x": 32,
+          "y": 32
+        },
+        {
+          "asset_id": "heroic-stylized-castle-defense-road-ew",
+          "height": 32,
+          "width": 32,
+          "x": 64,
+          "y": 32
+        },
+        {
+          "asset_id": "heroic-stylized-castle-defense-road-ew",
+          "height": 32,
+          "width": 32,
+          "x": 96,
+          "y": 32
+        },
+        {
+          "asset_id": "heroic-stylized-castle-defense-grass-c",
+          "height": 32,
+          "width": 32,
+          "x": 0,
+          "y": 64
+        },
+        {
+          "asset_id": "heroic-stylized-castle-defense-grass-a",
+          "height": 32,
+          "width": 32,
+          "x": 32,
+          "y": 64
+        },
+        {
+          "asset_id": "heroic-stylized-castle-defense-grass-d",
+          "height": 32,
+          "width": 32,
+          "x": 64,
+          "y": 64
+        },
+        {
+          "asset_id": "heroic-stylized-castle-defense-grass-b",
+          "height": 32,
+          "width": 32,
+          "x": 96,
+          "y": 64
+        }
+      ],
+      "references": [
+        "heroic-stylized-castle-defense-grass-a",
+        "heroic-stylized-castle-defense-grass-b",
+        "heroic-stylized-castle-defense-grass-c",
+        "heroic-stylized-castle-defense-grass-d",
+        "heroic-stylized-castle-defense-road-ew"
+      ],
+      "z_index": 0
+    }
+  ],
+  "manifest_sha256": "5688b3897613394b48a55b68bfe1436fae13e2b4cf7d705c2d39c86492dd32ef",
+  "palette_id": "heroic-stylized-environment-v1",
+  "provenance": {
+    "authoring": "replacement_native",
+    "created_utc": "2026-07-22T19:09:22Z",
+    "origin": "pixel_native_svg",
+    "reference_ids": [],
+    "source_repository": "pixel-art-generator"
+  },
+  "scene_id": "heroic-stylized-castle-defense-environment-exemplar",
+  "svg_sha256": "61d7166307e20ab54583f4865c0b8f6e22ea7b9daa256159df059ed43e9d43c0",
+  "theme_profile": "heroic_stylized_v1",
+  "view_box": [
+    0,
+    0,
+    128,
+    96
+  ]
+}

@@ -1,0 +1,123 @@
+{
+  "admission": {
+    "shipping": false,
+    "state": "candidate_unadmitted",
+    "visual_review": "pending"
+  },
+  "contract": "pixel-tile-scene-artifact/v1",
+  "layers": [
+    {
+      "id": "playfield",
+      "kind": "tile_map",
+      "layer_sha256": "051017495f5a2772bf75b330ab1f4be5c476f09c68634f1ee93e717acdaab408",
+      "rects": [
+        {
+          "asset_id": "cute-chibi-rune-match-playfield-background",
+          "height": 32,
+          "width": 32,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "asset_id": "cute-chibi-rune-match-playfield-background",
+          "height": 32,
+          "width": 32,
+          "x": 32,
+          "y": 0
+        },
+        {
+          "asset_id": "cute-chibi-rune-match-playfield-background",
+          "height": 32,
+          "width": 32,
+          "x": 64,
+          "y": 0
+        },
+        {
+          "asset_id": "cute-chibi-rune-match-playfield-background",
+          "height": 32,
+          "width": 32,
+          "x": 96,
+          "y": 0
+        },
+        {
+          "asset_id": "cute-chibi-rune-match-playfield-background",
+          "height": 32,
+          "width": 32,
+          "x": 0,
+          "y": 32
+        },
+        {
+          "asset_id": "cute-chibi-rune-match-playfield-background",
+          "height": 32,
+          "width": 32,
+          "x": 32,
+          "y": 32
+        },
+        {
+          "asset_id": "cute-chibi-rune-match-playfield-background",
+          "height": 32,
+          "width": 32,
+          "x": 64,
+          "y": 32
+        },
+        {
+          "asset_id": "cute-chibi-rune-match-playfield-background",
+          "height": 32,
+          "width": 32,
+          "x": 96,
+          "y": 32
+        },
+        {
+          "asset_id": "cute-chibi-rune-match-playfield-background",
+          "height": 32,
+          "width": 32,
+          "x": 0,
+          "y": 64
+        },
+        {
+          "asset_id": "cute-chibi-rune-match-playfield-background",
+          "height": 32,
+          "width": 32,
+          "x": 32,
+          "y": 64
+        },
+        {
+          "asset_id": "cute-chibi-rune-match-playfield-background",
+          "height": 32,
+          "width": 32,
+          "x": 64,
+          "y": 64
+        },
+        {
+          "asset_id": "cute-chibi-rune-match-playfield-background",
+          "height": 32,
+          "width": 32,
+          "x": 96,
+          "y": 64
+        }
+      ],
+      "references": [
+        "cute-chibi-rune-match-playfield-background"
+      ],
+      "z_index": 0
+    }
+  ],
+  "manifest_sha256": "a0dcedae85b8c88492209eb4a6f2e092136c7a196ed1ebb93c6f27cd70e1a714",
+  "palette_id": "cute-chibi-environment-v1",
+  "provenance": {
+    "authoring": "replacement_native",
+    "created_utc": "2026-07-22T19:09:22Z",
+    "origin": "pixel_native_svg",
+    "reference_ids": [],
+    "source_repository": "pixel-art-generator"
+  },
+  "scene_id": "cute-chibi-rune-match-environment-exemplar",
+  "svg_sha256": "b23ee5cbc9179cb1567f99424dc76749f9e2d70b84fd87bccd36a9ec8a7b9d30",
+  "theme_profile": "cute_chibi_v1",
+  "view_box": [
+    0,
+    0,
+    128,
+    96
+  ]
+}

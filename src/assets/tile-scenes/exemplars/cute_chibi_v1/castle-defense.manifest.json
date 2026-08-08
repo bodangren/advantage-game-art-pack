@@ -1,0 +1,127 @@
+{
+  "admission": {
+    "shipping": false,
+    "state": "candidate_unadmitted",
+    "visual_review": "pending"
+  },
+  "contract": "pixel-tile-scene-artifact/v1",
+  "layers": [
+    {
+      "id": "terrain",
+      "kind": "tile_map",
+      "layer_sha256": "1a3d925f0d43fb43065ff66449d9756d4dbc94d3ec2147f4f748917037ae2147",
+      "rects": [
+        {
+          "asset_id": "cute-chibi-castle-defense-grass-a",
+          "height": 32,
+          "width": 32,
+          "x": 0,
+          "y": 0
+        },
+        {
+          "asset_id": "cute-chibi-castle-defense-grass-b",
+          "height": 32,
+          "width": 32,
+          "x": 32,
+          "y": 0
+        },
+        {
+          "asset_id": "cute-chibi-castle-defense-grass-c",
+          "height": 32,
+          "width": 32,
+          "x": 64,
+          "y": 0
+        },
+        {
+          "asset_id": "cute-chibi-castle-defense-grass-d",
+          "height": 32,
+          "width": 32,
+          "x": 96,
+          "y": 0
+        },
+        {
+          "asset_id": "cute-chibi-castle-defense-road-ew",
+          "height": 32,
+          "width": 32,
+          "x": 0,
+          "y": 32
+        },
+        {
+          "asset_id": "cute-chibi-castle-defense-road-ew",
+          "height": 32,
+          "width": 32,
+          "x": 32,
+          "y": 32
+        },
+        {
+          "asset_id": "cute-chibi-castle-defense-road-ew",
+          "height": 32,
+          "width": 32,
+          "x": 64,
+          "y": 32
+        },
+        {
+          "asset_id": "cute-chibi-castle-defense-road-ew",
+          "height": 32,
+          "width": 32,
+          "x": 96,
+          "y": 32
+        },
+        {
+          "asset_id": "cute-chibi-castle-defense-grass-c",
+          "height": 32,
+          "width": 32,
+          "x": 0,
+          "y": 64
+        },
+        {
+          "asset_id": "cute-chibi-castle-defense-grass-a",
+          "height": 32,
+          "width": 32,
+          "x": 32,
+          "y": 64
+        },
+        {
+          "asset_id": "cute-chibi-castle-defense-grass-d",
+          "height": 32,
+          "width": 32,
+          "x": 64,
+          "y": 64
+        },
+        {
+          "asset_id": "cute-chibi-castle-defense-grass-b",
+          "height": 32,
+          "width": 32,
+          "x": 96,
+          "y": 64
+        }
+      ],
+      "references": [
+        "cute-chibi-castle-defense-grass-a",
+        "cute-chibi-castle-defense-grass-b",
+        "cute-chibi-castle-defense-grass-c",
+        "cute-chibi-castle-defense-grass-d",
+        "cute-chibi-castle-defense-road-ew"
+      ],
+      "z_index": 0
+    }
+  ],
+  "manifest_sha256": "d9eb8e0da7358a44ebd39556116483a4898235ebaf5b20d1201acede497d0061",
+  "palette_id": "cute-chibi-environment-v1",
+  "provenance": {
+    "authoring": "replacement_native",
+    "created_utc": "2026-07-22T19:09:22Z",
+    "origin": "pixel_native_svg",
+    "reference_ids": [],
+    "source_repository": "pixel-art-generator"
+  },
+  "scene_id": "cute-chibi-castle-defense-environment-exemplar",
+  "svg_sha256": "0a3828936d85e0207a65cfe76e5d973dcd4c5571d8db33c94923b8b3c2438587",
+  "theme_profile": "cute_chibi_v1",
+  "view_box": [
+    0,
+    0,
+    128,
+    96
+  ]
+}

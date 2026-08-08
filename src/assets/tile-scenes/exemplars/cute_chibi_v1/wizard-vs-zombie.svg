@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 96" width="128" height="96">
+  <g id="ruins" data-layer-kind="tile_map" data-z-index="0">
+    <g id="ruins-cell-0" transform="translate(0 0) scale(1 1)"><rect width="32" height="32" fill="#7f8b78"/>
+  <path d="M4 4h9v7H4zM17 3h11v8H17zM3 16h7v12H3zM13 15h15v13H13z" fill="#9ba18f"/>
+  <path d="M5 5h7v4H5zM18 4h9v5h-9zM14 16h6v5h-6zM22 16h5v11h-5z" fill="#c1bea7"/>
+  <path d="M13 5l3 2-3 4M8 16l3 3-3 4M20 21l3 2-2 4" fill="none" stroke="#59665b" stroke-width="2"/>
+  <path d="M4 25h8v3H4zM24 10h4v3h-4z" fill="#5e8154"/></g>
+    <g id="ruins-cell-1" transform="translate(32 0) scale(1 1)"><rect width="32" height="32" fill="#7f8b78"/>
+  <path d="M4 4h9v7H4zM17 3h11v8H17zM3 16h7v12H3zM13 15h15v13H13z" fill="#9ba18f"/>
+  <path d="M5 5h7v4H5zM18 4h9v5h-9zM14 16h6v5h-6zM22 16h5v11h-5z" fill="#c1bea7"/>
+  <path d="M13 5l3 2-3 4M8 16l3 3-3 4M20 21l3 2-2 4" fill="none" stroke="#59665b" stroke-width="2"/>
+  <path d="M4 25h8v3H4zM24 10h4v3h-4z" fill="#5e8154"/></g>
+    <g id="ruins-cell-2" transform="translate(64 0) scale(1 1)"><rect width="32" height="32" fill="#7f8b78"/>
+  <path d="M4 4h9v7H4zM17 3h11v8H17zM3 16h7v12H3zM13 15h15v13H13z" fill="#9ba18f"/>
+  <path d="M5 5h7v4H5zM18 4h9v5h-9zM14 16h6v5h-6zM22 16h5v11h-5z" fill="#c1bea7"/>
+  <path d="M13 5l3 2-3 4M8 16l3 3-3 4M20 21l3 2-2 4" fill="none" stroke="#59665b" stroke-width="2"/>
+  <path d="M4 25h8v3H4zM24 10h4v3h-4z" fill="#5e8154"/></g>
+    <g id="ruins-cell-3" transform="translate(96 0) scale(1 1)"><rect width="32" height="32" fill="#7f8b78"/>
+  <path d="M4 4h9v7H4zM17 3h11v8H17zM3 16h7v12H3zM13 15h15v13H13z" fill="#9ba18f"/>
+  <path d="M5 5h7v4H5zM18 4h9v5h-9zM14 16h6v5h-6zM22 16h5v11h-5z" fill="#c1bea7"/>
+  <path d="M13 5l3 2-3 4M8 16l3 3-3 4M20 21l3 2-2 4" fill="none" stroke="#59665b" stroke-width="2"/>
+  <path d="M4 25h8v3H4zM24 10h4v3h-4z" fill="#5e8154"/></g>
+    <g id="ruins-cell-4" transform="translate(0 32) scale(1 1)"><rect width="32" height="32" fill="#7f8b78"/>
+  <path d="M4 4h9v7H4zM17 3h11v8H17zM3 16h7v12H3zM13 15h15v13H13z" fill="#9ba18f"/>
+  <path d="M5 5h7v4H5zM18 4h9v5h-9zM14 16h6v5h-6zM22 16h5v11h-5z" fill="#c1bea7"/>
+  <path d="M13 5l3 2-3 4M8 16l3 3-3 4M20 21l3 2-2 4" fill="none" stroke="#59665b" stroke-width="2"/>
+  <path d="M4 25h8v3H4zM24 10h4v3h-4z" fill="#5e8154"/></g>
+    <g id="ruins-cell-5" transform="translate(32 32) scale(1 1)"><rect width="32" height="32" fill="#7f8b78"/>
+  <path d="M4 4h9v7H4zM17 3h11v8H17zM3 16h7v12H3zM13 15h15v13H13z" fill="#9ba18f"/>
+  <path d="M5 5h7v4H5zM18 4h9v5h-9zM14 16h6v5h-6zM22 16h5v11h-5z" fill="#c1bea7"/>
+  <path d="M13 5l3 2-3 4M8 16l3 3-3 4M20 21l3 2-2 4" fill="none" stroke="#59665b" stroke-width="2"/>
+  <path d="M4 25h8v3H4zM24 10h4v3h-4z" fill="#5e8154"/></g>
+    <g id="ruins-cell-6" transform="translate(64 32) scale(1 1)"><rect width="32" height="32" fill="#7f8b78"/>
+  <path d="M4 4h9v7H4zM17 3h11v8H17zM3 16h7v12H3zM13 15h15v13H13z" fill="#9ba18f"/>
+  <path d="M5 5h7v4H5zM18 4h9v5h-9zM14 16h6v5h-6zM22 16h5v11h-5z" fill="#c1bea7"/>
+  <path d="M13 5l3 2-3 4M8 16l3 3-3 4M20 21l3 2-2 4" fill="none" stroke="#59665b" stroke-width="2"/>
+  <path d="M4 25h8v3H4zM24 10h4v3h-4z" fill="#5e8154"/></g>
+    <g id="ruins-cell-7" transform="translate(96 32) scale(1 1)"><rect width="32" height="32" fill="#7f8b78"/>
+  <path d="M4 4h9v7H4zM17 3h11v8H17zM3 16h7v12H3zM13 15h15v13H13z" fill="#9ba18f"/>
+  <path d="M5 5h7v4H5zM18 4h9v5h-9zM14 16h6v5h-6zM22 16h5v11h-5z" fill="#c1bea7"/>
+  <path d="M13 5l3 2-3 4M8 16l3 3-3 4M20 21l3 2-2 4" fill="none" stroke="#59665b" stroke-width="2"/>
+  <path d="M4 25h8v3H4zM24 10h4v3h-4z" fill="#5e8154"/></g>
+    <g id="ruins-cell-8" transform="translate(0 64) scale(1 1)"><rect width="32" height="32" fill="#7f8b78"/>
+  <path d="M4 4h9v7H4zM17 3h11v8H17zM3 16h7v12H3zM13 15h15v13H13z" fill="#9ba18f"/>
+  <path d="M5 5h7v4H5zM18 4h9v5h-9zM14 16h6v5h-6zM22 16h5v11h-5z" fill="#c1bea7"/>
+  <path d="M13 5l3 2-3 4M8 16l3 3-3 4M20 21l3 2-2 4" fill="none" stroke="#59665b" stroke-width="2"/>
+  <path d="M4 25h8v3H4zM24 10h4v3h-4z" fill="#5e8154"/></g>
+    <g id="ruins-cell-9" transform="translate(32 64) scale(1 1)"><rect width="32" height="32" fill="#7f8b78"/>
+  <path d="M4 4h9v7H4zM17 3h11v8H17zM3 16h7v12H3zM13 15h15v13H13z" fill="#9ba18f"/>
+  <path d="M5 5h7v4H5zM18 4h9v5h-9zM14 16h6v5h-6zM22 16h5v11h-5z" fill="#c1bea7"/>
+  <path d="M13 5l3 2-3 4M8 16l3 3-3 4M20 21l3 2-2 4" fill="none" stroke="#59665b" stroke-width="2"/>
+  <path d="M4 25h8v3H4zM24 10h4v3h-4z" fill="#5e8154"/></g>
+    <g id="ruins-cell-10" transform="translate(64 64) scale(1 1)"><rect width="32" height="32" fill="#7f8b78"/>
+  <path d="M4 4h9v7H4zM17 3h11v8H17zM3 16h7v12H3zM13 15h15v13H13z" fill="#9ba18f"/>
+  <path d="M5 5h7v4H5zM18 4h9v5h-9zM14 16h6v5h-6zM22 16h5v11h-5z" fill="#c1bea7"/>
+  <path d="M13 5l3 2-3 4M8 16l3 3-3 4M20 21l3 2-2 4" fill="none" stroke="#59665b" stroke-width="2"/>
+  <path d="M4 25h8v3H4zM24 10h4v3h-4z" fill="#5e8154"/></g>
+    <g id="ruins-cell-11" transform="translate(96 64) scale(1 1)"><rect width="32" height="32" fill="#7f8b78"/>
+  <path d="M4 4h9v7H4zM17 3h11v8H17zM3 16h7v12H3zM13 15h15v13H13z" fill="#9ba18f"/>
+  <path d="M5 5h7v4H5zM18 4h9v5h-9zM14 16h6v5h-6zM22 16h5v11h-5z" fill="#c1bea7"/>
+  <path d="M13 5l3 2-3 4M8 16l3 3-3 4M20 21l3 2-2 4" fill="none" stroke="#59665b" stroke-width="2"/>
+  <path d="M4 25h8v3H4zM24 10h4v3h-4z" fill="#5e8154"/></g>
+  </g>
+</svg>
