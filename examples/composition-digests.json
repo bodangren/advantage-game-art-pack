@@ -1,8 +1,8 @@
 {
-  "boss-dragon": "a05c2fab43c5ead5df5bb12a01a4031d5e5ac4a9d273d3829cd3f902069cdfc4",
-  "enemy-goblin": "3964a41134a713cb0a14b855d630afcef98d83d1442ee0b05adbf7f2392cce2b",
-  "enemy-spectre": "8de859fa5fe132d05034a9a74693d3d4786ee461611d840a735c34a71215ff30",
-  "fx-set": "66994bee371d8574b7dade852fda4d575818a6b662b43e317b2b7207331f94c5",
-  "npc-prisoner": "6cca796e367b0e5c9d19827e954fe19b6c1f5ed80f4189e396e5fca251453a4f",
-  "prop-set-library": "f7c56ea613c904c2eafeb9fe042d9283f039466cec192fa7be6ed185e167b761"
+  "boss-dragon": "b432bc3a3157b984cbae510645d8e31aab10f114ceb73be4148b1a8196e68780",
+  "enemy-goblin": "fb522dc5c46694db80ee6543275ec8e362f176513cae7caa809167cbf1b60e03",
+  "enemy-spectre": "a0da3739c268dda953fedd320374470cea35dfc39cc8d4c84bdb06ed2edabed6",
+  "fx-set": "f950ce83a6d0907b79a87aaa7b81bd1361c8abf87f278f4b81344fe753124159",
+  "npc-prisoner": "3b40f07ea80055e090985b24b406dea3a04f7536b164f3eb8fee524f27c7d70f",
+  "prop-set-library": "58e4d5755bb3ddc7865b2f3dade0c78cd88e74cbde2aa53026110fa8fcb2547b"
 }
