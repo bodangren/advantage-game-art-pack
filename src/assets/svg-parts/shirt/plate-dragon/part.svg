@@ -1,6 +1,32 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-  <path d="M4 0h16l2 12-4 10H6l-4-10z" fill="var(--belly)"/>
-  <rect x="4" y="0" width="16" height="3" fill="var(--belly-light)"/>
-  <path d="M18 14l2-2 1 5-4 5h-3z" fill="var(--belly-shadow)"/>
-  <polygon points="12,4 16,12 12,20 8,12" fill="var(--bone)"/>
+  <!-- Segmented curved belly ribs wrapping around the dragon chest/throat contour -->
+  <!-- Rib 1 -->
+  <path d="M 6,0 h 6 c 1,0 2,1 2,2 h -8 c 0,-1 1,-2 2,-2 z" fill="var(--belly)"/>
+  <path d="M 6,0 h 3 v 2 h -3 z" fill="var(--belly-light)"/>
+  <path d="M 9,0 h 3 c 1,0 2,1 2,2 h -5 z" fill="var(--belly-shadow)"/>
+  
+  <!-- Rib 2 -->
+  <path d="M 5,3 h 6 c 1,0 2,1 2,2 h -8 c 0,-1 1,-2 2,-2 z" fill="var(--belly)"/>
+  <path d="M 5,3 h 3 v 2 h -3 z" fill="var(--belly-light)"/>
+  <path d="M 8,3 h 3 c 1,0 2,1 2,2 h -5 z" fill="var(--belly-shadow)"/>
+  
+  <!-- Rib 3 -->
+  <path d="M 4,6 h 6 c 1,0 2,1 2,2 h -8 c 0,-1 1,-2 2,-2 z" fill="var(--belly)"/>
+  <path d="M 4,6 h 3 v 2 h -3 z" fill="var(--belly-light)"/>
+  <path d="M 7,6 h 3 c 1,0 2,1 2,2 h -5 z" fill="var(--belly-shadow)"/>
+  
+  <!-- Rib 4 -->
+  <path d="M 3,9 h 6 c 1,0 2,1 2,2 h -8 c 0,-1 1,-2 2,-2 z" fill="var(--belly)"/>
+  <path d="M 3,9 h 3 v 2 h -3 z" fill="var(--belly-light)"/>
+  <path d="M 6,9 h 3 c 1,0 2,1 2,2 h -5 z" fill="var(--belly-shadow)"/>
+  
+  <!-- Rib 5 -->
+  <path d="M 2,12 h 6 c 1,0 2,1 2,2 h -8 c 0,-1 1,-2 2,-2 z" fill="var(--belly)"/>
+  <path d="M 2,12 h 3 v 2 h -3 z" fill="var(--belly-light)"/>
+  <path d="M 5,12 h 3 c 1,0 2,1 2,2 h -5 z" fill="var(--belly-shadow)"/>
+  
+  <!-- Rib 6 -->
+  <path d="M 2,15 h 5 c 1,0 2,1 2,2 h -7 c 0,-1 1,-2 2,-2 z" fill="var(--belly)"/>
+  <path d="M 2,15 h 3 v 2 h -3 z" fill="var(--belly-light)"/>
+  <path d="M 5,15 h 2 c 1,0 2,1 2,2 h -4 z" fill="var(--belly-shadow)"/>
 </svg>

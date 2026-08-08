@@ -1,7 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
-  <path d="M0 8l6-5 4 2 6-4v14l-6-4-4 2z" fill="var(--flame)"/>
-  <path d="M4 8l4-3 3 1 4-3v10l-4-3-3 1z" fill="var(--flame-light)"/>
-  <path d="M1 8l3-2 2 1-2 2z" fill="var(--flame-shadow)"/>
-  <circle cx="12" cy="8" r="3" fill="var(--ember)"/>
-  <circle cx="11" cy="7" r="1" fill="var(--ember-light)"/>
+  <!-- Flame burst base (spiky silhouette) -->
+  <path d="M 7,8 L 9,3 L 11,4 L 13,1 L 13,5 L 15,3 L 14,7 L 16,8 L 14,9 L 15,12 L 13,10 L 13,14 L 11,11 L 9,13 Z" fill="var(--flame-shadow)"/>
+  <path d="M 8,8 L 10,4 L 11,5 L 13,3 L 13,6 L 14,5 L 13,8 L 15,8 L 13,9 L 14,11 L 12,10 L 12,12 L 11,10 L 10,11 Z" fill="var(--flame)"/>
+  
+  <!-- Glowing core (Yellow/White) -->
+  <path d="M 10,8 L 11,6 L 13,7 L 13,9 L 11,10 Z" fill="var(--ember)"/>
+  <circle cx="11.5" cy="8" r="1.5" fill="var(--ember-light)"/>
+  <rect x="11" y="7.5" width="1" height="1" fill="#fff"/>
+  
+  <!-- Wavy smoke/flame trail (trailing to the left) -->
+  <path d="M 0,8 C 2,6 4,9 7,7 L 8,8 C 5,10 3,7 1,9 Z" fill="var(--flame-shadow)"/>
+  <path d="M 1,8 C 3,6 4,8 7,7 L 8,8 C 5,9 4,7 2,9 Z" fill="var(--flame)"/>
+  <path d="M 2,7 C 3.5,5.5 4.5,7 7,7 C 4.5,7 4,6.5 3,8 Z" fill="var(--flame-light)"/>
+  
+  <!-- Sparks/flying embers -->
+  <rect x="5" y="3" width="1" height="1" fill="var(--ember)"/>
+  <rect x="3" y="11" width="1" height="1" fill="var(--ember)"/>
+  <rect x="15" y="4" width="1" height="1" fill="var(--flame-light)"/>
 </svg>

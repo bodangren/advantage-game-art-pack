@@ -3,9 +3,9 @@
   "part_id": "ears-goblin",
   "slot": "feature",
   "source_file": "part.svg",
-  "view_box": [0, 0, 24, 12],
+  "view_box": [0, 0, 36, 12],
   "anchors": {
-    "root": [12, 12]
+    "root": [18, 12]
   },
   "z_index": 30,
   "palette_slots": ["skin", "skin-light", "skin-shadow"],

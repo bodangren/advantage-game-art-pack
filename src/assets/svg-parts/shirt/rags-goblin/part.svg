@@ -1,6 +1,25 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 32">
-  <path d="M5 2h14l2 8-3 2v16l-3-2-3 2-3-2-3 2-3-2V12l-3-2z" fill="var(--cloth)"/>
-  <path d="M5 2h6l-1 8H6l-4-2z" fill="var(--cloth-light)"/>
-  <path d="M15 3h4l2 7-3 2v16l-3-2z" fill="var(--cloth-shadow)"/>
-  <rect x="6" y="13" width="12" height="3" fill="var(--leather)"/>
+  <!-- Tattered Tunic / Vest Body -->
+  <path d="M 5,11 L 3,15 L 4,20 L 7,32 L 12,28 L 17,32 L 20,20 L 21,15 L 19,11 Z" fill="var(--cloth)"/>
+  
+  <!-- Highlight folds (Top-left lighting) -->
+  <path d="M 5,11 L 3,15 L 4,20 L 7,32 L 12,28 L 11,20 L 7,16 Z" fill="var(--cloth-light)"/>
+  <!-- Shoulder highlights -->
+  <polygon points="5,11 9,12 8,15 3,15" fill="var(--cloth-light)"/>
+  
+  <!-- Shadow folds (Lower-right lighting) -->
+  <path d="M 12,28 L 17,32 L 20,20 L 21,15 L 19,11 L 15,11 L 13,20 Z" fill="var(--cloth-shadow)"/>
+  <polygon points="19,11 15,12 16,15 21,15" fill="var(--cloth-shadow)"/>
+  
+  <!-- V-Neck Cutout (showing goblin chest shadow) -->
+  <polygon points="12,11 9,16 15,16" fill="#1b2227"/>
+  
+  <!-- Leather Belt -->
+  <rect x="6" y="24" width="12" height="3" fill="var(--leather)"/>
+  <rect x="6" y="24" width="12" height="1" fill="#a0522d"/> <!-- Belt highlight -->
+  
+  <!-- Silver Medallion with Red Gem -->
+  <circle cx="12" cy="25.5" r="3.25" fill="#dce8f4"/> <!-- Silver border -->
+  <circle cx="12" cy="25.5" r="2.25" fill="#8c2f3a"/> <!-- Red Gem Base -->
+  <rect x="11" y="24.5" width="1" height="1" fill="#ff6a4d"/> <!-- Gem Highlight -->
 </svg>

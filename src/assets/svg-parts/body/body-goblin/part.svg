@@ -1,15 +1,80 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 48">
-  <rect x="6" y="2" width="12" height="12" fill="var(--skin)"/>
-  <rect x="6" y="2" width="5" height="4" fill="var(--skin-light)"/>
-  <rect x="8" y="8" width="3" height="3" fill="var(--glow)"/>
-  <rect x="14" y="8" width="3" height="3" fill="var(--glow)"/>
-  <rect x="14" y="10" width="4" height="4" fill="var(--skin-shadow)"/>
-  <path d="M8 14h8l4 12-4 15H8l-4-15z" fill="var(--skin)"/>
-  <path d="M8 14h4l-2 9H6z" fill="var(--skin-light)"/>
-  <path d="M15 16h3l2 10-3 13h-3z" fill="var(--skin-shadow)"/>
-  <rect x="7" y="22" width="10" height="9" fill="var(--cloth)"/>
-  <rect x="7" y="22" width="10" height="2" fill="var(--cloth-light)"/>
-  <rect x="14" y="22" width="3" height="9" fill="var(--cloth-shadow)"/>
-  <rect x="7" y="40" width="4" height="7" fill="var(--shoe)"/>
-  <rect x="13" y="40" width="4" height="7" fill="var(--shoe)"/>
+  <!-- Left Arm (Behind) -->
+  <path d="M 6,24 c -2,0 -4,2 -4,5 c 0,3 1,5 3,7 c 1,1 2,0 2,-2 c 0,-2 -1,-3 -1,-5 c 0,-2 1,-3 2,-3 h 1" fill="var(--skin-shadow)"/>
+  <path d="M 3,33 l -1,3 l 1,1 l 1,-1 h 1 l 1,-2 h -1" fill="var(--skin-shadow)"/>
+  
+  <!-- Right Arm (Behind) -->
+  <path d="M 18,24 c 2,0 4,2 4,5 c 0,3 -1,5 -3,7 c -1,1 -2,0 -2,-2 c 0,-2 1,-3 1,-5 c 0,-2 -1,-3 -2,-3 h -1" fill="var(--skin-shadow)"/>
+  <path d="M 21,33 l 1,3 l -1,1 l -1,-1 h -1 l -1,-2 h 1" fill="var(--skin-shadow)"/>
+  
+  <!-- Left leg (Behind/crouching) -->
+  <path d="M 7,34 c -2,1 -4,3 -4,6 c 0,2 1,4 3,4 c 1,0 2,-1 2,-3 c 0,-2 -1,-3 -1,-5" fill="var(--skin-shadow)"/>
+  
+  <!-- Right leg (Behind/crouching) -->
+  <path d="M 17,34 c 2,1 4,3 4,6 c 0,2 -1,4 -3,4 c -1,0 -2,-1 -2,-3 c 0,-2 1,-3 1,-5" fill="var(--skin-shadow)"/>
+  
+  <!-- Torso & Abs (Main body mass) -->
+  <path d="M 8,24 h 8 l 1,10 l -1,8 h -8 l -1,-8 z" fill="var(--skin)"/>
+  <!-- Torso Shadows -->
+  <path d="M 12,24 h 4 l 1,10 l -1,8 h -4 z" fill="var(--skin-shadow)"/>
+  <!-- Abs highlights and muscle definitions -->
+  <rect x="9" y="26" width="3" height="2" fill="var(--skin-light)"/>
+  <rect x="9" y="30" width="3" height="2" fill="var(--skin-light)"/>
+  <rect x="12" y="27" width="3" height="1" fill="var(--skin-shadow)"/>
+  <rect x="12" y="31" width="3" height="1" fill="var(--skin-shadow)"/>
+  
+  <!-- Left Muscular Arm (Foreground) -->
+  <path d="M 8,24 c -2,1 -4,3 -4,6 c 0,3 2,5 4,5 c 1,0 1,-2 0,-3 c -1,-1 -2,-1 -2,-3 c 0,-2 1,-3 2,-3 z" fill="var(--skin)"/>
+  <path d="M 4,28 c -1,1 -1,2 0,3 c 1,1 2,0 2,-2 c 0,-1 -1,-1 -2,-1 z" fill="var(--skin-light)"/>
+  <!-- Left Claw Hand -->
+  <path d="M 6,34 c -1,1 -2,3 -2,5 c 0,1 1,2 2,2 c 1,0 1,-1 1,-2 l -1,-2 c 1,-1 1,-2 0,-3 z" fill="var(--skin-shadow)"/>
+  <!-- Claws -->
+  <polygon points="3,39 2,41 4,41" fill="#fff"/>
+  <polygon points="5,41 4,43 6,43" fill="#fff"/>
+  
+  <!-- Right Muscular Arm (Foreground with Leather Bracer) -->
+  <path d="M 16,24 c 2,1 4,3 4,6 c 0,3 -2,5 -4,5 c -1,0 -1,-2 0,-3 c 1,-1 2,-1 2,-3 c 0,-2 -1,-3 -2,-3 z" fill="var(--skin)"/>
+  <path d="M 20,28 c 1,1 1,2 0,3 c -1,1 -2,0 -2,-2 c 0,-1 1,-1 2,-1 z" fill="var(--skin-light)"/>
+  <!-- Leather Bracer (cuff) -->
+  <path d="M 17,29 h 4 v 4 h -4 z" fill="var(--leather)"/>
+  <path d="M 17,29 h 4 v 1 h -4 z" fill="#a0522d"/>
+  <!-- Right Claw Hand -->
+  <path d="M 18,34 c 1,1 2,3 2,5 c 0,1 -1,2 -2,2 c -1,0 -1,-1 -1,-2 l 1,-2 c -1,-1 -1,-2 0,-3 z" fill="var(--skin-shadow)"/>
+  <!-- Claws -->
+  <polygon points="21,39 22,41 20,41" fill="#fff"/>
+  <polygon points="19,41 20,43 18,43" fill="#fff"/>
+  
+  <!-- Squatting Legs (Foreground) -->
+  <!-- Left Leg -->
+  <path d="M 8,34 c -2,1 -4,3 -4,6 c 0,3 2,3 4,3 c 1,0 1,-2 0,-3 c -1,0 -2,-1 -2,-3 c 0,-1 1,-2 2,-3 z" fill="var(--skin)"/>
+  <path d="M 4,38 c -1,1 -1,2 0,3 c 1,0 1,-1 1,-2 c 0,-1 0,-1 -1,-1 z" fill="var(--skin-light)"/>
+  <!-- Left Foot -->
+  <path d="M 6,43 h 3 v 4 h -3 z" fill="var(--skin-shadow)"/>
+  <polygon points="6,47 5,48 7,48" fill="#fff"/>
+  <polygon points="8,47 8,48 9,48" fill="#fff"/>
+  
+  <!-- Right Leg -->
+  <path d="M 16,34 c 2,1 4,3 4,6 c 0,3 -2,3 -4,3 c -1,0 -1,-2 0,-3 c 1,0 2,-1 2,-3 c 0,-1 -1,-2 -2,-3 z" fill="var(--skin)"/>
+  <path d="M 20,38 c 1,1 1,2 0,3 c -1,0 -1,-1 -1,-2 c 0,-1 0,-1 1,-1 z" fill="var(--skin-light)"/>
+  <!-- Right Foot -->
+  <path d="M 15,43 h 3 v 4 h -3 z" fill="var(--skin-shadow)"/>
+  <polygon points="18,47 19,48 17,48" fill="#fff"/>
+  <polygon points="16,47 16,48 15,48" fill="#fff"/>
+  
+  <!-- Head (Large rounded skull) -->
+  <path d="M 6,14 c 0,-4 3,-7 6,-7 s 6,3 6,7 c 0,4 -3,7 -6,7 s -6,-3 -6,-7 z" fill="var(--skin)"/>
+  <!-- Forehead Highlights -->
+  <path d="M 8,10 c 0,-2 2,-3 4,-3 s 4,1 4,3 c 0,1 -1,2 -4,2 s -4,-1 -4,-2 z" fill="var(--skin-light)"/>
+  <!-- Head Shadow (Lower right) -->
+  <path d="M 12,14 c 2,0 6,2 6,6 c 0,2 -2,4 -6,4 s -6,-2 -6,-4" fill="var(--skin-shadow)"/>
+  
+  <!-- Glowing Slanted Eyes (Inside deep eye sockets) -->
+  <!-- Eye sockets (shadow) -->
+  <rect x="7" y="15" width="4" height="3" fill="#1b2227"/>
+  <rect x="13" y="15" width="4" height="3" fill="#1b2227"/>
+  <!-- Glow (red/yellow core) -->
+  <polygon points="8,15 10,17 11,17 9,15" fill="var(--glow)"/>
+  <polygon points="16,15 14,17 13,17 15,15" fill="var(--glow)"/>
+  <circle cx="9.5" cy="16.5" r="0.75" fill="#fff"/>
+  <circle cx="14.5" cy="16.5" r="0.75" fill="#fff"/>
 </svg>

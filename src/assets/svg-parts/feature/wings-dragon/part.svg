@@ -1,8 +1,27 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 24">
-  <path d="M22 24L2 4l10 2 10-6 2 10z" fill="var(--membrane)"/>
-  <path d="M26 24l20-20-10 2-10-6-2 10z" fill="var(--membrane)"/>
-  <path d="M20 22L6 8l8 2 6-4z" fill="var(--membrane-shadow)"/>
-  <path d="M28 22l14-14-8 2-6-4z" fill="var(--membrane-shadow)"/>
-  <polygon points="20,24 24,12 28,24" fill="var(--scale)"/>
-  <polygon points="22,24 24,16 26,24" fill="var(--scale-light)"/>
+  <!-- Wing Membranes (Background, dark) -->
+  <!-- Left Wing Membrane -->
+  <path d="M22 20c-5-2-12-8-15-14c0 0-2 8 3 12c4 3 9 2 12 2z" fill="var(--membrane-shadow)"/>
+  <path d="M15 10c-3-2-7-5-9-8c0 0-2 6 2 9c3 2 6 1 7-1z" fill="var(--membrane)"/>
+  
+  <!-- Right Wing Membrane -->
+  <path d="M26 20c5-2 12-8 15-14c0 0 2 8-3 12c-4 3-9 2-12 2z" fill="var(--membrane-shadow)"/>
+  <path d="M33 10c3-2 7-5 9-8c0 0 2 6-2 9c-3 2-6 1-7-1z" fill="var(--membrane)"/>
+  
+  <!-- Wing struts / bone fingers -->
+  <!-- Left Wing Struts -->
+  <path d="M24 22L7 6c-2 0-3-2-3-4s2-2 4 0l16 20z" fill="var(--scale)"/>
+  <path d="M24 22L15 10c-1-1-2-2-2-3s1-2 2-1l9 16z" fill="var(--scale)"/>
+  <path d="M24 22L21 12c0-1-1-2-1-3s1-2 2-1l1 14z" fill="var(--scale)"/>
+  <!-- Right Wing Struts -->
+  <path d="M24 22L41 6c2 0 3-2 3-4s-2-2-4 0l-16 20z" fill="var(--scale)"/>
+  <path d="M24 22L33 10c1-1 2-2 2-3s-1-2-2-1l-9 16z" fill="var(--scale)"/>
+  
+  <!-- Highlights on struts -->
+  <path d="M24 22L7 6c-1 0-2-1-2-2s1-1 2 0l17 18z" fill="var(--scale-light)"/>
+  <path d="M24 22L41 6c1 0 2-1 2-2s-1-1-2 0l-17 18z" fill="var(--scale-light)"/>
+  
+  <!-- Bone claws at the wing tips -->
+  <polygon points="4,2 1,0 4,-1" fill="#e8e0cc"/>
+  <polygon points="44,2 47,0 44,-1" fill="#e8e0cc"/>
 </svg>

@@ -11,7 +11,7 @@
     "hand": [3, 24]
   },
   "z_index": 10,
-  "palette_slots": ["skin", "skin-light", "skin-shadow", "glow", "cloth", "cloth-light", "cloth-shadow", "shoe"],
+  "palette_slots": ["skin", "skin-light", "skin-shadow", "glow", "cloth-light", "cloth-shadow", "leather"],
   "tags": ["body", "enemy", "goblin", "humanoid", "ruins"],
   "description": "Lean goblin body with glowing eyes, the stable anchor set, and a 3-tone ramp."
 }

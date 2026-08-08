@@ -3,7 +3,7 @@
   "part_id": "hair-prisoner",
   "slot": "hair",
   "source_file": "part.svg",
-  "view_box": [0, 0, 24, 16],
+  "view_box": [0, 0, 24, 32],
   "anchors": {
     "root": [12, 16]
   },

@@ -1,19 +1,62 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 44">
-  <rect x="2" y="6" width="6" height="38" fill="var(--stone)"/>
-  <rect x="24" y="6" width="6" height="38" fill="var(--stone)"/>
-  <rect x="0" y="0" width="32" height="8" fill="var(--stone)"/>
-  <rect x="2" y="6" width="2" height="38" fill="var(--stone-light)"/>
-  <rect x="24" y="6" width="2" height="38" fill="var(--stone-light)"/>
+  <!-- Stone Archway Base Structure -->
+  <!-- Left Pillar -->
+  <rect x="0" y="8" width="8" height="36" fill="var(--stone)"/>
+  <rect x="0" y="8" width="2.5" height="36" fill="var(--stone-light)"/>
+  <rect x="5.5" y="8" width="2.5" height="36" fill="var(--stone-shadow)"/>
+  
+  <!-- Right Pillar -->
+  <rect x="24" y="8" width="8" height="36" fill="var(--stone)"/>
+  <rect x="24" y="8" width="2.5" height="36" fill="var(--stone-light)"/>
+  <rect x="29.5" y="8" width="2.5" height="36" fill="var(--stone-shadow)"/>
+  
+  <!-- Top Arch lintel -->
+  <rect x="0" y="0" width="32" height="10" fill="var(--stone)"/>
   <rect x="0" y="0" width="32" height="2" fill="var(--stone-light)"/>
-  <rect x="6" y="6" width="2" height="38" fill="var(--stone-shadow)"/>
-  <rect x="28" y="6" width="2" height="38" fill="var(--stone-shadow)"/>
-  <rect x="0" y="6" width="32" height="2" fill="var(--stone-shadow)"/>
-  <rect x="2" y="20" width="6" height="1" fill="var(--stone-shadow)"/>
-  <rect x="24" y="20" width="6" height="1" fill="var(--stone-shadow)"/>
-  <rect x="2" y="32" width="6" height="1" fill="var(--stone-shadow)"/>
-  <rect x="24" y="32" width="6" height="1" fill="var(--stone-shadow)"/>
-  <rect x="11" y="10" width="3" height="30" fill="var(--metal)"/>
-  <rect x="18" y="10" width="3" height="30" fill="var(--metal)"/>
-  <rect x="12" y="10" width="1" height="30" fill="var(--metal-light)"/>
-  <rect x="19" y="10" width="1" height="30" fill="var(--metal-light)"/>
+  <rect x="0" y="8" width="32" height="2" fill="var(--stone-shadow)"/>
+  
+  <!-- Keystone (center brick) -->
+  <polygon points="13,0 19,0 18,10 14,10" fill="var(--stone-light)"/>
+  <polygon points="15,0 17,0 17,10 15,10" fill="var(--stone)"/>
+  <rect x="13" y="10" width="6" height="1.5" fill="var(--stone-shadow)"/>
+
+  <!-- Brick joint lines (shading) -->
+  <rect x="0" y="18" width="8" height="1.5" fill="var(--stone-shadow)"/>
+  <rect x="0" y="18" width="8" height="0.5" fill="var(--stone-light)"/>
+  <rect x="0" y="30" width="8" height="1.5" fill="var(--stone-shadow)"/>
+  <rect x="0" y="30" width="8" height="0.5" fill="var(--stone-light)"/>
+  
+  <rect x="24" y="18" width="8" height="1.5" fill="var(--stone-shadow)"/>
+  <rect x="24" y="18" width="8" height="0.5" fill="var(--stone-light)"/>
+  <rect x="24" y="30" width="8" height="1.5" fill="var(--stone-shadow)"/>
+  <rect x="24" y="30" width="8" height="0.5" fill="var(--stone-light)"/>
+
+  <!-- Inner arch opening (dark background) -->
+  <rect x="8" y="10" width="16" height="34" fill="#13171b"/>
+
+  <!-- Metal Portcullis (grill bars) -->
+  <!-- Vertical bars -->
+  <rect x="11" y="10" width="1.5" height="34" fill="var(--metal)"/>
+  <rect x="11" y="10" width="0.5" height="34" fill="var(--metal-light)"/>
+  
+  <rect x="15.5" y="10" width="1.5" height="34" fill="var(--metal)"/>
+  <rect x="15.5" y="10" width="0.5" height="34" fill="var(--metal-light)"/>
+  
+  <rect x="20" y="10" width="1.5" height="34" fill="var(--metal)"/>
+  <rect x="20" y="10" width="0.5" height="34" fill="var(--metal-light)"/>
+  
+  <!-- Horizontal bars -->
+  <rect x="8" y="16" width="16" height="1.5" fill="var(--metal)"/>
+  <rect x="8" y="16" width="16" height="0.5" fill="var(--metal-light)"/>
+  
+  <rect x="8" y="26" width="16" height="1.5" fill="var(--metal)"/>
+  <rect x="8" y="26" width="16" height="0.5" fill="var(--metal-light)"/>
+  
+  <rect x="8" y="36" width="16" height="1.5" fill="var(--metal)"/>
+  <rect x="8" y="36" width="16" height="0.5" fill="var(--metal-light)"/>
+  
+  <!-- Spike tips at the bottom of portcullis -->
+  <polygon points="11,44 12.5,44 11.75,46" fill="var(--metal)"/>
+  <polygon points="15.5,44 17,44 16.25,46" fill="var(--metal)"/>
+  <polygon points="20,44 21.5,44 20.75,46" fill="var(--metal)"/>
 </svg>

@@ -1,7 +1,21 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 36">
-  <path d="M4 6C4 2 7 0 12 0s8 2 8 6l2 30H2z" fill="var(--shroud)"/>
-  <path d="M4 6C4 3 6 1 9 0l-1 12-4 3z" fill="var(--shroud-light)"/>
-  <path d="M16 3c2 1 3 2 4 3l2 30h-6V11z" fill="var(--shroud-shadow)"/>
-  <path d="M6 28l2 4-2 4H4z" fill="var(--shroud-shadow)"/>
-  <rect x="8" y="4" width="8" height="6" fill="var(--shade)"/>
+  <!-- Hood (Large and rounded) -->
+  <path d="M 6,12 C 6,5 8,2 12,2 C 16,2 18,5 18,12 C 18,18 16,20 12,20 C 8,20 6,18 6,12 Z" fill="var(--shroud)"/>
+  <path d="M 12,2 C 16,2 18,5 18,12 C 18,18 16,20 12,20 Z" fill="var(--shroud-shadow)"/>
+  
+  <!-- Outer hood highlight rim -->
+  <path d="M 6,12 C 6,7 8,4 11,3 L 12,4 C 10,5 8,7 8,12 Z" fill="var(--shroud-light)"/>
+  
+  <!-- Deep black face opening (shade) -->
+  <path d="M 8,6 C 8,4 10,3 12,3 C 14,3 16,4 16,6 L 16,14 C 16,16 14,17 12,17 C 10,17 8,16 8,14 Z" fill="var(--shade)"/>
+  
+  <!-- Shoulders & Cloak body -->
+  <path d="M 4,18 C 2,20 2,24 2,28 L 22,28 C 22,24 22,20 20,18 Z" fill="var(--shroud)"/>
+  <path d="M 12,18 C 18,18 22,20 22,28 L 12,28 Z" fill="var(--shroud-shadow)"/>
+  
+  <!-- Sleeves (Flowing down to meet at the center chest) -->
+  <!-- Left sleeve -->
+  <path d="M 4,18 C 4,20 6,24 10,26 L 12,26 L 8,22 C 6,20 5,19 4,18 Z" fill="var(--shroud-light)"/>
+  <!-- Right sleeve -->
+  <path d="M 20,18 C 20,20 18,24 14,26 L 12,26 L 16,22 C 18,20 19,19 20,18 Z" fill="var(--shroud-shadow)"/>
 </svg>

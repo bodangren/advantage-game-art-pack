@@ -1,10 +1,25 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 16">
-  <rect x="4" y="0" width="4" height="2" fill="var(--wood)"/>
-  <rect x="4" y="0" width="2" height="2" fill="var(--wood-light)"/>
-  <rect x="4" y="2" width="4" height="2" fill="var(--glass)"/>
-  <path d="M3 4h6l3 4v8H2V8z" fill="var(--glass)"/>
-  <rect x="3" y="5" width="2" height="8" fill="var(--glass-light)"/>
-  <rect x="3" y="9" width="8" height="6" fill="var(--liquid)"/>
-  <rect x="3" y="9" width="3" height="3" fill="var(--liquid-light)"/>
-  <rect x="8" y="12" width="3" height="3" fill="var(--liquid-shadow)"/>
+  <!-- Cork Stopper -->
+  <rect x="4" y="0" width="4" height="3" fill="var(--wood)"/>
+  <rect x="4" y="0" width="2" height="1" fill="var(--wood-light)"/>
+  <rect x="4" y="2" width="4" height="1" fill="var(--wood-light)"/>
+  
+  <!-- Neck of the bottle -->
+  <rect x="3" y="3" width="6" height="3" fill="var(--glass)"/>
+  <rect x="3" y="3" width="1.5" height="3" fill="var(--glass-light)"/>
+  
+  <!-- Round Bottle Flask body -->
+  <circle cx="6" cy="10" r="5" fill="var(--glass)"/>
+  <!-- Glare highlight on glass -->
+  <circle cx="6" cy="10" r="4.5" fill="var(--glass-light)"/>
+  
+  <!-- Liquid inside -->
+  <circle cx="6" cy="10.5" r="4" fill="var(--liquid)"/>
+  <path d="M2.5 10c0 2 1.5 4.5 3.5 4.5s3.5-2.5 3.5-4.5c0-1-1-1-3.5-1s-3.5 0-3.5 1z" fill="var(--liquid-shadow)"/>
+  <!-- Glowing liquid highlight -->
+  <circle cx="4.5" cy="9" r="1.5" fill="var(--liquid-light)"/>
+  <rect x="4.5" y="9" width="1" height="1" fill="#fff"/>
+  
+  <!-- Glass front glare highlight -->
+  <path d="M8.5 7.5c1.5 1 2 2.5 2 2.5s-0.5-2-2-2.5z" fill="#fff" opacity="0.6"/>
 </svg>

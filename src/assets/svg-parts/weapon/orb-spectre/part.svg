@@ -1,6 +1,23 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 20">
-  <circle cx="8" cy="7" r="6" fill="var(--glow)"/>
-  <circle cx="6" cy="5" r="2" fill="var(--glow-light)"/>
-  <rect x="6" y="13" width="4" height="6" fill="var(--metal)"/>
-  <rect x="6" y="13" width="4" height="2" fill="var(--glow-light)"/>
+  <!-- Glowing Core of the Magic Orb (centered at 8, 9) -->
+  <circle cx="8" cy="9" r="6" fill="var(--glow)" opacity="0.4"/>
+  <circle cx="8" cy="9" r="4" fill="var(--glow)"/>
+  <circle cx="8" cy="9" r="2.5" fill="var(--glow-light)"/>
+  <circle cx="7.5" cy="8.5" r="1" fill="#fff"/>
+  
+  <!-- Claw-like Hands (metal claws) holding it from below (stroke-free) -->
+  <path d="M 4,14 C 4,16 6,18 8,19 L 7,19 C 5,18 3,16 3,14 Z" fill="var(--metal)"/>
+  <path d="M 12,14 C 12,16 10,18 8,19 L 9,19 C 11,18 13,16 13,14 Z" fill="var(--metal)"/>
+  <!-- Left claws -->
+  <path d="M 3,11 L 5,13 L 5,10 Z" fill="var(--metal)"/>
+  <path d="M 5,13 L 7,15 L 7,12 Z" fill="var(--metal)"/>
+  <!-- Right claws -->
+  <path d="M 13,11 L 11,13 L 11,10 Z" fill="var(--metal)"/>
+  <path d="M 11,13 L 9,15 L 9,12 Z" fill="var(--metal)"/>
+  
+  <!-- Sparkles floating around -->
+  <polygon points="8,1 9,3 8,4 7,3" fill="var(--glow-light)"/>
+  <polygon points="8,14 9,16 8,17 7,16" fill="var(--glow-light)"/>
+  <polygon points="1,9 3,8 4,9 3,10" fill="var(--glow-light)"/>
+  <polygon points="13,9 14,8 15,9 14,10" fill="var(--glow-light)"/>
 </svg>

@@ -1,7 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 48">
-  <path d="M7 10h10l3 16-2 9-3-4-3 4-3-4-3 4-2-9z" fill="var(--shroud)"/>
-  <path d="M7 10h5l-2 14-3 2z" fill="var(--shroud-light)"/>
-  <path d="M14 12h3l3 14-2 9-3-4z" fill="var(--shroud-shadow)"/>
-  <path d="M9 38l3 5 3-5 3 5-3 5-3-5-3 5z" fill="var(--wisp)"/>
-  <path d="M11 39l2 3-2 3-2-3z" fill="var(--shroud-shadow)"/>
+  <!-- Wispy Floating Skirt of the Cloak -->
+  <path d="M 6,20 C 6,26 4,32 4,38 C 4,44 6,47 12,47 C 18,47 20,44 20,38 C 20,32 18,26 18,20 Z" fill="var(--shroud)"/>
+  <path d="M 12,20 C 14,26 18,32 20,38 C 20,44 18,47 12,47 Z" fill="var(--shroud-shadow)"/>
+  <path d="M 6,20 C 6,24 8,30 10,36 C 11,40 12,44 12,47 C 12,44 11,38 9,32 C 7,26 6,22 6,20 Z" fill="var(--shroud-light)"/>
+  
+  <!-- Tattered wisps at the bottom -->
+  <path d="M 4,38 L 3,42 L 5,40 L 6,45 L 8,41 L 10,46 L 12,42 L 14,46 L 16,41 L 18,45 L 19,40 L 21,42 L 20,38 Z" fill="var(--shroud-shadow)"/>
+  
+  <!-- Floating energy particles below the tail -->
+  <rect x="5" y="44" width="1.5" height="1.5" fill="var(--wisp)"/>
+  <rect x="17" y="44" width="1.5" height="1.5" fill="var(--wisp)"/>
+  <rect x="11" y="46" width="2" height="2" fill="var(--wisp)"/>
 </svg>

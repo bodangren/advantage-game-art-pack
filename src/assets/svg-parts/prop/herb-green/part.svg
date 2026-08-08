@@ -1,11 +1,28 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 18">
-  <rect x="7" y="8" width="2" height="10" fill="var(--stem)"/>
-  <path d="M8 10C4 10 2 7 2 3c4 0 6 2 6 5z" fill="var(--leaf)"/>
-  <path d="M8 10c4 0 6-3 6-7-4 0-6 2-6 5z" fill="var(--leaf)"/>
-  <path d="M7 8C5 8 3 6 3 4c2 0 4 1 4 3z" fill="var(--leaf-light)"/>
-  <path d="M9 8c2 0 4-2 4-4-2 0-4 1-4 3z" fill="var(--leaf-light)"/>
-  <path d="M8 10c-1 0-2 0-3-1l2 2z" fill="var(--leaf-shadow)"/>
-  <path d="M8 10c1 0 2 0 3-1l-2 2z" fill="var(--leaf-shadow)"/>
-  <circle cx="8" cy="4" r="2" fill="var(--leaf)"/>
-  <circle cx="7" cy="3" r="1" fill="var(--leaf-light)"/>
+  <!-- Central Stem -->
+  <path d="M7.5 18l0.5-14l0.5 14z" fill="var(--stem)"/>
+  
+  <!-- Lower Left Leaf -->
+  <path d="M8 12c-4 0-7-2-7-5c0 0 4-1 6 2c1 2 1 3 1 3z" fill="var(--leaf)"/>
+  <path d="M8 12c-3-1-5-2-5-4c0 0 3 0 4 2c1 1 1 2 1 2z" fill="var(--leaf-light)"/>
+  <path d="M6 10c-2 1-3 1-3 1s2-2 3-2c1 1 0 1 0 1z" fill="var(--leaf-shadow)"/>
+  
+  <!-- Lower Right Leaf -->
+  <path d="M8 12c4 0 7-2 7-5c0 0-4-1-6 2c-1 2-1 3-1 3z" fill="var(--leaf)"/>
+  <path d="M8 12c3-1 5-2 5-4c0 0-3 0-4 2c-1 1-1 2-1 2z" fill="var(--leaf-light)"/>
+  <path d="M10 10c2 1 3 1 3 1s-2-2-3-2c-1 1 0 1 0 1z" fill="var(--leaf-shadow)"/>
+  
+  <!-- Upper Left Leaf -->
+  <path d="M8 7c-3-1-5-3-4-6c0 0 3 1 4 3c0 2 0 3 0 3z" fill="var(--leaf)"/>
+  <path d="M8 7c-2-1-4-2-3-4c0 0 2 1 3 2c0 1 0 2 0 2z" fill="var(--leaf-light)"/>
+  <path d="M6 5c-1 1-2 1-2 1s1-2 2-2c0 1 0 1 0 1z" fill="var(--leaf-shadow)"/>
+  
+  <!-- Upper Right Leaf -->
+  <path d="M8 7c3-1 5-3 4-6c0 0-3 1-4 3c0 2 0 3 0 3z" fill="var(--leaf)"/>
+  <path d="M8 7c2-1 4-2 3-4c0 0-2 1-3 2c0 1 0 2 0 2z" fill="var(--leaf-light)"/>
+  <path d="M10 5c1 1 2 1 2 1s-1-2-2-2c0 1 0 1 0 1z" fill="var(--leaf-shadow)"/>
+  
+  <!-- Central Flower Bud / Sprout Core -->
+  <circle cx="8" cy="4" r="1.5" fill="var(--leaf-light)"/>
+  <circle cx="8" cy="4" r="0.75" fill="#fff"/>
 </svg>

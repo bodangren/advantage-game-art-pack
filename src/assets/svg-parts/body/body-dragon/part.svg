@@ -1,9 +1,35 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48">
-  <path d="M4 48l2-18 8-10 10-8 4-8 8-4 6 2 2 6-6 6-8 2-6 8-4 10-8 8z" fill="var(--scale)"/>
-  <path d="M8 34l6-8 8-6 4-6-10 4-8 8-2 10z" fill="var(--scale-light)"/>
-  <path d="M14 40l4-8 4 2-4 10-6 4z" fill="var(--scale-shadow)"/>
-  <path d="M18 34l8-10 6 2-4 10z" fill="var(--belly)"/>
-  <polygon points="36,3 39,0 39,5" fill="var(--bone)"/>
-  <polygon points="41,4 44,2 44,6" fill="var(--bone)"/>
-  <rect x="38" y="6" width="2" height="2" fill="var(--scale-shadow)"/>
+  <!-- Tail (Left side, curving back and up) -->
+  <path d="M18 36c-5 0-10-3-12-8c-2-5-1-10 3-12c4-2 7 1 8 4c1 4-2 7-5 7c-2 0-3-2-2-3" fill="var(--scale)"/>
+  
+  <!-- Massive Torso (Connecting neck, tail, and legs) -->
+  <path d="M14 34c-3-5 2-12 8-14c6-2 12 1 14 6c2 5-2 10-8 11c-6 1-11-1-14-3z" fill="var(--scale)"/>
+  <path d="M16 26c1-3 5-5 8-5s6 2 6 5s-2 5-6 5s-8-2-8-5z" fill="var(--scale-light)"/>
+  <path d="M20 32c1 2 3 3 6 3s5-1 5-3v2c0 2-2 3-5 3s-6-1-6-3z" fill="var(--scale-shadow)"/>
+  
+  <!-- Hind Leg (Back leg - shadow) -->
+  <path d="M12 36l3 8l4 2l-1-11z" fill="var(--scale-shadow)"/>
+  
+  <!-- Hind Leg (Front leg - primary) -->
+  <path d="M22 32c1 3 3 8 5 12l4 2l-3-14z" fill="var(--scale)"/>
+  
+  <!-- Neck (Going up and right to head) -->
+  <path d="M22 26l8-16l8 3l-10 15z" fill="var(--scale)"/>
+  
+  <!-- Snout Head (Facing right, snarling) -->
+  <path d="M30 6c1-5 12-4 15-1c3 3 3 7 0 9c-3 2-12 2-15-1c-2-2-2-5 0-7z" fill="var(--scale)"/>
+  <!-- Snout snout detailing -->
+  <path d="M39 5l4 1l1 4l-4-1z" fill="var(--scale-light)"/>
+  <!-- Snout Snarl mouth and white teeth -->
+  <path d="M39 10h6l-3-3z" fill="#000"/>
+  <polygon points="41,10 42,9 43,10" fill="#fff"/>
+  <polygon points="43,10 44,9 45,10" fill="#fff"/>
+  
+  <!-- Horns (Back of head pointing left/up) -->
+  <polygon points="32,4 28,1 31,1" fill="var(--bone)"/>
+  <polygon points="30,6 25,3 28,3" fill="var(--bone)"/>
+  
+  <!-- Front Leg (Clawed hand/arm) -->
+  <path d="M22 26l-6 6l-6-2l2-4l6-2z" fill="var(--scale)"/>
+  <rect x="10" y="30" width="2" height="2" fill="var(--bone)"/>
 </svg>
